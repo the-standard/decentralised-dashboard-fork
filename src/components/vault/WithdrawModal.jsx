@@ -41,7 +41,7 @@ const WithdrawModal = (props) => {
   const inputRef = useRef(null);
 
   const handleAmount = (e) => {
-    setAmount(Number(e.target.value));
+    setAmount(ethers.parseUnits(e.target.value.toString(), decimals))
   };
 
   const { writeContract, isError, isPending, isSuccess } = useWriteContract();
@@ -53,7 +53,7 @@ const WithdrawModal = (props) => {
         address: vaultAddress,
         functionName: "removeCollateralNative",
         args: [
-          ethers.parseUnits(amount.toString()),
+          amount,
           address
         ],
       });
@@ -74,7 +74,7 @@ const WithdrawModal = (props) => {
         functionName: "removeCollateral",
         args: [
           ethers.encodeBytes32String(symbol),
-          ethers.parseUnits(amount.toString(), decimals),
+          amount,
           address
         ],
       });
@@ -120,8 +120,9 @@ const WithdrawModal = (props) => {
   });
 
   const handleMaxBalance = async () => {
-    inputRef.current.value = collateralValue.toString();
-    handleAmount({ target: { value: collateralValue } });
+    const formatted = collateralValue;
+    inputRef.current.value = formatted;
+    handleAmount({ target: { value: formatted } });
   };
 
   return (

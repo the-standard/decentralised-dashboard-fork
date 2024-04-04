@@ -33,7 +33,7 @@ const SwapModal = ({
   const [swapAssets, setSwapAssets] = useState();
   const [amount, setAmount] = useState(0);
   // const [receiveAmount, setReceiveAmount] = useState(0);
-  const [receiveAmountFormatted, setReceiveAmountFormatted] = useState(0);
+  const [receiveAmount, setReceiveAmount] = useState(0);
   const [receiveAsset, setReceiveAsset] = useState('');
   const [receiveDecimals, setReceiveDecimals] = useState();
   const { vaultStore } = useVaultStore();
@@ -49,11 +49,11 @@ const SwapModal = ({
   };
 
   const handleAmount = (e) => {
-    setAmount(Number(e.target.value));
+    setAmount(ethers.parseUnits(e.target.value.toString(), decimals))
   };
 
   const handleMinReturn = (e) => {
-    setReceiveAmountFormatted(e.target.value);
+    setReceiveAmount(ethers.parseUnits(e.target.value.toString(), receiveDecimals))
   };
 
   useEffect(() => {
@@ -88,8 +88,8 @@ const SwapModal = ({
         args: [
           ethers.encodeBytes32String(symbol),
           ethers.encodeBytes32String(receiveAsset),
-          ethers.parseUnits(amount.toString(), decimals),
-          ethers.parseUnits(receiveAmountFormatted.toString(), receiveDecimals),
+          amount,
+          receiveAmount,
         ],
     });
     } catch (error) {
@@ -109,14 +109,14 @@ const SwapModal = ({
       setSwapLoading(false);
       inputRef.current.value = "";
       setAmount(0);
-      setReceiveAmountFormatted(0);
+      setReceiveAmount(0);
       setReceiveAsset('');
     } else if (isError) {
       toast.error('There was an error');
       setSwapLoading(false);
       inputRef.current.value = "";
       setAmount(0);
-      setReceiveAmountFormatted(0);
+      setReceiveAmount(0);
       setReceiveAsset('');
     }
   }, [
@@ -127,8 +127,9 @@ const SwapModal = ({
   ]);
 
   const handleMaxBalance = async () => {
-    inputRef.current.value = collateralValue.toString();
-    handleAmount({ target: { value: collateralValue } });
+    const formatted = collateralValue;
+    inputRef.current.value = formatted;
+    handleAmount({ target: { value: formatted } });
   };
 
   if (open) {
@@ -209,11 +210,6 @@ const SwapModal = ({
                   </Typography>
                   <input
                     className="input input-bordered w-full"
-                    value={swapLoading ? (
-                      ''
-                    ) : (
-                      receiveAmountFormatted
-                    )}
                     ref={inputReceiveRef}
                     type="number"
                     onChange={handleMinReturn}
@@ -238,7 +234,7 @@ const SwapModal = ({
                   disabled={
                     !amount||
                     !receiveAsset ||
-                    !(receiveAmountFormatted >= 0) ||
+                    !(receiveAmount >= 0) ||
                     swapLoading
                   }
                   onClick={handleSwapTokens}
@@ -252,6 +248,7 @@ const SwapModal = ({
         </>
       );  
     }
+
     return (
       <Modal
         open={open}

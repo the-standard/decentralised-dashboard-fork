@@ -170,8 +170,6 @@ const DepositModal = (props) => {
     isSuccess,
     isError,
   ]);
-
-  console.log(123123, amount)
     
   return (
     <>
