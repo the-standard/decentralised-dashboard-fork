@@ -26,6 +26,7 @@ const RepayModal = (props) => {
     repayFee,
     burnFeeRate,
     toPercentage,
+    inputRef,
   } = props;
 
   if (isSuccess) {
@@ -165,9 +166,9 @@ const RepayModal = (props) => {
             className="input input-bordered join-item w-full"
             placeholder="Amount of EUROs you want to repay"
             type="number"
-            value={amount}
             onChange={handleAmount}
             disabled={isPending}
+            ref={inputRef}
           />
 
           <Button

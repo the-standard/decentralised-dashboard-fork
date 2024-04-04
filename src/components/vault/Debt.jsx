@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { toast } from 'react-toastify';
 import { useAccount } from "wagmi";
 import { formatEther, parseEther } from "viem";
@@ -33,16 +33,17 @@ const Debt = ({
   currentVault,
 }) => {
   const { address } = useAccount();
-  const [amount, setAmount] = useState(0);
   const { vaultAddress } = useVaultAddressStore();
   const { arbitrumsEuroAddress, arbitrumSepoliasEuroAddress } =
     usesEuroAddressStore();
   const { erc20Abi } = useErc20AbiStore();
+  const inputRef = useRef(null);
+
+  const [ amount, setAmount ] = useState(BigInt(0));
+  const [ stage, setStage ] = useState('');
+
   const chainId = useChainId();
   const HUNDRED_PC = 100_000n;
-  const [stage, setStage] = useState('');
-
-  const amountInWei = parseEther(amount.toString());
 
   const eurosAddress = chainId === arbitrumSepolia.id ?
     arbitrumSepoliasEuroAddress :
@@ -76,7 +77,7 @@ const Debt = ({
 
   const handleAmount = (e) => {
     if (Number(e.target.value) < 10n ** 21n) {
-      setAmount(Number(e.target.value));
+      setAmount(parseEther(e.target.value.toString()))
     }
   };
 
@@ -87,16 +88,17 @@ const Debt = ({
       eurosWalletBalance * HUNDRED_PC / (HUNDRED_PC + burnFeeRate) :
       minted;
     const maxRepay = formatEther(maxRepayWei);
+    inputRef.current.value = maxRepay;
     handleAmount({target: {value: maxRepay}});
   }
 
   useEffect(() => {
-    setAmount(0);
+    setAmount(BigInt(0));
   }, []);
 
   useEffect(() => {
     return () => {
-      setAmount(0);
+      setAmount(BigInt(0));
     };
   }, []);
 
@@ -109,7 +111,7 @@ const Debt = ({
         abi: smartVaultAbi,
         address: vaultAddress,
         functionName: "mint",
-        args: [address, amountInWei],
+        args: [address, amount],
       });
 
     } catch (error) {
@@ -128,7 +130,7 @@ const Debt = ({
   const [repaySuccess, setRepaySuccess] = useState(false);
 
   const closeDebtModal = () => {
-    setAmount(0);
+    setAmount(BigInt(0));
     setBorrowOpen(false);
     setRepayOpen(false);
     setBorrowSuccess(false);
@@ -140,7 +142,8 @@ const Debt = ({
   const [repayStep, setRepayStep] = useState(0);
 
   const burnFeeRate = currentVault?.burnFeeRate;
-  const repayFee = amountInWei * burnFeeRate / HUNDRED_PC;
+
+  const repayFee = amount * burnFeeRate / HUNDRED_PC;
 
   const handleApprove = async () => {
     setStage('APPROVE');
@@ -182,7 +185,7 @@ const Debt = ({
         abi: smartVaultAbi,
         address: vaultAddress,
         functionName: "burn",
-        args: [amountInWei],
+        args: [amount],
       });
 
     } catch (error) {
@@ -201,10 +204,12 @@ const Debt = ({
       } else if (isSuccess) {
         setBorrowSuccess(true);
         toast.success("Borrowed Successfully");
+        inputRef.current.value = "";
         setStage('');
       } else if (isError) {
         setBorrowSuccess(false);
         toast.error('There was an error');
+        inputRef.current.value = "";
         setStage('');
       }  
     }
@@ -213,9 +218,11 @@ const Debt = ({
         setRepayStep(1);
       } else if (isSuccess) {
         toast.success("Approved Successfully");
+        inputRef.current.value = "";
         handleBurn();
       } else if (isError) {
         toast.error('There was an error');
+        inputRef.current.value = "";
         setStage('');
       }  
     }
@@ -226,11 +233,13 @@ const Debt = ({
       } else if (isSuccess) {
         setRepaySuccess(true);
         toast.success("Repayed Successfully");
+        inputRef.current.value = "";
         setRepayStep(1);
         setStage('');
       } else if (isError) {
         setRepaySuccess(false)
         toast.error('There was an error');
+        inputRef.current.value = "";
         setRepayStep(1);
         setStage('');
       }
@@ -250,14 +259,14 @@ const Debt = ({
   };
 
   const calculateRepaymentWithFee = () => {
-    return amountInWei + calculateRateAmount(amountInWei, currentVault?.burnFeeRate);
+    return amount + calculateRateAmount(amount, currentVault?.burnFeeRate);
   }
 
   const handleDebtAction = (type) => {
     if (type === 'BORROW') {
       handleMint();
     } else {
-      if (amountInWei > currentVault?.status.minted) {
+      if (amount > currentVault?.status.minted) {
         alert('Repayment amount exceeds debt in vault');
       } else if (eurosWalletBalance < calculateRepaymentWithFee()) {
         alert('Repayment amount exceeds your EUROs balance');
@@ -286,15 +295,15 @@ const Debt = ({
     },
     {
       key: `Minting Fee (${toPercentage(currentVault?.mintFeeRate)}%)`,
-      value: formatEther(calculateRateAmount(amountInWei, currentVault?.mintFeeRate)),
+      value: formatEther(calculateRateAmount(amount, currentVault?.mintFeeRate)),
     },
     {
       key: "Borrowing",
-      value: formatEther(amountInWei + calculateRateAmount(amountInWei, currentVault?.mintFeeRate)),
+      value: formatEther(amount + calculateRateAmount(amount, currentVault?.mintFeeRate)),
     },
     {
       key: "Receiving",
-      value: amount,
+      value: formatEther(amount.toString()),
     },
   ];
   const repayValues = [
@@ -304,15 +313,15 @@ const Debt = ({
     },
     {
       key: `Burn Fee (${toPercentage(currentVault?.burnFeeRate)}%)`,
-      value: formatEther(calculateRateAmount(amountInWei, currentVault?.burnFeeRate)),
+      value: formatEther(calculateRateAmount(amount, currentVault?.burnFeeRate)),
     },
     {
       key: "Actual Repayment",
-      value: amount,
+      value: formatEther(amount.toString()),
     },
     {
       key: "Send",
-      value: formatEther(amountInWei + calculateRateAmount(amountInWei, currentVault?.burnFeeRate)),
+      value: formatEther(amount + calculateRateAmount(amount, currentVault?.burnFeeRate)),
     },
   ];
 
@@ -344,6 +353,7 @@ const Debt = ({
         amount={amount}
         handleDebtAction={handleDebtAction}
         borrowValues={borrowValues}
+        inputRef={inputRef}
       />
 
       <RepayModal
@@ -360,6 +370,7 @@ const Debt = ({
         repayFee={repayFee}
         burnFeeRate={currentVault?.burnFeeRate}
         toPercentage={toPercentage}
+        inputRef={inputRef}
       />
     </>
   );

@@ -20,11 +20,12 @@ const BorrowModal = (props) => {
     isSuccess,
     amount,
     handleDebtAction,
-    borrowValues
+    borrowValues,
+    inputRef
   } = props;
 
   const navigate = useNavigate();
-
+  
   if (isSuccess) {
     return (
       <>
@@ -84,9 +85,9 @@ const BorrowModal = (props) => {
           className="input input-bordered w-full"
           placeholder="Amount of EUROs to borrow"
           type="number"
-          value={amount}
           onChange={handleAmount}
           disabled={isPending}
+          ref={inputRef}
         />
 
         <div className="mt-4">
