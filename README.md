@@ -8,6 +8,6 @@ Uses:
 - ethers
 - viem
 
-To Do:
+Required:
 - create WalletConnect account and get project id
 - get alchemy id

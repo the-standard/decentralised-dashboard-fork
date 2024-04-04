@@ -68,7 +68,7 @@ const DepositModal = (props) => {
 
   const handleAmount = (e) => {
     if (Number(e.target.value) < 10n ** 21n) {
-      setAmount(Number(e.target.value));
+      setAmount(ethers.parseUnits(e.target.value.toString(), decimals))
     }
   };
   
@@ -80,7 +80,7 @@ const DepositModal = (props) => {
         abi: erc20Abi,
         address: tokenAddress,
         functionName: "transfer",
-        args: [vaultAddress, ethers.parseUnits(amount.toString(), decimals)],
+        args: [vaultAddress, amount],
       });
     } catch (error) {
       let errorMessage;
@@ -109,7 +109,7 @@ const DepositModal = (props) => {
       const hash = await sendTransaction(wagmiConfig, {
         account: address,
         to: toAddress,
-        value: ethers.parseEther(txAmount.toString()),
+        value: txAmount,
       })
       setTxdata(hash);
       inputRef.current.value = "";
@@ -170,6 +170,8 @@ const DepositModal = (props) => {
     isSuccess,
     isError,
   ]);
+
+  console.log(123123, amount)
     
   return (
     <>
