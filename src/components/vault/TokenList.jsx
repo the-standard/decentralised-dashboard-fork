@@ -9,7 +9,7 @@ import {
   useVaultStore,
 } from "../../store/Store";
 
-import CenterLoader from "../CenterLoader";
+import CenterLoader from "../ui/CenterLoader";
 import TokenActions from "./TokenActions";
 
 const TokenList = ({ assets, assetsLoading }) => {

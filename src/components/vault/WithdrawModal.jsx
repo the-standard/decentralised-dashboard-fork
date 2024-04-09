@@ -19,7 +19,7 @@ import {
   useSmartVaultABIStore,
 } from "../../store/Store";
 
-import Modal from "../Modal.jsx";
+import Modal from "../ui/Modal.jsx";
 
 const WithdrawModal = (props) => {
   const {

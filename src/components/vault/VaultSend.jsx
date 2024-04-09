@@ -74,7 +74,7 @@ const VaultSend = ({
       if (error && error.shortMessage) {
         errorMessage = error.shortMessage;
       }
-      toast.error(errorMessage || 'There was an error');
+      toast.error(errorMessage || 'There was a problem');
     }
   };
 
@@ -86,7 +86,7 @@ const VaultSend = ({
       navigate('/');
     } else if (isError) {
       // 
-      toast.error('There was an error');
+      toast.error('There was a problem');
     }
   }, [
     isPending,

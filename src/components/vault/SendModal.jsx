@@ -3,9 +3,9 @@ import {
   Card
 } from 'react-daisyui';
 
-import Modal from "../Modal.jsx";
-import CenterLoader from "../CenterLoader";
-import Typography from "../../components/Typography";
+import Modal from "../ui/Modal.jsx";
+import CenterLoader from "../ui/CenterLoader.jsx";
+import Typography from "../ui/Typography.jsx";
 
 const SendModal = ({
   isOpen,

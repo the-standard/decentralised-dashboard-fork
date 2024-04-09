@@ -8,8 +8,8 @@ import {
   ArrowDownCircleIcon,
 } from '@heroicons/react/24/outline';
 
-import Modal from "../Modal.jsx";
-import Typography from "../Typography.jsx";
+import Modal from "../ui/Modal";
+import Typography from "../ui/Typography";
 
 const BorrowModal = (props) => {
   const {

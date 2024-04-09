@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import { toast } from 'react-toastify';
 import { useAccount } from "wagmi";
-import { formatEther, parseEther } from "viem";
+import { ethers } from "ethers";
 import {
   useWriteContract,
   useReadContracts,
@@ -77,7 +77,7 @@ const Debt = ({
 
   const handleAmount = (e) => {
     if (Number(e.target.value) < 10n ** 21n) {
-      setAmount(parseEther(e.target.value.toString()))
+      setAmount(ethers.parseEther(e.target.value.toString()))
     }
   };
 
@@ -87,7 +87,7 @@ const Debt = ({
     const maxRepayWei = eurosWalletBalance < (minted + calculateRateAmount(minted, burnFeeRate)) ?
       eurosWalletBalance * HUNDRED_PC / (HUNDRED_PC + burnFeeRate) :
       minted;
-    const maxRepay = formatEther(maxRepayWei);
+    const maxRepay = ethers.formatEther(maxRepayWei);
     inputRef.current.value = maxRepay;
     handleAmount({target: {value: maxRepay}});
   }
@@ -119,11 +119,10 @@ const Debt = ({
       if (error && error.shortMessage) {
         errorMessage = error.shortMessage;
       }
-      toast.error(errorMessage || 'There was an error');
+      toast.error(errorMessage || 'There was a problem');
     }
   };
 
-  // debt modals
   const [borrowOpen, setBorrowOpen] = useState(false);
   const [repayOpen, setRepayOpen] = useState(false);
   const [borrowSuccess, setBorrowSuccess] = useState(false);
@@ -138,7 +137,6 @@ const Debt = ({
     setRepayStep(0);
   }
 
-  // modal
   const [repayStep, setRepayStep] = useState(0);
 
   const burnFeeRate = currentVault?.burnFeeRate;
@@ -160,12 +158,12 @@ const Debt = ({
       if (error && error.shortMessage) {
         errorMessage = error.shortMessage;
       }
-      toast.error(errorMessage || 'There was an error');
+      toast.error(errorMessage || 'There was a problem');
     }
   };
 
   const handleApprovePayment = async () => {
-    // V3 UPDATE
+    // V3+ Vaults
     // if vault version exists and if >= 3 skip the approval step
     if (currentVault && currentVault.status && currentVault.status.version && currentVault.status.version !== 1 && currentVault.status.version !== 2) {
       handleBurn()
@@ -193,7 +191,7 @@ const Debt = ({
       if (error && error.shortMessage) {
         errorMessage = error.shortMessage;
       }
-      toast.error(errorMessage || 'There was an error');
+      toast.error(errorMessage || 'There was a problem');
     }
   };
 
@@ -208,7 +206,7 @@ const Debt = ({
         setStage('');
       } else if (isError) {
         setBorrowSuccess(false);
-        toast.error('There was an error');
+        toast.error('There was a problem');
         inputRef.current.value = "";
         setStage('');
       }  
@@ -221,7 +219,7 @@ const Debt = ({
         inputRef.current.value = "";
         handleBurn();
       } else if (isError) {
-        toast.error('There was an error');
+        toast.error('There was a problem');
         inputRef.current.value = "";
         setStage('');
       }  
@@ -238,7 +236,7 @@ const Debt = ({
         setStage('');
       } else if (isError) {
         setRepaySuccess(false)
-        toast.error('There was an error');
+        toast.error('There was a problem');
         inputRef.current.value = "";
         setRepayStep(1);
         setStage('');
@@ -295,15 +293,15 @@ const Debt = ({
     },
     {
       key: `Minting Fee (${toPercentage(currentVault?.mintFeeRate)}%)`,
-      value: formatEther(calculateRateAmount(amount, currentVault?.mintFeeRate)),
+      value: ethers.formatEther(calculateRateAmount(amount, currentVault?.mintFeeRate)),
     },
     {
       key: "Borrowing",
-      value: formatEther(amount + calculateRateAmount(amount, currentVault?.mintFeeRate)),
+      value: ethers.formatEther(amount + calculateRateAmount(amount, currentVault?.mintFeeRate)),
     },
     {
       key: "Receiving",
-      value: formatEther(amount.toString()),
+      value: ethers.formatEther(amount.toString()),
     },
   ];
   const repayValues = [
@@ -313,15 +311,15 @@ const Debt = ({
     },
     {
       key: `Burn Fee (${toPercentage(currentVault?.burnFeeRate)}%)`,
-      value: formatEther(calculateRateAmount(amount, currentVault?.burnFeeRate)),
+      value: ethers.formatEther(calculateRateAmount(amount, currentVault?.burnFeeRate)),
     },
     {
       key: "Actual Repayment",
-      value: formatEther(amount.toString()),
+      value: ethers.formatEther(amount.toString()),
     },
     {
       key: "Send",
-      value: formatEther(amount + calculateRateAmount(amount, currentVault?.burnFeeRate)),
+      value: ethers.formatEther(amount + calculateRateAmount(amount, currentVault?.burnFeeRate)),
     },
   ];
 

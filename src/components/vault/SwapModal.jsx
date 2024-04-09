@@ -16,9 +16,9 @@ import {
   useSmartVaultABIStore,
 } from "../../store/Store";
 
-import Typography from "../../components/Typography";
-import Select from "../../components/Select";
-import Modal from "../../components/Modal.jsx";
+import Typography from "../ui/Typography";
+import Select from "../ui/Select";
+import Modal from "../ui/Modal.jsx";
 
 const SwapModal = ({
   open,
@@ -32,7 +32,6 @@ const SwapModal = ({
   const [swapLoading, setSwapLoading] = useState(false);
   const [swapAssets, setSwapAssets] = useState();
   const [amount, setAmount] = useState(0);
-  // const [receiveAmount, setReceiveAmount] = useState(0);
   const [receiveAmount, setReceiveAmount] = useState(0);
   const [receiveAsset, setReceiveAsset] = useState('');
   const [receiveDecimals, setReceiveDecimals] = useState();
@@ -97,7 +96,7 @@ const SwapModal = ({
       if (error && error.shortMessage) {
         errorMessage = error.shortMessage;
       }
-      toast.error(errorMessage || 'There was an error');
+      toast.error(errorMessage || 'There was a problem');
     }
   };
 
@@ -112,7 +111,7 @@ const SwapModal = ({
       setReceiveAmount(0);
       setReceiveAsset('');
     } else if (isError) {
-      toast.error('There was an error');
+      toast.error('There was a problem');
       setSwapLoading(false);
       inputRef.current.value = "";
       setAmount(0);
@@ -260,16 +259,7 @@ const SwapModal = ({
             Swap {symbol}
           </Card.Title>
 
-          <div
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              justifyContent: "center",
-              alignItems: "center",
-              color: "white",
-              marginTop: "1rem",
-            }}
-          >
+          <div>
             <Typography
               variant="h3"
               className="mb-2"

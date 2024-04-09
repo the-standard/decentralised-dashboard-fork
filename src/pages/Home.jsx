@@ -1,6 +1,6 @@
 import { useAccount } from "wagmi";
 
-import DashLayout from "../components/DashLayout";
+import DashLayout from "../components/ui/DashLayout";
 import Vaults from "./vaults/Vaults";
 import Welcome from "./Welcome";
 

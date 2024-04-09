@@ -2,14 +2,14 @@ import {
   Button,
   Card,
 } from 'react-daisyui';
-import { formatEther } from "viem";
+import { ethers } from "ethers";
 
 import {
   ArrowUpCircleIcon,
 } from '@heroicons/react/24/outline';
 
-import Modal from "../Modal.jsx";
-import Typography from "../Typography.jsx";
+import Modal from "../ui/Modal.jsx";
+import Typography from "../ui/Typography.jsx";
 
 const RepayModal = (props) => {
   const {
@@ -83,7 +83,7 @@ const RepayModal = (props) => {
           <Typography
             variant="p"
           >
-            We suggest a cap of {formatEther(repayFee)} for this transaction. This fee ({toPercentage(burnFeeRate)}%) is rewarded to Liquidity Pool stakers, helping the DAO grow and build more features.
+            We suggest a cap of {ethers.formatEther(repayFee)} for this transaction. This fee ({toPercentage(burnFeeRate)}%) is rewarded to Liquidity Pool stakers, helping the DAO grow and build more features.
           </Typography>
   
           <Card.Actions className="pt-4 flex-col-reverse lg:flex-row justify-end">

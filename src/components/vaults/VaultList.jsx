@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { formatEther } from "ethers";
+import { ethers } from "ethers";
 import { Link } from "react-router-dom";
 import {
   Tooltip,
@@ -11,11 +11,8 @@ import {
   useCurrentPageStore,
 } from "../../store/Store.jsx";
 
-// import EUROsLogo from "../../assets/EUROs.svg";
-// import USDsLogo from "../../assets/USDs.svg";
-
-import Pagination from "../Pagination";
-import CenterLoader from "../CenterLoader";
+import Pagination from "../ui/Pagination.jsx";
+import CenterLoader from "../ui/CenterLoader.jsx";
 
 const VaultList = ({ vaults, vaultsLoading }) => {
   const { setCurrentPage, currentPage } = useCurrentPageStore();
@@ -122,7 +119,6 @@ const VaultList = ({ vaults, vaultsLoading }) => {
                         <tr key={index}>
                           <td className="hidden md:table-cell">
                             EUROs
-                            {/* <img src={EUROsLogo} className="w-8 inline-block mask mask-circle" alt="EUROs" /> */}
                           </td>
                           <td>
                             {vault.status.version ? (
@@ -133,7 +129,7 @@ const VaultList = ({ vaults, vaultsLoading }) => {
                           <td className="hidden md:table-cell">
                             €
                             {truncateToTwoDecimals(
-                              formatEther(
+                              ethers.formatEther(
                                 BigInt(
                                   vault.status.totalCollateralValue
                                 ).toString()
@@ -142,7 +138,7 @@ const VaultList = ({ vaults, vaultsLoading }) => {
                           </td>
                           <td>
                             {truncateToTwoDecimals(
-                              formatEther(vault.status.minted.toString())
+                              ethers.formatEther(vault.status.minted.toString())
                             )}
                             &nbsp;EUROs
                           </td>

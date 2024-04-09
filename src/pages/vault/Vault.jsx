@@ -25,14 +25,14 @@ import {
   useVaultManagerAbiStore,
 } from "../../store/Store";
 
-import CenterLoader from "../../components/CenterLoader";
+import CenterLoader from "../../components/ui/CenterLoader";
 
 import Debt from "../../components/vault/Debt";
 import VaultStats from "../../components/vault/VaultStats";
 import TokenList from "../../components/vault/TokenList";
 import VaultSend from "../../components/vault/VaultSend";
 
-import Typography from "../../components/Typography";
+import Typography from "../../components/ui/Typography";
 
 function useQuery() {
   const { search } = useLocation();

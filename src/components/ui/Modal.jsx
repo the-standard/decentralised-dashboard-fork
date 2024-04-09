@@ -5,7 +5,8 @@ import {
 const Modal = (props) => {
   const {
     open,
-    closeModal
+    closeModal,
+    wide,
   } = props;
 
   return (
@@ -15,11 +16,11 @@ const Modal = (props) => {
           className="fixed z-50 top-0 left-0 right-0 bottom-0"
         >
           <div
-            className="z-40 absolute -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 w-full max-w-[32rem] px-4"
+            className={"z-40 absolute -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 w-full px-4 " + (wide ? "max-w-[48rem]" : "max-w-[34rem]") }
           >
             <Card
               compact
-              className="bg-base-100 shadow-md w-full"
+              className="bg-base-100 shadow-md w-full max-h-[90vh] overflow-scroll"
             >
               <Card.Body>
                 {props.children}

@@ -41,10 +41,10 @@ const SideNav = (props) => {
         </Menu.Item>
         <Menu.Item>
           <NavLink
-            to="/yield"
+            to="/liquidation-pools"
           >
             <BanknotesIcon className="h-6 w-6 inline-block"/>
-            Yield Account
+            Liquidation Pools
           </NavLink>
         </Menu.Item>
       </div>

@@ -23,7 +23,7 @@ import {
 } from "../../store/Store";
 
 import wagmiConfig from "../../WagmiConfig";
-import Modal from "../Modal.jsx";
+import Modal from "../ui/Modal.jsx";
 
 const DepositModal = (props) => {
   const {
@@ -87,7 +87,7 @@ const DepositModal = (props) => {
       if (error && error.shortMessage) {
         errorMessage = error.shortMessage;
       }
-      toast.error(errorMessage || 'There was an error');
+      toast.error(errorMessage || 'There was a problem');
     }
   };
 
@@ -120,7 +120,7 @@ const DepositModal = (props) => {
       if (error && error.shortMessage) {
         errorMessage = error.shortMessage;
       }
-      toast.error(errorMessage || 'There was an error');
+      toast.error(errorMessage || 'There was a problem');
     }
   };
 
@@ -140,7 +140,7 @@ const DepositModal = (props) => {
         if (error && error.shortMessage) {
           errorMessage = error.shortMessage;
         }
-        toast.error(errorMessage || 'There was an error');  
+        toast.error(errorMessage || 'There was a problem');  
         inputRef.current.value = "";
         inputRef.current.focus();
       }

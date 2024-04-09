@@ -1,4 +1,3 @@
-import { formatEther, parseEther } from "viem";
 import { ethers } from "ethers";
 import { useReadContracts, useChainId } from "wagmi";
 import { arbitrumSepolia } from "wagmi/chains";
@@ -14,7 +13,7 @@ import {
   useVaultIdStore,
 } from "../../store/Store";
 
-import Typography from "../../components/Typography";
+import Typography from "../ui/Typography";
 
 const VaultStats = ({
   currentVault,
@@ -56,21 +55,21 @@ const VaultStats = ({
   const statsItems = [
     {
       title: "Debt",
-      value: Number(formatEther(currentVault.status.minted)).toFixed(2),
+      value: Number(ethers.formatEther(currentVault.status.minted)).toFixed(2),
       currency: "EUROs",
     },
     {
       title: "Balance",
       value: '€' + Number(
-        formatEther(currentVault.status.totalCollateralValue)
+        ethers.formatEther(currentVault.status.totalCollateralValue)
       ).toFixed(2),
       currency: "",
     },
     {
       title: "Borrow up to",
       value: (
-        ((Number(formatEther(currentVault.status.maxMintable)) -
-          Number(formatEther(currentVault.status.minted))) *
+        ((Number(ethers.formatEther(currentVault.status.maxMintable)) -
+          Number(ethers.formatEther(currentVault.status.minted))) *
           (100000 - Number(currentVault.mintFeeRate))) /
         100000
       ).toFixed(2),

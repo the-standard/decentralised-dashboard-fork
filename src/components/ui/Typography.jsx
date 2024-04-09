@@ -18,7 +18,7 @@ const Typography = (props) => {
       useClass = 'inline-block text-lg font-medium';
       break;  
     default:
-      useClass = 'inline-block text-base font-normal';
+      useClass = 'inline-block text-base';
       break;
   }
 
