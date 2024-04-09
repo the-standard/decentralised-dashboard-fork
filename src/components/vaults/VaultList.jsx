@@ -72,7 +72,6 @@ const VaultList = ({ vaults, vaultsLoading }) => {
 
           <div className="overflow-x-auto">
             <table className="table table-zebra">
-              {/* head */}
               <thead>
                 <tr>
                   <th className="hidden md:table-cell">Type</th>

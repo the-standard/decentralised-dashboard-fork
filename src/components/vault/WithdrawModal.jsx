@@ -155,7 +155,6 @@ const WithdrawModal = (props) => {
             >
               Max
             </Button>
-            {/* input */}
 
           </div>
           <div>

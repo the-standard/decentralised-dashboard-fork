@@ -208,8 +208,6 @@ const DepositModal = (props) => {
               Max
             </Button>
           )}
-          {/* input */}
-
         </div>
         <div>
           Available Balance: {maxBal || '0'} {symbol || ''}

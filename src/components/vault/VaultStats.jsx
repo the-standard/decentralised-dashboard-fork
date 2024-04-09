@@ -100,74 +100,70 @@ const VaultStats = ({
 
   return (
     <>
-      {/* <Card compact className="bg-base-100 shadow-md">
-        <Card.Body> */}
-          <div className="flex flex-wrap">
+      <div className="flex flex-wrap">
+        <Typography
+          variant="h3"
+          className="mb-2"
+        >
+          Smart Vault #{vaultID}
+        </Typography>
+      </div>
+      <div className="-mx-1 flex flex-wrap">
+        {statsItems.map((item, index) => (
+          <div
+            className="w-1/2 px-1 my-2 sm:my-2 sm:w-1/2 lg:my-0 lg:w-2/12"
+            key={index}
+          >
             <Typography
-              variant="h3"
-              className="mb-2"
+              variant="p"
             >
-              Smart Vault #{vaultID}
+              {item.title}
             </Typography>
-          </div>
-          <div className="-mx-1 flex flex-wrap">
-            {statsItems.map((item, index) => (
-              <div
-                className="w-1/2 px-1 my-2 sm:my-2 sm:w-1/2 lg:my-0 lg:w-2/12"
-                key={index}
+            <div>
+              <Typography
+                variant="h2"
               >
-                <Typography
-                  variant="p"
-                >
-                  {item.title}
-                </Typography>
-                <div>
-                  <Typography
-                    variant="h2"
-                  >
-                    {item.value}&nbsp;
-                  </Typography>
-                  <Typography
-                    variant="p"
-                  >
-                    {item.currency}
-                  </Typography>
-                </div>
-              </div>
-            ))}
-            <div
-              className="w-full px-1 my-2 sm:my-2 lg:my-0 sm:w-full lg:w-6/12"
-            >
-              <div className="flex flex-row justify-between">
-                <Typography
-                  variant="p"
-                >
-                  Health: {vaultHealth}%
-                </Typography>
-                <Typography
-                  variant="p"
-                  className="text-right"
-                >
-                  Liquidates at 90.91%
-                </Typography>
-              </div>
-
-              <Tooltip
-                className="w-full h-100"
-                position="top"
-                message={(vaultHealth || 0 ) + '%'}
+                {item.value}&nbsp;
+              </Typography>
+              <Typography
+                variant="p"
               >
-                <Progress
-                  value={vaultHealth || 0}
-                  max="100"
-                  color={healthColour || 'neutral'}
-                />
-              </Tooltip>
-
+                {item.currency}
+              </Typography>
             </div>
           </div>
-        {/* </Card.Body>
-      </Card> */}
+        ))}
+        <div
+          className="w-full px-1 my-2 sm:my-2 lg:my-0 sm:w-full lg:w-6/12"
+        >
+          <div className="flex flex-row justify-between">
+            <Typography
+              variant="p"
+            >
+              Health: {vaultHealth}%
+            </Typography>
+            <Typography
+              variant="p"
+              className="text-right"
+            >
+              Liquidates at 90.91%
+            </Typography>
+          </div>
+
+          <Tooltip
+            className="w-full h-100"
+            position="top"
+            message={(vaultHealth || 0 ) + '%'}
+          >
+            <Progress
+              value={vaultHealth || 0}
+              max="100"
+              color={healthColour || 'neutral'}
+            />
+          </Tooltip>
+
+        </div>
+      </div>
     </>
   )
 
