@@ -9,6 +9,8 @@ import {
   XMarkIcon,
 } from '@heroicons/react/24/outline';
 
+import ThemeToggle from "./ThemeToggle";
+
 const SideNav = (props) => {
   const { toggleVisible } = props;
   const location = useLocation();
@@ -46,6 +48,9 @@ const SideNav = (props) => {
             Liquidation Pools
           </NavLink>
         </Menu.Item>
+      </div>
+      <div className="block md:hidden self-center mt-auto pb-4">
+        <ThemeToggle />
       </div>
     </Menu>
   );
