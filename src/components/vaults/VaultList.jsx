@@ -1,20 +1,76 @@
 import { useEffect } from "react";
 import { ethers } from "ethers";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from 'react-toastify';
+import {
+  useWriteContract,
+  useChainId,
+  useAccount
+} from "wagmi";
+import { arbitrum, arbitrumSepolia } from "wagmi/chains";
+
 import {
   Tooltip,
   Card,
   Progress,
+  Button,
 } from 'react-daisyui';
 
 import {
   useCurrentPageStore,
+  useContractAddressStore,
+  useVaultManagerAbiStore
 } from "../../store/Store.jsx";
 
 import Pagination from "../ui/Pagination.jsx";
 import CenterLoader from "../ui/CenterLoader.jsx";
 
-const VaultList = ({ vaults, vaultsLoading }) => {
+const VaultList = ({ vaults, vaultsLoading, tokenId }) => {
+  const { vaultManagerAbi } = useVaultManagerAbiStore();
+  const {
+    arbitrumSepoliaContractAddress,
+    arbitrumContractAddress,
+  } = useContractAddressStore();
+
+  const { address } = useAccount();
+  const chainId = useChainId();
+  const navigate = useNavigate();
+
+  const vaultManagerAddress =
+    chainId === arbitrumSepolia.id
+      ? arbitrumSepoliaContractAddress
+      : arbitrumContractAddress;
+
+  const { writeContract: mintVault, isError, isPending, isSuccess } = useWriteContract();
+
+  const handleMintVault = async () => {
+    if (chainId !== arbitrumSepolia.id && chainId !== arbitrum.id) {
+      toast.error('Please change to Arbitrum network!');
+      return;
+    }
+    mintVault({
+      abi: vaultManagerAbi,
+      address: vaultManagerAddress,
+      functionName: 'mint',
+      args: [],
+    });
+  };
+
+  useEffect(() => {
+    if (isPending) {
+      // 
+    } else if (isSuccess && tokenId) {
+      navigate(`/vault/${tokenId.toString()}`);
+    } else if (isError) {
+      // 
+    }
+  }, [
+    isError,
+    isPending,
+    isSuccess,
+    tokenId
+  ]);
+
   const { setCurrentPage, currentPage } = useCurrentPageStore();
 
   const sortedVaults = [...vaults].sort((a, b) => {
@@ -182,13 +238,20 @@ const VaultList = ({ vaults, vaultsLoading }) => {
             ) : (null)}
           </div>
 
-          <Card.Actions className="pt-4">
+          <Card.Actions className="pt-4 justify-between items-center">
             <Pagination
               totalItems={sortedVaults.length || 0}
               perPage={itemsPerPage || 0}
               currentPage={currentPage}
               onPageChange={handlePageChange}
             />
+            <Button
+              onClick={() => handleMintVault()}
+              disabled={isPending}
+              loading={isPending}
+            >
+              Create Vault
+            </Button>
           </Card.Actions>
         </Card.Body>
       </Card>

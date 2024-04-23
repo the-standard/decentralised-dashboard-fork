@@ -1,10 +1,13 @@
+import { useState } from "react";
+
 import { ethers } from "ethers";
 import {
   useAccount,
   useChainId,
   useReadContract,
   useReadContracts,
-  useWatchBlockNumber
+  useWatchBlockNumber,
+  useWatchContractEvent
 } from "wagmi";
 import { arbitrumSepolia } from "wagmi/chains";
 
@@ -31,6 +34,25 @@ const Vaults = () => {
     abi: vaultManagerAbi,
     functionName: "vaultIDs",
     args: [accountAddress || ethers?.constants?.AddressZero]
+  });
+
+  const [tokenId, setTokenId] = useState();
+
+  useWatchContractEvent({
+    abi: vaultManagerAbi,
+    address: vaultManagerAddress,
+    eventName: "VaultDeployed",
+    args: {
+      owner: accountAddress
+    },
+    poll: true,
+    pollingInterval: 1000,
+    onLogs(logs) {
+      if (logs[0] && logs[0].args) {
+        const { tokenId } = logs[0] && logs[0].args;
+        setTokenId(tokenId)
+      }
+    }
   });
 
   const vaultDataContract = {
@@ -70,6 +92,7 @@ const Vaults = () => {
       <VaultList
         vaults={myVaults || []}
         vaultsLoading={isPending || false}
+        tokenId={tokenId}
       />
     </main>
   );
