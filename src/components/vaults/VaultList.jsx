@@ -11,7 +11,6 @@ import { arbitrum, arbitrumSepolia } from "wagmi/chains";
 
 import {
   Tooltip,
-  Card,
   Progress,
   Button,
 } from 'react-daisyui';
@@ -20,10 +19,11 @@ import {
   useCurrentPageStore,
   useContractAddressStore,
   useVaultManagerAbiStore
-} from "../../store/Store.jsx";
+} from "../../store/Store";
 
-import Pagination from "../ui/Pagination.jsx";
-import CenterLoader from "../ui/CenterLoader.jsx";
+import Card from "../ui/Card";
+import Pagination from "../ui/Pagination";
+import CenterLoader from "../ui/CenterLoader";
 
 const VaultList = ({ vaults, vaultsLoading, tokenId }) => {
   const { vaultManagerAbi } = useVaultManagerAbiStore();
@@ -120,11 +120,9 @@ const VaultList = ({ vaults, vaultsLoading, tokenId }) => {
 
   return (
     <>
-      <Card compact className="bg-base-100 shadow-md">
-        <Card.Body>
-          <Card.Title tag="h2">
-            Vault List
-          </Card.Title>
+      <Card className="card-compact">
+        <div className="card-body">
+          <h2 className="card-title">Vault List</h2>
 
           <div className="overflow-x-auto">
             <table className="table table-zebra">
@@ -238,7 +236,7 @@ const VaultList = ({ vaults, vaultsLoading, tokenId }) => {
             ) : (null)}
           </div>
 
-          <Card.Actions className="pt-4 justify-between items-center">
+          <div className="card-actions pt-4 justify-between items-center">
             <Pagination
               totalItems={sortedVaults.length || 0}
               perPage={itemsPerPage || 0}
@@ -252,8 +250,8 @@ const VaultList = ({ vaults, vaultsLoading, tokenId }) => {
             >
               Create Vault
             </Button>
-          </Card.Actions>
-        </Card.Body>
+          </div>
+        </div>
       </Card>
     </>
   );

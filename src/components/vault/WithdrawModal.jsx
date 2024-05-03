@@ -8,7 +8,6 @@ import {
 } from "wagmi";
 import {
   Button,
-  Card,
 } from 'react-daisyui';
 import {
   ArrowDownCircleIcon,
@@ -132,10 +131,10 @@ const WithdrawModal = (props) => {
         closeModal={closeModal}
       >
         <>
-          <Card.Title tag="h2">
+          <h2 className="card-title">
             <ArrowDownCircleIcon className="h-6 w-6 inline-block"/>
             Withdraw {symbol}
-          </Card.Title>
+          </h2>
 
           <div
             className="join"
@@ -161,7 +160,7 @@ const WithdrawModal = (props) => {
             {symbol} to address "{shortenedAddress}"
           </div>
 
-          <Card.Actions className="pt-4 flex-col-reverse lg:flex-row justify-end">
+          <div className="card-actions pt-4 flex-col-reverse lg:flex-row justify-end">
             <Button
               className="w-full lg:w-auto"
               color="ghost"
@@ -184,7 +183,7 @@ const WithdrawModal = (props) => {
             >
               Confirm
             </Button>
-          </Card.Actions>
+          </div>
         </>
       </Modal>
     </>

@@ -13,7 +13,6 @@ import {
 } from "wagmi";
 import { arbitrumSepolia } from "wagmi/chains";
 import {
-  Card,
   Button,
 } from 'react-daisyui';
 
@@ -32,6 +31,7 @@ import VaultStats from "../../components/vault/VaultStats";
 import TokenList from "../../components/vault/TokenList";
 import VaultSend from "../../components/vault/VaultSend";
 
+import Card from "../../components/ui/Card";
 import Typography from "../../components/ui/Typography";
 
 function useQuery() {
@@ -55,7 +55,6 @@ const Vault = () => {
 
   const chainId = useChainId();
   const query = useQuery();
-  const queryView = query.get("view");
 
   useEffect(() => {
     setVaultID(vaultId);
@@ -106,10 +105,10 @@ const Vault = () => {
     return (
       <main>
         {vaultNav()}
-        <Card compact className="bg-base-100 shadow-md">
-          <Card.Body>
+        <Card className="card-compact">
+          <div className="card-body">
             <CenterLoader />
-          </Card.Body>
+          </div>
         </Card>
       </main>
     )
@@ -119,14 +118,14 @@ const Vault = () => {
     return (
       <main>
         {vaultNav()}
-        <Card compact className="bg-base-100 shadow-md">
-          <Card.Body>
+        <Card className="card-compact">
+          <div className="card-body">
             <Typography
               variant="h2"
             >
               Vault Not Found
             </Typography>
-          </Card.Body>
+          </div>
         </Card>
       </main>
     );
@@ -147,15 +146,15 @@ const Vault = () => {
   return (
     <main>
       {vaultNav()}
-      <Card compact className="bg-base-100 shadow-md">
-        <Card.Body>
+      <Card className="card-compact">
+        <div className="card-body">
           <VaultStats
             currentVault={currentVault}
           />
           <Debt
             currentVault={currentVault}
           />
-        </Card.Body>
+        </div>
       </Card>
       <div className="mt-4">
         <TokenList
