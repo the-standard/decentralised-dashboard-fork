@@ -1,15 +1,15 @@
 import {
   Button,
-  useTheme
 } from 'react-daisyui';
+
+import {
+  useCurrentTheme,
+} from "../../store/Store";
+
 import { SunIcon, MoonIcon } from '@heroicons/react/24/solid';
 
-const ThemeToggle = (props) => {
-
-  const {
-    theme,
-    setTheme,
-  } = useTheme();
+const ThemeToggle = () => {
+  const { setCurrentTheme } = useCurrentTheme();
 
   const chosenTheme = localStorage.getItem('theme');
 
@@ -27,9 +27,9 @@ const ThemeToggle = (props) => {
     }  
   }
 
-  const saveTheme = (theme) => {
-    setTheme(theme);
-    localStorage.setItem("theme", theme);
+  const saveTheme = (newTheme) => {
+    localStorage.setItem("theme", newTheme);
+    setCurrentTheme(newTheme);
   }
 
   return (

@@ -1,35 +1,39 @@
 import { useEffect } from "react";
 import {
-  useTheme,
   Theme,
 } from 'react-daisyui';
 
+import {
+  useCurrentTheme,
+} from "../store/Store";
+
 const ThemeHandler = ({children}) => {
-  const { setTheme } = useTheme();
+  const { currentTheme, setCurrentTheme } = useCurrentTheme();
 
   const localTheme = localStorage.getItem('theme');
 
   useEffect(() => {
     if (localTheme) {
-      setTheme(localTheme);
+      setCurrentTheme(localTheme);
     } else {
       if (
         window.matchMedia &&
         window.matchMedia('(prefers-color-scheme: dark)').matches
       ) {
-        setTheme("dark");
         localStorage.setItem("theme", "dark");
+        setCurrentTheme("dark");
       } else {
-        setTheme("light");
         localStorage.setItem("theme", "light");
+        setCurrentTheme("light");
       }
     }
   }, [])
 
   return (
-    <Theme dataTheme={localTheme || 'light'} style={{minHeight: "100vh"}}>
+    <Theme dataTheme={currentTheme} style={{minHeight: "100vh"}}>
       {children}
     </Theme>
-  )};
+  )
+};
 
 export default ThemeHandler;

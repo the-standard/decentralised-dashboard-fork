@@ -6,6 +6,13 @@ import smartVaultABI from "../abis/smartVault";
 import stakingAbi from "../abis/staking";
 import liquidationPoolAbi from "../abis/liquidationPool";
 
+export const useCurrentTheme = create(
+  (set) => ({
+    currentTheme: 'dark',
+    setCurrentTheme: (currentTheme) => set(() => ({ currentTheme: currentTheme })),
+  })
+);
+
 export const useEthToUsdAddressStore = create() (
   (set) => ({
     arbitrumOneEthToUsdAddress: "0x639fe6ab55c921f74e7fac1ee960c0b6293ba612",
