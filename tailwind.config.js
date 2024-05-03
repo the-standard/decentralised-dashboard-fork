@@ -57,7 +57,6 @@ export default {
       {
         'dark': {
           ...require("daisyui/src/theming/themes")["dark"],
-          'base-100' : `linear-gradient(110.28deg,rgba(26, 26, 26, 0.3) 0.2%,rgba(0, 0, 0, 0.6) 101.11%)`,
           '--rounded-box': '0.65rem',          /* border-radius for cards and other big elements */
           '--rounded-btn': '0.65rem',        /* border-radius for buttons and similar elements */
           '--rounded-badge': '0.65rem',      /* border-radius for badge and other small elements */
