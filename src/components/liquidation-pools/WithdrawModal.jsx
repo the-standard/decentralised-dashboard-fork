@@ -14,7 +14,6 @@ import {
 
 import {
   Button,
-  Card,
 } from 'react-daisyui';
 
 import CenterLoader from "../ui/CenterLoader";
@@ -22,7 +21,6 @@ import Modal from "../ui/Modal";
 import Typography from "../ui/Typography";
 
 const WithdrawModal = ({
-  stakedPositions,
   tstAmount,
   eurosAmount,
   pending,
@@ -146,16 +144,12 @@ const WithdrawModal = ({
         >
           {claimLoading ? (
             <>
-              <Card.Title tag="h2">
-                Withdrawing Your Tokens
-              </Card.Title>
+              <h2 className="card-title">Withdrawing Your Tokens</h2>
               <CenterLoader />
             </>
           ) : (
             <>
-              <Card.Title tag="h2">
-                Withdraw Unsuccessful
-              </Card.Title>
+              <h2 className="card-title">Withdraw Unsuccessful</h2>
               <Typography variant="p">
                 There was a problem processing your withdraw request.
               </Typography>
@@ -193,16 +187,12 @@ const WithdrawModal = ({
         <>
           {claimLoading ? (
             <>
-              <Card.Title tag="h2">
-                Withdrawing Your Tokens
-              </Card.Title>
+              <h2 className="card-title">Withdrawing Your Tokens</h2>
               <CenterLoader />
             </>
           ) : (
             <>
-              <Card.Title tag="h2">
-                Withdraw Your Tokens
-              </Card.Title>
+              <h2 className="card-title"> Withdraw Your Tokens</h2>
 
               {hasPending ? (
                 <>

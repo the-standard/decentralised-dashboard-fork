@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { ethers } from "ethers";
 import {
-  Card,
   Button
 } from 'react-daisyui';
 
@@ -9,6 +8,7 @@ import {
   useVaultStore,
 } from "../../store/Store";
 
+import Card from "../ui/Card";
 import CenterLoader from "../ui/CenterLoader";
 import TokenActions from "./TokenActions";
 
@@ -25,8 +25,8 @@ const TokenList = ({ assets, assetsLoading }) => {
 
   return (
     <>
-      <Card compact className="bg-base-100 shadow-md">
-        <Card.Body>
+      <Card className="card-compact">
+        <div className="card-body">
           <div className="overflow-x-auto">
             <table className="table table-zebra">
               <thead>
@@ -111,7 +111,7 @@ const TokenList = ({ assets, assetsLoading }) => {
             assets={assets}            
           />
 
-        </Card.Body>
+        </div>
       </Card>
     </>
   );

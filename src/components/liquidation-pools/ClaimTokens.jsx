@@ -14,9 +14,9 @@ import {
 
 import {
   Button,
-  Card,
 } from 'react-daisyui';
 
+import Card from "../ui/Card";
 import Modal from "../ui/Modal";
 import CenterLoader from "../ui/CenterLoader";
 
@@ -85,14 +85,11 @@ const ClaimTokens = ({
 
   return (
     <>
-      <Card
-        compact
-        className="bg-base-100 shadow-md w-full"
-      >
-        <Card.Body>
-          <Card.Title tag="h2" className="justify-between">
+      <Card className="card-compact w-full">
+        <div className="card-body">
+          <h2 className="card-title justify-between">
             Claimable Tokens
-          </Card.Title>
+          </h2>
 
           <div className="overflow-x-auto">
             <table className="table table-zebra">
@@ -127,25 +124,25 @@ const ClaimTokens = ({
             ) : (null)}
           </div>
 
-          <Card.Actions className="pt-4 flex-col-reverse lg:flex-row justify-end">
+          <div className="card-actions pt-4 flex-col-reverse lg:flex-row justify-end">
             <Button
               onClick={handleClaimRewards}
               disabled={noRewards}
             >
               Claim All Tokens
             </Button>
-          </Card.Actions>
+          </div>
 
-        </Card.Body>
+        </div>
       </Card>
 
       <Modal
         open={isOpen}
         closeModal={() => setIsOpen(false)}
       >
-        <Card.Title tag="h2">
+        <h2 className="card-title justify-between">
           Claiming Your Tokens
-        </Card.Title>
+        </h2>
         <CenterLoader />
       </Modal>
     </>

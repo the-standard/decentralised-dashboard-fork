@@ -1,6 +1,5 @@
 import {
   Button,
-  Card
 } from 'react-daisyui';
 
 import Modal from "../ui/Modal.jsx";
@@ -27,9 +26,9 @@ const SendModal = ({
             handleCloseModal();
           }}
         >
-          <Card.Title tag="h2">
+          <h2 className="card-title">
             Delete Smart Vault
-          </Card.Title>
+          </h2>
           <Typography
             variant="p"
             className="mb-2"
@@ -42,14 +41,14 @@ const SendModal = ({
             Please pay back any debt and remove collateral before deleting your vault.
           </Typography>
 
-          <Card.Actions className="pt-4 flex-col-reverse lg:flex-row justify-end">
+          <div className="card-actions pt-4 flex-col-reverse lg:flex-row justify-end">
             <Button
               className="w-full lg:w-64"
               onClick={handleCloseModal}
             >
               Close
             </Button>
-          </Card.Actions>
+          </div>
 
         </Modal>
       </>
@@ -66,24 +65,24 @@ const SendModal = ({
       >
         {isPending ? (
           <>
-            <Card.Title tag="h2">
+            <h2 className="card-title">
               {sendType === 'BURN' ? (
                 'Deleting Smart Vault'
               ) : (
                 'Transferring Smart Vault NFT'
               )}
-            </Card.Title>
+            </h2>
             <CenterLoader />
           </>
         ) : (
           <>
-            <Card.Title tag="h2">
+            <h2 className="card-title">
               {sendType === 'BURN' ? (
                 'Delete Smart Vault'
               ) : (
                 'Transfer Smart Vault NFT'
               )}
-            </Card.Title>
+            </h2>
 
             {sendType === 'BURN' ? (
               <>
@@ -132,7 +131,7 @@ const SendModal = ({
               </>
             ) : (null)}
 
-            <Card.Actions className="pt-4 flex-col-reverse lg:flex-row justify-end">
+            <div className="card-actions pt-4 flex-col-reverse lg:flex-row justify-end">
               <Button
                 className="w-full lg:w-auto"
                 color="ghost"
@@ -156,7 +155,7 @@ const SendModal = ({
                   'Transfer My Vault'
                 )}
               </Button>
-            </Card.Actions>
+            </div>
 
           </>
         )}
