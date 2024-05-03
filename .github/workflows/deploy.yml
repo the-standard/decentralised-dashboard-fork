@@ -54,7 +54,6 @@ jobs:
     # 
     - name: Build
       run: |-
-        echo "hi"
         docker build --build-arg dapp_name=${{ vars.VITE_COMPANY_DAPP_NAME }} --build-arg alchemy_key=${{ vars.VITE_ALCHEMY_API_KEY }} --build-arg alchemy_sepolia_key=${{ vars.VITE_ALCHEMY_SEPOLIA_API_KEY }} --build-arg walletconnect_id=${{ vars.VITE_WALLETCONNECT_ID }} -t "gcr.io/$PROJECT_NAME/$DEPLOYMENT:${GITHUB_REF##*/}.$GITHUB_SHA" .
 
     # Push the Docker image to Google Container Registry
