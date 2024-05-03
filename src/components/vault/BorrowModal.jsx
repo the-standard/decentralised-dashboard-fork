@@ -1,7 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import {
   Button,
-  Card,
 } from 'react-daisyui';
 
 import {
@@ -33,10 +32,10 @@ const BorrowModal = (props) => {
           open={open}
           closeModal={closeModal}
         >
-          <Card.Title tag="h2">
+          <h2 className="card-title">
             <ArrowDownCircleIcon className="h-6 w-6 inline-block"/>
             Borrowing EUROs
-          </Card.Title>
+          </h2>
 
           <Typography
             variant="h3"
@@ -50,7 +49,7 @@ const BorrowModal = (props) => {
             Don't forget you can buy discounted tokens by placing your EUROs into Liquidation Pools.
           </Typography>
 
-          <Card.Actions className="pt-4 flex-col-reverse lg:flex-row justify-end">
+          <div className="card-actions pt-4 flex-col-reverse lg:flex-row justify-end">
             <Button
               className="w-full lg:w-auto"
               color="ghost"
@@ -64,7 +63,7 @@ const BorrowModal = (props) => {
             >
               Get Discounted Tokens
             </Button>
-          </Card.Actions>
+          </div>
         </Modal>
       </>
     )
@@ -76,10 +75,10 @@ const BorrowModal = (props) => {
         open={open}
         closeModal={closeModal}
       >
-        <Card.Title tag="h2">
+        <h2 className="card-title">
           <ArrowDownCircleIcon className="h-6 w-6 inline-block"/>
           Borrowing EUROs
-        </Card.Title>
+        </h2>
 
         <input
           className="input input-bordered w-full"
@@ -110,7 +109,7 @@ const BorrowModal = (props) => {
           ))}
         </div>
 
-        <Card.Actions className="pt-4 flex-col-reverse lg:flex-row justify-end">
+        <div className="card-actions pt-4 flex-col-reverse lg:flex-row justify-end">
           <Button
             className="w-full lg:w-auto"
             color="ghost"
@@ -128,7 +127,7 @@ const BorrowModal = (props) => {
           >
             Withdraw
           </Button>
-        </Card.Actions>
+        </div>
       </Modal>
     </>
   );

@@ -1,6 +1,5 @@
 import {
   Button,
-  Card,
 } from 'react-daisyui';
 import { ethers } from "ethers";
 
@@ -36,10 +35,10 @@ const RepayModal = (props) => {
           open={open}
           closeModal={closeModal}
         >
-          <Card.Title tag="h2">
+          <h2 className="card-title">
             <ArrowUpCircleIcon className="h-6 w-6 inline-block"/>
             Repaying EUROs
-          </Card.Title>
+          </h2>
 
           <Typography
             variant="h3"
@@ -47,14 +46,14 @@ const RepayModal = (props) => {
             You just repayed {amount} EUROs successfully!
           </Typography>
 
-          <Card.Actions className="pt-4 flex-col-reverse lg:flex-row justify-end">
+          <div className="card-actions pt-4 flex-col-reverse lg:flex-row justify-end">
             <Button
               className="w-full lg:w-64"
               onClick={closeModal}
             >
               Close
             </Button>
-          </Card.Actions>
+          </div>
         </Modal>
       </>
     )
@@ -67,9 +66,9 @@ const RepayModal = (props) => {
           open={open}
           closeModal={closeModal}
         >
-          <Card.Title tag="h2">
+          <h2 className="card-title">
             Confirm Your EUROs Spending cap
-          </Card.Title>
+          </h2>
   
           <Typography
             variant="p"
@@ -86,7 +85,7 @@ const RepayModal = (props) => {
             We suggest a cap of {ethers.formatEther(repayFee)} for this transaction. This fee ({toPercentage(burnFeeRate)}%) is rewarded to Liquidity Pool stakers, helping the DAO grow and build more features.
           </Typography>
   
-          <Card.Actions className="pt-4 flex-col-reverse lg:flex-row justify-end">
+          <div className="card-actions pt-4 flex-col-reverse lg:flex-row justify-end">
             <Button
               className="w-full lg:w-auto"
               color="ghost"
@@ -102,7 +101,7 @@ const RepayModal = (props) => {
             >
               Repay
             </Button>
-          </Card.Actions>
+          </div>
         </Modal>
       </>
     );  
@@ -115,9 +114,10 @@ const RepayModal = (props) => {
           open={open}
           closeModal={closeModal}
         >
-          <Card.Title tag="h2">
+          <h2 className="card-title">
+            <ArrowUpCircleIcon className="h-6 w-6 inline-block"/>
             Confirm Your Loan Repayment
-          </Card.Title>
+          </h2>
   
           <Typography
             variant="p"
@@ -126,7 +126,7 @@ const RepayModal = (props) => {
             The funds will repay your loan and the small fee will support the Liquidity Pool.
           </Typography>
   
-          <Card.Actions className="pt-4 flex-col-reverse lg:flex-row justify-end">
+          <div className="card-actions pt-4 flex-col-reverse lg:flex-row justify-end">
             <Button
               className="w-full lg:w-auto"
               color="ghost"
@@ -142,7 +142,7 @@ const RepayModal = (props) => {
             >
               Repay
             </Button>
-          </Card.Actions>
+          </div>
         </Modal>
       </>
     );  
@@ -154,10 +154,10 @@ const RepayModal = (props) => {
         open={open}
         closeModal={closeModal}
       >
-        <Card.Title tag="h2">
+        <h2 className="card-title">
           <ArrowUpCircleIcon className="h-6 w-6 inline-block"/>
           Repaying EUROs
-        </Card.Title>
+        </h2>
 
         <div
           className="join"
@@ -200,7 +200,7 @@ const RepayModal = (props) => {
           ))}
         </div>
 
-        <Card.Actions className="pt-4 flex-col-reverse lg:flex-row justify-end">
+        <div className="card-actions pt-4 flex-col-reverse lg:flex-row justify-end">
           <Button
             className="w-full lg:w-auto"
             color="ghost"
@@ -218,7 +218,7 @@ const RepayModal = (props) => {
           >
             Repay
           </Button>
-        </Card.Actions>
+        </div>
       </Modal>
     </>
   );

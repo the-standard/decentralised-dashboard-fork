@@ -10,7 +10,6 @@ import {
 } from "wagmi";
 import { arbitrumSepolia } from "wagmi/chains";
 import {
-  Card,
   Button,
 } from 'react-daisyui';
 import {
@@ -325,7 +324,7 @@ const Debt = ({
 
   return (
     <>
-      <Card.Actions className="pt-4 gap-4 xl:gap-8 flex-col-reverse lg:flex-row justify-between xl:justify-normal">
+      <div className="card-actions pt-4 gap-4 xl:gap-8 flex-col-reverse lg:flex-row justify-between xl:justify-normal">
         <Button
           className="w-full lg:w-64"
           onClick={() => setBorrowOpen(!borrowOpen)}
@@ -340,7 +339,7 @@ const Debt = ({
           <ArrowUpCircleIcon className="h-6 w-6 inline-block"/>
           Repay
         </Button>
-      </Card.Actions>
+      </div>
 
       <BorrowModal
         open={borrowOpen}

@@ -4,10 +4,10 @@ import { ethers } from "ethers";
 
 import {
   Button,
-  Card,
 } from 'react-daisyui';
 
 import WithdrawModal from "./WithdrawModal";
+import Card from "../ui/Card";
 import CenterLoader from "../ui/CenterLoader";
 
 const StakedAssets = ({
@@ -24,14 +24,9 @@ const StakedAssets = ({
 
   return (
     <>
-      <Card
-        compact
-        className="bg-base-100 shadow-md w-full"
-      >
-        <Card.Body>
-          <Card.Title tag="h2" className="justify-between">
-            Staked Assets
-          </Card.Title>
+      <Card className="card-compact w-full">
+        <div className="card-body">
+          <h2 className="card-title">Vault List</h2>
 
           <div className="overflow-x-auto">
             <table className="table table-zebra">
@@ -67,16 +62,16 @@ const StakedAssets = ({
             ) : (null)}
           </div>
 
-          <Card.Actions className="pt-4 flex-col-reverse lg:flex-row justify-end">
+          <div className="card-actions pt-4 flex-col-reverse lg:flex-row justify-end">
             <Button
               onClick={() => setOpen(true)}
               disabled={tstAmount <= 0 && eurosAmount <= 0}
             >
               Withdraw
             </Button>
-          </Card.Actions>
+          </div>
 
-        </Card.Body>
+        </div>
       </Card>
       <WithdrawModal
         tstAmount={tstAmount}

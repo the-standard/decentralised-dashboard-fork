@@ -1,6 +1,4 @@
-import {
-  Card,
-} from 'react-daisyui';
+import Card from "../ui/Card";
 
 const Modal = (props) => {
   const {
@@ -18,13 +16,10 @@ const Modal = (props) => {
           <div
             className={"z-40 absolute -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 w-full px-4 " + (wide ? "max-w-[48rem]" : "max-w-[34rem]") }
           >
-            <Card
-              compact
-              className="bg-base-100 shadow-md w-full max-h-[90vh] overflow-scroll"
-            >
-              <Card.Body>
+            <Card className="card-compact w-full max-h-[90vh] overflow-scroll">
+              <div className="card-body">
                 {props.children}
-              </Card.Body>
+              </div>
             </Card>
           </div>
           <div

@@ -4,8 +4,6 @@ import { arbitrumSepolia } from "wagmi/chains";
 import {
   Progress,
   Tooltip,
-  Card,
-  Button,
 } from 'react-daisyui';
 import {
   useChainlinkAbiStore,

@@ -4,7 +4,6 @@ import { useWriteContract } from "wagmi";
 import { toast } from 'react-toastify';
 import {
   Button,
-  Card,
 } from 'react-daisyui';
 import {
   ArrowPathIcon,
@@ -140,10 +139,10 @@ const SwapModal = ({
             closeModal={closeModal}
           >
             <>
-              <Card.Title tag="h2">
+              <h2 className="card-title">
                 <ArrowPathIcon className="h-6 w-6 inline-block"/>
                 Swap {symbol}
-              </Card.Title>
+              </h2>
 
               <div>
                 <div>
@@ -218,7 +217,7 @@ const SwapModal = ({
                 </div>
               </div>
 
-              <Card.Actions className="pt-4 flex-col-reverse lg:flex-row justify-end">
+              <div className="card-actions pt-4 flex-col-reverse lg:flex-row justify-end">
                 <Button
                   className="w-full lg:w-auto"
                   color="ghost"
@@ -241,7 +240,7 @@ const SwapModal = ({
                 >
                   Confirm
                 </Button>
-              </Card.Actions>
+              </div>
             </>
           </Modal>
         </>
@@ -254,10 +253,10 @@ const SwapModal = ({
         closeModal={closeModal}
       >
         <>
-          <Card.Title tag="h2">
+          <h2 className="card-title">
             <ArrowPathIcon className="h-6 w-6 inline-block"/>
             Swap {symbol}
-          </Card.Title>
+          </h2>
 
           <div>
             <Typography
@@ -296,8 +295,7 @@ const SwapModal = ({
             </Typography>
           </div>
 
-
-          <Card.Actions className="pt-4 flex justify-end">
+          <div className="card-actions pt-4 flex justify-end">
             <Button
               color="ghost"
               onClick={closeModal}
@@ -305,7 +303,7 @@ const SwapModal = ({
             >
               Close
             </Button>
-          </Card.Actions>
+          </div>
         </>
       </Modal>
     );  

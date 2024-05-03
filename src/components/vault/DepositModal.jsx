@@ -11,7 +11,6 @@ import {
 import { sendTransaction } from "@wagmi/core";
 import {
   Button,
-  Card,
 } from 'react-daisyui';
 import {
   ArrowUpCircleIcon,
@@ -177,10 +176,10 @@ const DepositModal = (props) => {
         open={open}
         closeModal={closeModal}
       >
-        <Card.Title tag="h2">
+        <h2 className="card-title">
           <ArrowUpCircleIcon className="h-6 w-6 inline-block"/>
           Deposit {symbol}
-        </Card.Title>
+        </h2>
 
         <div role="alert" className="alert alert-warning mb-2">
           <span>
@@ -213,7 +212,7 @@ const DepositModal = (props) => {
           Available Balance: {maxBal || '0'} {symbol || ''}
         </div>
 
-        <Card.Actions className="pt-4 flex-col-reverse lg:flex-row justify-end">
+        <div className="card-actions pt-4 flex-col-reverse lg:flex-row justify-end">
           <Button
             className="w-full lg:w-auto"
             color="ghost"
@@ -231,7 +230,7 @@ const DepositModal = (props) => {
           >
             Confirm
           </Button>
-        </Card.Actions>
+        </div>
       </Modal>
     </>
   );

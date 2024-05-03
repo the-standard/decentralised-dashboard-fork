@@ -24,9 +24,9 @@ import {
 
 import {
   Button,
-  Card,
 } from 'react-daisyui';
 
+import Card from "../ui/Card";
 import Typography from "../ui/Typography";
 import Modal from "../ui/Modal";
 
@@ -266,19 +266,16 @@ const Staking = () => {
 
   return (
     <>
-      <Card
-        compact
-        className="bg-base-100 shadow-md w-full"
-      >
-        <Card.Body>
-          <Card.Title tag="h2" className="justify-between">
+      <Card className="card-compact w-full">
+        <div className="card-body">
+          <h2 className="card-title justify-between">
             Deposit
 
             <Button size="sm" onClick={() => setHelpOpen(true)}>
               <QuestionMarkCircleIcon className="h-4 w-4 inline-block"/>
               How It Works
             </Button>
-          </Card.Title>
+          </h2>
           <Typography variant="p">
             To start earning fees & buying up liquidated assets at up to a 10% discount, stake your TST & EUROs below.
           </Typography>
@@ -334,17 +331,17 @@ const Staking = () => {
               </Button>
             </div>
           </div>
-        </Card.Body>
+        </div>
       </Card>
       <Modal
         open={helpOpen}
         closeModal={() => setHelpOpen(false)}
         wide
       >
-        <Card.Title tag="h2">
+        <h2 className="card-title">
           <QuestionMarkCircleIcon className="h-6 w-6 inline-block"/>
           Liquidation Pool - How It Works
-        </Card.Title>
+        </h2>
 
         <Typography variant="h2">
           Earning Fees
@@ -380,7 +377,7 @@ const Staking = () => {
           All deposits will be held for a 24hour maturity period where they cannot be withdrawn, but can still be used for automatically purchasing liquidated assets.
         </Typography>
 
-        <Card.Actions className="flex flex-col-reverse lg:flex-row justify-end">
+        <div className="card-actions flex flex-col-reverse lg:flex-row justify-end">
           <Button
             className="w-full lg:w-auto"
             color="ghost"
@@ -388,7 +385,7 @@ const Staking = () => {
           >
             Close
           </Button>
-        </Card.Actions>
+        </div>
 
       </Modal>
     </>
