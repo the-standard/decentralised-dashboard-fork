@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 import wagmiConfig from "./WagmiConfig";
 
+import Web3ModalHandler from './components/Web3ModalHandler';
 import ThemeHandler from './components/ThemeHandler';
 import DisconnectHandler from './components/DisconnectHandler';
 import DashLayout from "./components/ui/DashLayout";
@@ -21,29 +22,31 @@ const projectId = import.meta.env.VITE_WALLETCONNECT_ID;
 function App() {
   const queryClient = new QueryClient();
 
-  const localTheme = localStorage.getItem('theme');
-  const useTheme = localTheme || "light";
+  // const localTheme = localStorage.getItem('theme');
+  // const useTheme = localTheme || "light";
 
-  createWeb3Modal({
-    wagmiConfig,
-    projectId,
-    chains: [arbitrum, arbitrumSepolia],
-    themeMode: useTheme,
-  });
+  // createWeb3Modal({
+  //   wagmiConfig,
+  //   projectId,
+  //   chains: [arbitrum, arbitrumSepolia],
+  //   themeMode: useTheme,
+  // });
 
   return (
     <WagmiProvider config={wagmiConfig} reconnectOnMount={true}>
       <QueryClientProvider client={queryClient}>
         <ThemeHandler>
-          <DisconnectHandler>
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="vaults" element={<DashLayout><Vaults /></DashLayout>} />
-              <Route path="vault/:vaultId" element={<DashLayout><Vault /></DashLayout>} />
-              <Route path="liquidation-pools" element={<DashLayout><LiquidationPools /></DashLayout>} />
-              <Route path="*" element={<Home/>} />
-            </Routes>
-          </DisconnectHandler>
+          <Web3ModalHandler>
+            <DisconnectHandler>
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="vaults" element={<DashLayout><Vaults /></DashLayout>} />
+                <Route path="vault/:vaultId" element={<DashLayout><Vault /></DashLayout>} />
+                <Route path="liquidation-pools" element={<DashLayout><LiquidationPools /></DashLayout>} />
+                <Route path="*" element={<Home/>} />
+              </Routes>
+            </DisconnectHandler>
+          </Web3ModalHandler>
         </ThemeHandler>
       </QueryClientProvider>
     </WagmiProvider>
