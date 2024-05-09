@@ -1,38 +1,48 @@
-.App {
-  text-align: center;
+.tst-bg {
+  background-color: #000000;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.tst-bg:before {
+  content: "";
+  position: fixed;
+  top: 0px;
+  right: 0px;
+  left: 0px;
+  bottom: 0px;
+  opacity: 0.3;
+  background-image: url(/abstract-bg.png);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed; 
+  -webkit-transition: background 0.5s ease-in-out;
+  -moz-transition: background 0.5s ease-in-out;
+  -o-transition: background 0.5s ease-in-out;
+  transition: background 0.5s ease-in-out;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.tst-card {
+  /* backdrop-filter: blur(4px); */
+  /* -webkit-backdrop-filter: blur(16px); */
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+ *[data-theme='dark'] .tst-card {
+  background: linear-gradient(
+    110.28deg,
+    rgba(26, 26, 26, 0.3) 0.2%,
+    rgba(0, 0, 0, 0.6) 101.11%
+  );
+  box-shadow: inset 1px 1px 1px 0px grey, 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
 }
 
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+*[data-theme='light'] .tst-card {
+  background: linear-gradient(
+    110.28deg,
+    rgba(230, 230, 230, 0.3) 0.2%,
+    rgba(255, 255, 255, 0.6) 101.11%
+  );
+  box-shadow: inset 1px 1px 1px 0px white, 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
 }
