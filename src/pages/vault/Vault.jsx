@@ -12,9 +12,6 @@ import {
   useAccount,
 } from "wagmi";
 import { arbitrumSepolia } from "wagmi/chains";
-import {
-  Button,
-} from 'react-daisyui';
 
 import {
   useVaultAddressStore,
@@ -25,6 +22,7 @@ import {
 } from "../../store/Store";
 
 import CenterLoader from "../../components/ui/CenterLoader";
+import Button from "../../components/ui/Button";
 
 import Debt from "../../components/vault/Debt";
 import VaultStats from "../../components/vault/VaultStats";

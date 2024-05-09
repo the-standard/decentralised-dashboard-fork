@@ -2,12 +2,9 @@ import { useState } from "react";
 
 import { ethers } from "ethers";
 
-import {
-  Button,
-} from 'react-daisyui';
-
 import WithdrawModal from "./WithdrawModal";
 import Card from "../ui/Card";
+import Button from "../ui/Button";
 import CenterLoader from "../ui/CenterLoader";
 
 const StakedAssets = ({

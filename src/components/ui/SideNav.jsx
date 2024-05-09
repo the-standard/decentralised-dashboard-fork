@@ -1,7 +1,6 @@
 import { NavLink, useLocation } from 'react-router-dom';
 import {
   Menu,
-  Button,
 } from 'react-daisyui';
 import {
   CircleStackIcon,
@@ -9,6 +8,7 @@ import {
   XMarkIcon,
 } from '@heroicons/react/24/outline';
 
+import Button from "./Button";
 import ThemeToggle from "./ThemeToggle";
 
 const SideNav = (props) => {

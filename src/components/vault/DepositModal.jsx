@@ -10,9 +10,6 @@ import {
 } from "wagmi";
 import { sendTransaction } from "@wagmi/core";
 import {
-  Button,
-} from 'react-daisyui';
-import {
   ArrowUpCircleIcon,
 } from '@heroicons/react/24/outline';
 
@@ -22,7 +19,8 @@ import {
 } from "../../store/Store";
 
 import wagmiConfig from "../../WagmiConfig";
-import Modal from "../ui/Modal.jsx";
+import Modal from "../ui/Modal";
+import Button from "../ui/Button";
 
 const DepositModal = (props) => {
   const {

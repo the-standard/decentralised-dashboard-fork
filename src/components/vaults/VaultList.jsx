@@ -12,7 +12,6 @@ import { arbitrum, arbitrumSepolia } from "wagmi/chains";
 import {
   Tooltip,
   Progress,
-  Button,
 } from 'react-daisyui';
 
 import {
@@ -22,6 +21,7 @@ import {
 } from "../../store/Store";
 
 import Card from "../ui/Card";
+import Button from "../ui/Button";
 import Pagination from "../ui/Pagination";
 import CenterLoader from "../ui/CenterLoader";
 

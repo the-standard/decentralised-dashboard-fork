@@ -1,11 +1,7 @@
 import { useAccount } from "wagmi";
-import {
-  Button,
-  useTheme
-} from 'react-daisyui';
 import { Bars3Icon } from '@heroicons/react/24/outline';
-import { SunIcon, MoonIcon } from '@heroicons/react/24/solid';
 
+import Button from "./Button";
 import ThemeToggle from "./ThemeToggle";
 
 const TopNav = (props) => {

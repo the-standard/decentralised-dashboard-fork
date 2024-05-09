@@ -1,14 +1,12 @@
 import { useState } from "react";
 import { ethers } from "ethers";
-import {
-  Button
-} from 'react-daisyui';
 
 import {
   useVaultStore,
 } from "../../store/Store";
 
 import Card from "../ui/Card";
+import Button from "../ui/Button";
 import CenterLoader from "../ui/CenterLoader";
 import TokenActions from "./TokenActions";
 

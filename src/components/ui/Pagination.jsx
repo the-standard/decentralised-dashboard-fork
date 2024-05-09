@@ -3,9 +3,10 @@ import {
   ChevronLeftIcon,
 } from '@heroicons/react/24/outline';
 import {
-  Button,
   Pagination as DaisyPagination,
 } from 'react-daisyui';
+
+import Button from "./Button";
 
 const Pagination = ({
   totalItems,

@@ -7,9 +7,6 @@ import {
   useWaitForTransactionReceipt,
 } from "wagmi";
 import {
-  Button,
-} from 'react-daisyui';
-import {
   ArrowDownCircleIcon,
 } from '@heroicons/react/24/outline';
 
@@ -18,7 +15,8 @@ import {
   useSmartVaultABIStore,
 } from "../../store/Store";
 
-import Modal from "../ui/Modal.jsx";
+import Modal from "../ui/Modal";
+import Button from "../ui/Button";
 
 const WithdrawModal = (props) => {
   const {
