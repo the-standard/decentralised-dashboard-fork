@@ -22,11 +22,8 @@ import {
   useLiquidationPoolStore,
 } from "../../store/Store";
 
-import {
-  Button,
-} from 'react-daisyui';
-
 import Card from "../ui/Card";
+import Button from "../ui/Button";
 import Typography from "../ui/Typography";
 import Modal from "../ui/Modal";
 

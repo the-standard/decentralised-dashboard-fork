@@ -1,14 +1,12 @@
-import {
-  Button,
-} from 'react-daisyui';
 import { ethers } from "ethers";
 
 import {
   ArrowUpCircleIcon,
 } from '@heroicons/react/24/outline';
 
-import Modal from "../ui/Modal.jsx";
-import Typography from "../ui/Typography.jsx";
+import Modal from "../ui/Modal";
+import Button from "../ui/Button";
+import Typography from "../ui/Typography";
 
 const RepayModal = (props) => {
   const {

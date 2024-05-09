@@ -1,10 +1,8 @@
 import {
-  Button,
-} from 'react-daisyui';
-
-import {
   useCurrentTheme,
 } from "../../store/Store";
+
+import Button from "./Button";
 
 import { SunIcon, MoonIcon } from '@heroicons/react/24/solid';
 

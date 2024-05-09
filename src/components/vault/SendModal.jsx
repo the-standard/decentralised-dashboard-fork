@@ -1,10 +1,7 @@
-import {
-  Button,
-} from 'react-daisyui';
-
-import Modal from "../ui/Modal.jsx";
-import CenterLoader from "../ui/CenterLoader.jsx";
-import Typography from "../ui/Typography.jsx";
+import Modal from "../ui/Modal";
+import CenterLoader from "../ui/CenterLoader";
+import Typography from "../ui/Typography";
+import Button from "../ui/Button";
 
 const SendModal = ({
   isOpen,

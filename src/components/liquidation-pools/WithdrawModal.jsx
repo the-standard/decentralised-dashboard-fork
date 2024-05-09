@@ -12,11 +12,8 @@ import {
   useLiquidationPoolAbiStore
 } from "../../store/Store";
 
-import {
-  Button,
-} from 'react-daisyui';
-
 import CenterLoader from "../ui/CenterLoader";
+import Button from "../ui/Button";
 import Modal from "../ui/Modal";
 import Typography from "../ui/Typography";
 
