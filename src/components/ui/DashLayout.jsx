@@ -36,7 +36,7 @@ const DashLayout = ({children}) => {
           <SideNav toggleVisible={toggleVisible} />
         }
         className="md:drawer-open"
-        contentClassName="bg-base-200 min-h-screen shadow-[inset_0_4px_6px_-1px_rgba(0,0,0,0.1)]"
+        contentClassName="min-h-screen shadow-[inset_0_4px_6px_-1px_rgba(0,0,0,0.1)]"
         sideClassName="bg-base-400"
       >
         <div className="p-4 max-w-[1440px] m-auto">

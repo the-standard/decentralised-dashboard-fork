@@ -30,7 +30,7 @@ const ThemeHandler = ({children}) => {
   }, [])
 
   return (
-    <Theme dataTheme={currentTheme} style={{minHeight: "100vh"}}>
+    <Theme dataTheme={currentTheme} style={{minHeight: "100vh"}} className="tst-bg">
       {children}
     </Theme>
   )
