@@ -35,9 +35,15 @@ const DashLayout = ({children}) => {
         side={
           <SideNav toggleVisible={toggleVisible} />
         }
+<<<<<<< HEAD
         className="md:drawer-open bg-base-400/0"
         contentClassName="tst-sidenav__content min-h-screen bg-base-400/0"
         sideClassName="tst-sidenav__side bg-base-400/0 z-[1]"
+=======
+        className="md:drawer-open"
+        contentClassName="min-h-screen shadow-[inset_0_4px_6px_-1px_rgba(0,0,0,0.1)]"
+        sideClassName="bg-base-400"
+>>>>>>> dcac62b (feat: added glass start)
       >
         <TopNav toggleVisible={toggleVisible} />
         <div className="tst-inner">

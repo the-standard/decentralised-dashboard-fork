@@ -30,7 +30,11 @@ const ThemeHandler = ({children}) => {
   }, [])
 
   return (
+<<<<<<< HEAD
     <Theme dataTheme={currentTheme} className="tst-bg">
+=======
+    <Theme dataTheme={currentTheme} style={{minHeight: "100vh"}} className="tst-bg">
+>>>>>>> dcac62b (feat: added glass start)
       {children}
     </Theme>
   )

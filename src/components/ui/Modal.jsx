@@ -36,8 +36,13 @@ const Modal = (props) => {
           <div
             className={"z-40 absolute -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 w-full px-4 " + (wide ? "max-w-[62rem]" : "max-w-[34rem]") }
           >
+<<<<<<< HEAD
             <Card className="card-compact w-full max-h-[90vh] tst-card">
               <div className="card-body overflow-scroll">
+=======
+            <Card className="card-compact w-full max-h-[90vh] overflow-scroll backdrop-blur-sm bg-white/10 tst-card">
+              <div className="card-body">
+>>>>>>> dcac62b (feat: added glass start)
                 {props.children}
               </div>
             </Card>
