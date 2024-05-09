@@ -10,7 +10,7 @@ const TopNav = (props) => {
 
   if (address) {
     return (
-      <div className="navbar sticky bg-base-100 shadow-md">
+      <div className="navbar sticky bg-nav/60 shadow-md">
         <div className="navbar-start">
           <Button
             className="md:hidden"
