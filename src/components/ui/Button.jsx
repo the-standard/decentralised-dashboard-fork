@@ -21,7 +21,7 @@ const Button = (props) => {
 
   return (
     <DaisyButton
-      className={'' || className}
+      className={` ${className ? className : ''}`}
       shape={'' || shape}
       size={'' || size}
       variant={null || variant}
