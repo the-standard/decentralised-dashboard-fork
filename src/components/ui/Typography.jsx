@@ -1,34 +1,49 @@
 const Typography = (props) => {
   const type = props.variant || '';
-  const customClasses = props.className || '';
-
-  let useClass = 'text-base font-normal';
+  const classes = props.className || '';
 
   switch (type) {
     case 'p':
-      useClass = 'inline-block text-base font-normal';
-      break;
+      return (
+        <p
+          className={`inline-block text-base font-normal ${classes ? classes : ''}`}
+        >
+          {props.children || ''}
+        </p>
+      );
     case 'h1':
-      useClass = 'inline-block text-2xl font-semibold';
-      break;
+      return (
+        <h1
+          className={`inline-block text-2xl font-semibold ${classes ? classes : ''}`}
+        >
+          {props.children || ''}
+        </h1>
+      );
     case 'h2':
-      useClass = 'inline-block text-xl font-semibold';
-      break;
+      return (
+        <h2
+          className={`inline-block text-xl font-semibold ${classes ? classes : ''}`}
+        >
+          {props.children || ''}
+        </h2>
+      );
     case 'h3':
-      useClass = 'inline-block text-lg font-medium';
-      break;  
+      return (
+        <h3
+          className={`inline-block text-lg font-medium  ${classes ? classes : ''}`}
+        >
+          {props.children || ''}
+        </h3>
+      );
     default:
-      useClass = 'inline-block text-base';
-      break;
-  }
-
-  return (
-    <div
-      className={useClass + ' ' + customClasses}
-    >
-      {props.children || ''}
-    </div>
-  );
+      return (
+        <p
+          className={`inline-block text-base ${classes ? classes : ''}`}
+        >
+          {props.children || ''}
+        </p>
+      );
+    }
 };
 
 export default Typography;

@@ -17,6 +17,7 @@ import {
 
 import Modal from "../ui/Modal";
 import Button from "../ui/Button";
+import Typography from "../ui/Typography";
 
 const WithdrawModal = (props) => {
   const {
@@ -129,10 +130,10 @@ const WithdrawModal = (props) => {
         closeModal={closeModal}
       >
         <>
-          <h2 className="card-title">
+          <Typography variant="h2" className="card-title">
             <ArrowDownCircleIcon className="h-6 w-6 inline-block"/>
             Withdraw {symbol}
-          </h2>
+          </Typography>
 
           <div
             className="join"

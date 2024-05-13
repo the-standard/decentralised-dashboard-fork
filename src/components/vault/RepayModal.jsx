@@ -33,10 +33,10 @@ const RepayModal = (props) => {
           open={open}
           closeModal={closeModal}
         >
-          <h2 className="card-title">
+          <Typography variant="h2" className="card-title">
             <ArrowUpCircleIcon className="h-6 w-6 inline-block"/>
             Repaying EUROs
-          </h2>
+          </Typography>
 
           <Typography
             variant="h3"
@@ -64,9 +64,9 @@ const RepayModal = (props) => {
           open={open}
           closeModal={closeModal}
         >
-          <h2 className="card-title">
+          <Typography variant="h2" className="card-title">
             Confirm Your EUROs Spending cap
-          </h2>
+          </Typography>
   
           <Typography
             variant="p"
@@ -112,10 +112,10 @@ const RepayModal = (props) => {
           open={open}
           closeModal={closeModal}
         >
-          <h2 className="card-title">
+          <Typography variant="h2" className="card-title">
             <ArrowUpCircleIcon className="h-6 w-6 inline-block"/>
             Confirm Your Loan Repayment
-          </h2>
+          </Typography>
   
           <Typography
             variant="p"
@@ -152,10 +152,10 @@ const RepayModal = (props) => {
         open={open}
         closeModal={closeModal}
       >
-        <h2 className="card-title">
+        <Typography variant="h2" className="card-title">
           <ArrowUpCircleIcon className="h-6 w-6 inline-block"/>
           Repaying EUROs
-        </h2>
+        </Typography>
 
         <div
           className="join"

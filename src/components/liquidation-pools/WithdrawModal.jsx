@@ -141,12 +141,12 @@ const WithdrawModal = ({
         >
           {claimLoading ? (
             <>
-              <h2 className="card-title">Withdrawing Your Tokens</h2>
+              <Typography variant="h2" className="card-title">Withdrawing Your Tokens</Typography>
               <CenterLoader />
             </>
           ) : (
             <>
-              <h2 className="card-title">Withdraw Unsuccessful</h2>
+              <Typography variant="h2" className="card-title">Withdraw Unsuccessful</Typography>
               <Typography variant="p">
                 There was a problem processing your withdraw request.
               </Typography>
@@ -184,12 +184,12 @@ const WithdrawModal = ({
         <>
           {claimLoading ? (
             <>
-              <h2 className="card-title">Withdrawing Your Tokens</h2>
+              <Typography variant="h2" className="card-title">Withdrawing Your Tokens</Typography>
               <CenterLoader />
             </>
           ) : (
             <>
-              <h2 className="card-title"> Withdraw Your Tokens</h2>
+              <Typography variant="h2" className="card-title"> Withdraw Your Tokens</Typography>
 
               {hasPending ? (
                 <>
@@ -204,7 +204,7 @@ const WithdrawModal = ({
                     <Typography variant="p">
                       Pending TST:
                     </Typography>
-                    <Typography >
+                    <Typography variant="p">
                       {showTstPending || '0'}
                     </Typography>
                   </div>

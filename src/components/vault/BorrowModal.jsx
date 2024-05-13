@@ -30,10 +30,10 @@ const BorrowModal = (props) => {
           open={open}
           closeModal={closeModal}
         >
-          <h2 className="card-title">
+          <Typography variant="h2" className="card-title">
             <ArrowDownCircleIcon className="h-6 w-6 inline-block"/>
             Borrowing EUROs
-          </h2>
+          </Typography>
 
           <Typography
             variant="h3"
@@ -73,10 +73,10 @@ const BorrowModal = (props) => {
         open={open}
         closeModal={closeModal}
       >
-        <h2 className="card-title">
+        <Typography variant="h2" className="card-title">
           <ArrowDownCircleIcon className="h-6 w-6 inline-block"/>
           Borrowing EUROs
-        </h2>
+        </Typography>
 
         <input
           className="input input-bordered w-full"

@@ -265,14 +265,14 @@ const Staking = () => {
     <>
       <Card className="card-compact w-full">
         <div className="card-body">
-          <h2 className="card-title justify-between">
+          <Typography variant="h2" className="card-title justify-between">
             Deposit
 
             <Button size="sm" onClick={() => setHelpOpen(true)}>
               <QuestionMarkCircleIcon className="h-4 w-4 inline-block"/>
               How It Works
             </Button>
-          </h2>
+          </Typography>
           <Typography variant="p">
             To start earning fees & buying up liquidated assets at up to a 10% discount, stake your TST & EUROs below.
           </Typography>
@@ -335,10 +335,10 @@ const Staking = () => {
         closeModal={() => setHelpOpen(false)}
         wide
       >
-        <h2 className="card-title">
+        <Typography variant="h2" className="card-title">
           <QuestionMarkCircleIcon className="h-6 w-6 inline-block"/>
           Liquidation Pool - How It Works
-        </h2>
+        </Typography>
 
         <Typography variant="h2">
           Earning Fees
