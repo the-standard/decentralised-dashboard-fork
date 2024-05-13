@@ -17,7 +17,7 @@ const SideNav = (props) => {
   const location = useLocation();
 
   return (
-    <Menu className="p-0 w-60 h-full text-base-content bg-nav/60 shadow-[inset_0_4px_6px_-1px_rgba(0,0,0,0.1)]">
+    <Menu className="p-0 text-base-content bg-nav/60 md:bg-transparent tst-sidenav">
       <div className="flex flex-row flex-no-wrap space-x-2 md:hidden p-2 h-16 bg-nav/60">
         <Button className="flex grow text-xl p-2 px-4" color="ghost" style={{justifyContent: "flex-start"}}>
           {import.meta.env.VITE_COMPANY_DAPP_NAME || ''}
@@ -26,7 +26,7 @@ const SideNav = (props) => {
           <XMarkIcon className="h-6 w-6 inline-block"/>
         </Button>
       </div>
-      <div className="p-2">
+      <div className="p-2 flex flex-col gap-2">
         <Menu.Item>
           <NavLink
             to="/vaults"
@@ -38,7 +38,7 @@ const SideNav = (props) => {
             }
           >
             <CircleStackIcon className="h-6 w-6 inline-block"/>
-            Vaults
+            {/* Vaults */}
           </NavLink>
         </Menu.Item>
         <Menu.Item>
@@ -52,9 +52,14 @@ const SideNav = (props) => {
         <Menu.Item>
           <NavLink
             to="/liquidation-pools"
+            className={({ isActive }) => 
+              isActive ||
+              location.pathname.includes('/liquidation-pools') ?
+              'navbar-item active' : 'navbar-item'
+            }
           >
             <BanknotesIcon className="h-6 w-6 inline-block"/>
-            Liquidation Pool
+            {/* Liquidation Pools */}
           </NavLink>
         </Menu.Item>
       </div>
