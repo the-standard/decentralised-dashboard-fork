@@ -15,7 +15,7 @@ const DashLayout = ({children}) => {
   }, []);
 
   return (
-    <>
+    <div className="tst-con">
       <TopNav toggleVisible={toggleVisible} />
       <ToastContainer
         position="bottom-left"
@@ -36,14 +36,14 @@ const DashLayout = ({children}) => {
           <SideNav toggleVisible={toggleVisible} />
         }
         className="md:drawer-open"
-        contentClassName="min-h-screen shadow-[inset_0_4px_6px_-1px_rgba(0,0,0,0.1)]"
+        contentClassName="min-h-screen"
         sideClassName="bg-base-400"
       >
-        <div className="p-4 max-w-[1440px] m-auto">
+        <div className="tst-inner">
           {children}
         </div>
       </Drawer>
-    </>
+    </div>
   );
 };
 
