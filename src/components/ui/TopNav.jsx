@@ -22,11 +22,7 @@ const TopNav = (props) => {
 
   if (address) {
     return (
-<<<<<<< HEAD
       <div className="navbar sticky shadow-md tst-topnav">
-=======
-      <div className="navbar sticky bg-nav/60 shadow-md">
->>>>>>> dcac62b (feat: added glass start)
         <div className="navbar-start">
           <Button
             className="md:hidden"

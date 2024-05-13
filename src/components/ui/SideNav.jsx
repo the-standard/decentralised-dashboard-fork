@@ -29,7 +29,6 @@ const SideNav = (props) => {
   const isLight = currentTheme && currentTheme.includes('light');
 
   return (
-<<<<<<< HEAD
     <Menu className="p-0 text-base-content tst-sidenav">
       <div className="flex flex-row flex-no-wrap space-x-2 md:hidden p-2 h-16">
         <Button
@@ -44,12 +43,6 @@ const SideNav = (props) => {
             className="h-5"
           />
           {/* {import.meta.env.VITE_COMPANY_DAPP_NAME || ''} */}
-=======
-    <Menu className="p-0 w-60 h-full text-base-content bg-nav/60 shadow-[inset_0_4px_6px_-1px_rgba(0,0,0,0.1)]">
-      <div className="flex flex-row flex-no-wrap space-x-2 md:hidden p-2 h-16 bg-nav/60">
-        <Button className="flex grow text-xl p-2 px-4" color="ghost" style={{justifyContent: "flex-start"}}>
-          {import.meta.env.VITE_COMPANY_DAPP_NAME || ''}
->>>>>>> dcac62b (feat: added glass start)
         </Button>
         <Button color="ghost" onClick={toggleVisible}>
           <XMarkIcon className="h-6 w-6 inline-block"/>
