@@ -1,3 +1,33 @@
+:root {
+  --sm-break: 640px;
+  --md-break: 768px;
+  --lg-break: 1024px;
+  --xl-break: 1280px;
+  --2xl-break: 1536px;
+  --nav-height: 4rem;
+  --card-border-radius: 1rem;
+}
+
+*[data-theme='dark'] {
+  --glass-bg: linear-gradient(
+    110.28deg,
+    rgba(255, 255, 255, 0.2) 0.2%,
+    rgba(255, 255, 255, 0.0) 101.11%
+  );
+  --glass-inset: inset 1px 1px 1px 0px rgba(255, 255, 255, 0.3), 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+}
+
+*[data-theme='light'] {
+  --glass-bg: linear-gradient(
+    110.28deg,
+    rgba(255, 255, 255, 0.6) 0.2%,
+    rgba(255, 255, 255, 0.3) 101.11%
+  );
+  --glass-inset: inset 1px 1px 1px 0px rgba(255, 255, 255, 0.9), 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+}
+
+/* BACKGROUND */
+
 .tst-bg {
   background-color: #000000;
 }
@@ -20,6 +50,134 @@
   user-select: none;
 }
 
+/* LAYOUT */
+
+.tst-con {
+  max-width: 1440px;
+  margin: auto;
+}
+
+.tst-inner {
+ padding: 1rem;
+ margin: auto;
+}
+
+@media (min-width: 1610px) {
+  .tst-inner {
+    padding: 1rem 0px;
+  }
+}
+
+/* TOPNAV */
+
+.tst-topnav,
+.tst-topnav > .navbar-start,
+.tst-topnav > .navbar-end {
+  position: relative;
+}
+
+.tst-topnav::before {
+  content: "";
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  left: 0px;
+  bottom: 0px;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  backdrop-filter: blur(8px);
+  background: var(--glass-bg);
+  box-shadow: var(--glass-inset);
+}
+
+@media (min-width: 1440px) {
+  .tst-topnav,
+  .tst-topnav:before {
+    border-radius: 0px 0px var(--card-border-radius) var(--card-border-radius);
+  }
+}
+
+/* SIDENAV */
+
+.tst-sidenav {
+  height: 100%;
+}
+
+.tst-sidebody {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.drawer[aria-expanded='true'] > .drawer-side > .drawer-overlay {
+  transition: all 0.2s;
+  backdrop-filter: blur(4px);
+}
+
+@media (min-width: 768px) {
+  .tst-sidenav {
+    position: relative;
+    height: unset;
+    margin-top: calc(var(--nav-height) * -1);
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 5rem;
+  }
+
+  .tst-sidenav::before {
+    content: "";
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    left: 0px;
+    bottom: 0px;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    backdrop-filter: blur(8px);
+    background: var(--glass-bg);
+    box-shadow: var(--glass-inset);
+  }
+
+  .tst-sidenav,
+  .tst-sidenav:before {
+    border-radius: 0px var(--card-border-radius) var(--card-border-radius) 0px;
+  }
+  
+  .tst-sidenav .navbar-item {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    width: 4rem;
+    height: 4rem;
+  }
+  
+  .drawer-content {
+    margin-left: 5rem;
+  }
+}
+
+@media (min-width: 1440px) {
+  .tst-sidenav,
+  .tst-sidenav:before {
+    border-radius: var(--card-border-radius);
+  }
+}
+
+@media (min-width: 1610px) {
+  .tst-sidenav {
+    margin-left: -6rem;
+  }
+  .drawer-content {
+    margin-left: 0rem;
+  }
+}
+
+/* CARDS */
+
 .tst-card > .card-body {
   position: relative;
 }
@@ -35,29 +193,7 @@
   -ms-user-select: none;
   user-select: none;
   backdrop-filter: blur(8px);
-  border-radius: 1rem;
-}
-
-
-*[data-theme='dark'] .tst-card::before {
-  /* background: linear-gradient(
-    110.28deg,
-    rgba(26, 26, 26, 0.3) 0.2%,
-    rgba(0, 0, 0, 0.6) 101.11%
-  ); */
-  background: linear-gradient(
-    110.28deg,
-    rgba(255, 255, 255, 0.2) 0.2%,
-    rgba(255, 255, 255, 0.0) 101.11%
-  );
-  box-shadow: inset 1px 1px 1px 0px rgba(255, 255, 255, 0.3), 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-}
-
-*[data-theme='light'] .tst-card::before {
-  background: linear-gradient(
-    110.28deg,
-    rgba(255, 255, 255, 0.6) 0.2%,
-    rgba(255, 255, 255, 0.3) 101.11%
-  );
-  box-shadow: inset 1px 1px 1px 0px rgba(255, 255, 255, 0.9), 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  border-radius: var(--card-border-radius);
+  background: var(--glass-bg);
+  box-shadow: var(--glass-inset);
 }
