@@ -24,8 +24,12 @@
   user-select: none;
 }
 
+.tst-card {
+  /* backdrop-filter: blur(4px); */
+  /* -webkit-backdrop-filter: blur(16px); */
+}
 
-*[data-theme='dark'] .tst-card {
+ *[data-theme='dark'] .tst-card {
   background: linear-gradient(
     110.28deg,
     rgba(26, 26, 26, 0.3) 0.2%,
