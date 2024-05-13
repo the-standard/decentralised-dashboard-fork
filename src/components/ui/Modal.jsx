@@ -24,7 +24,7 @@ const Modal = (props) => {
           </div>
           <div
             onClick={closeModal}
-            className="opacity-25 z-30 fixed inset-0 bg-black"
+            className="z-30 fixed inset-0 bg-black/50"
           />
         </div>
       ) : (null)}

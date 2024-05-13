@@ -1,14 +1,12 @@
-import {
-  Button,
-} from 'react-daisyui';
 import { ethers } from "ethers";
 
 import {
   ArrowUpCircleIcon,
 } from '@heroicons/react/24/outline';
 
-import Modal from "../ui/Modal.jsx";
-import Typography from "../ui/Typography.jsx";
+import Modal from "../ui/Modal";
+import Button from "../ui/Button";
+import Typography from "../ui/Typography";
 
 const RepayModal = (props) => {
   const {
@@ -35,10 +33,10 @@ const RepayModal = (props) => {
           open={open}
           closeModal={closeModal}
         >
-          <h2 className="card-title">
+          <Typography variant="h2" className="card-title">
             <ArrowUpCircleIcon className="h-6 w-6 inline-block"/>
             Repaying EUROs
-          </h2>
+          </Typography>
 
           <Typography
             variant="h3"
@@ -66,9 +64,9 @@ const RepayModal = (props) => {
           open={open}
           closeModal={closeModal}
         >
-          <h2 className="card-title">
+          <Typography variant="h2" className="card-title">
             Confirm Your EUROs Spending cap
-          </h2>
+          </Typography>
   
           <Typography
             variant="p"
@@ -114,10 +112,10 @@ const RepayModal = (props) => {
           open={open}
           closeModal={closeModal}
         >
-          <h2 className="card-title">
+          <Typography variant="h2" className="card-title">
             <ArrowUpCircleIcon className="h-6 w-6 inline-block"/>
             Confirm Your Loan Repayment
-          </h2>
+          </Typography>
   
           <Typography
             variant="p"
@@ -154,10 +152,10 @@ const RepayModal = (props) => {
         open={open}
         closeModal={closeModal}
       >
-        <h2 className="card-title">
+        <Typography variant="h2" className="card-title">
           <ArrowUpCircleIcon className="h-6 w-6 inline-block"/>
           Repaying EUROs
-        </h2>
+        </Typography>
 
         <div
           className="join"

@@ -3,9 +3,6 @@ import { ethers } from "ethers";
 import { useWriteContract } from "wagmi";
 import { toast } from 'react-toastify';
 import {
-  Button,
-} from 'react-daisyui';
-import {
   ArrowPathIcon,
 } from '@heroicons/react/24/outline';
 
@@ -15,9 +12,10 @@ import {
   useSmartVaultABIStore,
 } from "../../store/Store";
 
+import Button from "../ui/Button";
 import Typography from "../ui/Typography";
 import Select from "../ui/Select";
-import Modal from "../ui/Modal.jsx";
+import Modal from "../ui/Modal";
 
 const SwapModal = ({
   open,
@@ -139,10 +137,10 @@ const SwapModal = ({
             closeModal={closeModal}
           >
             <>
-              <h2 className="card-title">
+              <Typography variant="h2" className="card-title">
                 <ArrowPathIcon className="h-6 w-6 inline-block"/>
                 Swap {symbol}
-              </h2>
+              </Typography>
 
               <div>
                 <div>
@@ -253,10 +251,10 @@ const SwapModal = ({
         closeModal={closeModal}
       >
         <>
-          <h2 className="card-title">
+          <Typography variant="h2" className="card-title">
             <ArrowPathIcon className="h-6 w-6 inline-block"/>
             Swap {symbol}
-          </h2>
+          </Typography>
 
           <div>
             <Typography

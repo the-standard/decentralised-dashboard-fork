@@ -1,12 +1,10 @@
 import { useNavigate } from "react-router-dom";
-import {
-  Button,
-} from 'react-daisyui';
 
 import {
   ArrowDownCircleIcon,
 } from '@heroicons/react/24/outline';
 
+import Button from "../ui/Button";
 import Modal from "../ui/Modal";
 import Typography from "../ui/Typography";
 
@@ -32,10 +30,10 @@ const BorrowModal = (props) => {
           open={open}
           closeModal={closeModal}
         >
-          <h2 className="card-title">
+          <Typography variant="h2" className="card-title">
             <ArrowDownCircleIcon className="h-6 w-6 inline-block"/>
             Borrowing EUROs
-          </h2>
+          </Typography>
 
           <Typography
             variant="h3"
@@ -75,10 +73,10 @@ const BorrowModal = (props) => {
         open={open}
         closeModal={closeModal}
       >
-        <h2 className="card-title">
+        <Typography variant="h2" className="card-title">
           <ArrowDownCircleIcon className="h-6 w-6 inline-block"/>
           Borrowing EUROs
-        </h2>
+        </Typography>
 
         <input
           className="input input-bordered w-full"

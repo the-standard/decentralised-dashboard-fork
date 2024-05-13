@@ -2,13 +2,11 @@ import { useState } from "react";
 
 import { ethers } from "ethers";
 
-import {
-  Button,
-} from 'react-daisyui';
-
 import WithdrawModal from "./WithdrawModal";
 import Card from "../ui/Card";
+import Button from "../ui/Button";
 import CenterLoader from "../ui/CenterLoader";
+import Typography from "../ui/Typography";
 
 const StakedAssets = ({
   loading,
@@ -26,7 +24,7 @@ const StakedAssets = ({
     <>
       <Card className="card-compact w-full">
         <div className="card-body">
-          <h2 className="card-title">Vault List</h2>
+          <Typography variant="h2" className="card-title">Vault List</Typography>
 
           <div className="overflow-x-auto">
             <table className="table table-zebra">

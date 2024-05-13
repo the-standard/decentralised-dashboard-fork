@@ -12,7 +12,6 @@ import { arbitrum, arbitrumSepolia } from "wagmi/chains";
 import {
   Tooltip,
   Progress,
-  Button,
 } from 'react-daisyui';
 
 import {
@@ -22,8 +21,10 @@ import {
 } from "../../store/Store";
 
 import Card from "../ui/Card";
+import Button from "../ui/Button";
 import Pagination from "../ui/Pagination";
 import CenterLoader from "../ui/CenterLoader";
+import Typography from "../ui/Typography";
 
 const VaultList = ({ vaults, vaultsLoading, tokenId }) => {
   const { vaultManagerAbi } = useVaultManagerAbiStore();
@@ -122,7 +123,9 @@ const VaultList = ({ vaults, vaultsLoading, tokenId }) => {
     <>
       <Card className="card-compact">
         <div className="card-body">
-          <h2 className="card-title">Vault List</h2>
+          <Typography variant="h2" className="card-title">
+            Vault List
+          </Typography>
 
           <div className="overflow-x-auto">
             <table className="table table-zebra">
@@ -197,7 +200,9 @@ const VaultList = ({ vaults, vaultsLoading, tokenId }) => {
                           </td>
                           <td className="hidden md:table-cell">
                             {vault.status.liquidated ? (
-                              <p>Vault Liquidated</p>
+                              <Typography variant="p">
+                                Vault Liquidated
+                              </Typography>
                             ) : (
                               <Tooltip
                                 className="w-full h-full"

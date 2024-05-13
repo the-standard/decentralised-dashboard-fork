@@ -1,5 +1,7 @@
 import TSTIconSmallBG from "../assets/TSTIconSmallBG.png";
 
+import Typography from "../components/ui/Typography";
+
 function Welcome(){
 
   return(
@@ -9,13 +11,13 @@ function Welcome(){
           <div className="py-24 px-10">
             <div className="flex justify-center content-center mb-3">
               <img src={TSTIconSmallBG} className="w-12 inline-block mask mask-circle mr-4" alt="logo" />
-              <h1 className="text-3xl/loose text-center font-bold">
+              <Typography variant="p" className="text-3xl/loose text-center font-bold">
                 {import.meta.env.VITE_COMPANY_DAPP_NAME || ''}
-              </h1>
+              </Typography>
             </div>
-            <p className="font-semibold text-center mb-8">
+            <Typography variant="p" className="font-semibold text-center mb-8">
               To start staking and earning with TST connect your wallet below.
-            </p>
+            </Typography>
             <div className="flex justify-center content-center">
               <w3m-button />
             </div>

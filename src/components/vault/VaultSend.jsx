@@ -7,9 +7,6 @@ import {
 } from "wagmi";
 import { arbitrumSepolia } from "wagmi/chains";
 import {
-  Button,
-} from 'react-daisyui';
-import {
   TrashIcon,
   PaperAirplaneIcon,
 } from '@heroicons/react/24/outline';
@@ -20,6 +17,9 @@ import {
 } from "../../store/Store";
 
 import SendModal from "./SendModal";
+
+import Button from "../ui/Button";
+
 
 const VaultSend = ({
   currentVault,

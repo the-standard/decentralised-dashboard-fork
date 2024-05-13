@@ -10,9 +10,6 @@ import {
 } from "wagmi";
 import { arbitrumSepolia } from "wagmi/chains";
 import {
-  Button,
-} from 'react-daisyui';
-import {
   ArrowDownCircleIcon,
   ArrowUpCircleIcon
 } from '@heroicons/react/24/outline';
@@ -27,6 +24,8 @@ import smartVaultAbi from "../../abis/smartVault";
 
 import BorrowModal from "./BorrowModal";
 import RepayModal from "./RepayModal";
+
+import Button from "../ui/Button";
 
 const Debt = ({
   currentVault,
