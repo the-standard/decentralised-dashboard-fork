@@ -21,6 +21,7 @@ import {
 import wagmiConfig from "../../WagmiConfig";
 import Modal from "../ui/Modal";
 import Button from "../ui/Button";
+import Typography from "../ui/Typography";
 
 const DepositModal = (props) => {
   const {
@@ -174,10 +175,10 @@ const DepositModal = (props) => {
         open={open}
         closeModal={closeModal}
       >
-        <h2 className="card-title">
+        <Typography variant="h2" className="card-title">
           <ArrowUpCircleIcon className="h-6 w-6 inline-block"/>
           Deposit {symbol}
-        </h2>
+        </Typography>
 
         <div role="alert" className="alert alert-warning mb-2">
           <span>

@@ -137,10 +137,10 @@ const SwapModal = ({
             closeModal={closeModal}
           >
             <>
-              <h2 className="card-title">
+              <Typography variant="h2" className="card-title">
                 <ArrowPathIcon className="h-6 w-6 inline-block"/>
                 Swap {symbol}
-              </h2>
+              </Typography>
 
               <div>
                 <div>
@@ -251,10 +251,10 @@ const SwapModal = ({
         closeModal={closeModal}
       >
         <>
-          <h2 className="card-title">
+          <Typography variant="h2" className="card-title">
             <ArrowPathIcon className="h-6 w-6 inline-block"/>
             Swap {symbol}
-          </h2>
+          </Typography>
 
           <div>
             <Typography

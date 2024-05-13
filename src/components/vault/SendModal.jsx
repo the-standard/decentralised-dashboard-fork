@@ -23,9 +23,9 @@ const SendModal = ({
             handleCloseModal();
           }}
         >
-          <h2 className="card-title">
+          <Typography variant="h2" className="card-title">
             Delete Smart Vault
-          </h2>
+          </Typography>
           <Typography
             variant="p"
             className="mb-2"
@@ -62,24 +62,24 @@ const SendModal = ({
       >
         {isPending ? (
           <>
-            <h2 className="card-title">
+            <Typography variant="h2" className="card-title">
               {sendType === 'BURN' ? (
                 'Deleting Smart Vault'
               ) : (
                 'Transferring Smart Vault NFT'
               )}
-            </h2>
+            </Typography>
             <CenterLoader />
           </>
         ) : (
           <>
-            <h2 className="card-title">
+            <Typography variant="h2" className="card-title">
               {sendType === 'BURN' ? (
                 'Delete Smart Vault'
               ) : (
                 'Transfer Smart Vault NFT'
               )}
-            </h2>
+            </Typography>
 
             {sendType === 'BURN' ? (
               <>

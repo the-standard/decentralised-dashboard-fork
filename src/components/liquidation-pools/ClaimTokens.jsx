@@ -16,6 +16,7 @@ import Card from "../ui/Card";
 import Button from "../ui/Button";
 import Modal from "../ui/Modal";
 import CenterLoader from "../ui/CenterLoader";
+import Typography from "../ui/Typography";
 
 const ClaimTokens = ({
   loading,
@@ -84,9 +85,9 @@ const ClaimTokens = ({
     <>
       <Card className="card-compact w-full">
         <div className="card-body">
-          <h2 className="card-title justify-between">
+          <Typography variant="h2" className="card-title justify-between">
             Claimable Tokens
-          </h2>
+          </Typography>
 
           <div className="overflow-x-auto">
             <table className="table table-zebra">
@@ -137,9 +138,9 @@ const ClaimTokens = ({
         open={isOpen}
         closeModal={() => setIsOpen(false)}
       >
-        <h2 className="card-title justify-between">
+        <Typography variant="h2" className="card-title justify-between">
           Claiming Your Tokens
-        </h2>
+        </Typography>
         <CenterLoader />
       </Modal>
     </>
