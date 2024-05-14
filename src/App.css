@@ -114,7 +114,25 @@
 /* SIDENAV */
 
 .tst-sidenav {
+  position: relative;
   height: 100%;
+}
+
+.tst-sidenav > div {
+  position: relative;
+}
+
+.tst-sidenav::before {
+  content: "";
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  left: 0px;
+  bottom: 0px;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  backdrop-filter: var(--glass-blur);
   background: var(--glass-bg);
   box-shadow: var(--glass-inset);
 }
@@ -132,28 +150,12 @@
 
 @media (min-width: 768px) {
   .tst-sidenav {
-    position: relative;
     height: unset;
     margin-top: calc(var(--nav-height) * -1);
     position: fixed;
     top: 50%;
     transform: translateY(-50%);
     width: 4rem;
-  }
-
-  .tst-sidenav::before {
-    content: "";
-    position: absolute;
-    top: 0px;
-    right: 0px;
-    left: 0px;
-    bottom: 0px;
-    -webkit-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    backdrop-filter: var(--glass-blur);
-    background: var(--glass-bg);
-    box-shadow: var(--glass-inset);
   }
 
   .tst-sidenav,
