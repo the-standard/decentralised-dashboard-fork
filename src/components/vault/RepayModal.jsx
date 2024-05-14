@@ -7,6 +7,7 @@ import {
 import Modal from "../ui/Modal";
 import Button from "../ui/Button";
 import Typography from "../ui/Typography";
+import Input from "../ui/Input";
 
 const RepayModal = (props) => {
   const {
@@ -160,13 +161,13 @@ const RepayModal = (props) => {
         <div
           className="join"
         >
-          <input
-            className="input input-bordered join-item w-full"
+          <Input
+            className="join-item w-full"
             placeholder="Amount of EUROs you want to repay"
             type="number"
             onChange={handleAmount}
             disabled={isPending}
-            ref={inputRef}
+            useRef={inputRef}
           />
 
           <Button

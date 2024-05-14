@@ -16,11 +16,11 @@ import Button from "../ui/Button";
 import Typography from "../ui/Typography";
 import Select from "../ui/Select";
 import Modal from "../ui/Modal";
+import Input from "../ui/Input";
 
 const SwapModal = ({
   open,
   closeModal,
-
   assets,
   symbol,
   decimals,
@@ -153,9 +153,9 @@ const SwapModal = ({
                   <div
                     className="join w-full mb-4"
                   >
-                    <input
-                      className="input input-bordered join-item w-full"
-                      ref={inputRef}
+                    <Input
+                      className="join-item w-full"
+                      useRef={inputRef}
                       type="number"
                       onChange={handleAmount}
                       placeholder={ symbol ? (
@@ -204,9 +204,9 @@ const SwapModal = ({
                   >
                     Min. Return:
                   </Typography>
-                  <input
-                    className="input input-bordered w-full"
-                    ref={inputReceiveRef}
+                  <Input
+                    className="w-full"
+                    useRef={inputReceiveRef}
                     type="number"
                     onChange={handleMinReturn}
                     placeholder="Amount"

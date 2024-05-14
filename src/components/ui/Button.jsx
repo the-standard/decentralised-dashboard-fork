@@ -22,15 +22,15 @@ const Button = (props) => {
   return (
     <DaisyButton
       className={` ${className ? className : ''}`}
-      shape={'' || shape}
-      size={'' || size}
-      variant={null || variant}
-      color={null || color}
-      glass={false || glass}
-      wide={false || wide}
-      fullWidth={false || fullWidth}
-      loading={false || loading}
-      disabled={false || disabled}
+      shape={shape || ''}
+      size={size || ''}
+      variant={variant || null}
+      color={color || null}
+      glass={glass || false}
+      wide={wide || false}
+      fullWidth={fullWidth || false}
+      loading={loading || false}
+      disabled={disabled || false}
       onClick={onClick ? (
         onClick
       ) : (

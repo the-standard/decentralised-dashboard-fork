@@ -16,6 +16,7 @@ import CenterLoader from "../ui/CenterLoader";
 import Button from "../ui/Button";
 import Modal from "../ui/Modal";
 import Typography from "../ui/Typography";
+import Input from "../ui/Input";
 
 const WithdrawModal = ({
   tstAmount,
@@ -253,12 +254,12 @@ const WithdrawModal = ({
               <div
                 className="join w-full mb-4"
               >
-                <input
-                  className="input input-bordered join-item w-full"
+                <Input
+                  className="join-item w-full"
                   placeholder="TST Amount"
                   type="number"
                   onChange={handleTstAmount}
-                  ref={tstInputRef}
+                  useRef={tstInputRef}
                 />
                 <Button
                   className="join-item"
@@ -274,12 +275,12 @@ const WithdrawModal = ({
               <div
                 className="join w-full mb-4"
               >
-                <input
-                  className="input input-bordered join-item w-full"
+                <Input
+                  className="join-item w-full"
                   placeholder="EUROs Amount"
                   type="number"
                   onChange={handleEurosAmount}
-                  ref={eurosInputRef}
+                  useRef={eurosInputRef}
                 />
                 <Button
                   className="join-item"
