@@ -17,8 +17,6 @@ const Button = (props) => {
     onClick
   } = props;
 
-  console.log()
-
   return (
     <DaisyButton
       className={` ${className ? className : ''}`}
