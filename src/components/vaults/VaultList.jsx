@@ -26,6 +26,9 @@ import Pagination from "../ui/Pagination";
 import CenterLoader from "../ui/CenterLoader";
 import Typography from "../ui/Typography";
 
+import seurologo from "../../assets/EUROs.svg";
+import susdlogo from "../../assets/USDs.svg";
+
 const VaultList = ({ vaults, vaultsLoading, tokenId }) => {
   const { vaultManagerAbi } = useVaultManagerAbiStore();
   const {
@@ -174,7 +177,16 @@ const VaultList = ({ vaults, vaultsLoading, tokenId }) => {
                       return(
                         <tr key={index}>
                           <td className="hidden md:table-cell">
-                            EUROs
+                            <img
+                              style={{
+                                display: "block",
+                                width: "42px",
+                                // margin: "auto",
+                              }}
+                              src={seurologo}
+                              alt="EUROs"
+                            />
+                            {/* EUROs */}
                           </td>
                           <td>
                             {vault.status.version ? (

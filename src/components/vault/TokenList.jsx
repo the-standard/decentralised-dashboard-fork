@@ -8,6 +8,7 @@ import {
 import Card from "../ui/Card";
 import Button from "../ui/Button";
 import CenterLoader from "../ui/CenterLoader";
+import TokenIcon from "../ui/TokenIcon";
 import TokenActions from "./TokenActions";
 
 const TokenList = ({ assets, assetsLoading }) => {
@@ -53,7 +54,11 @@ const TokenList = ({ assets, assetsLoading }) => {
                     return(
                       <tr key={index}>
                         <td>
-                          {symbol}
+                          {/* {symbol} */}
+                          <TokenIcon
+                            symbol={symbol}
+                            style={{ height: "2rem", width: "2rem" }}
+                          />
                         </td>
                         <td>
                           {ethers.formatUnits(amount, token.dec)}
