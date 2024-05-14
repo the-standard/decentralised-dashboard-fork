@@ -15,6 +15,7 @@
     rgba(255, 255, 255, 0.0) 101.11%
   );
   --glass-inset: inset 1px 1px 1px 0px rgba(255, 255, 255, 0.3), 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --bg-image: url(/abstract-bg.png);
 }
 
 *[data-theme='light'] {
@@ -24,6 +25,7 @@
     rgba(255, 255, 255, 0.3) 101.11%
   );
   --glass-inset: inset 1px 1px 1px 0px rgba(255, 255, 255, 0.9), 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  --bg-image: url(/abstract-bg.png);
 }
 
 /* BACKGROUND */
@@ -40,7 +42,7 @@
   left: 0px;
   bottom: 0px;
   opacity: 0.3;
-  background-image: url(/abstract-bg.png);
+  background-image: var(--bg-image);
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
@@ -123,7 +125,7 @@
     position: fixed;
     top: 50%;
     transform: translateY(-50%);
-    width: 5rem;
+    width: 4rem;
   }
 
   .tst-sidenav::before {
@@ -151,12 +153,12 @@
     flex-direction: column;
     justify-content: center;
     align-content: center;
-    width: 4rem;
-    height: 4rem;
+    width: 3rem;
+    height: 3rem;
   }
   
   .drawer-content {
-    margin-left: 5rem;
+    margin-left: 4rem;
   }
 }
 
@@ -169,7 +171,7 @@
 
 @media (min-width: 1610px) {
   .tst-sidenav {
-    margin-left: -6rem;
+    margin-left: -5rem;
   }
   .drawer-content {
     margin-left: 0rem;
