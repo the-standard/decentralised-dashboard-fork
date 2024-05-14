@@ -14,7 +14,7 @@ const Input = (props) => {
     default:
       return (
         <input
-          className={`input input-bordered ${className ? className : ''}`}
+          className={`input ${className ? className : ''}`}
           placeholder={placeholder || ''}
           type={type || 'text'}
           onChange={onChange ? (

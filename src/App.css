@@ -16,6 +16,7 @@
   );
   --glass-inset: inset 1px 1px 1px 0px rgba(255, 255, 255, 0.3), 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
   --bg-image: url(/abstract-bg.png);
+  --accent-bg: rgba(0, 0, 0, 0.4);
 }
 
 *[data-theme='light'] {
@@ -26,6 +27,7 @@
   );
   --glass-inset: inset 1px 1px 1px 0px rgba(255, 255, 255, 0.9), 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
   --bg-image: url(/abstract-bg.png);
+  --accent-bg: rgba(255, 255, 255, 0.3);
 }
 
 /* BACKGROUND */
@@ -198,4 +200,10 @@
   border-radius: var(--card-border-radius);
   background: var(--glass-bg);
   box-shadow: var(--glass-inset);
+}
+
+/* INPUTS */
+
+input.input {
+  background-color: var(--accent-bg);
 }
