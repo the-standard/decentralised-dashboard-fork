@@ -26,6 +26,7 @@ import Card from "../ui/Card";
 import Button from "../ui/Button";
 import Typography from "../ui/Typography";
 import Modal from "../ui/Modal";
+import Input from "../ui/Input";
 
 const Staking = () => {
   const chainId = useChainId();
@@ -284,12 +285,12 @@ const Staking = () => {
             <div
               className="join w-full mb-4"
             >
-              <input
-                className="input input-bordered join-item w-full"
+              <Input
+                className="join-item w-full"
                 placeholder="TST Amount"
                 type="number"
                 onChange={handleTstAmount}
-                ref={tstInputRef}
+                useRef={tstInputRef}
               />
               <Button
                 className="join-item"
@@ -304,12 +305,12 @@ const Staking = () => {
             <div
               className="join w-full mb-4"
             >
-              <input
-                className="input input-bordered join-item w-full"
+              <Input
+                className="join-item w-full"
                 placeholder="EUROs Amount"
                 type="number"
                 onChange={handleEurosAmount}
-                ref={eurosInputRef}
+                useRef={eurosInputRef}
               />
               <Button
                 className="join-item"

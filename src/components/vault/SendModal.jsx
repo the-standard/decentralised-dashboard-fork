@@ -2,6 +2,7 @@ import Modal from "../ui/Modal";
 import CenterLoader from "../ui/CenterLoader";
 import Typography from "../ui/Typography";
 import Button from "../ui/Button";
+import Input from "../ui/Input";
 
 const SendModal = ({
   isOpen,
@@ -117,8 +118,8 @@ const SendModal = ({
                 >
                   <b>This action is irreversible.</b>
                 </Typography>
-                <input
-                  className="input input-bordered w-full"
+                <Input
+                  className="w-full"
                   placeholder="Send To Address"
                   type="text"
                   onChange={(e) => setSendTo(e.target.value)}

@@ -18,6 +18,7 @@ import {
 import Modal from "../ui/Modal";
 import Button from "../ui/Button";
 import Typography from "../ui/Typography";
+import Input from "../ui/Input";
 
 const WithdrawModal = (props) => {
   const {
@@ -138,9 +139,9 @@ const WithdrawModal = (props) => {
           <div
             className="join"
           >
-            <input
-              className="input input-bordered join-item w-full"
-              ref={inputRef}
+            <Input
+              className="join-item w-full"
+              useRef={inputRef}
               type="number"
               onChange={handleAmount}
               placeholder="Amount"
