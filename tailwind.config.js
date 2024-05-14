@@ -19,8 +19,6 @@ export default {
   },
   daisyui: {
     themes: [
-      // "light",
-      // "dark",
       {
         'light': {
           'primary' : '#570df8',           /* Primary color */

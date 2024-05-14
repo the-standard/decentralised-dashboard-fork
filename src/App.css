@@ -16,7 +16,11 @@
   );
   --glass-inset: inset 1px 1px 1px 0px rgba(255, 255, 255, 0.3), 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
   --bg-image: url(/abstract-bg.png);
-  --accent-bg: rgba(0, 0, 0, 0.4);
+  --glass-accent: 0, 0, 0;
+  --input-bg: rgba(var(--glass-accent), 0.6);
+  --input-bg-disabled: rgba(var(--glass-accent), 0.3);
+  --table-alt: rgba(var(--glass-accent), 0.2);
+  --glass-lines: rgba(var(--glass-accent), 0.2);
 }
 
 *[data-theme='light'] {
@@ -27,7 +31,11 @@
   );
   --glass-inset: inset 1px 1px 1px 0px rgba(255, 255, 255, 0.9), 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
   --bg-image: url(/abstract-bg.png);
-  --accent-bg: rgba(255, 255, 255, 0.3);
+  --glass-accent: 255, 255, 255;
+  --input-bg: rgba(var(--glass-accent), 0.6);
+  --input-bg-disabled: rgba(var(--glass-accent), 0.3);
+  --table-alt: rgba(var(--glass-accent), 0.4);
+  --glass-lines: rgba(var(--glass-accent), 0.4);
 }
 
 /* BACKGROUND */
@@ -205,5 +213,22 @@
 /* INPUTS */
 
 input.input {
-  background-color: var(--accent-bg);
+  background-color: var(--input-bg);
+}
+input.input:disabled {
+  background-color: var(--input-bg-disabled);
+  border: 0px;
+}
+
+/* TABLE */
+
+.tst-con .table tr.active,
+.tst-con .table tr.active:nth-child(even),
+.tst-con .table-zebra tbody tr:nth-child(even) {
+  background-color: var(--table-alt);
+}
+
+.tst-con .table :where(thead, tbody) :where(tr:not(:last-child)),
+.tst-con .table :where(thead, tbody) :where(tr:first-child:last-child) {
+  border-bottom-color: var(--glass-lines);
 }
