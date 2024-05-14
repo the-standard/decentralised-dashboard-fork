@@ -7,6 +7,7 @@ import {
 import Button from "../ui/Button";
 import Modal from "../ui/Modal";
 import Typography from "../ui/Typography";
+import Input from "../ui/Input";
 
 const BorrowModal = (props) => {
   const {
@@ -78,13 +79,13 @@ const BorrowModal = (props) => {
           Borrowing EUROs
         </Typography>
 
-        <input
-          className="input input-bordered w-full"
+        <Input
+          className="w-full"
           placeholder="Amount of EUROs to borrow"
           type="number"
           onChange={handleAmount}
           disabled={isPending}
-          ref={inputRef}
+          useRef={inputRef}
         />
 
         <div className="mt-4">
