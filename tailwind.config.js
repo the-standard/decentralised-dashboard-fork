@@ -67,6 +67,8 @@ export default {
         'dark': {
           ...require("daisyui/src/theming/themes")["dark"],
 
+          'base-content' : 'rgba(255,255,255,0.8)',      /* Foreground content color to use on base color */
+
           '--rounded-box': '0.65rem',          /* border-radius for cards and other big elements */
           '--rounded-btn': '0.65rem',        /* border-radius for buttons and similar elements */
           '--rounded-badge': '0.65rem',      /* border-radius for badge and other small elements */
