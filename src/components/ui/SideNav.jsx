@@ -18,7 +18,7 @@ const SideNav = (props) => {
   return (
     // <Menu className="p-0 text-base-content bg-nav/60 md:bg-transparent tst-sidenav">
     //   <div className="flex flex-row flex-no-wrap space-x-2 md:hidden p-2 h-16 bg-nav/60">
-    <Menu className="p-0 text-base-content md:bg-transparent tst-sidenav">
+    <Menu className="p-0 text-base-content tst-sidenav">
       <div className="flex flex-row flex-no-wrap space-x-2 md:hidden p-2 h-16">
         <Button className="flex grow text-xl p-2 px-4" color="ghost" style={{justifyContent: "flex-start"}}>
           {import.meta.env.VITE_COMPANY_DAPP_NAME || ''}
