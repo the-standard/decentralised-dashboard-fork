@@ -1,5 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ethers } from "ethers";
+import axios from "axios";
+import {
+  useChainId,
+} from "wagmi";
+import { arbitrumSepolia } from "wagmi/chains";
 
 import {
   useVaultStore,
@@ -15,8 +20,11 @@ import Button from "../ui/Button";
 import CenterLoader from "../ui/CenterLoader";
 import TokenIcon from "../ui/TokenIcon";
 import TokenActions from "./TokenActions";
+import TokenValueChart from "./TokenValueChart";
 
 const TokenList = ({ assets, assetsLoading }) => {
+
+  const chainId = useChainId();
 
   const { vaultStore } = useVaultStore();
 
@@ -39,16 +47,38 @@ const TokenList = ({ assets, assetsLoading }) => {
     }
   }
 
+  const [chartData, setChartData] = useState(undefined);
+
+  const getChartData = async () => {
+    try {
+      const response = await axios.get(
+        "https://smart-vault-api.thestandard.io/asset_prices"
+      );
+      const chainData =
+        chainId === arbitrumSepolia.id
+          ? response.data.arbitrum_sepolia
+          : response.data.arbitrum;
+      setChartData(chainData);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getChartData();
+  }, []);
+
   return (
     <>
       <Card className="card-compact">
         <div className="card-body">
-          <div className="overflow-x-auto">
+          <div className="">
             <table className="table table-fixed table-zebra">
               <thead>
                 <tr>
                   <th>Asset</th>
                   <th>Balance</th>
+                  <th className="hidden md:table-cell">Price Development</th>
                   <th>&nbsp;</th>
                 </tr>
               </thead>
@@ -68,7 +98,13 @@ const TokenList = ({ assets, assetsLoading }) => {
                       setUseAsset(asset);
                     };
 
-                    return(
+                    let useData = [];
+                    
+                    if (chartData && chartData[symbol] && chartData[symbol].prices) {
+                      useData = chartData[symbol].prices;
+                    }
+
+                    return (
                       <>
                         <tr
                           key={index}
@@ -86,6 +122,12 @@ const TokenList = ({ assets, assetsLoading }) => {
                             {ethers.formatUnits(amount, token.dec)}
                             <br/>
                             €{formattedCollateralValue}
+                          </td>
+                          <td className="hidden md:table-cell">
+                            <TokenValueChart
+                              data={useData}
+                              symbol={symbol}
+                            />
                           </td>
                           <td className="text-right">
                             <Button
@@ -108,7 +150,8 @@ const TokenList = ({ assets, assetsLoading }) => {
                             'glass-alt-bg w-full hidden h-0'
                           )}
                         >
-                          <td colspan="3">
+                          <td className="hidden md:table-cell"></td>
+                          <td colSpan="3">
                             {vaultStore.status.liquidated ? null : (
                               <>
                                 <div className="flex flex-row gap-4">
