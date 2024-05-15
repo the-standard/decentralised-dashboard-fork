@@ -5,6 +5,11 @@ import {
   useVaultStore,
 } from "../../store/Store";
 
+import {
+  ChevronDownIcon,
+  ChevronUpIcon,
+} from '@heroicons/react/24/outline';
+
 import Card from "../ui/Card";
 import Button from "../ui/Button";
 import CenterLoader from "../ui/CenterLoader";
@@ -18,8 +23,20 @@ const TokenList = ({ assets, assetsLoading }) => {
   const [actionType, setActionType] = useState();
   const [useAsset, setUseAsset] = useState();
 
+  const [subRow, setSubRow] = useState();
+
   const closeAction = () => {
     setActionType('');
+  }
+
+  const toggleSubRow = (index) => {
+    const useRow = index + 'sub';
+
+    if (subRow === useRow) {
+      setSubRow('');
+    } else {
+      setSubRow(useRow);
+    }
   }
 
   return (
@@ -27,7 +44,7 @@ const TokenList = ({ assets, assetsLoading }) => {
       <Card className="card-compact">
         <div className="card-body">
           <div className="overflow-x-auto">
-            <table className="table table-zebra">
+            <table className="table table-fixed table-zebra">
               <thead>
                 <tr>
                   <th>Asset</th>
@@ -52,52 +69,79 @@ const TokenList = ({ assets, assetsLoading }) => {
                     };
 
                     return(
-                      <tr key={index}>
-                        <td>
-                          {/* {symbol} */}
-                          <TokenIcon
-                            symbol={symbol}
-                            style={{ height: "2rem", width: "2rem" }}
-                          />
-                        </td>
-                        <td>
-                          {ethers.formatUnits(amount, token.dec)}
-                          <br/>
-                          €{formattedCollateralValue}
-                        </td>
-                        <td>
-                          {vaultStore.status.liquidated ? null : (
-                            <div>
-                              <div className="flex flex-col space-x-0 space-y-2 md:flex-row md:space-x-2 md:space-y-0">
-                                <Button
-                                  variant="outline"
-                                  size="sm"
-                                  onClick={() => handleClick('DEPOSIT', asset)}
-                                  className="w-full md:w-1/3"
-                                >
-                                  Deposit
-                                </Button>
-                                <Button
-                                  variant="outline"
-                                  size="sm"
-                                  onClick={() => handleClick('WITHDRAW', asset)}
-                                  className="w-full md:w-1/3"
-                                >
-                                  Withdraw
-                                </Button>
-                                <Button
-                                  variant="outline"
-                                  size="sm"
-                                  onClick={() => handleClick('SWAP', asset)}
-                                  className="w-full md:w-1/3"
-                                >
-                                  Swap
-                                </Button>
-                              </div>
-                            </div>
+                      <>
+                        <tr
+                          key={index}
+                          onClick={() => toggleSubRow(index)}
+                          className="cursor-pointer hover"
+                        >
+                          <td>
+                            {/* {symbol} */}
+                            <TokenIcon
+                              symbol={symbol}
+                              style={{ height: "2rem", width: "2rem" }}
+                            />
+                          </td>
+                          <td>
+                            {ethers.formatUnits(amount, token.dec)}
+                            <br/>
+                            €{formattedCollateralValue}
+                          </td>
+                          <td className="text-right">
+                            <Button
+                              shape="circle"
+                              color="ghost"
+                            >
+                              {subRow === index + 'sub' ? (
+                                <ChevronUpIcon className="w-6 h-6"/>
+                              ) : (
+                                <ChevronDownIcon className="w-6 h-6"/>
+                              )}
+                            </Button>
+                          </td>
+                        </tr>
+                        <tr
+                          key={index + 'sub'}
+                          className={subRow === index + 'sub' ? (
+                            'glass-alt-bg w-full p-4 h-auto'
+                          ) : (
+                            'glass-alt-bg w-full hidden h-0'
                           )}
-                        </td>
-                      </tr>
+                        >
+                          <td colspan="3">
+                            {vaultStore.status.liquidated ? null : (
+                              <>
+                                <div className="flex flex-row gap-4">
+                                  <Button
+                                    variant="outline"
+
+                                    onClick={() => handleClick('DEPOSIT', asset)}
+                                    className="grow"
+                                  >
+                                    Deposit
+                                  </Button>
+                                  <Button
+                                    variant="outline"
+
+                                    onClick={() => handleClick('WITHDRAW', asset)}
+                                    className="grow"
+                                  >
+                                    Withdraw
+                                  </Button>
+                                  <Button
+                                    variant="outline"
+
+                                    onClick={() => handleClick('SWAP', asset)}
+                                    className="grow"
+                                  >
+                                    Swap
+                                  </Button>
+                                </div>
+                              </>
+                            )}
+                          </td>
+                        </tr>
+                      </>
                     )}
                   )}
                 </tbody>

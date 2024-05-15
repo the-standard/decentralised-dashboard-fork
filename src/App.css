@@ -7,6 +7,7 @@
   --nav-height: 4rem;
   --card-border-radius: 1rem;
   --glass-blur: blur(30px);
+  --transition-general: all 0.1s ease-in;
 }
 
 *[data-theme='dark'] {
@@ -37,6 +38,10 @@
   --input-bg-disabled: rgba(var(--glass-accent), 0.3);
   --table-alt: rgba(var(--glass-accent), 0.4);
   --glass-lines: rgba(var(--glass-accent), 0.4);
+}
+
+.glass-alt-bg {
+  background: var(--table-alt);
 }
 
 /* BACKGROUND */
@@ -144,7 +149,7 @@
 }
 
 .drawer[aria-expanded='true'] > .drawer-side > .drawer-overlay {
-  transition: all 0.2s;
+  transition: var(--transition-general);
   backdrop-filter: var(--glass-blur);
 }
 
@@ -229,8 +234,11 @@ input.input:disabled {
 
 .tst-con .table tr.active,
 .tst-con .table tr.active:nth-child(even),
-.tst-con .table-zebra tbody tr:nth-child(even) {
+.tst-con .table-zebra tbody tr:nth-child(even),
+.tst-con .table tr.hover:hover,
+.tst-con .table tr.hover:nth-child(even):hover {
   background-color: var(--table-alt);
+  transition: var(--transition-general);
 }
 
 .tst-con .table :where(thead, tbody) :where(tr:not(:last-child)),
