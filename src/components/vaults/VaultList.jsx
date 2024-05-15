@@ -177,16 +177,20 @@ const VaultList = ({ vaults, vaultsLoading, tokenId }) => {
                       return(
                         <tr key={index}>
                           <td className="hidden md:table-cell">
-                            <img
-                              style={{
-                                display: "block",
-                                width: "42px",
-                                // margin: "auto",
-                              }}
-                              src={seurologo}
-                              alt="EUROs"
-                            />
-                            {/* EUROs */}
+                            <Tooltip
+                              className="h-full"
+                              position="top"
+                              message={('EUROs' || '' )}
+                            >
+                              <img
+                                style={{
+                                  display: "block",
+                                  width: "42px",
+                                }}
+                                src={seurologo}
+                                alt="EUROs"
+                              />
+                            </Tooltip>
                           </td>
                           <td>
                             {vault.status.version ? (
