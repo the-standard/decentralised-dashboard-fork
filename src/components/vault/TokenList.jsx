@@ -5,6 +5,9 @@ import {
   useChainId,
 } from "wagmi";
 import { arbitrumSepolia } from "wagmi/chains";
+import {
+  Tooltip,
+} from 'react-daisyui';
 
 import {
   useVaultStore,
@@ -112,11 +115,19 @@ const TokenList = ({ assets, assetsLoading }) => {
                           className="cursor-pointer hover"
                         >
                           <td>
-                            {/* {symbol} */}
-                            <TokenIcon
-                              symbol={symbol}
-                              style={{ height: "2rem", width: "2rem" }}
-                            />
+                            <div className="h-full w-full flex items-center">
+                              <Tooltip
+                                className="h-full"
+                                position="top"
+                                message={(symbol || '' )}
+                              >
+                                <TokenIcon
+                                  symbol={symbol}
+                                  style={{ height: "2rem", width: "2rem" }}
+                                />
+                              </Tooltip>
+                              <div className="p-4 hidden md:table-cell">{symbol}</div>
+                            </div>
                           </td>
                           <td>
                             {ethers.formatUnits(amount, token.dec)}
