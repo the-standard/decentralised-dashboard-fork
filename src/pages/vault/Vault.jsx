@@ -164,7 +164,7 @@ const Vault = () => {
         </div>
       </Card>
 
-      <div>
+      <div className="mt-4">
         <TokenTotalPie
           chartData={chartData}
           currentVault={currentVault}
