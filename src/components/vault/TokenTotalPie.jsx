@@ -109,16 +109,14 @@ const TokenTotalPie = (props) => {
   };
 
   return (
-    <div>
-      <div id="chart">
-        <ReactApexChart
-          options={options}
-          series={prices}
-          labels={names}
-          type="donut"
-          height="300px"
-        />
-      </div>
+    <div id="chart">
+      <ReactApexChart
+        options={options}
+        series={prices}
+        labels={names}
+        type="donut"
+        height="300px"
+      />
     </div>
   );
 }

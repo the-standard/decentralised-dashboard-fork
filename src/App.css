@@ -17,7 +17,7 @@
     rgba(255, 255, 255, 0.0) 101.11%
   );
   --glass-inset: inset 1px 1px 1px 0px rgba(255, 255, 255, 0.3), 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-  --bg-image: url(/abstract-bg.png);
+  --bg-image: url(/src/assets/bg-dark.webp);
   --glass-accent: 0, 0, 0;
   --input-bg: rgba(var(--glass-accent), 0.6);
   --input-bg-disabled: rgba(var(--glass-accent), 0.3);
@@ -32,7 +32,7 @@
     rgba(255, 255, 255, 0.3) 101.11%
   );
   --glass-inset: inset 1px 1px 1px 0px rgba(255, 255, 255, 0.9), 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-  --bg-image: url(/abstract-bg.png);
+  --bg-image: url(/src/assets/bg-light.webp);
   --glass-accent: 255, 255, 255;
   --input-bg: rgba(var(--glass-accent), 0.6);
   --input-bg-disabled: rgba(var(--glass-accent), 0.3);
@@ -57,7 +57,7 @@
   right: 0px;
   left: 0px;
   bottom: 0px;
-  opacity: 0.3;
+  /* opacity: 0.3; */
   background-image: var(--bg-image);
   background-repeat: no-repeat;
   background-size: cover;
