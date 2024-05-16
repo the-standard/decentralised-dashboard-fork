@@ -245,3 +245,36 @@ input.input:disabled {
 .tst-con .table :where(thead, tbody) :where(tr:first-child:last-child) {
   border-bottom-color: var(--glass-lines);
 }
+
+/* CHART TOOLTIP */
+
+.chart-tooltip {
+  font-size: 14px;
+  text-align: center;
+  position: relative;
+  display: block;
+  min-width: 150px;
+  max-width: 200px;
+  animation: fade-in 300ms ease;
+  background: #272727;
+  border-radius: 4px;
+  padding: 10px;
+  color: #ffffff;
+  z-index: 1;
+}
+
+.chart-tooltip::after {
+  position: absolute;
+  content: "";
+  border-style: solid;
+  border-width: .1875rem 0;
+  width: 0;
+  height: 0;
+  display: block;
+  transform: translate(-50%);
+  border-color: #2a323c transparent transparent transparent;
+  top: auto;
+  left: 50%;
+  right: auto;
+  bottom: calc(100% + .0625rem - .1875rem);
+}
