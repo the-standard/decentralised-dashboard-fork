@@ -3,7 +3,7 @@ import { useParams, useLocation, useNavigate } from "react-router-dom";
 import {
   ChevronLeftIcon,
 } from '@heroicons/react/24/outline';
-
+import { ethers } from "ethers";
 import {
   useBlockNumber,
   useReadContract,
@@ -28,6 +28,7 @@ import Debt from "../../components/vault/Debt";
 import VaultStats from "../../components/vault/VaultStats";
 import TokenList from "../../components/vault/TokenList";
 import VaultSend from "../../components/vault/VaultSend";
+import TokenTotalPie from "../../components/vault/TokenTotalPie";
 
 import Card from "../../components/ui/Card";
 import Typography from "../../components/ui/Typography";
@@ -141,6 +142,14 @@ const Vault = () => {
     setRenderedBlock(blockNumber);
   }
 
+  const chartData = currentVault.status.collateral.map((asset) => {
+    return {
+      name: ethers.decodeBytes32String(asset.token.symbol),
+      prices: Number(ethers.formatEther(asset.collateralValue)).toFixed(2),
+      total: Number(ethers.formatUnits(asset.amount, asset.token.dec)).toFixed(2),
+    };
+  });
+
   return (
     <main>
       {vaultNav()}
@@ -154,6 +163,14 @@ const Vault = () => {
           />
         </div>
       </Card>
+
+      <div>
+        <TokenTotalPie
+          chartData={chartData}
+          currentVault={currentVault}
+        />
+      </div>
+      
       <div className="mt-4">
         <TokenList
           assets={assets}

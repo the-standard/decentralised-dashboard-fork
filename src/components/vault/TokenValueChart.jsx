@@ -76,7 +76,6 @@ const TokenValueChart = ({ data, symbol }) => {
       <ReactApexChart
         options={{
           chart: {
-            height: 200,
             type: "area",
             stacked: false,
             sparkline: {
