@@ -203,7 +203,6 @@ const VaultList = ({ vaults, vaultsLoading, tokenId }) => {
           </div>
 
           <div className="card-actions pt-4 justify-between items-center">
-
             {sortedVaults && sortedVaults.length ? (
               <Pagination
                 totalItems={sortedVaults.length || 0}
