@@ -14,13 +14,17 @@ const Pagination = ({
   currentPage,
   onPageChange,
   className,
+  mode,
 }) => {
 
   const useTotalItems = totalItems || 0;
-  const useCurrentPage = currentPage || useTotalPages.length || 0;
   const usePerPage = perPage || 5;
   const useMaxVisiblePages = 5;
   const useTotalPages = Math.ceil(useTotalItems / usePerPage);
+  let useCurrentPage = currentPage || 1;
+  if (mode === 'server') {
+    useCurrentPage = currentPage - 1 || 0;
+  }
 
   const getLastPageIndex = (total, pageSize) => {
     return Math.floor((total + pageSize - 1) / pageSize); // - 1;

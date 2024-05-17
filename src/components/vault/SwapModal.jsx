@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { ethers } from "ethers";
 import { useWriteContract } from "wagmi";
 import { toast } from 'react-toastify';
+import axios from "axios";
 import {
   ArrowPathIcon,
 } from '@heroicons/react/24/outline';
@@ -52,6 +53,30 @@ const SwapModal = ({
   const handleMinReturn = (e) => {
     setReceiveAmount(ethers.parseUnits(e.target.value.toString(), receiveDecimals))
   };
+
+  const getSwapConversion = async () => {
+    try {
+      setSwapLoading(true);
+      const swapIn = symbol;
+      const swapOut = receiveAsset;
+      const swapAmount = amount.toString();
+      const response = await axios.get(
+        `https://smart-vault-api.thestandard.io/estimate_swap?in=${swapIn}&out=${swapOut}&amount=${swapAmount}`
+      );
+      const data = response.data;
+      setReceiveAmount(BigInt(data));
+      inputReceiveRef.current.value = ethers.formatUnits(data.toString(), receiveDecimals);
+      setSwapLoading(false);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    if (amount && receiveAsset && symbol) {
+      getSwapConversion();
+    }
+  }, [amount, receiveAsset]);
 
   useEffect(() => {
     const useAssets = [];

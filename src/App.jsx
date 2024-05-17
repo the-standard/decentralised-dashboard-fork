@@ -11,6 +11,7 @@ import DashLayout from "./components/ui/DashLayout";
 import Home from './pages/Home';
 import Vaults from './pages/vaults/Vaults';
 import Vault from './pages/vault/Vault';
+import VaultHistory from './pages/vault/VaultHistory';
 import LiquidationPools from './pages/liquidation-pools/LiquidationPools';
 import StakingPool from './pages/staking-pool/StakingPool';
 import './App.css';
@@ -29,6 +30,7 @@ function App() {
                 <Route path="/" element={<Home />} />
                 <Route path="vaults" element={<DashLayout><Vaults /></DashLayout>} />
                 <Route path="vault/:vaultId" element={<DashLayout><Vault /></DashLayout>} />
+                <Route path="vault/:vaultId/history" element={<DashLayout><VaultHistory /></DashLayout>} />
                 <Route path="liquidation-pools" element={<DashLayout><LiquidationPools /></DashLayout>} />
                 <Route path="staking-pool" element={<DashLayout><StakingPool /></DashLayout>} />
                 <Route path="*" element={<Home/>} />
