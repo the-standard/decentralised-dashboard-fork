@@ -20,36 +20,62 @@ const TokenTotalPie = (props) => {
     return Number(item['prices']);
   });
 
+  let useSeries = prices;
+
+  let chartEmpty = false;
+
+  if (useSeries.some(el => el > 0)) {
+    chartEmpty = false;
+  } else {
+    chartEmpty = true;
+    useSeries = [1];
+  }
+
+
   const options = {
     plotOptions: {
-      // pie: {
-      //   donut: {
-      //     labels: {
-      //       show: true,
-      //       name: {
-      //         formatter: function (val) {
-      //           return val
-      //         },        
-      //       },
-      //       value: {
-      //         formatter: function (val) {
-      //           return val
-      //         },        
-      //       },
-      //       total: {
-      //         show: true,
-      //         label: 'Total',
-      //         fontSize: '22px',
-      //         fontWeight: 600,
-      //         formatter: function (w) {
-      //           return w.globals.seriesTotals.reduce((a, b) => {
-      //             return a + b
-      //           }, 0)
-      //         }
-      //       }
-      //     }
-      //   }
-      // }
+      pie: {
+        expandOnClick: chartEmpty ? (false) : (true),
+        donut: {
+          // background: 'transparent',
+          // labels: {
+          //   show: true,
+          //   name: {
+          //     formatter: function (val) {
+          //       return val
+          //     },        
+          //   },
+          //   value: {
+          //     formatter: function (val) {
+          //       return val
+          //     },        
+          //   },
+          //   total: {
+          //     show: true,
+          //     label: 'Total',
+          //     fontSize: '22px',
+          //     fontWeight: 600,
+          //     formatter: function (w) {
+          //       return w.globals.seriesTotals.reduce((a, b) => {
+          //         return a + b
+          //       }, 0)
+          //     }
+          //   }
+          // }
+        }
+      }
+    },
+    states: {
+      active: {
+        filter: {
+          type: chartEmpty ? ('none') : ('darken')
+        }
+      },
+      hover: {
+        filter: {
+          type: chartEmpty ? ('none') : ('lighten')
+        }
+      },
     },
     chart: {
       type: 'donut',
@@ -60,12 +86,13 @@ const TokenTotalPie = (props) => {
         show: false,
       },  
     },
+    colors: chartEmpty ? (['rgba(0,0,0,0.3)']) : (undefined),
     stroke: {
       show: false
     },
     labels: names,
     dataLabels: {
-      enabled: true,
+      enabled: chartEmpty ? (false) : (true),
       formatter: (val, opt) => {
         if (opt.seriesIndex >= 0) {
           return names[opt.seriesIndex]
@@ -87,7 +114,7 @@ const TokenTotalPie = (props) => {
       }
     }],
     tooltip: {
-      enabled: true,
+      enabled: chartEmpty ? (false) : (true),
       shared: false,
       theme: 'dark',
       custom: ({ series, seriesIndex, dataPointIndex, w }) => {
@@ -104,16 +131,16 @@ const TokenTotalPie = (props) => {
             </p>
           </div>
         )
+      },
     },
-},
   };
 
   return (
     <div id="chart">
       <ReactApexChart
         options={options}
-        series={prices}
-        labels={names}
+        series={useSeries || []}
+        labels={names || []}
         type="donut"
         height="300px"
       />
