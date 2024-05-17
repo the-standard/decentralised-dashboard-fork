@@ -187,8 +187,6 @@ const VaultHistory = () => {
 
   const rows = historyData || [];
 
-  console.log(456456, rows.length)
-
   const handleEtherscanLink = (txRef) => {
     const arbiscanUrl = chainId === arbitrumSepolia.id
       ? `https://sepolia.arbiscan.io/tx/${txRef}`
