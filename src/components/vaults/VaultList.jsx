@@ -258,12 +258,17 @@ const VaultList = ({ vaults, vaultsLoading, tokenId }) => {
           </div>
 
           <div className="card-actions pt-4 justify-between items-center">
-            <Pagination
-              totalItems={sortedVaults.length || 0}
-              perPage={itemsPerPage || 0}
-              currentPage={currentPage}
-              onPageChange={handlePageChange}
-            />
+
+            {sortedVaults && sortedVaults.length ? (
+              <Pagination
+                totalItems={sortedVaults.length || 0}
+                perPage={itemsPerPage || 0}
+                currentPage={currentPage}
+                onPageChange={handlePageChange}
+              />            
+            ) : (
+              <div>&nbsp;</div>
+            )}
             <Button
               onClick={() => handleMintVault()}
               disabled={isPending}

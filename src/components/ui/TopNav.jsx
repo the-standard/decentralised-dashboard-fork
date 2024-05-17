@@ -1,12 +1,15 @@
 import { useAccount } from "wagmi";
+import { useNavigate } from "react-router-dom";
 import { Bars3Icon } from '@heroicons/react/24/outline';
 
+import StandardioLogo from "../../assets/standardiologo.svg";
 import Button from "./Button";
 import ThemeToggle from "./ThemeToggle";
 
 const TopNav = (props) => {
   const { toggleVisible } = props;
   const { address } = useAccount();
+  const navigate = useNavigate();
 
   if (address) {
     return (
@@ -22,9 +25,14 @@ const TopNav = (props) => {
           <Button
             className="text-xl hidden md:flex"
             color="ghost"
-            onClick={toggleVisible}
+            onClick={() => navigate("/")}
           >
-            {import.meta.env.VITE_COMPANY_DAPP_NAME || ''}
+            <img
+              src={StandardioLogo}
+              alt="TheStandard.io Logo"
+              className="h-6"
+            />  
+            {/* {import.meta.env.VITE_COMPANY_DAPP_NAME || ''} */}
           </Button>
         </div>
         <div className="navbar-end">

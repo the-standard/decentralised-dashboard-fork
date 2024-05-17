@@ -266,7 +266,7 @@ const Staking = () => {
     <>
       <Card className="card-compact w-full">
         <div className="card-body">
-          <Typography variant="h2" className="card-title justify-between">
+          <Typography variant="h2" className="card-title flex justify-between">
             Deposit
 
             <Button size="sm" onClick={() => setHelpOpen(true)}>

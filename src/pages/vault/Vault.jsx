@@ -88,13 +88,19 @@ const Vault = () => {
 
   const vaultNav = (element) => {
     return (
-      <div className="flex flex-wrap mb-4">
+      <div className="flex flex-wrap mb-4 gap-4">
         <Button
           onClick={() => navigate('/')}
           disabled={isLoading}
         >
           <ChevronLeftIcon className="h-6 w-6 inline-block"/>
           Return to Vaults
+        </Button>
+        <Button
+          onClick={() => navigate('./history')}
+          disabled={isLoading}
+        >
+          History
         </Button>
       </div>
     )
