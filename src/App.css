@@ -47,7 +47,9 @@
 /* BACKGROUND */
 
 .tst-bg {
-  background-color: #000000;
+  height: 100lvh;
+  display: block;
+  overflow: auto;
 }
 
 .tst-bg:before {
