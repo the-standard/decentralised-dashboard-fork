@@ -76,7 +76,7 @@ const TokenList = ({ assets, assetsLoading }) => {
       <Card className="card-compact">
         <div className="card-body">
           <div className="">
-            <table className="table table-fixed table-zebra">
+            <table className="table table-fixed">
               <thead>
                 <tr>
                   <th>Asset</th>

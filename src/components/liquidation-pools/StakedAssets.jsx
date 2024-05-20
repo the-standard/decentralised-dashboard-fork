@@ -27,7 +27,7 @@ const StakedAssets = ({
           <Typography variant="h2" className="card-title">Staked Assets</Typography>
 
           <div className="overflow-x-auto">
-            <table className="table table-zebra">
+            <table className="table">
               <thead>
                 <tr>
                   <th>Asset</th>
