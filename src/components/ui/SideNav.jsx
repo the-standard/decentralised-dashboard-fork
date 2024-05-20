@@ -1,6 +1,7 @@
 import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import {
   Menu,
+  Tooltip,
 } from 'react-daisyui';
 import {
   CircleStackIcon,
@@ -44,7 +45,8 @@ const SideNav = (props) => {
           <XMarkIcon className="h-6 w-6 inline-block"/>
         </Button>
       </div>
-      <div className="p-2 flex flex-col gap-2">
+      {/* Small - */}
+      <div className="p-2 flex flex-col gap-2 w-full md:hidden">
         <Menu.Item>
           <NavLink
             to="/vaults"
@@ -56,7 +58,9 @@ const SideNav = (props) => {
             }
           >
             <CircleStackIcon className="h-6 w-6 inline-block"/>
-            {/* Vaults */}
+            <span className="md:hidden">
+              Vaults
+            </span>
           </NavLink>
         </Menu.Item>
         <Menu.Item>
@@ -69,9 +73,55 @@ const SideNav = (props) => {
             }
           >
             <BanknotesIcon className="h-6 w-6 inline-block"/>
-            {/* Liquidation Pools */}
+            <span className="md:hidden">
+              Liquidation Pools
+            </span>
           </NavLink>
         </Menu.Item>
+      </div>
+      {/* Med + */}
+      <div className="p-2 flex-col gap-2 w-full hidden md:flex">
+        <Tooltip
+          position="right"
+          message="Vaults"
+        >
+          <Menu.Item>
+            <NavLink
+              to="/vaults"
+              className={({ isActive }) => 
+                isActive ||
+                location.pathname === '/' ||
+                location.pathname.includes('/vault') ?
+                'navbar-item active' : 'navbar-item'
+              }
+            >
+              <CircleStackIcon className="h-6 w-6 inline-block"/>
+              <span className="md:hidden">
+                Vaults
+              </span>
+            </NavLink>
+          </Menu.Item>
+        </Tooltip>
+        <Tooltip
+          position="right"
+          message="Liquidation Pools"
+        >
+          <Menu.Item>
+            <NavLink
+              to="/liquidation-pools"
+              className={({ isActive }) => 
+                isActive ||
+                location.pathname.includes('/liquidation-pools') ?
+                'navbar-item active' : 'navbar-item'
+              }
+            >
+              <BanknotesIcon className="h-6 w-6 inline-block"/>
+              <span className="md:hidden">
+                Liquidation Pools
+              </span>
+            </NavLink>
+          </Menu.Item>
+        </Tooltip>
       </div>
       <div className="block md:hidden self-center mt-auto pb-4">
         <ThemeToggle />
