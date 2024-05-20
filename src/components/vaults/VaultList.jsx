@@ -76,7 +76,7 @@ const VaultList = ({ vaults, vaultsLoading, tokenId }) => {
           </Typography>
 
           <div className="overflow-x-auto">
-            <table className="table table-zebra">
+            <table className="table ">
               <thead>
                 <tr>
                   <th className="hidden md:table-cell">Type</th>
@@ -120,7 +120,17 @@ const VaultList = ({ vaults, vaultsLoading, tokenId }) => {
                         healthColour = 'error';
                       }
                       return(
-                        <tr key={index}>
+                        <tr
+                          key={index}
+                          className="cursor-pointer hover"
+                          onClick={() => navigate(
+                            `/vault/${
+                              BigInt(
+                                vault.tokenId
+                              ).toString()
+                            }`
+                          )}
+                        >
                           <td className="hidden md:table-cell">
                             <Tooltip
                               className="h-full"
