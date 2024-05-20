@@ -68,6 +68,10 @@ const Pagination = ({
     useCurrentPage
   );
 
+  if (useTotalItems <= usePerPage) {
+    return (<>&nbsp;</>)
+  }
+
   return (
     <DaisyPagination className={className || ''}>
       <Button

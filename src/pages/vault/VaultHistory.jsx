@@ -24,7 +24,7 @@ import Card from "../../components/ui/Card";
 import Button from "../../components/ui/Button";
 import Pagination from "../../components/ui/Pagination";
 
-const itemsPerPage = 10;
+const itemsPerPage = 8;
 
 const VaultHistory = () => {
   const chainId = useChainId();
@@ -186,6 +186,8 @@ const VaultHistory = () => {
   };
 
   const rows = historyData || [];
+
+  console.log(456456, rows.length)
 
   const handleEtherscanLink = (txRef) => {
     const arbiscanUrl = chainId === arbitrumSepolia.id
