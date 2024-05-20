@@ -1,13 +1,6 @@
 import { useEffect } from "react";
 import { ethers } from "ethers";
 import { Link, useNavigate } from "react-router-dom";
-import { toast } from 'react-toastify';
-import {
-  useWriteContract,
-  useChainId,
-  useAccount
-} from "wagmi";
-import { arbitrum, arbitrumSepolia } from "wagmi/chains";
 
 import {
   Tooltip,
@@ -16,62 +9,14 @@ import {
 
 import {
   useCurrentPageStore,
-  useContractAddressStore,
-  useVaultManagerAbiStore
 } from "../../store/Store";
 
 import Card from "../ui/Card";
-import Button from "../ui/Button";
 import Pagination from "../ui/Pagination";
 import CenterLoader from "../ui/CenterLoader";
 import Typography from "../ui/Typography";
 
 const VaultList = ({ vaults, vaultsLoading, tokenId }) => {
-  const { vaultManagerAbi } = useVaultManagerAbiStore();
-  const {
-    arbitrumSepoliaContractAddress,
-    arbitrumContractAddress,
-  } = useContractAddressStore();
-
-  const { address } = useAccount();
-  const chainId = useChainId();
-  const navigate = useNavigate();
-
-  const vaultManagerAddress =
-    chainId === arbitrumSepolia.id
-      ? arbitrumSepoliaContractAddress
-      : arbitrumContractAddress;
-
-  const { writeContract: mintVault, isError, isPending, isSuccess } = useWriteContract();
-
-  const handleMintVault = async () => {
-    if (chainId !== arbitrumSepolia.id && chainId !== arbitrum.id) {
-      toast.error('Please change to Arbitrum network!');
-      return;
-    }
-    mintVault({
-      abi: vaultManagerAbi,
-      address: vaultManagerAddress,
-      functionName: 'mint',
-      args: [],
-    });
-  };
-
-  useEffect(() => {
-    if (isPending) {
-      // 
-    } else if (isSuccess && tokenId) {
-      navigate(`/vault/${tokenId.toString()}`);
-    } else if (isError) {
-      // 
-    }
-  }, [
-    isError,
-    isPending,
-    isSuccess,
-    tokenId
-  ]);
-
   const { setCurrentPage, currentPage } = useCurrentPageStore();
 
   const sortedVaults = [...vaults].sort((a, b) => {
@@ -248,13 +193,6 @@ const VaultList = ({ vaults, vaultsLoading, tokenId }) => {
               currentPage={currentPage}
               onPageChange={handlePageChange}
             />
-            <Button
-              onClick={() => handleMintVault()}
-              disabled={isPending}
-              loading={isPending}
-            >
-              Create Vault
-            </Button>
           </div>
         </div>
       </Card>
