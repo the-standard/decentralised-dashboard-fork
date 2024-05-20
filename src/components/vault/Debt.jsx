@@ -332,16 +332,16 @@ const Debt = ({
 
   return (
     <>
-      <div className="card-actions pt-4 gap-4 xl:gap-8 flex-col-reverse lg:flex-row justify-between xl:justify-normal">
+      <div className="card-actions">
         <Button
-          className="w-full lg:w-64"
+          className="w-full lg:w-auto flex-1"
           onClick={() => setBorrowOpen(!borrowOpen)}
         >
           <ArrowDownCircleIcon className="h-6 w-6 inline-block"/>
           Borrow
         </Button>
         <Button
-          className="w-full lg:w-64"
+          className="w-full lg:w-auto flex-1"
           onClick={() => setRepayOpen(!repayOpen)}
         >
           <ArrowUpCircleIcon className="h-6 w-6 inline-block"/>

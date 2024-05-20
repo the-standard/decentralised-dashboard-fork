@@ -156,21 +156,42 @@ const Vault = () => {
     };
   });
 
+  const vaultVersion = vaultStore?.status.version || '';
+
   return (
     <main>
-      {vaultNav()}
       <Card className="card-compact">
         <div className="card-body">
-          <VaultStats
-            currentVault={currentVault}
-          />
-          <Debt
-            currentVault={currentVault}
-          />
+          <div className="flex flex-col md:flex-row">
+            <div className="flex-1">
+              {vaultNav()}
+              <VaultStats
+                currentVault={currentVault}
+              />
+              <div className="pt-4 hidden md:block">
+                <Debt
+                  currentVault={currentVault}
+                />
+              </div>
+            </div>
+            <div className="flex-1 flex flex-col justify-center items-center">
+              <TokenTotalPie
+                chartData={chartData}
+                currentVault={currentVault}
+                vaultId={vaultId}
+                vaultVersion={vaultVersion}
+              />
+              <div className="pt-4 w-full block md:hidden">
+                <Debt
+                  currentVault={currentVault}
+                />
+              </div>
+            </div>
+          </div>
         </div>
       </Card>
 
-      <div className="mt-4">
+      {/* <div className="mt-4">
         <Card className="card-compact">
           <div className="card-body">
             <TokenTotalPie
@@ -180,7 +201,7 @@ const Vault = () => {
           </div>
         </Card>
       </div>
-      
+       */}
       <div className="mt-4">
         <TokenList
           assets={assets}
