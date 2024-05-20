@@ -156,11 +156,12 @@
 @media (min-width: 768px) {
   .tst-sidenav {
     height: unset;
-    margin-top: calc(var(--nav-height) * -1);
+    /* margin-top: calc(var(--nav-height) * -1); */
     position: fixed;
-    top: 50%;
-    transform: translateY(-50%);
+    /* top: 50%; */
+    /* transform: translateY(-50%); */
     width: 4rem;
+    margin-top: 1rem;
   }
 
   .tst-sidenav,
