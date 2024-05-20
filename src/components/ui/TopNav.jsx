@@ -2,7 +2,13 @@ import { useAccount } from "wagmi";
 import { useNavigate } from "react-router-dom";
 import { Bars3Icon } from '@heroicons/react/24/outline';
 
-import StandardioLogo from "../../assets/standardiologo.svg";
+import {
+  useCurrentTheme,
+} from "../../store/Store";
+
+import StandardioLogoWhite from "../../assets/standardiologo-white.svg";
+import StandardioLogoBlack from "../../assets/standardiologo-black.svg";
+
 import Button from "./Button";
 import ThemeToggle from "./ThemeToggle";
 
@@ -10,6 +16,7 @@ const TopNav = (props) => {
   const { toggleVisible } = props;
   const { address } = useAccount();
   const navigate = useNavigate();
+  const { currentTheme } = useCurrentTheme();
 
   if (address) {
     return (
@@ -28,7 +35,7 @@ const TopNav = (props) => {
             onClick={() => navigate("/")}
           >
             <img
-              src={StandardioLogo}
+              src={currentTheme === 'light' ? (StandardioLogoBlack) : (StandardioLogoWhite)}
               alt="TheStandard.io Logo"
               className="h-6"
             />  

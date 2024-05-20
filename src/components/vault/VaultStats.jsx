@@ -99,17 +99,17 @@ const VaultStats = ({
   return (
     <>
       <div className="flex flex-wrap">
-        <Typography
+        {/* <Typography
           variant="h3"
           className="mb-2"
         >
           Smart Vault #{vaultID}
-        </Typography>
+        </Typography> */}
       </div>
       <div className="-mx-1 flex flex-wrap">
         {statsItems.map((item, index) => (
           <div
-            className="w-1/2 px-1 my-2 sm:my-2 sm:w-1/2 lg:my-0 lg:w-2/12"
+            className="w-1/2 px-1 my-2 sm:my-2 sm:w-1/2 lg:my-0 lg:w-1/3"
             key={index}
           >
             <Typography
@@ -132,7 +132,7 @@ const VaultStats = ({
           </div>
         ))}
         <div
-          className="w-full px-1 my-2 sm:my-2 lg:my-0 sm:w-full lg:w-6/12"
+          className="w-full px-1 my-2 sm:my-2 sm:w-full"
         >
           <div className="flex flex-row justify-between">
             <Typography

@@ -8,7 +8,12 @@ import {
   XMarkIcon,
 } from '@heroicons/react/24/outline';
 
-import StandardioLogo from "../../assets/standardiologo.svg";
+import {
+  useCurrentTheme,
+} from "../../store/Store";
+
+import StandardioLogoWhite from "../../assets/standardiologo-white.svg";
+import StandardioLogoBlack from "../../assets/standardiologo-black.svg";
 
 import Button from "./Button";
 import ThemeToggle from "./ThemeToggle";
@@ -17,10 +22,9 @@ const SideNav = (props) => {
   const { toggleVisible } = props;
   const location = useLocation();
   const navigate = useNavigate();
+  const { currentTheme } = useCurrentTheme();
 
   return (
-    // <Menu className="p-0 text-base-content bg-nav/60 md:bg-transparent tst-sidenav">
-    //   <div className="flex flex-row flex-no-wrap space-x-2 md:hidden p-2 h-16 bg-nav/60">
     <Menu className="p-0 text-base-content tst-sidenav">
       <div className="flex flex-row flex-no-wrap space-x-2 md:hidden p-2 h-16">
         <Button
@@ -30,7 +34,7 @@ const SideNav = (props) => {
           onClick={() => navigate("/")}
         >
           <img
-            src={StandardioLogo}
+            src={currentTheme === 'light' ? (StandardioLogoBlack) : (StandardioLogoWhite)}
             alt="TheStandard.io Logo"
             className="h-5"
           />

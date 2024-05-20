@@ -4,9 +4,11 @@ import { renderToString } from 'react-dom/server'
 
 import ReactApexChart from "react-apexcharts";
 
+import Typography from "../../components/ui/Typography";
+
 const TokenTotalPie = (props) => {
 
-  const { chartData } = props;
+  const { chartData, vaultId, vaultVersion } = props;
 
   // const series = [44, 55, 41, 17, 15];
   
@@ -37,6 +39,7 @@ const TokenTotalPie = (props) => {
       pie: {
         expandOnClick: chartEmpty ? (false) : (true),
         donut: {
+          size: '80%',
           // background: 'transparent',
           // labels: {
           //   show: true,
@@ -86,7 +89,20 @@ const TokenTotalPie = (props) => {
         show: false,
       },  
     },
-    colors: chartEmpty ? (['rgba(0,0,0,0.3)']) : (undefined),
+    colors: chartEmpty ? (
+      ['rgba(0,0,0,0.3)']
+    ) : (
+      [
+        'rgba(0, 143, 251, 0.6)',
+        'rgba(139, 77, 249, 0.6)',
+        'rgba(248, 226, 35, 0.6)',
+        'rgba(0, 227, 150, 0.6)',
+        'rgba(233, 30, 99, 0.6)',
+        'rgba(0, 143, 251, 0.6)',
+        'rgba(0, 227, 150, 0.6)',
+        'rgba(206, 212, 220, 0.6)',
+      ]
+    ),
     stroke: {
       show: false
     },
@@ -136,13 +152,28 @@ const TokenTotalPie = (props) => {
   };
 
   return (
-    <div id="chart">
+    <div id="chart" className="relative">
+      <div className="
+        hidden sm:block absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2
+      ">
+        <Typography
+          variant="h3"
+          className="text-center"
+        >
+          Vault ID<br/>
+          {vaultVersion ? (
+            `V${vaultVersion}-`
+          ) : ('')}
+          {vaultId}
+        </Typography>
+      </div>
       <ReactApexChart
         options={options}
         series={useSeries || []}
         labels={names || []}
         type="donut"
-        height="300px"
+        height="200px"
+        width="200px"
       />
     </div>
   );
