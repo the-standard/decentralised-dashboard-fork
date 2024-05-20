@@ -181,9 +181,11 @@ const DepositModal = (props) => {
           Deposit {symbol}
         </Typography>
 
-        <div role="alert" className="alert alert-warning mb-2">
+        <div role="alert" className="alert alert-warning bg-yellow-400/20 mb-2">
           <span>
-            <b>Only send coins on Arbitrum</b>. Deposits from other chains will be lost.
+            <b>Only send coins on Arbitrum</b>.
+            <br/>
+            Deposits from other chains will be lost.
           </span>
         </div>
 
