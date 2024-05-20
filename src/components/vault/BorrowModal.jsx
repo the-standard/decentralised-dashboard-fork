@@ -32,7 +32,7 @@ const BorrowModal = (props) => {
           closeModal={closeModal}
         >
           <Typography variant="h2" className="card-title">
-            <ArrowDownCircleIcon className="h-6 w-6 inline-block"/>
+            <ArrowDownCircleIcon className="mr-2 h-6 w-6 inline-block"/>
             Borrowing EUROs
           </Typography>
 
@@ -75,7 +75,7 @@ const BorrowModal = (props) => {
         closeModal={closeModal}
       >
         <Typography variant="h2" className="card-title">
-          <ArrowDownCircleIcon className="h-6 w-6 inline-block"/>
+          <ArrowDownCircleIcon className="mr-2 h-6 w-6 inline-block"/>
           Borrowing EUROs
         </Typography>
 

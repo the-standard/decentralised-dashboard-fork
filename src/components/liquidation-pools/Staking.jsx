@@ -337,7 +337,7 @@ const Staking = () => {
         wide
       >
         <Typography variant="h2" className="card-title">
-          <QuestionMarkCircleIcon className="h-6 w-6 inline-block"/>
+          <QuestionMarkCircleIcon className="mr-2 h-6 w-6 inline-block"/>
           Liquidation Pool - How It Works
         </Typography>
 
