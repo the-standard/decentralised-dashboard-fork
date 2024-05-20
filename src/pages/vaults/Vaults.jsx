@@ -92,11 +92,13 @@ const Vaults = () => {
     <main>
       <VaultCreate
         tokenId={tokenId}
-      />
-      <VaultList
         vaults={myVaults || []}
         vaultsLoading={isPending || false}
+      />
+      <VaultList
         tokenId={tokenId}
+        vaults={myVaults || []}
+        vaultsLoading={isPending || false}
       />
     </main>
   );
