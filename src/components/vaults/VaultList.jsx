@@ -223,13 +223,6 @@ const VaultList = ({ vaults, vaultsLoading, tokenId }) => {
             ) : (
               <div>&nbsp;</div>
             )}
-            <Button
-              onClick={() => handleMintVault()}
-              disabled={isPending}
-              loading={isPending}
-            >
-              Create Vault
-            </Button>
           </div>
         </div>
       </Card>
