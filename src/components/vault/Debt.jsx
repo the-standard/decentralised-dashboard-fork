@@ -18,6 +18,7 @@ import {
   useVaultAddressStore,
   usesEuroAddressStore,
   useErc20AbiStore,
+  useVaultHealthUpdate,
 } from "../../store/Store";
 
 import smartVaultAbi from "../../abis/smartVault";
@@ -35,6 +36,10 @@ const Debt = ({
   const { arbitrumsEuroAddress, arbitrumSepoliasEuroAddress } =
     usesEuroAddressStore();
   const { erc20Abi } = useErc20AbiStore();
+  const {
+    setVaultHealthUpdateType,
+    setVaultHealthUpdateAmount,
+  } = useVaultHealthUpdate();
   const inputRef = useRef(null);
 
   const [ amount, setAmount ] = useState(BigInt(0));
@@ -73,9 +78,12 @@ const Debt = ({
   const allowance = eurosData && eurosData[0].result;
   const eurosWalletBalance = eurosData && eurosData[1].result;
 
-  const handleAmount = (e) => {
+  const handleAmount = (e, type) => {
+    setVaultHealthUpdateType(type);
     if (Number(e.target.value) < 10n ** 21n) {
-      setAmount(ethers.parseEther(e.target.value.toString()))
+      const amount = ethers.parseEther(e.target.value.toString());
+      setAmount(amount)
+      setVaultHealthUpdateAmount(amount);
     }
   };
 
@@ -89,10 +97,10 @@ const Debt = ({
     return maxRepay;
   }
 
-  const handleInputMax = () => {
+  const handleInputMax = (type) => {
     const maxRepay = getInputMax();
     inputRef.current.value = maxRepay;
-    handleAmount({target: {value: maxRepay}});
+    handleAmount({target: {value: maxRepay}}, type);
   }
 
   useEffect(() => {
@@ -138,6 +146,8 @@ const Debt = ({
     setBorrowSuccess(false);
     setRepaySuccess(false);
     setRepayStep(0);
+    setVaultHealthUpdateType('');
+    setVaultHealthUpdateAmount(0);
   }
 
   const [repayStep, setRepayStep] = useState(0);
@@ -355,6 +365,7 @@ const Debt = ({
         handleDebtAction={handleDebtAction}
         borrowValues={borrowValues}
         inputRef={inputRef}
+        currentVault={currentVault}
       />
 
       <RepayModal
@@ -373,6 +384,7 @@ const Debt = ({
         burnFeeRate={currentVault?.burnFeeRate}
         toPercentage={toPercentage}
         inputRef={inputRef}
+        currentVault={currentVault}
       />
     </>
   );

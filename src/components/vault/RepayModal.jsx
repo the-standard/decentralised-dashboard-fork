@@ -4,6 +4,8 @@ import {
   ArrowUpCircleIcon,
 } from '@heroicons/react/24/outline';
 
+import VaultHealth from "./VaultHealth";
+
 import Modal from "../ui/Modal";
 import Button from "../ui/Button";
 import Typography from "../ui/Typography";
@@ -26,6 +28,7 @@ const RepayModal = (props) => {
     burnFeeRate,
     toPercentage,
     inputRef,
+    currentVault,
   } = props;
 
   if (isSuccess) {
@@ -179,14 +182,14 @@ const RepayModal = (props) => {
             className="join-item w-full"
             placeholder="Amount of EUROs you want to repay"
             type="number"
-            onChange={handleAmount}
+            onChange={(e) => handleAmount(e, 'REPAY')}
             disabled={isPending}
             useRef={inputRef}
           />
 
           <Button
             className="join-item"
-            onClick={handleInputMax}
+            onClick={() => handleInputMax('REPAY')}
             disabled={isPending}
           >
             Max
@@ -194,6 +197,10 @@ const RepayModal = (props) => {
         </div>
 
         <div className="mt-4">
+          <VaultHealth currentVault={currentVault}/>
+        </div>
+
+        <div>
           {repayValues.map((item) => (
             <div
               className="flex justify-between align-center"
