@@ -153,9 +153,7 @@ const TokenTotalPie = (props) => {
 
   return (
     <div id="chart" className="relative">
-      <div className="
-        hidden sm:block absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2
-      ">
+      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
         <Typography
           variant="h3"
           className="text-center"
@@ -167,14 +165,26 @@ const TokenTotalPie = (props) => {
           {vaultId}
         </Typography>
       </div>
-      <ReactApexChart
-        options={options}
-        series={useSeries || []}
-        labels={names || []}
-        type="donut"
-        height="200px"
-        width="200px"
-      />
+      <div className="relative z-[1]">
+        <ReactApexChart
+          options={options}
+          series={useSeries || []}
+          labels={names || []}
+          type="donut"
+          height="200px"
+          width="200px"
+        />
+      </div>
+      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 blur-lg z-0 opacity-80">
+        <ReactApexChart
+          options={options}
+          series={useSeries || []}
+          labels={names || []}
+          type="donut"
+          height="200px"
+          width="200px"
+        />
+      </div>
     </div>
   );
 }
