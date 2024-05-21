@@ -42,6 +42,17 @@ const VaultHealth = ({
     currentVault.status.totalCollateralValue
   );
 
+  let showHealth = topHealth;
+  if (vaultHealthUpdateType === 'BORROW') {
+    showHealth = bottomHealth;
+  }
+  if (showHealth <= 0) {
+    showHealth = 0;
+  }
+  if (showHealth >= 100) {
+    showHealth = 100;
+  }
+
   let tHealthColour = 'success';
   let bHealthColour = 'neutral';
   if (topHealth >= 30) {
@@ -63,10 +74,6 @@ const VaultHealth = ({
     bHealthColour = 'error';
   }
 
-  let showHealth = topHealth;
-  if (topHealth <= 0) {
-    showHealth = 0;
-  }
 
   return (
     <div
