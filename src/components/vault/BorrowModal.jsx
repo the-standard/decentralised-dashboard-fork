@@ -79,6 +79,13 @@ const BorrowModal = (props) => {
           Borrowing EUROs
         </Typography>
 
+        <div className="flex justify-between">
+          <Typography
+            variant="p"
+          >
+            Borrow Amount
+          </Typography>
+        </div>
         <Input
           className="w-full"
           placeholder="Amount of EUROs to borrow"
@@ -96,11 +103,13 @@ const BorrowModal = (props) => {
             >
               <Typography
                 variant="p"
+                className="flex-1"
               >
                 {item.key}
               </Typography>
               <Typography
                 variant="p"
+                className="flex-1"
               >
                 {item.value || '0'}
               </Typography>

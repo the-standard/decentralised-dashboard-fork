@@ -79,13 +79,18 @@ const Debt = ({
     }
   };
 
-  const handleInputMax = () => {
+  const getInputMax = () => {
     const minted = currentVault?.status?.minted;
     const burnFeeRate = currentVault?.burnFeeRate;
     const maxRepayWei = eurosWalletBalance < (minted + calculateRateAmount(minted, burnFeeRate)) ?
       eurosWalletBalance * HUNDRED_PC / (HUNDRED_PC + burnFeeRate) :
       minted;
     const maxRepay = ethers.formatEther(maxRepayWei);
+    return maxRepay;
+  }
+
+  const handleInputMax = () => {
+    const maxRepay = getInputMax();
     inputRef.current.value = maxRepay;
     handleAmount({target: {value: maxRepay}});
   }
@@ -356,6 +361,7 @@ const Debt = ({
         open={repayOpen}
         closeModal={closeDebtModal}
         handleAmount={handleAmount}
+        getInputMax={getInputMax}
         handleInputMax={handleInputMax}
         isPending={isPending}
         isSuccess={repaySuccess}

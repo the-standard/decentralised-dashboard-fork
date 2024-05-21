@@ -175,13 +175,12 @@ const SwapModal = ({
                   <div className="flex justify-between">
                     <Typography
                       variant="p"
-                      className="mb-2"
                     >
                       Swap Amount
                     </Typography>
                     <Typography
                       variant="p"
-                      className="mb-2 text-right"
+                      className="text-right"
                     >
                       Available: {total || ''}
                     </Typography>

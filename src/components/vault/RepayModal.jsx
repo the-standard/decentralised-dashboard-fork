@@ -15,6 +15,7 @@ const RepayModal = (props) => {
     closeModal,
     handleAmount,
     handleInputMax,
+    getInputMax,
     isPending,
     isSuccess,
     amount,
@@ -158,6 +159,19 @@ const RepayModal = (props) => {
           Repaying EUROs
         </Typography>
 
+        <div className="flex justify-between">
+          <Typography
+            variant="p"
+          >
+            Repay Amount
+          </Typography>
+          <Typography
+            variant="p"
+            className="text-right"
+          >
+            Remaining: {getInputMax()}
+          </Typography>
+        </div>
         <div
           className="join"
         >
@@ -187,11 +201,13 @@ const RepayModal = (props) => {
             >
               <Typography
                 variant="p"
+                className="flex-1"
               >
                 {item.key}
               </Typography>
               <Typography
                 variant="p"
+                className="flex-1"
               >
                 {item.value || '0'}
               </Typography>

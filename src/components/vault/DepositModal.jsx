@@ -189,6 +189,19 @@ const DepositModal = (props) => {
           </span>
         </div>
 
+        <div className="flex justify-between">
+          <Typography
+            variant="p"
+          >
+            Deposit Amount
+          </Typography>
+          <Typography
+            variant="p"
+            className="text-right"
+          >
+            Available: {maxBal || '0'}
+          </Typography>
+        </div>
         <div
           className="join"
         >
@@ -209,9 +222,6 @@ const DepositModal = (props) => {
               Max
             </Button>
           )}
-        </div>
-        <div>
-          Available Balance: {maxBal || '0'} {symbol || ''}
         </div>
 
         <div className="card-actions pt-4 flex-col-reverse lg:flex-row justify-end">
