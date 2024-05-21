@@ -1,8 +1,10 @@
 import { useNavigate } from "react-router-dom";
-
+import { ethers } from "ethers";
 import {
   ArrowDownCircleIcon,
 } from '@heroicons/react/24/outline';
+
+import VaultHealth from "./VaultHealth";
 
 import Button from "../ui/Button";
 import Modal from "../ui/Modal";
@@ -19,10 +21,13 @@ const BorrowModal = (props) => {
     amount,
     handleDebtAction,
     borrowValues,
-    inputRef
+    inputRef,
+    currentVault,
   } = props;
 
   const navigate = useNavigate();
+
+  const currentDebt = ethers.formatEther(currentVault.status.minted.toString());
   
   if (isSuccess) {
     return (
@@ -85,17 +90,27 @@ const BorrowModal = (props) => {
           >
             Borrow Amount
           </Typography>
+          <Typography
+            variant="p"
+            className="text-right"
+          >
+            Current Debt: {currentDebt}
+          </Typography>
         </div>
         <Input
           className="w-full"
           placeholder="Amount of EUROs to borrow"
           type="number"
-          onChange={handleAmount}
+          onChange={(e) => handleAmount(e, 'BORROW')}
           disabled={isPending}
           useRef={inputRef}
         />
 
         <div className="mt-4">
+          <VaultHealth currentVault={currentVault}/>
+        </div>
+
+        <div>
           {borrowValues.map((item) => (
             <div
               className="flex justify-between align-center"

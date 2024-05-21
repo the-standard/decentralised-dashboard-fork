@@ -13,6 +13,15 @@ export const useCurrentTheme = create(
   })
 );
 
+export const useVaultHealthUpdate = create(
+  (set) => ({
+    vaultHealthUpdateAmount: 0,
+    vaultHealthUpdateType: '',
+    setVaultHealthUpdateAmount: (vaultHealthUpdateAmount) => set(() => ({ vaultHealthUpdateAmount: vaultHealthUpdateAmount })),
+    setVaultHealthUpdateType: (vaultHealthUpdateType) => set(() => ({ vaultHealthUpdateType: vaultHealthUpdateType })),
+  })
+);
+
 export const useEthToUsdAddressStore = create() (
   (set) => ({
     arbitrumOneEthToUsdAddress: "0x639fe6ab55c921f74e7fac1ee960c0b6293ba612",
