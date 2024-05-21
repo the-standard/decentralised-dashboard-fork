@@ -11,7 +11,10 @@ import {
 import { sendTransaction } from "@wagmi/core";
 import {
   ArrowUpCircleIcon,
+  DocumentDuplicateIcon,
+  QrCodeIcon,
 } from '@heroicons/react/24/outline';
+import QRCode from "react-qr-code";
 
 import {
   useVaultAddressStore,
@@ -35,6 +38,7 @@ const DepositModal = (props) => {
 
   const [amount, setAmount] = useState(0);
   const [maxBal, setMaxBal] = useState(0);
+  const [showQr, setShowQr] = useState(false);
 
   const { vaultAddress } = useVaultAddressStore();
   const { erc20Abi } = useErc20AbiStore();
@@ -169,7 +173,24 @@ const DepositModal = (props) => {
     isSuccess,
     isError,
   ]);
-    
+
+  const handleCopyText = () => {
+    const textElement = vaultAddress;
+
+    if (navigator.clipboard && textElement) {
+      const text = textElement;
+
+      navigator.clipboard
+        .writeText(text)
+        .then(() => {
+          toast.success('Address Copied');
+        })
+        .catch((error) => {
+          toast.error('There was a problem');
+        });
+    }
+  };
+
   return (
     <>
       <Modal
@@ -187,6 +208,37 @@ const DepositModal = (props) => {
           </span>
         </div>
 
+        {showQr ? (
+          <>
+            <div
+              className="flex flex-col justify-center items-center"
+            >
+              <div className="bg-white p-2 mb-2 rounded-md">
+                <QRCode value={vaultAddress} />
+              </div>
+              <Typography variant="p">
+                Scan QR code to deposit collateral
+              </Typography>
+              <div
+                className="flex flex-row justify-center items-center"
+              >
+                <Typography variant="p">
+                  {vaultAddress}
+                </Typography>
+                <Button
+                  color="ghost"
+                  onClick={handleCopyText}
+                  size="sm"
+                >
+                  <DocumentDuplicateIcon className="h-6 w-6"/>
+                </Button>
+              </div>
+            </div>
+
+            <hr className="mb-2"/>
+          </>
+        ) : (null)}
+
         <div className="flex justify-between">
           <Typography
             variant="p"
@@ -200,26 +252,35 @@ const DepositModal = (props) => {
             Available: {maxBal || '0'}
           </Typography>
         </div>
-        <div
-          className="join"
-        >
-          <Input
-            className="join-item w-full"
-            useRef={inputRef}
-            type="number"
-            onChange={handleAmount}
-            placeholder="Amount"
-            disabled={isPending}
-          />
-          {symbol !== "ETH" && symbol !== "AGOR" && (
-            <Button
-              className="join-item"
-              onClick={handleMaxBalance}
+        <div className="flex flex-row">
+          <div
+            className="join flex-1"
+          >
+            <Input
+              className="join-item w-full"
+              useRef={inputRef}
+              type="number"
+              onChange={handleAmount}
+              placeholder="Amount"
               disabled={isPending}
-            >
-              Max
-            </Button>
-          )}
+            />
+            {symbol !== "ETH" && symbol !== "AGOR" && (
+              <Button
+                className="join-item"
+                onClick={handleMaxBalance}
+                disabled={isPending}
+              >
+                Max
+              </Button>
+            )}
+          </div>
+
+          <Button
+            color="ghost"
+            onClick={() => setShowQr(!showQr)}
+          >
+            <QrCodeIcon className="h-6 w-6"/>
+          </Button>
         </div>
 
         <div className="card-actions pt-4 flex-col-reverse lg:flex-row justify-end">
