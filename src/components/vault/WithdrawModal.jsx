@@ -136,6 +136,20 @@ const WithdrawModal = (props) => {
             Withdraw {symbol}
           </Typography>
 
+          <div className="flex justify-between">
+            <Typography
+              variant="p"
+              className="mb-2"
+            >
+              Withdraw Amount
+            </Typography>
+            <Typography
+              variant="p"
+              className="mb-2 text-right"
+            >
+              Available: {collateralValue || ''}
+            </Typography>
+          </div>
           <div
             className="join"
           >

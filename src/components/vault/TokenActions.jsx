@@ -18,7 +18,7 @@ const TokenActions = ({
     const decimals = useAsset.token.dec;
     const token = useAsset.token;
     const amount = useAsset?.amount.toString();
-    const collateralValue = ethers.formatUnits(amount, useAsset.dec);
+    const collateralValue = ethers.formatUnits(amount, decimals);
 
     switch (actionType) {
       case 'DEPOSIT':
