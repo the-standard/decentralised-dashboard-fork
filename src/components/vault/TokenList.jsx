@@ -49,7 +49,7 @@ const TokenList = ({ assets, assetsLoading }) => {
                       setActionType(type);
                       setUseAsset(asset);
                     };
-                  
+
                     return(
                       <tr key={index}>
                         <td>

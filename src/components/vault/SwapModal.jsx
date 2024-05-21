@@ -25,6 +25,7 @@ const SwapModal = ({
   symbol,
   decimals,
   collateralValue,
+  tokenTotal,
 }) => {
   const [swapLoading, setSwapLoading] = useState(false);
   const [swapAssets, setSwapAssets] = useState();
@@ -128,6 +129,8 @@ const SwapModal = ({
     handleAmount({ target: { value: formatted } });
   };
 
+  const total = ethers.formatUnits(tokenTotal, decimals);
+
   if (open) {
     if (vaultStore.status.version !== 1 && vaultStore.status.version !== 2) {
       return (
@@ -144,12 +147,20 @@ const SwapModal = ({
 
               <div>
                 <div>
-                  <Typography
-                    variant="p"
-                    className="mb-2"
-                  >
-                    Swap Amount:
-                  </Typography>
+                  <div className="flex justify-between">
+                    <Typography
+                      variant="p"
+                      className="mb-2"
+                    >
+                      Swap Amount
+                    </Typography>
+                    <Typography
+                      variant="p"
+                      className="mb-2 text-right"
+                    >
+                      Available: {total || ''}
+                    </Typography>
+                  </div>
                   <div
                     className="join w-full mb-4"
                   >
@@ -182,7 +193,7 @@ const SwapModal = ({
                     variant="p"
                     className="mb-2"
                   >
-                    Swap For:
+                    Swap For
                   </Typography>
                   <Select
                     id="swap-asset-select"
