@@ -99,29 +99,10 @@ const VaultHistory = () => {
 
   if (vaultsLoading) {
     return (
-      <div
-        sx={{
-          width: "100%",
-          maxWidth: "1440px",  
-          color: "#8E9BAE",
-          margin: {
-            xs: "0% 4%",
-            sm: "3% 6%",
-            md: "3% 12%",
-          },
-          minHeight: "100vh",
-          height: "100%",
-        }}
-      >
+      <div>
         {vaultNav()}
 
-        <div
-          sx={{
-            display: { xs: "flex", lg: "grid" },
-            flexDirection: "column",
-            width: "100%",
-          }}
-        >
+        <div>
           <Card className="card-compact">
             <div className="card-body">
               <CenterLoader />
@@ -135,26 +116,9 @@ const VaultHistory = () => {
   if (!currentVault) {
     // vault not found
     return (
-      <div
-        sx={{
-          width: "100%",
-          maxWidth: "1440px",  
-          color: "#ffffff",
-          margin: {
-            xs: "0% 4%",
-            sm: "3% 6%",
-            md: "3% 12%",
-          },
-        }}
-      >
+      <div>
         {vaultNav()}
-        <div
-          sx={{
-            display: { xs: "flex", lg: "grid" },
-            flexDirection: "column",
-            width: "100%",
-          }}
-        >
+        <div>
           <Card className="card-compact">
             <div className="card-body">
               Vault Not Found
@@ -196,19 +160,7 @@ const VaultHistory = () => {
   };
 
   return (
-    <div
-      sx={{
-        width: "100%",
-        maxWidth: "1440px",
-        margin: {
-          xs: "0% 4%",
-          sm: "3% 6%",
-          md: "3% 12%",
-        },
-        minHeight: "100vh",
-        height: "100%",
-      }}
-    >
+    <div>
       {vaultNav()}
       <Card className="card-compact">
         <div className="card-body overflow-x-scroll">
