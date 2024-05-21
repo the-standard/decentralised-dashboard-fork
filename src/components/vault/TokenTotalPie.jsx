@@ -165,7 +165,7 @@ const TokenTotalPie = (props) => {
           {vaultId}
         </Typography>
       </div>
-      <div className="relative z-[1]">
+      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 blur-lg opacity-80">
         <ReactApexChart
           options={options}
           series={useSeries || []}
@@ -175,7 +175,7 @@ const TokenTotalPie = (props) => {
           width="200px"
         />
       </div>
-      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 blur-lg z-0 opacity-80">
+      <div className="relative">
         <ReactApexChart
           options={options}
           series={useSeries || []}
