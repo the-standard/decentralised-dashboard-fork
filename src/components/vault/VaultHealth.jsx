@@ -74,7 +74,6 @@ const VaultHealth = ({
     bHealthColour = 'error';
   }
 
-
   return (
     <div
       className="w-full flex flex-col"
