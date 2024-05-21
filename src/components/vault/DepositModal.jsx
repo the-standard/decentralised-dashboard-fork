@@ -177,7 +177,7 @@ const DepositModal = (props) => {
         closeModal={closeModal}
       >
         <Typography variant="h2" className="card-title">
-          <ArrowUpCircleIcon className="h-6 w-6 inline-block"/>
+          <ArrowUpCircleIcon className="mr-2 h-6 w-6 inline-block"/>
           Deposit {symbol}
         </Typography>
 
