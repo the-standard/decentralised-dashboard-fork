@@ -107,7 +107,7 @@ const VaultStats = ({
             </div>
           </div>
         ))}
-        <div className="w-1/2 px-1 my-2 sm:my-2 sm:w-1/2 lg:my-0 lg:w-6/12">
+        <div className="w-full px-1 mt-4">
           <VaultHealth currentVault={currentVault}/>
         </div>
       </div>
