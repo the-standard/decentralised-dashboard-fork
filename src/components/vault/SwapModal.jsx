@@ -163,7 +163,7 @@ const SwapModal = ({
           >
             <>
               <Typography variant="h2" className="card-title">
-                <ArrowPathIcon className="h-6 w-6 inline-block"/>
+                <ArrowPathIcon className="mr-2 h-6 w-6 inline-block"/>
                 Swap {symbol}
               </Typography>
 
@@ -277,7 +277,7 @@ const SwapModal = ({
       >
         <>
           <Typography variant="h2" className="card-title">
-            <ArrowPathIcon className="h-6 w-6 inline-block"/>
+            <ArrowPathIcon className="mr-2 h-6 w-6 inline-block"/>
             Swap {symbol}
           </Typography>
 
