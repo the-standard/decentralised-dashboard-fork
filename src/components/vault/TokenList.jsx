@@ -180,7 +180,7 @@ const TokenList = ({ assets, assetsLoading }) => {
                                   </Button>
                                   <Button
                                     variant="outline"
-
+                                    disabled={amount <= 0}
                                     onClick={() => handleClick('WITHDRAW', asset)}
                                     className="grow"
                                   >
@@ -188,7 +188,7 @@ const TokenList = ({ assets, assetsLoading }) => {
                                   </Button>
                                   <Button
                                     variant="outline"
-
+                                    disabled={amount <= 0}
                                     onClick={() => handleClick('SWAP', asset)}
                                     className="grow"
                                   >
