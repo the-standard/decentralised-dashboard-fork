@@ -112,7 +112,11 @@ const TokenList = ({ assets, assetsLoading }) => {
                         <tr
                           key={index}
                           onClick={() => toggleSubRow(index)}
-                          className="cursor-pointer hover"
+                          className={subRow === index + 'sub' ? (
+                            'cursor-pointer hover active'
+                          ) : (
+                            'cursor-pointer hover'
+                          )}
                         >
                           <td>
                             <div className="h-full w-full flex items-center">
