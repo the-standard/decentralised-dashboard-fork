@@ -335,6 +335,7 @@ const Debt = ({
       <div className="card-actions">
         <Button
           className="w-full lg:w-auto flex-1"
+          color="primary"
           onClick={() => setBorrowOpen(!borrowOpen)}
         >
           <ArrowDownCircleIcon className="h-6 w-6 inline-block"/>
@@ -342,6 +343,7 @@ const Debt = ({
         </Button>
         <Button
           className="w-full lg:w-auto flex-1"
+          color="primary"
           onClick={() => setRepayOpen(!repayOpen)}
         >
           <ArrowUpCircleIcon className="h-6 w-6 inline-block"/>

@@ -42,6 +42,7 @@ const SendModal = ({
           <div className="card-actions pt-4 flex-col-reverse lg:flex-row justify-end">
             <Button
               className="w-full lg:w-64"
+              color="ghost"
               onClick={handleCloseModal}
             >
               Close
@@ -140,7 +141,7 @@ const SendModal = ({
 
               <Button
                 className="w-full lg:w-64"
-                color={sendType === 'BURN' ? 'error' : 'neutral'}
+                color={sendType === 'BURN' ? 'error' : 'primary'}
                 onClick={() => handleSendVault()}
                 disabled={
                   sendType === 'SEND' &&

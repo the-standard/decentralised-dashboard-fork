@@ -189,9 +189,9 @@ const VaultList = ({ vaults, vaultsLoading, tokenId }) => {
                               </Tooltip>
                             )}
                           </td>
-                          <td>
+                          <td className="text-right">
                             <Link
-                              className="btn btn-outline btn-sm"
+                              className="btn btn-outline"
                               to={`/vault/${
                                 BigInt(
                                   vault.tokenId

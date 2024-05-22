@@ -77,6 +77,7 @@ const Pagination = ({
       <Button
         className="join-item"
         size="sm"
+        variant="outline"
         onClick={() => onPageChange( currentPage - 1)}
         disabled={currentPage <= 1 || useTotalItems < 1}
       >
@@ -88,6 +89,7 @@ const Pagination = ({
           key={index}
           className="join-item"
           size="sm"
+          variant="outline"
           active={currentPage === (index + 1)}
           onClick={() => onPageChange( index + 1)}
         >
@@ -98,6 +100,7 @@ const Pagination = ({
       <Button
         className="join-item"
         size="sm"
+        variant="outline"
         onClick={() => onPageChange( currentPage + 1)}
         disabled={currentPage >= useTotalPages || useTotalItems < 1}
       >

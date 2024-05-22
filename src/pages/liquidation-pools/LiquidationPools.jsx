@@ -97,7 +97,7 @@ const LiquidationPools = () => {
               ) : (
                 'Asset Totals'
               )}
-              <Button size="sm" onClick={() => setShowValue(!showValue)}>
+              <Button size="sm" color="ghost" onClick={() => setShowValue(!showValue)}>
                 {showValue ? (
                   <>
                     <ArrowTrendingUpIcon className="h-4 w-4 inline-block"/>

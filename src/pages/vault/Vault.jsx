@@ -91,6 +91,7 @@ const Vault = () => {
       <div className="flex flex-wrap mb-4 gap-4">
         <Button
           onClick={() => navigate('/')}
+          variant="outline"
           disabled={isLoading}
         >
           <ChevronLeftIcon className="h-6 w-6 inline-block"/>
@@ -98,6 +99,7 @@ const Vault = () => {
         </Button>
         <Button
           onClick={() => navigate('./history')}
+          variant="outline"
           disabled={isLoading}
         >
           History
@@ -109,9 +111,9 @@ const Vault = () => {
   if (isLoading) {
     return (
       <main>
-        {vaultNav()}
         <Card className="card-compact">
           <div className="card-body">
+            {vaultNav()}
             <CenterLoader />
           </div>
         </Card>
@@ -122,9 +124,9 @@ const Vault = () => {
   if (!currentVault || !isConnected) {
     return (
       <main>
-        {vaultNav()}
         <Card className="card-compact">
           <div className="card-body">
+            {vaultNav()}
             <Typography
               variant="h2"
             >
@@ -190,18 +192,6 @@ const Vault = () => {
           </div>
         </div>
       </Card>
-
-      {/* <div className="mt-4">
-        <Card className="card-compact">
-          <div className="card-body">
-            <TokenTotalPie
-              chartData={chartData}
-              currentVault={currentVault}
-            />
-          </div>
-        </Card>
-      </div>
-       */}
       <div className="mt-4">
         <TokenList
           assets={assets}

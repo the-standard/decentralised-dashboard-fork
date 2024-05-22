@@ -269,7 +269,7 @@ const Staking = () => {
           <Typography variant="h2" className="card-title flex justify-between">
             Deposit
 
-            <Button size="sm" onClick={() => setHelpOpen(true)}>
+            <Button size="sm" color="ghost" onClick={() => setHelpOpen(true)}>
               <QuestionMarkCircleIcon className="h-4 w-4 inline-block"/>
               How It Works
             </Button>
@@ -294,6 +294,7 @@ const Staking = () => {
               />
               <Button
                 className="join-item"
+                variant="outline"
                 onClick={() => handleTstInputMax()}
               >
                 Max
@@ -314,6 +315,7 @@ const Staking = () => {
               />
               <Button
                 className="join-item"
+                variant="outline"
                 onClick={() => handleEurosInputMax()}
               >
                 Max
@@ -322,6 +324,7 @@ const Staking = () => {
             <div className="pt-4 flex flex-col-reverse lg:flex-row justify-end items-end">
               <Button
                 className="w-full lg:w-auto"
+                color="primary"
                 disabled={tstStakeAmount <= 0 && eurosStakeAmount <= 0}
                 onClick={handleLetsStake}
               >

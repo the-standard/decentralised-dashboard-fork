@@ -269,6 +269,7 @@ const DepositModal = (props) => {
             {symbol !== "ETH" && symbol !== "AGOR" && (
               <Button
                 className="join-item"
+                variant="outline"
                 onClick={handleMaxBalance}
                 disabled={isPending}
               >

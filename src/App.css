@@ -30,8 +30,8 @@
 *[data-theme='light'] {
   --glass-bg: linear-gradient(
     110.28deg,
-    rgba(255, 255, 255, 0.6) 0.2%,
-    rgba(255, 255, 255, 0.3) 101.11%
+    rgba(255, 255, 255, 0.4) 0.2%,
+    rgba(255, 255, 255, 0.2) 101.11%
   );
   --glass-inset: inset 1px 1px 1px 0px rgba(255, 255, 255, 0.9), 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
   --bg-image: url(/src/assets/bg-light.webp);
@@ -287,10 +287,21 @@ input.input:disabled {
 
 /* BUTTONS */
 
-button.btn.btn-primary:not(:disabled) {
+.btn:not(:disabled):active,
+button.btn:not(:disabled):active {
+  transform: none!important;
+  filter: brightness(0.8)!important;
+}
+
+.btn.btn-primary:not(:disabled),
+button.btn.btn-primary:not(:disabled),
+.btn.btn-success:not(:disabled),
+button.btn.btn-success:not(:disabled) {
   background: rgba(var(--primary-color), 0.9);
-  box-shadow: inset 0px 0px 0px 1px rgba(255, 255, 255, 0.3), /* outline 1 */
+  box-shadow: inset 0px 0px 0px 1px rgba(255, 255, 255, 0.3), /* outline */
   inset 0px 0px 20px 1px rgba(255, 255, 255, 0.2), /* inner white glow */
+  inset 1px 1px 0px 0px rgba(255, 255, 255, 0.0), /* outline corner highlight */
+  inset 0px 0px 20px 1px rgba(255, 255, 255, 0.0), /* outline corner highlight */
   0 4px 6px -1px rgb(0 0 0 / 0.1), /* outer box shadow1 */
   0 2px 4px -2px rgb(0 0 0 / 0.1), /* outer box shadow2 */
   0 5px 15px 0px rgba(var(--primary-color), 0.4); /* outer box glow */
@@ -298,26 +309,64 @@ button.btn.btn-primary:not(:disabled) {
   transition: var(--transition-general);
 }
 
+.btn.btn-primary:hover,
 button.btn.btn-primary:hover {
   background: rgba(var(--primary-color), 1);
-  box-shadow: inset 0px 0px 0px 1px rgba(255, 255, 255, 0.3),
-  inset -1px -1px 0px 0px rgba(255, 255, 255, 0.3), /* outline */
-  inset 1px 1px 0px 0px rgba(255, 255, 255, 0.3), /* outline */
-  inset 0px 0px 20px 1px rgba(255, 255, 255, 0.2),
-  0 4px 6px -1px rgb(0 0 0 / 0.1),
-  0 2px 4px -2px rgb(0 0 0 / 0.1),
-  0 5px 15px 3px rgba(var(--primary-color), 0.8);
+  box-shadow: inset 0px 0px 0px 1px rgba(255, 255, 255, 0.3), /* outline */
+  inset -1px -1px 0px 0px rgba(255, 255, 255, 0.3), /* inner white glow */
+  inset 1px 1px 0px 0px rgba(255, 255, 255, 0.3), /* outline corner highlight */
+  inset 0px 0px 20px 1px rgba(255, 255, 255, 0.2), /* outline corner highlight */
+  0 4px 6px -1px rgb(0 0 0 / 0.1), /* outer box shadow1 */
+  0 2px 4px -2px rgb(0 0 0 / 0.1), /* outer box shadow2 */
+  0 5px 15px 3px rgba(var(--primary-color), 0.8); /* outer box glow */
   border: 0px;
 }
 
+.btn.btn-primary:disabled,
 button.btn.btn-primary:disabled {
   box-shadow: inset 0px 0px 0px 1px rgba(255, 255, 255, 0.3), 0 2px 4px -2px rgb(0 0 0 / 0.1);
   border: 0px;
 }
 
+.btn.btn-success:not(:disabled),
+button.btn.btn-success:not(:disabled) {
+  background: theme(backgroundColor.success);
+  box-shadow: inset 0px 0px 0px 1px rgba(255, 255, 255, 0.3), /* outline */
+  inset 0px 0px 20px 1px rgba(255, 255, 255, 0.5), /* inner white glow */
+  inset 1px 1px 0px 0px rgba(255, 255, 255, 0.0), /* outline corner highlight */
+  inset 0px 0px 20px 1px rgba(255, 255, 255, 0.0), /* outline corner highlight */
+  0 4px 6px -1px rgb(0 0 0 / 0.1), /* outer box shadow1 */
+  0 2px 4px -2px rgb(0 0 0 / 0.1); /* outer box shadow2 */
+}
+.btn.btn-error:not(:disabled),
+button.btn.btn-error:not(:disabled) {
+  background: theme(backgroundColor.error);
+  box-shadow: inset 0px 0px 0px 1px rgba(255, 255, 255, 0.3), /* outline */
+  inset 0px 0px 20px 1px rgba(255, 255, 255, 0.5), /* inner white glow */
+  inset 1px 1px 0px 0px rgba(255, 255, 255, 0.0), /* outline corner highlight */
+  inset 0px 0px 20px 1px rgba(255, 255, 255, 0.0), /* outline corner highlight */
+  0 4px 6px -1px rgb(0 0 0 / 0.1), /* outer box shadow1 */
+  0 2px 4px -2px rgb(0 0 0 / 0.1); /* outer box shadow2 */
+}
+.btn.btn-success:hover,
+button.btn.btn-success:hover,
+.btn.btn-error:hover,
+button.btn.btn-error:hover {
+  box-shadow: inset 0px 0px 0px 1px rgba(255, 255, 255, 0.3), /* outline */
+  inset 0px 0px 20px 1px rgba(255, 255, 255, 0.8), /* inner white glow */
+  inset 1px 1px 0px 0px rgba(255, 255, 255, 0.3), /* outline corner highlight */
+  inset 0px 0px 20px 1px rgba(255, 255, 255, 0.2), /* outline corner highlight */
+  0 4px 6px -1px rgb(0 0 0 / 0.1), /* outer box shadow1 */
+  0 2px 4px -2px rgb(0 0 0 / 0.1); /* outer box shadow2 */
+}
+
+
+.btn.btn-outline:not(:disabled),
 button.btn.btn-outline:not(:disabled) {
   box-shadow: inset 0px 0px 0px 1px rgba(255, 255, 255, 0.3), /* outline 1 */
   inset 0px 0px 20px 1px rgba(255, 255, 255, 0.2), /* inner white glow */
+  inset 1px 1px 0px 0px rgba(255, 255, 255, 0.0), /* outline corner highlight */
+  inset 0px 0px 20px 1px rgba(255, 255, 255, 0.0), /* outline corner highlight */
   0 4px 6px -1px rgb(0 0 0 / 0.1), /* outer box shadow1 */
   0 2px 4px -2px rgb(0 0 0 / 0.1), /* outer box shadow2 */
   0 5px 15px 0px rgba(var(--primary-color), 0.0); /* outer box glow */
@@ -325,19 +374,21 @@ button.btn.btn-outline:not(:disabled) {
   transition: var(--transition-general);
 }
 
+.btn.btn-outline:hover,
 button.btn.btn-outline:hover {
   color: var(--alt-btn-txt-color);
   background: rgba(255,255,255, 0.1);
-  box-shadow: inset 0px 0px 0px 1px rgba(255, 255, 255, 0.3),
-  inset -1px -1px 0px 0px rgba(255, 255, 255, 0.3), /* outline */
-  inset 1px 1px 0px 0px rgba(255, 255, 255, 0.3), /* outline */
-  inset 0px 0px 20px 1px rgba(255, 255, 255, 0.2),
-  0 4px 6px -1px rgb(0 0 0 / 0.1),
-  0 2px 4px -2px rgb(0 0 0 / 0.1),
-  0 5px 15px 3px rgba(var(--primary-color), 0.4);
+  box-shadow: inset 0px 0px 0px 1px rgba(255, 255, 255, 0.3), /* outline 1 */
+  inset -1px -1px 0px 0px rgba(255, 255, 255, 0.3), /* inner white glow */
+  inset 1px 1px 0px 0px rgba(255, 255, 255, 0.3), /* outline corner highlight */
+  inset 0px 0px 20px 1px rgba(255, 255, 255, 0.2), /* outline corner highlight */
+  0 4px 6px -1px rgb(0 0 0 / 0.1), /* outer box shadow1 */
+  0 2px 4px -2px rgb(0 0 0 / 0.1), /* outer box shadow2 */
+  0 5px 15px 3px rgba(var(--primary-color), 0.4); /* outer box glow */
   border: 0px;
 }
 
+.btn.btn-outline:disabled,
 button.btn.btn-outline:disabled {
   box-shadow: inset 0px 0px 0px 1px rgba(255, 255, 255, 0.3), 0 2px 4px -2px rgb(0 0 0 / 0.1);
   border: 0px;

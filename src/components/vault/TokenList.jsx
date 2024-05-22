@@ -172,7 +172,6 @@ const TokenList = ({ assets, assetsLoading }) => {
                                 <div className="flex flex-row gap-4">
                                   <Button
                                     variant="outline"
-
                                     onClick={() => handleClick('DEPOSIT', asset)}
                                     className="grow"
                                   >

@@ -162,6 +162,7 @@ const WithdrawModal = (props) => {
             />
             <Button
               className="join-item"
+              variant="outline"
               onClick={handleMaxBalance}
               disabled={isPending}
             >

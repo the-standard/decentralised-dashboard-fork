@@ -125,6 +125,7 @@ const ClaimTokens = ({
           <div className="card-actions pt-4 flex-col-reverse lg:flex-row justify-end">
             <Button
               onClick={handleClaimRewards}
+              color="primary"
               disabled={noRewards}
             >
               Claim All Tokens

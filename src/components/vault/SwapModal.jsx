@@ -204,6 +204,7 @@ const SwapModal = ({
                     {symbol !== "ETH" && symbol !== "AGOR" && (
                       <Button
                         className="join-item"
+                        variant="outline"
                         onClick={handleMaxBalance}
                         disabled={swapLoading}
                       >

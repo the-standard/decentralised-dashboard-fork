@@ -63,6 +63,7 @@ const StakedAssets = ({
           <div className="card-actions pt-4 flex-col-reverse lg:flex-row justify-end">
             <Button
               onClick={() => setOpen(true)}
+              color="primary"
               disabled={tstAmount <= 0 && eurosAmount <= 0}
             >
               Withdraw
