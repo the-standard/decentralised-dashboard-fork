@@ -14,7 +14,6 @@ import Vault from './pages/vault/Vault';
 import VaultHistory from './pages/vault/VaultHistory';
 import LiquidationPools from './pages/liquidation-pools/LiquidationPools';
 
-import ButtonDemo from "./components/ui/ButtonDemo";
 import './App.css';
 import 'react-toastify/dist/ReactToastify.min.css';
 
@@ -33,7 +32,6 @@ function App() {
                 <Route path="vault/:vaultId" element={<DashLayout><Vault /></DashLayout>} />
                 <Route path="vault/:vaultId/history" element={<DashLayout><VaultHistory /></DashLayout>} />
                 <Route path="liquidation-pools" element={<DashLayout><LiquidationPools /></DashLayout>} />
-                <Route path="otter" element={<DashLayout><ButtonDemo /></DashLayout>} />
                 <Route path="*" element={<Home/>} />
               </Routes>
             </DisconnectHandler>
