@@ -39,7 +39,7 @@ const TokenTotalPie = (props) => {
       pie: {
         expandOnClick: chartEmpty ? (false) : (true),
         donut: {
-          size: '80%',
+          size: '70%',
           // background: 'transparent',
           // labels: {
           //   show: true,
@@ -165,7 +165,7 @@ const TokenTotalPie = (props) => {
           {vaultId}
         </Typography>
       </div>
-      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 blur-lg opacity-80">
+      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 blur-lg opacity-70">
         <ReactApexChart
           options={options}
           series={useSeries || []}
