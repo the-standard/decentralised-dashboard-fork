@@ -14,7 +14,7 @@ const TokenActions = ({
 
   if (useAsset) {
     const symbol = ethers.decodeBytes32String(useAsset.token.symbol);
-    const tokenAddress = useAsset.addr;
+    const tokenAddress = useAsset.token.addr;
     const decimals = useAsset.token.dec;
     const token = useAsset.token;
     const amount = useAsset?.amount.toString();
