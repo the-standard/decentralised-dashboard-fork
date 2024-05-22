@@ -178,64 +178,74 @@ const VaultHistory = () => {
             </thead>
             {vaultsLoading ? (null) : (
               <tbody>
-                {rows.map(function(row, index) {
-                  const useType = row.type || '';
-                  const useTimestamp = row.timestamp || '';
-                  let useDate = '';
-                  if (useTimestamp) {
-                    useDate = moment.unix(useTimestamp).format("D/MMM/YYYY HH:mm:ss");
-                  }
-                  const useAsset = row.asset || '';
-                  const amount = row.amount || '';
-                  const assetDec = row.assetDec || '';
-                  let useAmount = '';
-                  if (amount && assetDec) {
-                    useAmount = formatUnits(amount.toString(), assetDec);
-                  }
-                  const minted = row.minted || '';
-                  let useMinted = '';
-                  if (minted) {
-                    useMinted = formatEther(minted.toString());
-                  }
-                  const totalCollateralValue = row.totalCollateralValue;
-                  let useTotalCollateralValue = '';
-                  if (totalCollateralValue) {
-                    useTotalCollateralValue = Number(formatEther(totalCollateralValue)).toFixed(2);
-                  }
-                  const txHash = row.txHash || '';
+                {rows && rows.length ? (
+                  <>
+                    {rows.map(function(row, index) {
+                      const useType = row.type || '';
+                      const useTimestamp = row.timestamp || '';
+                      let useDate = '';
+                      if (useTimestamp) {
+                        useDate = moment.unix(useTimestamp).format("D/MMM/YYYY HH:mm:ss");
+                      }
+                      const useAsset = row.asset || '';
+                      const amount = row.amount || '';
+                      const assetDec = row.assetDec || '';
+                      let useAmount = '';
+                      if (amount && assetDec) {
+                        useAmount = formatUnits(amount.toString(), assetDec);
+                      }
+                      const minted = row.minted || '';
+                      let useMinted = '';
+                      if (minted) {
+                        useMinted = formatEther(minted.toString());
+                      }
+                      const totalCollateralValue = row.totalCollateralValue;
+                      let useTotalCollateralValue = '';
+                      if (totalCollateralValue) {
+                        useTotalCollateralValue = Number(formatEther(totalCollateralValue)).toFixed(2);
+                      }
+                      const txHash = row.txHash || '';
 
-                  return (
-                    <tr
-                      key={index}
-                    >
-                      <td className="capitalize" width="120">
-                        {useType.toLowerCase() || ''}
-                      </td>
-                      <td>
-                        {useDate || ''}
-                      </td>
-                      <td>
-                        {useAsset || ''}
-                      </td>
-                      <td>
-                        {useAmount.toString()}
-                      </td>
-                      <td>
-                        {useMinted.toString()}
-                      </td>
-                      <td>
-                        {useTotalCollateralValue.toString()}
-                      </td>
-                      <td>
-                        <Button
-                          onClick={() => handleEtherscanLink(txHash)}
-                          disabled={!txHash}
+                      return (
+                        <tr
+                          key={index}
                         >
-                          View
-                        </Button>
-                      </td>
-                    </tr>
-                  )}
+                          <td className="capitalize" width="120">
+                            {useType.toLowerCase() || ''}
+                          </td>
+                          <td>
+                            {useDate || ''}
+                          </td>
+                          <td>
+                            {useAsset || ''}
+                          </td>
+                          <td>
+                            {useAmount.toString()}
+                          </td>
+                          <td>
+                            {useMinted.toString()}
+                          </td>
+                          <td>
+                            {useTotalCollateralValue.toString()}
+                          </td>
+                          <td>
+                            <Button
+                              onClick={() => handleEtherscanLink(txHash)}
+                              disabled={!txHash}
+                            >
+                              View
+                            </Button>
+                          </td>
+                        </tr>
+                      )}
+                    )}
+                  </>
+                ) : (
+                  <tr>
+                    <td colSpan="7" className="text-center py-5">
+                      No Data
+                    </td>
+                  </tr>
                 )}
               </tbody>
             )}
