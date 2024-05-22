@@ -54,7 +54,7 @@ const DepositModal = (props) => {
     balanceReqData.token = tokenAddress;
   }
   const { data: balanceData, refetch } = useBalance(balanceReqData);
-
+  
   useWatchBlockNumber({
     onBlockNumber() {
       refetch();
