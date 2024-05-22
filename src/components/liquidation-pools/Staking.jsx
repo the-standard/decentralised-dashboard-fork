@@ -268,7 +268,6 @@ const Staking = () => {
         <div className="card-body">
           <Typography variant="h2" className="card-title flex justify-between">
             Deposit
-
             <Button size="sm" color="ghost" onClick={() => setHelpOpen(true)}>
               <QuestionMarkCircleIcon className="h-4 w-4 inline-block"/>
               How It Works
