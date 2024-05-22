@@ -21,6 +21,7 @@ import susdlogo from "../../assets/USDs.svg";
 
 const VaultList = ({ vaults, vaultsLoading, tokenId }) => {
   const { setCurrentPage, currentPage } = useCurrentPageStore();
+  const navigate = useNavigate();
 
   const sortedVaults = [...vaults].sort((a, b) => {
     const idA = BigInt(a.tokenId);
