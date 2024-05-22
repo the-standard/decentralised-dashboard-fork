@@ -19,9 +19,6 @@ import {
 import VaultCreate from "../../components/vaults/VaultCreate";
 import VaultList from "../../components/vaults/VaultList";
 
-// TEMP
-import ButtonDemo from "../../components/ui/ButtonDemo";
-
 const Vaults = () => {
   const { address: accountAddress } = useAccount();
   const { vaultManagerAbi } = useVaultManagerAbiStore();
@@ -93,9 +90,6 @@ const Vaults = () => {
 
   return (
     <main>
-      {/* TEMP */}
-      <ButtonDemo />
-
       <VaultCreate
         tokenId={tokenId}
         vaults={myVaults || []}
