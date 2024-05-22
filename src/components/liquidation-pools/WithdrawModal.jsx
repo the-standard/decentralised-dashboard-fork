@@ -157,6 +157,7 @@ const WithdrawModal = ({
 
               <Button
                 onClick={() => setShowError(false)}
+                color="ghost"
               >
                 Return
               </Button>
@@ -165,6 +166,7 @@ const WithdrawModal = ({
                   setShowError(false);
                   handleCloseModal();
                 }}
+                color="ghost"
               >
                 Cancel
               </Button>
@@ -263,6 +265,7 @@ const WithdrawModal = ({
                 />
                 <Button
                   className="join-item"
+                  variant="outline"
                   onClick={() => handleTstInputMax()}
                 >
                   Max
@@ -284,6 +287,7 @@ const WithdrawModal = ({
                 />
                 <Button
                   className="join-item"
+                  variant="outline"
                   onClick={() => handleEurosInputMax()}
                 >
                   Max
@@ -293,12 +297,14 @@ const WithdrawModal = ({
               </div>
               <Button
                 onClick={handleApproveWithdraw}
+                color="primary"
                 disabled={!(tstWithdrawAmount > 0) && !(eurosWithdrawAmount > 0)}
               >
                 Withdraw
               </Button>
               <Button
                 onClick={handleCloseModal}
+                color="ghost"
               >
                 Cancel
               </Button>

@@ -52,6 +52,7 @@ const RepayModal = (props) => {
           <div className="card-actions pt-4 flex-col-reverse lg:flex-row justify-end">
             <Button
               className="w-full lg:w-64"
+              color="ghost"
               onClick={closeModal}
             >
               Close
@@ -189,6 +190,7 @@ const RepayModal = (props) => {
 
           <Button
             className="join-item"
+            variant="outline"
             onClick={() => handleInputMax('REPAY')}
             disabled={isPending}
           >

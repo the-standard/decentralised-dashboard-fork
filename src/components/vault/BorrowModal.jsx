@@ -63,6 +63,7 @@ const BorrowModal = (props) => {
             </Button>
             <Button
               className="w-full lg:w-64"
+              color="primary"
               onClick={() => navigate('/liquidation-pools')}
             >
               Get Discounted Tokens

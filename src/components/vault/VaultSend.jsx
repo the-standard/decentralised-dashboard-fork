@@ -103,6 +103,7 @@ const VaultSend = ({
           onClick={() => {
             setSendType('BURN');
           }}
+          color="ghost"
         >
           <TrashIcon className="h-6 w-6 inline-block"/>
         </Button>
@@ -110,6 +111,7 @@ const VaultSend = ({
           onClick={() => {
             setSendType('SEND');
           }}
+          color="ghost"
         >
           <PaperAirplaneIcon className="h-6 w-6 inline-block"/>
         </Button>

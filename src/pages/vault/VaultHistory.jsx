@@ -82,6 +82,7 @@ const VaultHistory = () => {
       <div className="flex flex-wrap mb-4 gap-4">
         <Button
           onClick={() => navigate('/')}
+          variant="outline"
           disabled={vaultsLoading}
         >
           <ChevronLeftIcon className="h-6 w-6 inline-block"/>
@@ -89,6 +90,7 @@ const VaultHistory = () => {
         </Button>
         <Button
           onClick={() => navigate(`../vault/${vaultId}`)}
+          variant="outline"
           disabled={vaultsLoading}
         >
           Manage Vault
@@ -100,31 +102,25 @@ const VaultHistory = () => {
   if (vaultsLoading) {
     return (
       <div>
-        {vaultNav()}
-
-        <div>
-          <Card className="card-compact">
-            <div className="card-body">
-              <CenterLoader />
-            </div>
-          </Card>
-        </div>
+        <Card className="card-compact">
+          <div className="card-body">
+            {vaultNav()}
+            <CenterLoader />
+          </div>
+        </Card>
       </div>
     )
   }
 
   if (!currentVault) {
-    // vault not found
     return (
       <div>
-        {vaultNav()}
-        <div>
-          <Card className="card-compact">
-            <div className="card-body">
-              Vault Not Found
-            </div>
-          </Card>
-        </div>
+        <Card className="card-compact">
+          <div className="card-body">
+            {vaultNav()}
+            Vault Not Found
+          </div>
+        </Card>
       </div>
     );
   }
@@ -161,9 +157,9 @@ const VaultHistory = () => {
 
   return (
     <div>
-      {vaultNav()}
       <Card className="card-compact">
         <div className="card-body overflow-x-scroll">
+          {vaultNav()}
           <table className="table table-zebra">
             <thead>
               <tr>
@@ -228,9 +224,10 @@ const VaultHistory = () => {
                           <td>
                             {useTotalCollateralValue.toString()}
                           </td>
-                          <td>
+                          <td className="text-right">
                             <Button
                               onClick={() => handleEtherscanLink(txHash)}
+                              color="ghost"
                               disabled={!txHash}
                             >
                               View
