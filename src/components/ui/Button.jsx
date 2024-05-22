@@ -19,7 +19,7 @@ const Button = (props) => {
 
   return (
     <DaisyButton
-      className={` ${className ? className : ''}`}
+      className={` ${className ? className : 'btn-primary'}`}
       shape={shape || ''}
       size={size || ''}
       variant={variant || null}

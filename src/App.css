@@ -8,6 +8,7 @@
   --card-border-radius: 1rem;
   --glass-blur: blur(30px);
   --transition-general: all 0.1s ease-in;
+  --primary-color: 99, 33, 242;
 }
 
 *[data-theme='dark'] {
@@ -23,6 +24,7 @@
   --input-bg-disabled: rgba(var(--glass-accent), 0.3);
   --table-alt: rgba(var(--glass-accent), 0.2);
   --glass-lines: rgba(var(--glass-accent), 0.2);
+  --alt-btn-txt-color: #ffffff;
 }
 
 *[data-theme='light'] {
@@ -38,6 +40,7 @@
   --input-bg-disabled: rgba(var(--glass-accent), 0.3);
   --table-alt: rgba(var(--glass-accent), 0.4);
   --glass-lines: rgba(var(--glass-accent), 0.4);
+  --alt-btn-txt-color: #000000;
 }
 
 .glass-alt-bg {
@@ -280,4 +283,62 @@ input.input:disabled {
   left: 50%;
   right: auto;
   bottom: calc(100% + .0625rem - .1875rem);
+}
+
+/* BUTTONS */
+
+button.btn.btn-primary:not(:disabled) {
+  background: rgba(var(--primary-color), 0.9);
+  box-shadow: inset 0px 0px 0px 1px rgba(255, 255, 255, 0.3), /* outline 1 */
+  inset 0px 0px 20px 1px rgba(255, 255, 255, 0.2), /* inner white glow */
+  0 4px 6px -1px rgb(0 0 0 / 0.1), /* outer box shadow1 */
+  0 2px 4px -2px rgb(0 0 0 / 0.1), /* outer box shadow2 */
+  0 5px 15px 0px rgba(var(--primary-color), 0.4); /* outer box glow */
+  border: 0px;
+  transition: var(--transition-general);
+}
+
+button.btn.btn-primary:hover {
+  background: rgba(var(--primary-color), 1);
+  box-shadow: inset 0px 0px 0px 1px rgba(255, 255, 255, 0.3),
+  inset -1px -1px 0px 0px rgba(255, 255, 255, 0.3), /* outline */
+  inset 1px 1px 0px 0px rgba(255, 255, 255, 0.3), /* outline */
+  inset 0px 0px 20px 1px rgba(255, 255, 255, 0.2),
+  0 4px 6px -1px rgb(0 0 0 / 0.1),
+  0 2px 4px -2px rgb(0 0 0 / 0.1),
+  0 5px 15px 3px rgba(var(--primary-color), 0.8);
+  border: 0px;
+}
+
+button.btn.btn-primary:disabled {
+  box-shadow: inset 0px 0px 0px 1px rgba(255, 255, 255, 0.3), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  border: 0px;
+}
+
+button.btn.btn-outline:not(:disabled) {
+  box-shadow: inset 0px 0px 0px 1px rgba(255, 255, 255, 0.3), /* outline 1 */
+  inset 0px 0px 20px 1px rgba(255, 255, 255, 0.2), /* inner white glow */
+  0 4px 6px -1px rgb(0 0 0 / 0.1), /* outer box shadow1 */
+  0 2px 4px -2px rgb(0 0 0 / 0.1), /* outer box shadow2 */
+  0 5px 15px 0px rgba(var(--primary-color), 0.0); /* outer box glow */
+  border: 0px;
+  transition: var(--transition-general);
+}
+
+button.btn.btn-outline:hover {
+  color: var(--alt-btn-txt-color);
+  background: rgba(255,255,255, 0.1);
+  box-shadow: inset 0px 0px 0px 1px rgba(255, 255, 255, 0.3),
+  inset -1px -1px 0px 0px rgba(255, 255, 255, 0.3), /* outline */
+  inset 1px 1px 0px 0px rgba(255, 255, 255, 0.3), /* outline */
+  inset 0px 0px 20px 1px rgba(255, 255, 255, 0.2),
+  0 4px 6px -1px rgb(0 0 0 / 0.1),
+  0 2px 4px -2px rgb(0 0 0 / 0.1),
+  0 5px 15px 3px rgba(var(--primary-color), 0.4);
+  border: 0px;
+}
+
+button.btn.btn-outline:disabled {
+  box-shadow: inset 0px 0px 0px 1px rgba(255, 255, 255, 0.3), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  border: 0px;
 }
