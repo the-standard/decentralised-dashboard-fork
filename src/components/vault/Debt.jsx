@@ -215,12 +215,10 @@ const Debt = ({
       } else if (isSuccess) {
         setBorrowSuccess(true);
         toast.success("Borrowed Successfully");
-        inputRef.current.value = "";
         setStage('');
       } else if (isError) {
         setBorrowSuccess(false);
         toast.error('There was a problem');
-        inputRef.current.value = "";
         setStage('');
       }  
     }
@@ -229,11 +227,9 @@ const Debt = ({
         setRepayStep(1);
       } else if (isSuccess) {
         toast.success("Approved Successfully");
-        inputRef.current.value = "";
         handleBurn();
       } else if (isError) {
         toast.error('There was a problem');
-        inputRef.current.value = "";
         setStage('');
       }  
     }
@@ -244,13 +240,11 @@ const Debt = ({
       } else if (isSuccess) {
         setRepaySuccess(true);
         toast.success("Repayed Successfully");
-        inputRef.current.value = "";
         setRepayStep(1);
         setStage('');
       } else if (isError) {
         setRepaySuccess(false)
         toast.error('There was a problem');
-        inputRef.current.value = "";
         setRepayStep(1);
         setStage('');
       }
