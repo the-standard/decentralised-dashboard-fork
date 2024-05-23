@@ -11,6 +11,7 @@
   --primary-color: 86, 23, 222;
 
   /* BTN SOLID */
+  --btn-solid-color: 255, 255, 255;
   --btn-solid-outline: inset 0px 0px 0px 1px rgba(255, 255, 255, 0.0);
   --btn-solid-outline-hover: inset 0px 0px 0px 1px rgba(255, 255, 255, 0.3);
   --btn-inner-highlight: inset 0px 0px 20px 1px rgba(255, 255, 255, 0.05);
@@ -215,13 +216,38 @@
   backdrop-filter: var(--glass-blur);
 }
 
+.tst-sidenav li[role="menuitem"] > .navbar-item:active {
+  transform: none!important;
+  filter: brightness(0.8)!important;
+  background-color: unset;
+}
+
+.tst-sidenav li[role="menuitem"] > .navbar-item.active {
+  color: rgb(var(--btn-solid-color));
+  background: rgba(var(--primary-color), 1)!important;
+  box-shadow: var(--btn-solid-outline),
+  var(--btn-inner-highlight),
+  var(--btn-edge-highlight),
+  var(--btn-outer-shadow),
+  var(--btn-outer-glow);
+  border: 0px;
+  transition: var(--transition-general);
+}
+
+.tst-sidenav li[role="menuitem"] > .navbar-item.active:hover {
+  color: rgb(var(--btn-solid-color));
+  background: rgba(var(--primary-color), 1);
+  box-shadow: var(--btn-solid-outline-hover),
+  var(--btn-inner-highlight-hover),
+  var(--btn-edge-highlight-hover),
+  var(--btn-outer-shadow-hover),
+  var(--btn-outer-glow-hover);
+}
+
 @media (min-width: 768px) {
   .tst-sidenav {
     height: unset;
-    /* margin-top: calc(var(--nav-height) * -1); */
     position: fixed;
-    /* top: 50%; */
-    /* transform: translateY(-50%); */
     width: 4rem;
     margin-top: 1rem;
   }
@@ -356,6 +382,7 @@ button.btn:not(:disabled):active {
 button.btn.btn-primary:not(:disabled),
 .btn.btn-success:not(:disabled),
 button.btn.btn-success:not(:disabled) {
+  color: rgb(var(--btn-solid-color));
   background: rgba(var(--primary-color), 1);
   box-shadow: var(--btn-solid-outline),
   var(--btn-inner-highlight),
@@ -368,6 +395,7 @@ button.btn.btn-success:not(:disabled) {
 
 .btn.btn-primary:hover,
 button.btn.btn-primary:hover {
+  color: rgb(var(--btn-solid-color));
   background: rgba(var(--primary-color), 1);
   box-shadow: var(--btn-solid-outline-hover),
   var(--btn-inner-highlight-hover),
@@ -386,6 +414,7 @@ button.btn.btn-primary:disabled {
 
 .btn.btn-success:not(:disabled),
 button.btn.btn-success:not(:disabled) {
+  color: rgb(var(--btn-solid-color));
   background: theme('backgroundColor.success');
   box-shadow: var(--btn-solid-outline),
   var(--btn-inner-highlight),
@@ -394,6 +423,7 @@ button.btn.btn-success:not(:disabled) {
 }
 .btn.btn-error:not(:disabled),
 button.btn.btn-error:not(:disabled) {
+  color: rgb(var(--btn-solid-color));
   background: theme('backgroundColor.error');
   box-shadow: var(--btn-solid-outline),
   var(--btn-inner-highlight),
@@ -404,6 +434,7 @@ button.btn.btn-error:not(:disabled) {
 button.btn.btn-success:hover,
 .btn.btn-error:hover,
 button.btn.btn-error:hover {
+  color: rgb(var(--btn-solid-color));
   box-shadow: var(--btn-solid-outline-hover),
   var(--btn-inner-highlight-hover),
   var(--btn-edge-highlight-hover),
