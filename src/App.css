@@ -393,3 +393,40 @@ button.btn.btn-outline:disabled {
   box-shadow: inset 0px 0px 0px 1px rgba(255, 255, 255, 0.3), 0 2px 4px -2px rgb(0 0 0 / 0.1);
   border: 0px;
 }
+
+/* PIE CHART */
+
+/* apexcharts-pie-area apexcharts-donut-slice-0 */
+
+.tst-pie {
+  position: relative;
+}
+
+.tst-pie:not(.empty) svg.apexcharts-svg g.apexcharts-series.apexcharts-pie-series path {
+  /* fill: rgba(255, 255, 255, 0.2); */
+  fill-opacity: 0.1;
+  /* position: relative; */
+}
+.tst-pie:not(.empty) svg.apexcharts-svg g.apexcharts-series.apexcharts-pie-series path[selected="true"] {
+  /* fill: rgba(255, 255, 255, 0.2); */
+  fill-opacity: 0.5;
+  position: relative;
+}
+
+.tst-pie-overlay {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  left: 4px;
+  bottom: 2px;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  pointer-events: none;
+  border-radius: 500000000px;
+  /* background: var(--glass-bg); */
+  /* box-shadow: var(--glass-inset); */
+  box-shadow: inset 0px 0px 20px 1px rgba(255, 255, 255, 0.2);
+  -webkit-mask: radial-gradient(67px, #0000 98%, #000);
+  mask: radial-gradient(67px, #0000 98%, #000);
+}

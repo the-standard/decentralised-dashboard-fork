@@ -35,51 +35,6 @@ const TokenTotalPie = (props) => {
 
 
   const options = {
-    plotOptions: {
-      pie: {
-        expandOnClick: chartEmpty ? (false) : (true),
-        donut: {
-          size: '70%',
-          // background: 'transparent',
-          // labels: {
-          //   show: true,
-          //   name: {
-          //     formatter: function (val) {
-          //       return val
-          //     },        
-          //   },
-          //   value: {
-          //     formatter: function (val) {
-          //       return val
-          //     },        
-          //   },
-          //   total: {
-          //     show: true,
-          //     label: 'Total',
-          //     fontSize: '22px',
-          //     fontWeight: 600,
-          //     formatter: function (w) {
-          //       return w.globals.seriesTotals.reduce((a, b) => {
-          //         return a + b
-          //       }, 0)
-          //     }
-          //   }
-          // }
-        }
-      }
-    },
-    states: {
-      active: {
-        filter: {
-          type: chartEmpty ? ('none') : ('darken')
-        }
-      },
-      hover: {
-        filter: {
-          type: chartEmpty ? ('none') : ('lighten')
-        }
-      },
-    },
     chart: {
       type: 'donut',
       sparkline: {
@@ -89,22 +44,21 @@ const TokenTotalPie = (props) => {
         show: false,
       },  
     },
-    colors: chartEmpty ? (
-      ['rgba(0,0,0,0.3)']
-    ) : (
-      [
-        'rgba(0, 143, 251, 0.6)',
-        'rgba(139, 77, 249, 0.6)',
-        'rgba(248, 226, 35, 0.6)',
-        'rgba(0, 227, 150, 0.6)',
-        'rgba(233, 30, 99, 0.6)',
-        'rgba(0, 143, 251, 0.6)',
-        'rgba(0, 227, 150, 0.6)',
-        'rgba(206, 212, 220, 0.6)',
-      ]
-    ),
+    plotOptions: {
+      pie: {
+        expandOnClick: chartEmpty ? (false) : (false),
+        donut: {
+          size: '70%',
+        }
+      }
+    },
     stroke: {
-      show: false
+      show: chartEmpty ? (false) : (true),
+      curve: 'straight',
+      lineCap: 'round',
+      colors: ['rgba(255,255,255,0.2'],
+      width: 1,
+      dashArray: 0, 
     },
     labels: names,
     dataLabels: {
@@ -149,6 +103,32 @@ const TokenTotalPie = (props) => {
         )
       },
     },
+    states: {
+      active: {
+        filter: {
+          type: chartEmpty ? ('none') : ('darken')
+        }
+      },
+      hover: {
+        filter: {
+          type: chartEmpty ? ('none') : ('lighten')
+        }
+      },
+    },
+    colors: chartEmpty ? (
+      ['rgba(0,0,0,0.3)']
+    ) : (
+      [
+        'rgba(0, 143, 251, 1)',
+        'rgba(139, 77, 249, 1)',
+        'rgba(248, 226, 35, 1)',
+        'rgba(0, 227, 150, 1)',
+        'rgba(233, 30, 99, 1)',
+        'rgba(0, 143, 251, 1)',
+        'rgba(0, 227, 150, 1)',
+        'rgba(206, 212, 220, 1)',
+      ]
+    ),
   };
 
   return (
@@ -165,17 +145,12 @@ const TokenTotalPie = (props) => {
           {vaultId}
         </Typography>
       </div>
-      <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 blur-lg opacity-70">
-        <ReactApexChart
-          options={options}
-          series={useSeries || []}
-          labels={names || []}
-          type="donut"
-          height="200px"
-          width="200px"
-        />
-      </div>
-      <div className="relative">
+      <div
+        className={`relative tst-pie ${chartEmpty ? ' empty' : ''}`}
+      >
+        {chartEmpty ? (null) : (
+          <div className="tst-pie-overlay"></div>
+        )}
         <ReactApexChart
           options={options}
           series={useSeries || []}
