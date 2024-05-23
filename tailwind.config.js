@@ -21,7 +21,7 @@ export default {
     themes: [
       {
         'light': {
-          'primary' : '#6321f2',           /* Primary color */
+          'primary' : '#5617de',           /* Primary color */
           // 'primary' : '#570df8',           /* Primary color */
           // 'primary-focus' : '#4506cb',     /* Primary color - focused */
           'primary-content' : '#ffffff',   /* Foreground content color to use on primary color */
@@ -65,7 +65,7 @@ export default {
       {
         'dark': {
           ...require("daisyui/src/theming/themes")["dark"],
-          'primary' : '#6321f2',           /* Primary color */
+          'primary' : '#5617de',           /* Primary color */
 
           'base-content' : 'rgba(255,255,255,0.8)',      /* Foreground content color to use on base color */
 
