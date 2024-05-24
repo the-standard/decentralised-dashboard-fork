@@ -37,7 +37,7 @@ const DashLayout = ({children}) => {
         }
         className="md:drawer-open bg-base-400/0"
         contentClassName="min-h-screen bg-base-400/0"
-        sideClassName="bg-base-400/0"
+        sideClassName="bg-base-400/0 z-[1]"
       >
         <div className="tst-inner">
           {children}

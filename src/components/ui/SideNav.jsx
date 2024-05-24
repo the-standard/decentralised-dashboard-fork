@@ -133,7 +133,7 @@ const SideNav = (props) => {
         </Tooltip>
       </div>
       <div className="block md:hidden self-center mt-auto pb-4">
-        <ThemeToggle />
+        <ThemeToggle className="dropdown-top" />
       </div>
     </Menu>
   );

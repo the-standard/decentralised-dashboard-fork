@@ -44,7 +44,7 @@ const TopNav = (props) => {
         </div>
         <div className="navbar-end">
           <div className="hidden md:block">
-            <ThemeToggle />
+            <ThemeToggle className="dropdown-bottom"/>
           </div>
           <w3m-button />
         </div>

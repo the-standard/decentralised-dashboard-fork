@@ -7,8 +7,8 @@
   --nav-height: 4rem;
   --card-border-radius: 1rem;
   --glass-blur: blur(30px);
+  --glass-blur-sm: blur(4px);
   --transition-general: all 0.1s ease-in;
-  --primary-color: 86, 23, 222;
 
   /* BTN SOLID */
   --btn-solid-color: 255, 255, 255;
@@ -28,8 +28,6 @@
   --btn-outer-shadow-hover: 
     0 4px 6px -1px rgb(0 0 0 / 0.1),
     0 2px 4px -2px rgb(0 0 0 / 0.1);
-  --btn-outer-glow: 0 5px 15px 0px rgba(var(--primary-color), 0.0);
-  --btn-outer-glow-hover: 0 5px 15px 0px rgba(var(--primary-color), 0.4);
 
   /* BTN OUTLINE */
   --btn-outline-outline: inset 0px 0px 0px 1px rgba(255, 255, 255, 0.3);
@@ -48,11 +46,28 @@
   --btn-outline-outer-shadow-hover: 
     0 4px 6px -1px rgb(0 0 0 / 0.1),
     0 2px 4px -2px rgb(0 0 0 / 0.1);
+}
+
+*[data-theme='deluxe-dark'],
+*[data-theme='deluxe-light'] {
+  --primary-color: 212, 175, 55;
+  --btn-outer-glow: 0 5px 15px 0px rgba(var(--primary-color), 0.0);
+  --btn-outer-glow-hover: 0 5px 15px 0px rgba(var(--primary-color), 0.4);
   --btn-outline-outer-glow: 0 5px 15px 0px rgba(var(--primary-color), 0.0);
   --btn-outline-outer-glow-hover: 0 5px 15px 3px rgba(var(--primary-color), 0.4);
 }
 
-*[data-theme='dark'] {
+*[data-theme='nebula-dark'],
+*[data-theme='nebula-light'] {
+  --primary-color: 86, 23, 222;
+  --btn-outer-glow: 0 5px 15px 0px rgba(var(--primary-color), 0.0);
+  --btn-outer-glow-hover: 0 5px 15px 0px rgba(var(--primary-color), 0.4);
+  --btn-outline-outer-glow: 0 5px 15px 0px rgba(var(--primary-color), 0.0);
+  --btn-outline-outer-glow-hover: 0 5px 15px 3px rgba(var(--primary-color), 0.4);
+}
+
+*[data-theme='deluxe-dark'],
+*[data-theme='nebula-dark'] {
   --glass-bg: linear-gradient(
     110.28deg,
     rgba(255, 255, 255, 0.2) 0.2%,
@@ -75,7 +90,8 @@
   --btn-outline-inner-highlight-hover: inset 0px 0px 20px 1px rgba(255, 255, 255, 0.1);
 }
 
-*[data-theme='light'] {
+*[data-theme='deluxe-light'],
+*[data-theme='nebula-light'] {
   --glass-bg: linear-gradient(
     110.28deg,
     rgba(255, 255, 255, 0.4) 0.2%,
@@ -103,6 +119,10 @@
 
 .glass-alt-bg {
   background: var(--table-alt);
+}
+
+.dropdown-content {
+  opacity: 1!important;
 }
 
 /* BACKGROUND */
@@ -150,6 +170,10 @@
 }
 
 /* TOPNAV */
+
+.tst-topnav {
+  z-index: 1;
+}
 
 .tst-topnav,
 .tst-topnav > .navbar-start,
@@ -213,7 +237,7 @@
 
 .drawer[aria-expanded='true'] > .drawer-side > .drawer-overlay {
   transition: var(--transition-general);
-  backdrop-filter: var(--glass-blur);
+  backdrop-filter: var(--glass-blur-sm);
 }
 
 .tst-sidenav li[role="menuitem"] > .navbar-item:active {
