@@ -20,11 +20,11 @@ const ThemeHandler = ({children}) => {
         window.matchMedia &&
         window.matchMedia('(prefers-color-scheme: dark)').matches
       ) {
-        localStorage.setItem("theme", "dark");
-        setCurrentTheme("dark");
+        localStorage.setItem("theme", "deluxe-dark");
+        setCurrentTheme("deluxe-dark");
       } else {
-        localStorage.setItem("theme", "light");
-        setCurrentTheme("light");
+        localStorage.setItem("theme", "deluxe-light");
+        setCurrentTheme("deluxe-light");
       }
     }
   }, [])

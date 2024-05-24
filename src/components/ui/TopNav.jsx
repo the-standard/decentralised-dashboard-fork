@@ -18,6 +18,8 @@ const TopNav = (props) => {
   const navigate = useNavigate();
   const { currentTheme } = useCurrentTheme();
 
+  const isLight = currentTheme && currentTheme.includes('light');
+
   if (address) {
     return (
       <div className="navbar sticky shadow-md tst-topnav">
@@ -35,7 +37,7 @@ const TopNav = (props) => {
             onClick={() => navigate("/")}
           >
             <img
-              src={currentTheme === 'light' ? (StandardioLogoBlack) : (StandardioLogoWhite)}
+              src={isLight ? (StandardioLogoBlack) : (StandardioLogoWhite)}
               alt="TheStandard.io Logo"
               className="h-6"
             />  
