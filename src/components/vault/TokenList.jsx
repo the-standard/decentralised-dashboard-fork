@@ -34,7 +34,7 @@ const TokenList = ({ assets, assetsLoading }) => {
   const [actionType, setActionType] = useState();
   const [useAsset, setUseAsset] = useState();
 
-  const [subRow, setSubRow] = useState();
+  const [subRow, setSubRow] = useState('0sub');
 
   const closeAction = () => {
     setActionType('');
