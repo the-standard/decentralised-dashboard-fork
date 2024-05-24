@@ -34,10 +34,10 @@ const Modal = (props) => {
           }}
         >
           <div
-            className={"z-40 absolute -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 w-full px-4 " + (wide ? "max-w-[48rem]" : "max-w-[34rem]") }
+            className={"z-40 absolute -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2 w-full px-4 " + (wide ? "max-w-[62rem]" : "max-w-[34rem]") }
           >
-            <Card className="card-compact w-full max-h-[90vh] overflow-scroll tst-card">
-              <div className="card-body">
+            <Card className="card-compact w-full max-h-[90vh] tst-card">
+              <div className="card-body overflow-scroll">
                 {props.children}
               </div>
             </Card>
