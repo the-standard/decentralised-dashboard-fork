@@ -20,14 +20,14 @@ export default {
       {
         'deluxe-light': {
           ...require("daisyui/src/theming/themes")["light"],
-          'primary' : '#d4af37',
+          'primary' : '#43423d',
           'base-content' : 'rgba(0,0,0,0.8)',
         },
       },
       {
         'deluxe-dark': {
           ...require("daisyui/src/theming/themes")["dark"],
-          'primary' : '#d4af37',
+          'primary' : '#1b1918',
           'base-content' : 'rgba(255,255,255,0.8)',
         },
       },

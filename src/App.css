@@ -9,6 +9,7 @@
   --glass-blur: blur(30px);
   --glass-blur-sm: blur(4px);
   --transition-general: all 0.1s ease-in;
+  --gold-color: 212, 175, 55;
 
   /* BTN SOLID */
   --btn-solid-color: 255, 255, 255;
@@ -48,13 +49,18 @@
     0 2px 4px -2px rgb(0 0 0 / 0.1);
 }
 
+*[data-theme='deluxe-dark'] {
+  --primary-color: 27, 25, 24;
+}
+*[data-theme='deluxe-light'] {
+  --primary-color: 67, 66, 61;
+}
 *[data-theme='deluxe-dark'],
 *[data-theme='deluxe-light'] {
-  --primary-color: 212, 175, 55;
-  --btn-outer-glow: 0 5px 15px 0px rgba(var(--primary-color), 0.0);
-  --btn-outer-glow-hover: 0 5px 15px 0px rgba(var(--primary-color), 0.4);
-  --btn-outline-outer-glow: 0 5px 15px 0px rgba(var(--primary-color), 0.0);
-  --btn-outline-outer-glow-hover: 0 5px 15px 3px rgba(var(--primary-color), 0.4);
+  --btn-outer-glow: 0 5px 15px 0px rgba(var(--gold-color), 0.0);
+  --btn-outer-glow-hover: 0 5px 15px 0px rgba(var(--gold-color), 0.4);
+  --btn-outline-outer-glow: 0 5px 15px 0px rgba(var(--gold-color), 0.0);
+  --btn-outline-outer-glow-hover: 0 5px 15px 3px rgba(var(--gold-color), 0.4);
 }
 
 *[data-theme='nebula-dark'],
