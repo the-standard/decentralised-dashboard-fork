@@ -44,7 +44,7 @@ const ThemeToggle = (props) => {
     setCurrentTheme(newTheme);
   }
 
-  const isLight = chosenTheme.includes('light');
+  const isLight = chosenTheme && chosenTheme.includes('light');
 
   return (
     <div

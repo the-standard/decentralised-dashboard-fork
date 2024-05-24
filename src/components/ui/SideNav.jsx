@@ -25,6 +25,8 @@ const SideNav = (props) => {
   const navigate = useNavigate();
   const { currentTheme } = useCurrentTheme();
 
+  const isLight = currentTheme && currentTheme.includes('light');
+
   return (
     <Menu className="p-0 text-base-content tst-sidenav">
       <div className="flex flex-row flex-no-wrap space-x-2 md:hidden p-2 h-16">
@@ -35,7 +37,7 @@ const SideNav = (props) => {
           onClick={() => navigate("/")}
         >
           <img
-            src={currentTheme === 'light' ? (StandardioLogoBlack) : (StandardioLogoWhite)}
+            src={isLight ? (StandardioLogoBlack) : (StandardioLogoWhite)}
             alt="TheStandard.io Logo"
             className="h-5"
           />
