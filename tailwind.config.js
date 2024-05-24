@@ -20,12 +20,26 @@ export default {
       {
         'deluxe-light': {
           ...require("daisyui/src/theming/themes")["light"],
-          'primary' : '#5617de',
+          'primary' : '#d4af37',
           'base-content' : 'rgba(0,0,0,0.8)',
         },
       },
       {
         'deluxe-dark': {
+          ...require("daisyui/src/theming/themes")["dark"],
+          'primary' : '#d4af37',
+          'base-content' : 'rgba(255,255,255,0.8)',
+        },
+      },
+      {
+        'nebula-light': {
+          ...require("daisyui/src/theming/themes")["light"],
+          'primary' : '#5617de',
+          'base-content' : 'rgba(0,0,0,0.8)',
+        },
+      },
+      {
+        'nebula-dark': {
           ...require("daisyui/src/theming/themes")["dark"],
           'primary' : '#5617de',
           'base-content' : 'rgba(255,255,255,0.8)',
