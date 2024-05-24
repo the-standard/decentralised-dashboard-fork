@@ -17,8 +17,7 @@ const BorrowModal = (props) => {
     closeModal,
     handleAmount,
     isPending,
-    // temp todo
-    // isSuccess,
+    isSuccess,
     amount,
     handleDebtAction,
     borrowValues,
@@ -30,8 +29,6 @@ const BorrowModal = (props) => {
 
   const currentDebt = ethers.formatEther(currentVault.status.minted.toString());
   
-  // temp todo
-  const isSuccess = true;
   if (isSuccess) {
     return (
       <>
