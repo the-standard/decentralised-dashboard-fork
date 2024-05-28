@@ -57,10 +57,10 @@
 }
 *[data-theme='deluxe-dark'],
 *[data-theme='deluxe-light'] {
-  --btn-outer-glow: 0 5px 15px 0px rgba(var(--gold-color), 0.0);
-  --btn-outer-glow-hover: 0 5px 15px 0px rgba(var(--gold-color), 0.4);
-  --btn-outline-outer-glow: 0 5px 15px 0px rgba(var(--gold-color), 0.0);
-  --btn-outline-outer-glow-hover: 0 5px 15px 3px rgba(var(--gold-color), 0.4);
+  --btn-outer-glow: 0 5px 15px 0px rgba(var(--primary-color), 0.0);
+  --btn-outer-glow-hover: 0 5px 15px 0px rgba(var(--primary-color), 0.4);
+  --btn-outline-outer-glow: 0 5px 15px 0px rgba(var(--primary-color), 0.0);
+  --btn-outline-outer-glow-hover: 0 5px 15px 3px rgba(var(--primary-color), 0.4);
 }
 
 *[data-theme='nebula-dark'],
