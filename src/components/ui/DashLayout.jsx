@@ -6,6 +6,7 @@ import {
 
 import TopNav from './TopNav';
 import SideNav from './SideNav';
+import Footer from './Footer';
 
 const DashLayout = ({children}) => {
   const [showSideNav, setShowSideNav] = useState(false);
@@ -16,7 +17,6 @@ const DashLayout = ({children}) => {
 
   return (
     <div className="tst-con">
-      <TopNav toggleVisible={toggleVisible} />
       <ToastContainer
         position="bottom-left"
         stacked
@@ -36,12 +36,14 @@ const DashLayout = ({children}) => {
           <SideNav toggleVisible={toggleVisible} />
         }
         className="md:drawer-open bg-base-400/0"
-        contentClassName="min-h-screen bg-base-400/0"
-        sideClassName="bg-base-400/0 z-[1]"
+        contentClassName="tst-sidenav__content min-h-screen bg-base-400/0"
+        sideClassName="tst-sidenav__side bg-base-400/0 z-[1]"
       >
+        <TopNav toggleVisible={toggleVisible} />
         <div className="tst-inner">
           {children}
         </div>
+        <Footer />
       </Drawer>
     </div>
   );
