@@ -160,6 +160,14 @@ const VaultHistory = () => {
       <Card className="card-compact">
         <div className="card-body overflow-x-scroll">
           {vaultNav()}
+
+          <div role="alert" className="alert alert-warning bg-yellow-400/20 mb-2">
+            <span>
+              <b>History Maintenance</b>
+              <br/>
+              We are are working on improving the speed of history updates. In the meantime you may experience temporary drops in history coverage or delayed new entries.
+            </span>
+          </div>
           <table className="table table-zebra">
             <thead>
               <tr>
