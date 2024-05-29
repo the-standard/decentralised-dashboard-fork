@@ -4,12 +4,13 @@ on:
   push:
     branches:
       - main
+      - beta
 
 env:
   PROJECT_NAME: ${{ secrets.GKE_PROJECT }}
   CLUSTER_NAME: cluster-1
   CLOUDSDK_COMPUTE_ZONE: europe-west2-c
-  DEPLOYMENT: fork-demo
+  DEPLOYMENT: smart-vault
   NAMESPACE: default
 jobs:
 
@@ -66,7 +67,7 @@ jobs:
           export IMAGE_TAG="gcr.io/${PROJECT_NAME}/$DEPLOYMENT:${GITHUB_REF##*/}.${GITHUB_SHA}"
           gcloud components install gke-gcloud-auth-plugin
           gcloud container clusters get-credentials cluster-1 --zone $CLOUDSDK_COMPUTE_ZONE --project $PROJECT_NAME
-          kubectl set image deployment/$DEPLOYMENT-deployment $DEPLOYMENT=${IMAGE_TAG} -n ${NAMESPACE}
+          kubectl set image deployment/$DEPLOYMENT-deployment-${GITHUB_REF##*/} $DEPLOYMENT-${GITHUB_REF##*/}=${IMAGE_TAG} -n ${NAMESPACE}
 
     - name: Cleanup
       run: |-
