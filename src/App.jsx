@@ -17,6 +17,7 @@ import StakingPool from './pages/staking-pool/StakingPool';
 import './App.css';
 import 'react-toastify/dist/ReactToastify.min.css';
 
+
 function App() {
   const queryClient = new QueryClient();
 
