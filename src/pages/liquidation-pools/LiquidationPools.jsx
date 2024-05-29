@@ -44,7 +44,7 @@ const LiquidationPools = () => {
     ? arbitrumSepoliaLiquidationPoolAddress
     : arbitrumLiquidationPoolAddress;
 
-  const { data: liquidationPool, refetch, isLoading } = useReadContract({
+  const { data: liquidationPool, refetch, isLoading, error } = useReadContract({
     address: liquidationPoolAddress,
     abi: liquidationPoolAbi,
     functionName: "position",
