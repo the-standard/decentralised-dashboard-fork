@@ -60,13 +60,13 @@ const Footer = (props) => {
     <footer className="tst-footer items-center p-4 tst-footer mt-20 gap-2 flex flex-col md:flex-row">
       <aside className="w-full flex flex-row align-center justify-center md:justify-start flex-wrap md:flex-nowrap gap-4">
         {links.map((link) => (
-            <a
-              key={link.name}
-              href={link.link}
-              target="_blank"
-            >
-              {link.name}
-            </a>
+          <a
+            key={link.name}
+            href={link.link}
+            target="_blank"
+          >
+            {link.name}
+          </a>
         ))}
       </aside> 
       <nav className="w-full flex flex-row align-center justify-center md:justify-end flex-wrap md:flex-nowrap gap-1">
