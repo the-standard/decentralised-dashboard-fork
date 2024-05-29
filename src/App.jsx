@@ -17,6 +17,7 @@ import LiquidationPools from './pages/liquidation-pools/LiquidationPools';
 import './App.css';
 import 'react-toastify/dist/ReactToastify.min.css';
 
+
 function App() {
   const queryClient = new QueryClient();
 
