@@ -172,7 +172,7 @@ const VaultList = ({ vaults, vaultsLoading, tokenId }) => {
                           </td>
                           <td className="hidden md:table-cell">
                             {vault.status.liquidated ? (
-                              <Typography variant="p">
+                              <Typography variant="p" className="text-error">
                                 Vault Liquidated
                               </Typography>
                             ) : (
