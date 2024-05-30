@@ -318,15 +318,7 @@ const SwapModal = ({
               variant="p"
               className="mb-2"
             >
-              {vaultStore.status.version == 2 ? (
-                <>
-                  Asset swapping will return soon with the upcoming introduction of V3 vaults.
-                </>
-              ) : (
-                <>
-                  Asset swapping is coming soon with the upcoming introduction of V3 vaults.
-                </>
-              )}
+              Asset swapping is available with V3 and newer vaults.
             </Typography>
           </div>
 
