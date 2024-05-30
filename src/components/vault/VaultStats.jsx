@@ -108,7 +108,13 @@ const VaultStats = ({
           </div>
         ))}
         <div className="w-full px-1 mt-4">
-          <VaultHealth currentVault={currentVault}/>
+          {currentVault.status.liquidated ? (
+            <Typography variant="h1" className="text-error">
+              Vault Liquidated
+            </Typography>
+          ) : (
+            <VaultHealth currentVault={currentVault}/>
+          )}
         </div>
       </div>
     </>
