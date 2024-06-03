@@ -76,7 +76,8 @@ const TokenList = ({ assets, assetsLoading }) => {
       <Card className="card-compact">
         <div className="card-body">
           <div className="">
-            <table className="table table-fixed">
+            {/* <table className="table table-fixed"> */}
+            <table className="table">
               <thead>
                 <tr>
                   <th>Asset</th>
@@ -143,6 +144,7 @@ const TokenList = ({ assets, assetsLoading }) => {
                               symbol={symbol}
                             />
                           </td>
+                          <td className="table-cell md:hidden"></td>
                           <td className="text-right">
                             <Button
                               shape="circle"
@@ -163,11 +165,10 @@ const TokenList = ({ assets, assetsLoading }) => {
                             'glass-alt-bg w-full hidden h-0'
                           )}
                         >
-                          <td className="hidden md:table-cell"></td>
-                          <td colSpan="3">
+                          <td colSpan="4">
                             {vaultStore.status.liquidated ? null : (
                               <>
-                                <div className="flex flex-row gap-4">
+                                <div className="flex flex-row flex-wrap gap-4">
                                   <Button
                                     variant="outline"
                                     onClick={() => handleClick('DEPOSIT', asset)}
@@ -190,6 +191,14 @@ const TokenList = ({ assets, assetsLoading }) => {
                                     className="grow"
                                   >
                                     Swap
+                                  </Button>
+                                  <Button
+                                    variant="outline"
+                                    disabled={amount <= 0}
+                                    onClick={() => handleClick('SWAP', asset)}
+                                    className="grow"
+                                  >
+                                    Place In Yield Pool
                                   </Button>
                                 </div>
                               </>
