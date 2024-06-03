@@ -125,7 +125,7 @@ const BorrowModal = (props) => {
           </div>
         </Modal>
       </>
-    )
+    );
   }
     
   return (
@@ -210,10 +210,7 @@ const BorrowModal = (props) => {
               </Button>
             </div>
           </div>
-          <div class="divider md:divider-horizontal" />
-          <div className="flex-1">
-            <EurosCompare />
-          </div>
+          <EurosCompare />
         </div>
       </Modal>
     </>

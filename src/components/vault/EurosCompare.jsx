@@ -80,88 +80,93 @@ const EurosCompare = () => {
 
   if (currentDiscount < 0) {
     return (
-      <div>
-        <div className="mb-2">
-          <Typography
-            variant="h2"
-            className="mb-1"
-          >
-            Repay Your Debt for a Discount
-          </Typography>
-          <Typography
-            variant="p"
-          >
-            Take advantage of market conditions to reduce your EUROs debt.
-            <br/>
-            When the EUROs Value dips below the FX market price of EUR, you have the opportunity to repay your debt at discount. Act swiftly to lock in your savings and strengthen your financial position.
-          </Typography>
-        </div>
-    
-        <div className="mb-2">
-          <Typography
-            variant="h3"
-          >
-            Current Savings Opportunity:
-          </Typography>
-          <div
-            className="flex justify-between align-center"
-          >
-            <Typography
-              variant="p"
-              className="flex-1"
-            >
-              EUR FX market price (USD):
-            </Typography>
-            <Typography
-              variant="p"
-              className="flex-1"
-            >
-              ${chainPrice}
-            </Typography>
+      <div className="flex flex-col md:flex-row flex-1">
+        <div className="flex flex-col md:flex-row">
+          <div class="divider md:divider-horizontal" />
+          <div>
+            <div className="mb-2">
+              <Typography
+                variant="h2"
+                className="mb-1"
+              >
+                Repay Your Debt for a Discount
+              </Typography>
+              <Typography
+                variant="p"
+              >
+                Take advantage of market conditions to reduce your EUROs debt.
+                <br/>
+                When the EUROs Value dips below the FX market price of EUR, you have the opportunity to repay your debt at discount. Act swiftly to lock in your savings and strengthen your financial position.
+              </Typography>
+            </div>
+        
+            <div className="mb-2">
+              <Typography
+                variant="h3"
+              >
+                Current Savings Opportunity:
+              </Typography>
+              <div
+                className="flex justify-between align-center"
+              >
+                <Typography
+                  variant="p"
+                  className="flex-1"
+                >
+                  EUR FX market price (USD):
+                </Typography>
+                <Typography
+                  variant="p"
+                  className="flex-1"
+                >
+                  ${chainPrice}
+                </Typography>
+              </div>
+      
+              <div
+                className="flex justify-between align-center"
+              >
+                <Typography
+                  variant="p"
+                  className="flex-1"
+                >
+                  EUROs price (USD):
+                </Typography>
+                <Typography
+                  variant="p"
+                  className="flex-1"
+                >
+                  ${poolPrice}
+                </Typography>
+              </div>
+      
+              <div
+                className="flex justify-between align-center"
+              >
+                <Typography
+                  variant="p"
+                  className="flex-1"
+                >
+                  Current discount %:
+                </Typography>
+                <Typography
+                  variant="p"
+                  className="flex-1"
+                >
+                  {showDiscount.toFixed(2)}%
+                </Typography>
+              </div>
+      
+            </div>
+      
+            <div>
+              <Typography
+                variant="h3"
+              >
+                Act Now: Save {showDiscount.toFixed(2)}% on Repayment
+              </Typography>
+            </div>
           </div>
-  
-          <div
-            className="flex justify-between align-center"
-          >
-            <Typography
-              variant="p"
-              className="flex-1"
-            >
-              EUROs price (USD):
-            </Typography>
-            <Typography
-              variant="p"
-              className="flex-1"
-            >
-              ${poolPrice}
-            </Typography>
-          </div>
-  
-          <div
-            className="flex justify-between align-center"
-          >
-            <Typography
-              variant="p"
-              className="flex-1"
-            >
-              Current discount %:
-            </Typography>
-            <Typography
-              variant="p"
-              className="flex-1"
-            >
-              {showDiscount.toFixed(2)}%
-            </Typography>
-          </div>
-  
-        </div>
-  
-        <div>
-          <Typography
-            variant="h3"
-          >
-            Act Now: Save {showDiscount.toFixed(2)}% on Repayment
-          </Typography>
         </div>
       </div>
     );  
