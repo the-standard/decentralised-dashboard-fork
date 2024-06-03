@@ -29,6 +29,8 @@ import VaultStats from "../../components/vault/VaultStats";
 import TokenList from "../../components/vault/TokenList";
 import VaultSend from "../../components/vault/VaultSend";
 import TokenTotalPie from "../../components/vault/TokenTotalPie";
+import YieldList from "../../components/vault/YieldList";
+import YieldRatio from "../../components/vault/YieldRatio";
 
 import Card from "../../components/ui/Card";
 import Typography from "../../components/ui/Typography";
@@ -207,11 +209,55 @@ const Vault = () => {
           </div>
         </div>
       </Card>
-      <div className="mt-4">
-        <TokenList
-          assets={assets}
-          assetsLoading={!assets.length || assets.length === 0}
-        />
+      <div className="flex flex-col md:flex-row mt-4 gap-4 flex-wrap">
+        <div className="flex-1 grow-[6]">
+          <TokenList
+            assets={assets}
+            assetsLoading={!assets.length || assets.length === 0}
+          />
+        </div>
+
+        <div className="flex-1 grow-[3]">
+          <Card className="card-compact">
+            <div className="card-body">
+              {/* TEMP TODO */}
+              <YieldList
+                assets={assets}
+                assetsLoading={!assets.length || assets.length === 0}
+              />
+              <YieldRatio />
+              <div className="flex flex-col mt-2">
+                <div className="flex-1 flex flex-row justify-between">
+                  <Typography
+                    variant="p"
+                  >
+                    Total Yield Earned
+                  </Typography>
+                  <Typography
+                    variant="p"
+                    className="text-right"
+                  >
+                    €TBC.12
+                  </Typography>
+                </div>
+                <div className="flex-1 flex flex-row justify-between">
+                  <Typography
+                    variant="p"
+                  >
+                    Total Balance
+                  </Typography>
+                  <Typography
+                    variant="p"
+                    className="text-right"
+                  >
+                    €TBC.34
+                  </Typography>
+                </div>
+
+              </div>
+            </div>
+          </Card>
+        </div>
       </div>
       
       <div className="mt-4">
