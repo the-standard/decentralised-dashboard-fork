@@ -5,6 +5,7 @@ import {
 } from '@heroicons/react/24/outline';
 
 import VaultHealth from "./VaultHealth";
+import EurosCompare from "./EurosCompare";
 
 import Button from "../ui/Button";
 import Modal from "../ui/Modal";
@@ -132,78 +133,87 @@ const BorrowModal = (props) => {
       <Modal
         open={open}
         closeModal={closeModal}
+        wide={true}
       >
-        <Typography variant="h2" className="card-title">
-          <ArrowDownCircleIcon className="mr-2 h-6 w-6 inline-block"/>
-          Borrowing EUROs
-        </Typography>
+        <div className="flex flex-col md:flex-row">
+          <div className="flex flex-col flex-1">
+            <Typography variant="h2" className="card-title">
+              <ArrowDownCircleIcon className="mr-2 h-6 w-6 inline-block"/>
+              Borrowing EUROs
+            </Typography>
 
-        <div className="flex justify-between">
-          <Typography
-            variant="p"
-          >
-            Borrow Amount
-          </Typography>
-          <Typography
-            variant="p"
-            className="text-right"
-          >
-            Current Debt: {currentDebt}
-          </Typography>
-        </div>
-        <Input
-          className="w-full"
-          placeholder="Amount of EUROs to borrow"
-          type="number"
-          onChange={(e) => handleAmount(e, 'BORROW')}
-          disabled={isPending}
-          useRef={inputRef}
-        />
-
-        <div className="mt-4">
-          <VaultHealth currentVault={currentVault}/>
-        </div>
-
-        <div>
-          {borrowValues.map((item) => (
-            <div
-              className="flex justify-between align-center"
-              key={item.key}
-            >
+            <div className="flex justify-between">
               <Typography
                 variant="p"
-                className="flex-1"
               >
-                {item.key}
+                Borrow Amount
               </Typography>
               <Typography
                 variant="p"
-                className="flex-1"
+                className="text-right"
               >
-                {item.value || '0'}
+                Current Debt: {currentDebt}
               </Typography>
             </div>
-          ))}
-        </div>
+            <Input
+              className="w-full"
+              placeholder="Amount of EUROs to borrow"
+              type="number"
+              onChange={(e) => handleAmount(e, 'BORROW')}
+              disabled={isPending}
+              useRef={inputRef}
+            />
 
-        <div className="card-actions pt-4 flex-col-reverse lg:flex-row justify-end">
-          <Button
-            className="w-full lg:w-auto"
-            color="ghost"
-            onClick={closeModal}
-            disabled={isPending}
-          >
-            Close
-          </Button>
-          <Button
-            className="w-full lg:w-64"
-            color="success"
-            disabled={!amount || isPending}
-            onClick={() => handleDebtAction('BORROW')}
-            loading={isPending}
-          >
-            Withdraw
-          </Button>
+            <div className="mt-4">
+              <VaultHealth currentVault={currentVault}/>
+            </div>
+
+            <div>
+              {borrowValues.map((item) => (
+                <div
+                  className="flex justify-between align-center"
+                  key={item.key}
+                >
+                  <Typography
+                    variant="p"
+                    className="flex-1"
+                  >
+                    {item.key}
+                  </Typography>
+                  <Typography
+                    variant="p"
+                    className="flex-1"
+                  >
+                    {item.value || '0'}
+                  </Typography>
+                </div>
+              ))}
+            </div>
+
+            <div className="card-actions flex-1 pt-4 flex-col-reverse lg:flex-row justify-end items-end">
+              <Button
+                className="w-full lg:w-auto"
+                color="ghost"
+                onClick={closeModal}
+                disabled={isPending}
+              >
+                Close
+              </Button>
+              <Button
+                className="w-full lg:w-64"
+                color="success"
+                disabled={!amount || isPending}
+                onClick={() => handleDebtAction('BORROW')}
+                loading={isPending}
+              >
+                Withdraw
+              </Button>
+            </div>
+          </div>
+          <div class="divider md:divider-horizontal" />
+          <div className="flex-1">
+            <EurosCompare />
+          </div>
         </div>
       </Modal>
     </>
