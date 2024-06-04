@@ -20,13 +20,13 @@ import {
   usesEuroAddressStore,
   useLiquidationPoolAbiStore,
   useLiquidationPoolStore,
-} from "../../store/Store";
+} from "../../../store/Store";
 
-import Card from "../ui/Card";
-import Button from "../ui/Button";
-import Typography from "../ui/Typography";
-import Modal from "../ui/Modal";
-import Input from "../ui/Input";
+import Card from "../../ui/Card";
+import Button from "../../ui/Button";
+import Typography from "../../ui/Typography";
+import Modal from "../../ui/Modal";
+import Input from "../../ui/Input";
 
 const Staking = () => {
   const chainId = useChainId();

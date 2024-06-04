@@ -1,0 +1,182 @@
+import { useState, useEffect, useRef } from "react";
+import {
+  useWriteContract,
+  useChainId,
+} from "wagmi";
+import { arbitrumSepolia } from "wagmi/chains";
+import { toast } from 'react-toastify';
+
+import {
+  useStakingPoolv2AddressStore,
+  useStakingPoolv2AbiStore
+} from "../../../store/Store";
+
+import Button from "../../ui/Button";
+import Modal from "../../ui/Modal";
+import Typography from "../../ui/Typography";
+import CenterLoader from "../../ui/CenterLoader";
+import Checkbox from "../../ui/Checkbox";
+
+const ClaimingRewardsModal = ({
+  isOpen,
+  handleCloseModal,
+}) => {
+  const {
+    arbitrumSepoliaStakingPoolv2Address,
+    arbitrumStakingPoolv2Address,
+  } = useStakingPoolv2AddressStore();
+  const { stakingPoolv2Abi } = useStakingPoolv2AbiStore();
+  const [claimLoading, setClaimLoading] = useState(false);
+  const [showError, setShowError] = useState(false);
+  const [compound, setCompound] = useState(false);
+  const chainId = useChainId();
+
+  const stakingPoolv2Address = chainId === arbitrumSepolia.id ? arbitrumSepoliaStakingPoolv2Address :
+  arbitrumStakingPoolv2Address;
+
+  const { writeContract, isError, isPending, isSuccess, error } = useWriteContract();
+
+  const handleApproveClaim = async () => {
+    try {
+      writeContract({
+        abi: stakingPoolv2Abi,
+        address: stakingPoolv2Address,
+        functionName: "claim",
+        args: [compound],
+      });
+    } catch (error) {
+      let errorMessage = '';
+      if (error && error.shortMessage) {
+        errorMessage = error.shortMessage;
+      }
+      toast.error(errorMessage || 'There was an error');
+    }
+  };
+
+  useEffect(() => {
+    if (isPending) {
+      setClaimLoading(true);
+    } else if (isSuccess) {
+      toast.success(errorMessage || 'Success!');
+      setClaimLoading(false);
+      handleCloseModal();
+    } else if (isError) {
+      setShowError(true)
+      setClaimLoading(false);
+    }
+  }, [
+    isPending,
+    isSuccess,
+    isError,
+    error,
+  ]);
+
+  if (showError) {
+    return (
+      <>
+        <Modal
+          open={isOpen}
+          closeModal={() => {
+            setShowError(false);
+            handleCloseModal();
+          }}
+        >
+          <div>
+            {claimLoading ? (
+              <>
+                <Typography variant="h2" className="card-title">
+                  Claiming Your Rewards
+                </Typography>
+                <CenterLoader />
+              </>
+            ) : (
+              <>
+                <div>
+                  <Typography variant="h2" className="card-title">
+                    Reward Claim Unsuccessful
+                  </Typography>
+                  <Typography variant="p">
+                    There was a problem processing your reward claim request.
+                  </Typography>
+                </div>
+
+                <div className="card-actions pt-4 flex-col-reverse lg:flex-row justify-end">
+                  <Button
+                    onClick={() => setShowError(false)}
+                  >
+                    Return
+                  </Button>
+                  <Button
+                    onClick={() => {
+                      setShowError(false);
+                      handleCloseModal();
+                    }}
+                  >
+                    Cancel
+                  </Button>
+                </div>
+              </>
+            )}
+          </div>
+        </Modal>
+      </>
+    )
+  }
+
+  return (
+    <>
+      <Modal
+        open={isOpen}
+        onClose={() => {
+          handleCloseModal();
+        }}
+      >
+        <div>
+          {claimLoading ? (
+            <>
+              <Typography variant="h2" className="card-title">
+                Claiming Your Rewards
+              </Typography>
+              <CenterLoader />
+            </>
+          ) : (
+            <>
+              <div>
+                <Typography variant="h2" className="card-title">
+                  Claim Your Rewards
+                </Typography>
+                <Typography variant="p" className="mb-2">
+                  Claiming your rewards will end your current staking period and restart a new one.
+                </Typography>
+                <Typography variant="p" className="mb-2">
+                  By opting to compound your EUROs rewards, those EUROs will be added to the EUROs in your new stake.
+                </Typography>
+                <div className="mb-2">
+                  <Checkbox
+                    checked={compound}
+                    onChange={() => setCompound(!compound)}
+                    label="I would like to compound my EUROs rewards"
+                  />
+                </div>
+              </div>
+              <div className="card-actions pt-4 flex-col-reverse lg:flex-row justify-end">
+                <Button
+                  onClick={handleApproveClaim}
+                >
+                  Claim Rewards
+                </Button>
+                <Button
+                  onClick={handleCloseModal}
+                >
+                  Cancel
+                </Button>
+              </div>
+            </>
+          )}
+        </div>
+      </Modal>
+    </>
+  )
+};
+
+export default ClaimingRewardsModal;

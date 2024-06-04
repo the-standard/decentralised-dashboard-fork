@@ -10,13 +10,13 @@ import { arbitrumSepolia } from "wagmi/chains";
 import {
   useLiquidationPoolAbiStore,
   useLiquidationPoolStore,
-} from "../../store/Store";
+} from "../../../store/Store";
 
-import Card from "../ui/Card";
-import Button from "../ui/Button";
-import Modal from "../ui/Modal";
-import CenterLoader from "../ui/CenterLoader";
-import Typography from "../ui/Typography";
+import Card from "../../ui/Card";
+import Button from "../../ui/Button";
+import Modal from "../../ui/Modal";
+import CenterLoader from "../../ui/CenterLoader";
+import Typography from "../../ui/Typography";
 
 const ClaimTokens = ({
   loading,

@@ -61,7 +61,7 @@ const WithdrawModal = (props) => {
       if (error && error.shortMessage) {
         errorMessage = error.shortMessage;
       }
-      toast.error(errorMessage || 'There was an error1');
+      toast.error(errorMessage || 'There was an error');
     }
   };
 
