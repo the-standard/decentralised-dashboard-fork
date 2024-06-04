@@ -374,7 +374,7 @@ const Staking = () => {
           All deposits will be held for a 24hour maturity period where they cannot be withdrawn, but can still be used for automatically purchasing liquidated assets.
         </Typography>
 
-        <div className="card-actions flex flex-col-reverse lg:flex-row justify-end">
+        <div className="card-actions flex flex-row justify-end">
           <Button
             className="w-full lg:w-auto"
             color="ghost"
