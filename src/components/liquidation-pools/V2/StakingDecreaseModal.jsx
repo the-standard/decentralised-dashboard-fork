@@ -6,8 +6,6 @@ import {
 } from "wagmi";
 import { arbitrumSepolia } from "wagmi/chains";
 import { formatEther, parseEther } from "viem";
-import Lottie from "lottie-react";
-import withdrawLottie from "../../../lotties/withdrawal.json";
 
 import {
   useSnackBarStore,
@@ -17,13 +15,7 @@ import {
 
 import Button from "../../Button";
 
-interface StakingDecreaseModalProps {
-  stakedPositions;
-  isOpen: boolean;
-  handleCloseModal;
-}
-
-const StakingDecreaseModal: React.FC<StakingDecreaseModalProps> = ({
+const StakingDecreaseModal = ({
   stakedPositions,
   isOpen,
   handleCloseModal,
@@ -40,8 +32,8 @@ const StakingDecreaseModal: React.FC<StakingDecreaseModalProps> = ({
   const [eurosWithdrawAmount, setEurosWithdrawAmount] = useState(0);
   const chainId = useChainId();
 
-  const tstInputRef = useRef<HTMLInputElement>(null);
-  const eurosInputRef = useRef<HTMLInputElement>(null);
+  const tstInputRef = useRef(null);
+  const eurosInputRef = useRef(null);
 
   const tstPosition = stakedPositions?.find((item) => item.asset === 'TST');
   const eurosPosition = stakedPositions?.find((item) => item.asset === 'EUROs');

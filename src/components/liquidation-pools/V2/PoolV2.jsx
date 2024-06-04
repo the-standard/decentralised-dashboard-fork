@@ -12,7 +12,7 @@ import {
   useStakingPoolv2AddressStore,
 } from "../../../store/Store";
 
-// import StakingIncrease from "./StakingIncrease";
+import StakingIncrease from "./StakingIncrease";
 // import StakingAssets from "./StakingAssets";
 import StakingRewards from "./StakingRewards";
 
@@ -104,9 +104,9 @@ const PoolV2 = (props) => {
 
   return (
     <main className="grid gap-4 grid-cols-1 md:grid-cols-2">
-      {/* <div>
+      <div>
         <StakingIncrease />
-      </div> */}
+      </div>
 
       <div className="order-first md:order-[unset]">
         <Card className="card-compact">

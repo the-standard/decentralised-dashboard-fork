@@ -29,7 +29,7 @@ const LiquidationPools = () => {
   const [showValue, setShowValue] = useState(false);
   const { liquidationPoolAbi } = useLiquidationPoolAbiStore();
 
-  const [activeView, setActiveView] = useState();
+  const [activeView, setActiveView] = useState(queryView);
 
   const handleSetActiveView = (e) => {
     setSearchParams(`v=${e.target.value}`);
@@ -41,7 +41,7 @@ const LiquidationPools = () => {
 
   if (activeView === 'V1') {
     return (
-     <PoolV1 setActiveView={setActiveView} activeView={activeView}/>
+     <PoolV1 setActiveView={handleSetActiveView} activeView={activeView}/>
     )
   }
 
