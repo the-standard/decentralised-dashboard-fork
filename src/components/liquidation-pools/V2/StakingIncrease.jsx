@@ -1,8 +1,6 @@
 import { useRef, useState, useEffect } from "react";
-import {
-  Box,
-  Typography,
-} from "@mui/material";
+import { toast } from 'react-toastify';
+
 import {
   useAccount,
   useReadContracts,
@@ -11,20 +9,20 @@ import {
   useWatchBlockNumber,
 } from "wagmi";
 import { arbitrumSepolia } from "wagmi/chains";
-import { formatEther, parseEther } from "viem";
+import { ethers } from "ethers";
 
 import {
   useTstAddressStore,
   useErc20AbiStore,
   usesEuroAddressStore,
-  useSnackBarStore,
-  useCircularProgressStore,
   useStakingPoolv2AbiStore,
   useStakingPoolv2AddressStore,
 } from "../../../store/Store.jsx";
 
-import Card from "../../Card";
-import Button from "../../Button";
+import Card from "../../ui/Card";
+import Typography from "../../ui/Typography";
+import Button from "../../ui/Button";
+import Input from "../../ui/Input";
 
 const StakingIncrease = () => {
   const chainId = useChainId();
@@ -43,14 +41,12 @@ const StakingIncrease = () => {
   const { address } = useAccount();
   const { erc20Abi } = useErc20AbiStore();
   const { stakingPoolv2Abi } = useStakingPoolv2AbiStore();
-  const { getSnackBar } = useSnackBarStore();
-  const { getCircularProgress, getProgressType } = useCircularProgressStore();
-  const [tstStakeAmount, setTstStakeAmount] = useState<any>(0);
-  const [eurosStakeAmount, setEurosStakeAmount] = useState<any>(0);
+  const [tstStakeAmount, setTstStakeAmount] = useState(0);
+  const [eurosStakeAmount, setEurosStakeAmount] = useState(0);
   const [stage, setStage] = useState('');
 
-  const tstInputRef = useRef<HTMLInputElement>(null);
-  const eurosInputRef = useRef<HTMLInputElement>(null);
+  const tstInputRef = useRef(null);
+  const eurosInputRef = useRef(null);
 
   const tstAddress = chainId === arbitrumSepolia.id ?
   arbitrumSepoliaTstAddress :
@@ -126,7 +122,7 @@ const StakingIncrease = () => {
       if (error && error.shortMessage) {
         errorMessage = error.shortMessage;
       }
-      getSnackBar('ERROR', errorMessage);
+      toast.error(errorMessage || 'There was a problem');
     }
   };
 
@@ -146,7 +142,7 @@ const StakingIncrease = () => {
         if (error && error.shortMessage) {
           errorMessage = error.shortMessage;
         }
-        getSnackBar('ERROR', errorMessage);
+        toast.error(errorMessage || 'There was a problem');
       }  
     }, 1000);
   };
@@ -169,7 +165,7 @@ const StakingIncrease = () => {
         if (error && error.shortMessage) {
           errorMessage = error.shortMessage;
         }
-        getSnackBar('ERROR', errorMessage);
+        toast.error(errorMessage || 'There was a problem');
       }  
     }, 1000);
   };
@@ -189,48 +185,41 @@ const StakingIncrease = () => {
   useEffect(() => {
     if (stage === 'APPROVE_TST') {
       if (isPending) {
-        getProgressType('STAKE_DEPOSIT');
-        getCircularProgress(true);
+        // 
       } else if (isSuccess) {
         setStage('');
-        getSnackBar('SUCCESS', 'TST Approved');
+        toast.success('TST Approved');
         handleApproveEuros();
       } else if (isError) {
         setStage('');
-        getSnackBar('ERROR', 'There was a problem');
-        getCircularProgress(false);
+        toast.error('There was a problem');
       }  
     }
     if (stage === 'APPROVE_EUROS') {
       if (isPending) {
-        getProgressType('STAKE_DEPOSIT');
-        getCircularProgress(true);
+        // 
       } else if (isSuccess) {
         setStage('');
-        getSnackBar('SUCCESS', 'EUROs Approved');
+        toast.success('EUROs Approved');
         handleDepositToken();
       } else if (isError) {
         setStage('');
-        getSnackBar('ERROR', 'There was a problem');
-        getCircularProgress(false);
+        toast.error('There was a problem');
       }
     }
     if (stage === 'DEPOSIT_TOKEN') {
       if (isPending) {
-        getProgressType('STAKE_DEPOSIT');
-        getCircularProgress(true);
+        // 
       } else if (isSuccess) {
         setStage('');
-        getSnackBar('SUCCESS', 'Deposited Successfully');
-        getCircularProgress(false);
+        toast.success('Deposited Successfully!');
         eurosInputRef.current.value = "";
         tstInputRef.current.value = "";
         setTstStakeAmount(0);
         setEurosStakeAmount(0);
       } else if (isError) {
         setStage('');
-        getSnackBar('ERROR', 'There was a problem');
-        getCircularProgress(false);
+        toast.error('There was a problem');
         eurosInputRef.current.value = "";
         tstInputRef.current.value = "";
         setTstStakeAmount(0);
@@ -246,178 +235,95 @@ const StakingIncrease = () => {
 
   const handleTstAmount = (e) => {
     if (Number(e.target.value) < 10n ** 21n) {
-      setTstStakeAmount(parseEther(e.target.value.toString()));      
+      setTstStakeAmount(ethers.parseEther(e.target.value.toString()));      
     }
   };
 
   const handleTstInputMax = () => {
-    const formatBalance = formatEther(tstBalance);
+    const formatBalance = ethers.formatEther(tstBalance);
     tstInputRef.current.value = formatBalance;
     handleTstAmount({target: {value: formatBalance}});
   }
 
   const handleEurosAmount = (e) => {
     if (Number(e.target.value) < 10n ** 21n) {
-      setEurosStakeAmount(parseEther(e.target.value.toString()));      
+      setEurosStakeAmount(ethers.parseEther(e.target.value.toString()));      
     }
   };
 
   const handleEurosInputMax = () => {
-    const formatBalance = formatEther(eurosBalance);
+    const formatBalance = ethers.formatEther(eurosBalance);
     eurosInputRef.current.value = formatBalance;
     handleEurosAmount({target: {value: formatBalance}});
   }
 
   return (
-    <Card
-    sx={{
-      padding: "1.5rem",
-    }}
-  >
-    <div
-      sx={{
-        display: "flex",
-        justifyContent: "space-between",
-      }}
-    >
-      <Typography
-        sx={{
-          color: "#fff",
-          margin: "0",
-          marginBottom: "1rem",
-          fontSize: {
-            xs: "1.2rem",
-            md: "1.5rem"
-          }
-        }}
-        variant="h4"
-      >
-        Deposit
-      </Typography>
-    </div>
-    <Typography
-      sx={{
-        fontSize: "1rem",
-        width: "100%",
-        opacity: "0.8",
-        marginBottom: "1rem",
-      }}
-    >
-      Increase your TST position to earn EUROs rewards, and increase your EUROs position to earn an assortment of other tokens. 
-    </Typography>
-    <Typography
-      sx={{
-        fontSize: "1rem",
-        width: "100%",
-        opacity: "0.8",
-        marginBottom: "1rem",
-      }}
-    >
-      Depositing will automatically claim your existing rewards & compound any EUROs, ending your current staking period and restarting a new one.
-    </Typography>
-    <div>
-      <div
-        sx={{
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "space-between",
-          marginBottom: "1rem",
-        }}
-      >
-        <input
-          style={{
-            background: "rgba(18, 18, 18, 0.5)",
-            border: "1px solid #8E9BAE",
-            color: "white",
-            fontSize: "1rem",
-            fontWeight: "normal",
-            fontFamily: "Poppins",
-            height: "2.5rem",
-            width: "100%",
-            borderRadius: "10px",
-            paddingLeft: "0.5rem",
-            boxSizing: "border-box",
-            MozBoxSizing: "border-box",
-            WebkitBoxSizing: "border-box",
-          }}
-          placeholder="TST Amount"
-          type="number"
-          onChange={handleTstAmount}
-          ref={tstInputRef}
-        />
-        <Button
-          sx={{
-            marginLeft: "0.5rem",
-            padding: "0px 5px",
-            minWidth: "60px",
-            height: "2.5rem",
-            fontSize: "1rem",
-            boxSizing: "border-box",
-            MozBoxSizing: "border-box",
-            WebkitBoxSizing: "border-box",
-          }}
-          clickFunction={() => handleTstInputMax()}
+    <Card className="card-compact w-full">
+      <div className="card-body">
+        <Typography variant="h2" className="card-title justify-between">
+          Deposit
+        </Typography>
+        <Typography variant="p" className="mb-2">
+          Increase your TST position to earn EUROs rewards, and increase your EUROs position to earn an assortment of other tokens. 
+        </Typography>
+        <Typography variant="p" className="mb-2">
+          Depositing will automatically claim your existing rewards & compound any EUROs, ending your current staking period and restarting a new one.
+        </Typography>
+        <hr className="my-2" />
+        <div>
+          <Typography variant="p" className="pb-2">
+            TST Deposit Amount:
+          </Typography>
+          <div
+            className="join w-full mb-4"
           >
-          Max
-        </Button>
+            <Input
+              className="join-item w-full"
+              placeholder="TST Amount"
+              type="number"
+              onChange={handleTstAmount}
+              useRef={tstInputRef}
+            />
+            <Button
+              className="join-item"
+              onClick={() => handleTstInputMax()}
+            >
+              Max
+            </Button>
+          </div>
+          <Typography variant="p" className="pb-2">
+            EUROs Deposit Amount:
+          </Typography>
+          <div
+            className="join w-full mb-4"
+          >
+           <Input
+              className="join-item w-full"
+              placeholder="EUROs Amount"
+              type="number"
+              onChange={handleEurosAmount}
+              useRef={eurosInputRef}
+            />
+            <Button
+              className="join-item"
+              onClick={() => handleEurosInputMax()}
+            >
+              Max
+            </Button>
+          </div>
+          <div className="card-actions flex flex-col-reverse lg:flex-row justify-end">
+            <Button
+              loading={isPending}
+              disabled={isPending || tstStakeAmount <= 0 && eurosStakeAmount <= 0}
+              onClick={handleLetsStake}
+            >
+              Deposit
+            </Button>
+          </div>
+        </div>
       </div>
-      <div
-        sx={{
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "space-between",
-          marginBottom: "1rem",
-        }}
-      >
-        <input
-          style={{
-            background: "rgba(18, 18, 18, 0.5)",
-            border: "1px solid #8E9BAE",
-            color: "white",
-            fontSize: "1rem",
-            fontWeight: "normal",
-            fontFamily: "Poppins",
-            height: "2.5rem",
-            width: "100%",
-            borderRadius: "10px",
-            paddingLeft: "0.5rem",
-            boxSizing: "border-box",
-            MozBoxSizing: "border-box",
-            WebkitBoxSizing: "border-box",
-          }}
-          placeholder="EUROs Amount"
-          type="number"
-          onChange={handleEurosAmount}
-          ref={eurosInputRef}
-        />
-        <Button
-          sx={{
-            marginLeft: "0.5rem",
-            padding: "5px",
-            minWidth: "60px",
-            height: "2.5em",
-            fontSize: "1rem",
-            boxSizing: "border-box",
-            MozBoxSizing: "border-box",
-            WebkitBoxSizing: "border-box",
-          }}
-          clickFunction={() => handleEurosInputMax()}
-        >
-          Max
-        </Button>
-      </div>
-      <Button
-        sx={{
-          marginTop: "1rem",
-        }}
-        isDisabled={isPending || tstStakeAmount <= 0 && eurosStakeAmount <= 0}
-        clickFunction={handleLetsStake}
-      >
-        Deposit
-      </Button>
-    </div>
-  </Card>
-);
+    </Card>
+  );
 };
 
 export default StakingIncrease;
