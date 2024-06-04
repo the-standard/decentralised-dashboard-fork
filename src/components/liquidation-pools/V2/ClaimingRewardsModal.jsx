@@ -159,13 +159,15 @@ const ClaimingRewardsModal = ({
                   />
                 </div>
               </div>
-              <div className="card-actions pt-4 flex-col-reverse lg:flex-row justify-end">
+              <div className="card-actions pt-4 flex-row justify-end">
                 <Button
+                  className="w-full"
                   onClick={handleApproveClaim}
                 >
                   Claim Rewards
                 </Button>
                 <Button
+                  className="w-full"
                   onClick={handleCloseModal}
                 >
                   Cancel

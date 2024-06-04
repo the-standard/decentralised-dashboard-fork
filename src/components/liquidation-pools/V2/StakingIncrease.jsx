@@ -311,7 +311,7 @@ const StakingIncrease = () => {
               Max
             </Button>
           </div>
-          <div className="card-actions flex flex-col-reverse lg:flex-row justify-end">
+          <div className="card-actions flex flex-row justify-end">
             <Button
               loading={isPending}
               disabled={isPending || tstStakeAmount <= 0 && eurosStakeAmount <= 0}

@@ -13,7 +13,7 @@ import {
 } from "../../../store/Store";
 
 import StakingIncrease from "./StakingIncrease";
-// import StakingAssets from "./StakingAssets";
+import StakingAssets from "./StakingAssets";
 import StakingRewards from "./StakingRewards";
 
 import Select from "../../ui/Select";
@@ -143,9 +143,9 @@ const PoolV2 = (props) => {
         </Card>
       </div>
 
-      {/* <div>
+      <div>
         <StakingAssets positions={positions}/>
-      </div> */}
+      </div>
 
       {poolRewardsLoading ? (
         <Card className="card-compact">
