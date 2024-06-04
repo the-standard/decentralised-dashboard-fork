@@ -3,10 +3,10 @@ import { useState } from "react";
 import { ethers } from "ethers";
 
 import WithdrawModal from "./WithdrawModal";
-import Card from "../ui/Card";
-import Button from "../ui/Button";
-import CenterLoader from "../ui/CenterLoader";
-import Typography from "../ui/Typography";
+import Card from "../../ui/Card";
+import Button from "../../ui/Button";
+import CenterLoader from "../../ui/CenterLoader";
+import Typography from "../../ui/Typography";
 
 const StakedAssets = ({
   loading,

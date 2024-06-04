@@ -12,10 +12,8 @@ import {
   BanknotesIcon,
 } from '@heroicons/react/24/outline';
 
-import {
-  useLiquidationPoolAbiStore,
-  useLiquidationPoolStore,
-} from "../../store/Store";
+import PoolV1 from "../../components/liquidation-pools/V1/PoolV1";
+import PoolV2 from "../../components/liquidation-pools/V2/PoolV2";
 
 import Staking from "../../components/liquidation-pools/Staking";
 import StakedAssets from "../../components/liquidation-pools/StakedAssets";
@@ -31,35 +29,21 @@ const LiquidationPools = () => {
   const [showValue, setShowValue] = useState(false);
   const { liquidationPoolAbi } = useLiquidationPoolAbiStore();
 
-  const {
-    arbitrumSepoliaLiquidationPoolAddress,
-    arbitrumLiquidationPoolAddress,
-  } = useLiquidationPoolStore();
+  const [activeView, setActiveView] = useState();
 
-  const { address } = useAccount();
-  const chainId = useChainId();
+  const handleSetActiveView = (e) => {
+    setSearchParams(`v=${e.target.value}`);
+  };
 
-  const liquidationPoolAddress =
-  chainId === arbitrumSepolia.id
-    ? arbitrumSepoliaLiquidationPoolAddress
-    : arbitrumLiquidationPoolAddress;
+  useEffect(() => {
+    setActiveView(queryView)
+  }, [queryView]);
 
-  const { data: liquidationPool, refetch, isLoading } = useReadContract({
-    address: liquidationPoolAddress,
-    abi: liquidationPoolAbi,
-    functionName: "position",
-    args: [address],
-  });
-
-  useWatchBlockNumber({
-    onBlockNumber() {
-      refetch();
-    },
-  })
-
-  const positions = liquidationPool && liquidationPool[0];
-  const pending = liquidationPool && liquidationPool[1];
-  const rewards = liquidationPool && liquidationPool[2];
+  if (activeView === 'V1') {
+    return (
+     <PoolV1 setActiveView={setActiveView} activeView={activeView}/>
+    )
+  }
 
   const getChartData = async () => {
     try {
