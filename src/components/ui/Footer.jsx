@@ -72,6 +72,7 @@ const Footer = (props) => {
       <nav className="w-full flex flex-row align-center justify-center md:justify-end flex-wrap md:flex-nowrap gap-1">
         {icons.map((icon) => (
           <Button
+            key={icon.name}
             size="sm"
             color="ghost"
             onClick={() => window.open(icon.link, "_blank")}
