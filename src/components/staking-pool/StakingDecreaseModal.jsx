@@ -181,7 +181,7 @@ const StakingDecreaseModal = ({
           handleCloseModal();
         }}
       >
-        <div>
+        <>
           {claimLoading ? (
             <>
               <Typography variant="h2" className="card-title">
@@ -242,6 +242,7 @@ const StakingDecreaseModal = ({
                 />
                 <Button
                   className="join-item"
+                  variant="outline"
                   onClick={() => handleTstInputMax()}
                 >
                   Max
@@ -259,30 +260,28 @@ const StakingDecreaseModal = ({
                 />
                 <Button
                   className="join-item"
+                  variant="outline"
                   onClick={() => handleEurosInputMax()}
                 >
                   Max
                 </Button>
               </div>
-              <div className="card-actions flex flex-row justify-end">
-                <Button
-                  className="w-full"
-                  onClick={handleApproveWithdraw}
-                  disabled={!(tstWithdrawAmount > 0) && !(eurosWithdrawAmount > 0)}
-                >
-                  Withdraw
-                </Button>
-                <Button
-                  className="w-full"
-                  wide
-                  onClick={handleCloseModal}
-                >
-                  Cancel
-                </Button>
-              </div>
+              <Button
+                onClick={handleApproveWithdraw}
+                color="primary"
+                disabled={!(tstWithdrawAmount > 0) && !(eurosWithdrawAmount > 0)}
+              >
+                Withdraw
+              </Button>
+              <Button
+                onClick={handleCloseModal}
+                color="ghost"
+              >
+                Cancel
+              </Button>
             </>
           )}
-        </div>
+        </>
       </Modal>
     </>
   )

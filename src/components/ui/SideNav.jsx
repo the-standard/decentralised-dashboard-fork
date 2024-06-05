@@ -115,6 +115,26 @@ const SideNav = (props) => {
         </Tooltip>
         <Tooltip
           position="right"
+          message="Staking Pool"
+        >
+          <Menu.Item>
+            <NavLink
+              to="/staking-pool"
+              className={({ isActive }) => 
+                isActive ||
+                location.pathname.includes('/staking-pool') ?
+                'navbar-item active' : 'navbar-item'
+              }
+            >
+              <Square3Stack3DIcon className="h-6 w-6 inline-block"/>
+              <span className="md:hidden">
+                Staking Pool
+              </span>
+            </NavLink>
+          </Menu.Item>
+        </Tooltip>
+        <Tooltip
+          position="right"
           message="Liquidation Pools"
         >
           <Menu.Item>
