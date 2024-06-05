@@ -85,7 +85,7 @@ const VaultCreate = ({ tokenId }) => {
   ]);
 
   return (
-    <div className="flex gap-4 mb-4">
+    <div className="flex flex-col md:flex-row gap-4 mb-4">
       {vaultTypes.map((item) => (
         <Card className="flex-1 card-compact">
           <div className="card-body">

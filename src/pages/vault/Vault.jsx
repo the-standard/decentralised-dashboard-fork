@@ -158,7 +158,7 @@ const Vault = () => {
     };
   });
 
-  const vaultVersion = vaultStore?.status.version || '';
+  const vaultVersion = vaultStore?.status?.version || '';
 
   return (
     <main>
