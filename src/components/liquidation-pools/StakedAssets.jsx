@@ -24,7 +24,7 @@ const StakedAssets = ({
     <>
       <Card className="card-compact w-full">
         <div className="card-body">
-          <Typography variant="h2" className="card-title">Vault List</Typography>
+          <Typography variant="h2" className="card-title">Staked Assets</Typography>
 
           <div className="overflow-x-auto">
             <table className="table table-zebra">
