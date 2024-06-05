@@ -1,3 +1,4 @@
+import { useState } from "react";
 import moment from 'moment';
 import {
   useReadContract,
@@ -5,7 +6,11 @@ import {
   useChainId,
   useWatchBlockNumber
 } from "wagmi";
-import { arbitrum, arbitrumSepolia } from "wagmi/chains";
+import { arbitrumSepolia } from "wagmi/chains";
+import {
+  ArrowTrendingUpIcon,
+  BanknotesIcon,
+} from '@heroicons/react/24/outline';
 
 import {
   useStakingPoolv2AbiStore,
@@ -15,13 +20,17 @@ import {
 import StakingIncrease from "../../components/staking-pool/StakingIncrease";
 import StakingAssets from "../../components/staking-pool/StakingAssets";
 import StakingRewards from "../../components/staking-pool/StakingRewards";
+import VolumeChart from "../../components/staking-pool/VolumeChart";
+import ValueChart from "../../components/staking-pool/ValueChart";
 
 import Card from "../../components/ui/Card";
 import CenterLoader from "../../components/ui/CenterLoader";
+import Typography from "../../components/ui/Typography";
+import Button from "../../components/ui/Button";
 
 const StakingPool = (props) => {
-  const { setActiveView, activeView } = props;
   const { stakingPoolv2Abi } = useStakingPoolv2AbiStore();
+  const [showValue, setShowValue] = useState(false);
 
   const {
     arbitrumSepoliaStakingPoolv2Address,
@@ -108,6 +117,42 @@ const StakingPool = (props) => {
 
       <div>
         <StakingAssets positions={positions}/>
+      </div>
+
+      <div>
+        <Card className="card-compact">
+          <div className="card-body">
+            <Typography variant="h2" className="card-title flex justify-between">
+              {showValue ? (
+                'Asset Value'
+              ) : (
+                'Asset Totals'
+              )}
+              <Button size="sm" color="ghost" onClick={() => setShowValue(!showValue)}>
+                {showValue ? (
+                  <>
+                    <ArrowTrendingUpIcon className="h-4 w-4 inline-block"/>
+                    Show Totals
+                  </>
+                ) : (
+                  <>
+                    <BanknotesIcon className="h-4 w-4 inline-block"/>
+                    Show Values
+                  </>
+                )}
+              </Button>
+            </Typography>
+            {showValue ? (
+              <>
+                <VolumeChart chartData={[]} />
+              </>
+            ) : (
+              <>
+                <ValueChart chartData={[]} />
+              </>
+            )}
+          </div>
+        </Card>
       </div>
 
       {poolRewardsLoading ? (

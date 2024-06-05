@@ -81,7 +81,7 @@ const ClaimingRewardsModal = ({
             handleCloseModal();
           }}
         >
-          <div>
+          <>
             {claimLoading ? (
               <>
                 <Typography variant="h2" className="card-title">
@@ -100,24 +100,24 @@ const ClaimingRewardsModal = ({
                   </Typography>
                 </div>
 
-                <div className="card-actions pt-4 flex-col-reverse lg:flex-row justify-end">
-                  <Button
-                    onClick={() => setShowError(false)}
-                  >
-                    Return
-                  </Button>
-                  <Button
-                    onClick={() => {
-                      setShowError(false);
-                      handleCloseModal();
-                    }}
-                  >
-                    Cancel
-                  </Button>
-                </div>
+                <Button
+                  color="primary"
+                  onClick={() => setShowError(false)}
+                >
+                  Return
+                </Button>
+                <Button
+                  color="ghost"
+                  onClick={() => {
+                    setShowError(false);
+                    handleCloseModal();
+                  }}
+                >
+                  Cancel
+                </Button>
               </>
             )}
-          </div>
+          </>
         </Modal>
       </>
     )
@@ -131,7 +131,7 @@ const ClaimingRewardsModal = ({
           handleCloseModal();
         }}
       >
-        <div>
+        <>
           {claimLoading ? (
             <>
               <Typography variant="h2" className="card-title">
@@ -159,23 +159,21 @@ const ClaimingRewardsModal = ({
                   />
                 </div>
               </div>
-              <div className="card-actions pt-4 flex-row justify-end">
-                <Button
-                  className="w-full"
-                  onClick={handleApproveClaim}
-                >
-                  Claim Rewards
-                </Button>
-                <Button
-                  className="w-full"
-                  onClick={handleCloseModal}
-                >
-                  Cancel
-                </Button>
-              </div>
+              <Button
+                color="primary"
+                onClick={handleApproveClaim}
+              >
+                Claim Rewards
+              </Button>
+              <Button
+                color="ghost"
+                onClick={handleCloseModal}
+              >
+                Cancel
+              </Button>
             </>
           )}
-        </div>
+        </>
       </Modal>
     </>
   )

@@ -152,11 +152,13 @@ const StakingDecreaseModal = ({
 
                 <div className="card-actions flex flex-row justify-end">
                   <Button
+                    color="primary"
                     onClick={() => setShowError(false)}
                   >
                     Return
                   </Button>
                   <Button
+                    color="ghost"
                     onClick={() => {
                       setShowError(false);
                       handleCloseModal();

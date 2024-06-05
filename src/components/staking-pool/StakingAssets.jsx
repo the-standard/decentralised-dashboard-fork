@@ -42,46 +42,6 @@ const StakingAssets = ({
     setOpen(false)
   };
 
-  const colData = [
-    {
-      minWidth: 90,
-      flex: 1,
-      field: 'asset',
-      headerName: 'Asset',
-      sortable: false,
-      disableColumnMenu: true,
-      renderCell: (params) => {
-        const symbol = params?.row?.asset || '';
-        return (
-          <div>
-            <Typography variant="body2" sx={{marginLeft: "8px"}}>
-              {symbol || ''}
-            </Typography>
-          </div>
-        );
-      },
-    },
-    {
-      minWidth: 90,
-      flex: 1,
-      field: 'amount',
-      headerName: 'Amount',
-      sortable: false,
-      disableColumnMenu: true,
-      renderCell: (params) => {
-        let useAmount = 0;
-        if (params.row.amount) {
-          useAmount = ethers.formatEther(params.row.amount.toString());
-        }
-        return (
-          <span style={{textTransform: 'capitalize'}}>
-            {useAmount || '0'}
-          </span>
-        );
-      },
-    },
-  ];
-
   const rows = useRows || [];
 
   let noStaked = true;
@@ -132,6 +92,7 @@ const StakingAssets = ({
 
         <div className="card-actions flex flex-row justify-end">
           <Button
+            color="primary"
             onClick={() => setOpen(true)}
             disabled={noStaked}
           >

@@ -171,6 +171,7 @@ const StakingRewards = ({
 
         <div className="card-actions flex flex-row justify-end">
           <Button
+            color="primary"
             onClick={() => setOpen(true)}
             disabled={noRewards}
           >

@@ -288,6 +288,7 @@ const StakingIncrease = () => {
               />
               <Button
                 className="join-item"
+                variant="outline"
                 onClick={() => handleTstInputMax()}
               >
                 Max
@@ -308,6 +309,7 @@ const StakingIncrease = () => {
               />
               <Button
                 className="join-item"
+                variant="outline"
                 onClick={() => handleEurosInputMax()}
               >
                 Max
@@ -315,6 +317,7 @@ const StakingIncrease = () => {
             </div>
             <div className="card-actions flex flex-row justify-end">
               <Button
+                color="primary"
                 loading={isPending}
                 disabled={isPending || tstStakeAmount <= 0 && eurosStakeAmount <= 0}
                 onClick={handleLetsStake}
