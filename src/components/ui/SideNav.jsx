@@ -6,6 +6,7 @@ import {
   CircleStackIcon,
   BanknotesIcon,
   XMarkIcon,
+  Square3Stack3DIcon
 } from '@heroicons/react/24/outline';
 
 import Button from "./Button";
@@ -42,10 +43,18 @@ const SideNav = (props) => {
         </Menu.Item>
         <Menu.Item>
           <NavLink
+            to="/staking-pool"
+          >
+            <Square3Stack3DIcon className="h-6 w-6 inline-block"/>
+            Staking Pool
+          </NavLink>
+        </Menu.Item>
+        <Menu.Item>
+          <NavLink
             to="/liquidation-pools"
           >
             <BanknotesIcon className="h-6 w-6 inline-block"/>
-            Liquidation Pools
+            Liquidation Pool
           </NavLink>
         </Menu.Item>
       </div>

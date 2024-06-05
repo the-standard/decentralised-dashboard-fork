@@ -1,37 +1,73 @@
-import { useState, useMemo, useEffect } from "react";
-import { useLocation, useSearchParams } from 'react-router-dom';
+import { 
+  useReadContract,
+  useAccount,
+  useChainId,
+  useWatchBlockNumber
+} from "wagmi";
+import { arbitrumSepolia } from "wagmi/chains";
 
-import PoolV1 from "../../components/liquidation-pools/V1/PoolV1";
-import PoolV2 from "../../components/liquidation-pools/V2/PoolV2";
+import {
+  useLiquidationPoolAbiStore,
+  useLiquidationPoolStore,
+} from "../../store/Store";
 
-function useQuery() {
-  const { search } = useLocation();
-  return useMemo(() => new URLSearchParams(search), [search]);
-}
+import Staking from "../../components/liquidation-pools/Staking";
+import StakedAssets from "../../components/liquidation-pools/StakedAssets";
+import ClaimTokens from "../../components/liquidation-pools/ClaimTokens";
 
-const LiquidationPools = () => {
-  const query = useQuery();
-  const [searchParams, setSearchParams] = useSearchParams();
-  const queryView = query.get("v") || 'V2';
+const LiquidationPools = (props) => {
+  const { setActiveView, activeView } = props;
+  const { liquidationPoolAbi } = useLiquidationPoolAbiStore();
 
-  const [activeView, setActiveView] = useState(queryView);
+  const {
+    arbitrumSepoliaLiquidationPoolAddress,
+    arbitrumLiquidationPoolAddress,
+  } = useLiquidationPoolStore();
 
-  const handleSetActiveView = (e) => {
-    setSearchParams(`v=${e.target.value}`);
-  };
+  const { address } = useAccount();
+  const chainId = useChainId();
 
-  useEffect(() => {
-    setActiveView(queryView)
-  }, [queryView]);
+  const liquidationPoolAddress =
+  chainId === arbitrumSepolia.id
+    ? arbitrumSepoliaLiquidationPoolAddress
+    : arbitrumLiquidationPoolAddress;
 
-  if (activeView === 'V1') {
-    return (
-     <PoolV1 setActiveView={handleSetActiveView} activeView={activeView}/>
-    )
-  }
+  const { data: liquidationPool, refetch, isLoading } = useReadContract({
+    address: liquidationPoolAddress,
+    abi: liquidationPoolAbi,
+    functionName: "position",
+    args: [address],
+  });
+
+  useWatchBlockNumber({
+    onBlockNumber() {
+      refetch();
+    },
+  })
+
+  const positions = liquidationPool && liquidationPool[0];
+  const pending = liquidationPool && liquidationPool[1];
+  const rewards = liquidationPool && liquidationPool[2];
 
   return (
-    <PoolV2 setActiveView={handleSetActiveView} activeView={activeView}/>
+    <main className="grid gap-4 grid-cols-1 md:grid-cols-2">
+      <div>
+        <Staking />
+      </div>
+      <div>
+        <StakedAssets
+          loading={isLoading}
+          positions={positions || {}}
+          pending={pending || {}}
+        />
+      </div>
+      <div>
+        <ClaimTokens
+          loading={isLoading}
+          rewards={rewards || []}
+        />
+      </div>
+    </main>
   );
 };
 
