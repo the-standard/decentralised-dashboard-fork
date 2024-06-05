@@ -250,50 +250,49 @@ const WithdrawModal = ({
               <hr className="my-2"/>
 
               <div>
-              <Typography variant="p" className="pb-2">
-                TST Withdraw Amount:
-              </Typography>
-              <div
-                className="join w-full mb-4"
-              >
-                <Input
-                  className="join-item w-full"
-                  placeholder="TST Amount"
-                  type="number"
-                  onChange={handleTstAmount}
-                  useRef={tstInputRef}
-                />
-                <Button
-                  className="join-item"
-                  variant="outline"
-                  onClick={() => handleTstInputMax()}
+                <Typography variant="p" className="pb-2">
+                  TST Withdraw Amount:
+                </Typography>
+                <div
+                  className="join w-full mb-4"
                 >
-                  Max
-                </Button>
-              </div>
+                  <Input
+                    className="join-item w-full"
+                    placeholder="TST Amount"
+                    type="number"
+                    onChange={handleTstAmount}
+                    useRef={tstInputRef}
+                  />
+                  <Button
+                    className="join-item"
+                    variant="outline"
+                    onClick={() => handleTstInputMax()}
+                  >
+                    Max
+                  </Button>
+                </div>
 
-              <Typography variant="p" className="pb-2">
-                EUROs Withdraw Amount:
-              </Typography>
-              <div
-                className="join w-full mb-4"
-              >
-                <Input
-                  className="join-item w-full"
-                  placeholder="EUROs Amount"
-                  type="number"
-                  onChange={handleEurosAmount}
-                  useRef={eurosInputRef}
-                />
-                <Button
-                  className="join-item"
-                  variant="outline"
-                  onClick={() => handleEurosInputMax()}
+                <Typography variant="p" className="pb-2">
+                  EUROs Withdraw Amount:
+                </Typography>
+                <div
+                  className="join w-full mb-4"
                 >
-                  Max
-                </Button>
-              </div>
-
+                  <Input
+                    className="join-item w-full"
+                    placeholder="EUROs Amount"
+                    type="number"
+                    onChange={handleEurosAmount}
+                    useRef={eurosInputRef}
+                  />
+                  <Button
+                    className="join-item"
+                    variant="outline"
+                    onClick={() => handleEurosInputMax()}
+                  >
+                    Max
+                  </Button>
+                </div>
               </div>
               <Button
                 onClick={handleApproveWithdraw}
