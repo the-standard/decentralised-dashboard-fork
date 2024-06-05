@@ -69,6 +69,12 @@ const SideNav = (props) => {
         <Menu.Item>
           <NavLink
             to="/staking-pool"
+            className={({ isActive }) => 
+              isActive ||
+              location.pathname === '/' ||
+              location.pathname.includes('/staking-pool') ?
+              'navbar-item active' : 'navbar-item'
+            }
           >
             <Square3Stack3DIcon className="h-6 w-6 inline-block"/>
             Staking Pool
