@@ -6,12 +6,12 @@ import {
 
 import {
   useErc20AbiStore,
-} from "../../../store/Store";
+} from "../../store/Store";
 
-import Button from "../../ui/Button";
-import Card from "../../ui/Card";
-import Typography from "../../ui/Typography";
-import CenterLoader from "../../ui/CenterLoader";
+import Button from "../ui/Button";
+import Card from "../ui/Card";
+import Typography from "../ui/Typography";
+import CenterLoader from "../ui/CenterLoader";
 
 import ClaimingRewardsModal from "./ClaimingRewardsModal";
 
@@ -169,7 +169,7 @@ const StakingRewards = ({
           ) : (null)}
         </div>
 
-        <div className="card-actions pt-4 flex-col-reverse lg:flex-row justify-end">
+        <div className="card-actions flex flex-row justify-end">
           <Button
             onClick={() => setOpen(true)}
             disabled={noRewards}

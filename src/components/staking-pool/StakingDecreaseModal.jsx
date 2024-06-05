@@ -11,13 +11,13 @@ import { formatEther, parseEther } from "viem";
 import {
   useStakingPoolv2AddressStore,
   useStakingPoolv2AbiStore
-} from "../../../store/Store";
+} from "../../store/Store";
 
-import Button from "../../ui/Button";
-import Modal from "../../ui/Modal";
-import Typography from "../../ui/Typography";
-import Input from "../../ui/Input";
-import CenterLoader from "../../ui/CenterLoader";
+import Button from "../ui/Button";
+import Modal from "../ui/Modal";
+import Typography from "../ui/Typography";
+import Input from "../ui/Input";
+import CenterLoader from "../ui/CenterLoader";
 
 const StakingDecreaseModal = ({
   stakedPositions,
@@ -150,7 +150,7 @@ const StakingDecreaseModal = ({
                   </Typography>
                 </div>
 
-                <div className="card-actions pt-4 flex-col-reverse lg:flex-row justify-end">
+                <div className="card-actions flex flex-row justify-end">
                   <Button
                     onClick={() => setShowError(false)}
                   >

@@ -9,13 +9,13 @@ import { toast } from 'react-toastify';
 import {
   useStakingPoolv2AddressStore,
   useStakingPoolv2AbiStore
-} from "../../../store/Store";
+} from "../../store/Store";
 
-import Button from "../../ui/Button";
-import Modal from "../../ui/Modal";
-import Typography from "../../ui/Typography";
-import CenterLoader from "../../ui/CenterLoader";
-import Checkbox from "../../ui/Checkbox";
+import Button from "../ui/Button";
+import Modal from "../ui/Modal";
+import Typography from "../ui/Typography";
+import CenterLoader from "../ui/CenterLoader";
+import Checkbox from "../ui/Checkbox";
 
 const ClaimingRewardsModal = ({
   isOpen,

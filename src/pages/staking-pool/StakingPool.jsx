@@ -10,18 +10,16 @@ import { arbitrum, arbitrumSepolia } from "wagmi/chains";
 import {
   useStakingPoolv2AbiStore,
   useStakingPoolv2AddressStore,
-} from "../../../store/Store";
+} from "../../store/Store";
 
-import StakingIncrease from "./StakingIncrease";
-import StakingAssets from "./StakingAssets";
-import StakingRewards from "./StakingRewards";
+import StakingIncrease from "../../components/staking-pool/StakingIncrease";
+import StakingAssets from "../../components/staking-pool/StakingAssets";
+import StakingRewards from "../../components/staking-pool/StakingRewards";
 
-import Select from "../../ui/Select";
-import Card from "../../ui/Card";
-import Typography from "../../ui/Typography";
-import CenterLoader from "../../ui/CenterLoader";
+import Card from "../../components/ui/Card";
+import CenterLoader from "../../components/ui/CenterLoader";
 
-const PoolV2 = (props) => {
+const StakingPool = (props) => {
   const { setActiveView, activeView } = props;
   const { stakingPoolv2Abi } = useStakingPoolv2AbiStore();
 
@@ -108,41 +106,6 @@ const PoolV2 = (props) => {
         <StakingIncrease />
       </div>
 
-      <div className="order-first md:order-[unset]">
-        <Card className="card-compact">
-          <div className="card-body">
-            <Typography variant="h2" className="card-title">
-              Liquidity Pool Version
-            </Typography>
-            <Typography
-              variant="p"
-              className="mb-4"
-            >
-              Here you can select the pool version you want. Our latest versions contain the most up to date features to help you compound your rewards & more.
-            </Typography>
-            <Select
-              value={activeView || ''}
-              label="Pool Version"
-              handleChange={setActiveView}
-              optName="name"
-              optValue="value"
-              options={[
-                {
-                  name: 'Version 2',
-                  value: 'V2',
-                },
-                {
-                  name: 'Version 1',
-                  value: 'V1',
-                },
-              ]}
-              className="w-full mb-4"
-            >
-            </Select>
-          </div>
-        </Card>
-      </div>
-
       <div>
         <StakingAssets positions={positions}/>
       </div>
@@ -168,4 +131,4 @@ const PoolV2 = (props) => {
   );
 };
 
-export default PoolV2;
+export default StakingPool;

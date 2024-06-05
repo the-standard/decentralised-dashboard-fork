@@ -2,10 +2,10 @@ import { useState } from "react";
 
 import { ethers } from "ethers";
 
-import Button from "../../ui/Button";
-import Card from "../../ui/Card";
-import Typography from "../../ui/Typography";
-import CenterLoader from "../../ui/CenterLoader";
+import Button from "../ui/Button";
+import Card from "../ui/Card";
+import Typography from "../ui/Typography";
+import CenterLoader from "../ui/CenterLoader";
 
 import StakingDecreaseModal from "./StakingDecreaseModal";
 
@@ -130,7 +130,7 @@ const StakingAssets = ({
           ) : (null)}
         </div>
 
-        <div className="card-actions pt-4 flex-col-reverse lg:flex-row justify-end">
+        <div className="card-actions flex flex-row justify-end">
           <Button
             onClick={() => setOpen(true)}
             disabled={noStaked}

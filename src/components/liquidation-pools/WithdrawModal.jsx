@@ -10,13 +10,13 @@ import { toast } from 'react-toastify';
 import {
   useLiquidationPoolStore,
   useLiquidationPoolAbiStore
-} from "../../../store/Store";
+} from "../../store/Store";
 
-import CenterLoader from "../../ui/CenterLoader";
-import Button from "../../ui/Button";
-import Modal from "../../ui/Modal";
-import Typography from "../../ui/Typography";
-import Input from "../../ui/Input";
+import CenterLoader from "../ui/CenterLoader";
+import Button from "../ui/Button";
+import Modal from "../ui/Modal";
+import Typography from "../ui/Typography";
+import Input from "../ui/Input";
 
 const WithdrawModal = ({
   tstAmount,
