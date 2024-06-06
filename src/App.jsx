@@ -19,6 +19,7 @@ import TermsOfUse from './pages/TermsOfUse';
 import './App.css';
 import 'react-toastify/dist/ReactToastify.min.css';
 
+
 function App() {
   const queryClient = new QueryClient();
 
