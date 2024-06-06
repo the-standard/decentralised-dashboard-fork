@@ -75,7 +75,7 @@ const StakingRewards = ({
     }
     let useDailyReward = 0n;
 
-    const rewardItem = collatDaily?.find((reward) => reward.symbol === item.symbol);
+    const rewardItem = collatDaily?.find((reward) => reward.token === item.token);
 
     if (rewardItem && rewardItem.amount) {
       useDailyReward = rewardItem.amount;
@@ -136,14 +136,14 @@ const StakingRewards = ({
               <tr>
                 <th>Asset</th>
                 <th>Amount</th>
-                <th>DailyReward</th>
+                <th>Daily Reward</th>
               </tr>
             </thead>
             {poolRewardsLoading ? (null) : (
               <tbody>
                 {rows.map(function(asset, index) {
                   const amount = asset?.amount;
-                  const decimals = asset?.dec;
+                  const decimals = asset?.decimals;
                   const symbol = asset?.asset;
                   const dailyReward = asset?.dailyReward;
 
