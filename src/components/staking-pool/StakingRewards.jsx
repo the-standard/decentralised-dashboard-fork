@@ -119,8 +119,11 @@ const StakingRewards = ({
           Projected Rewards
         </Typography>
         <div>
-          <Typography variant="p">
+          <Typography variant="p" className="mb-2">
             You can earn rewards every 24 hours after your staking period begins.
+          </Typography>
+          <Typography variant="p" className="mb-2">
+            Your reward rates are based on a the number of tokens you have staked.
           </Typography>
           {stakedSince ? (
             <Typography variant="p">
@@ -136,7 +139,7 @@ const StakingRewards = ({
               <tr>
                 <th>Asset</th>
                 <th>Amount</th>
-                <th>Daily Reward</th>
+                <th>Daily Reward Per Token</th>
               </tr>
             </thead>
             {poolRewardsLoading ? (null) : (
@@ -155,8 +158,9 @@ const StakingRewards = ({
                       <td>
                         {ethers.formatUnits(amount, decimals)}
                       </td>
-                      <td>
+                      <td className="whitespace-nowrap">
                         {ethers.formatUnits(dailyReward, decimals)}
+                        <span className="opacity-40"> / {symbol === 'EUROs' ? ('TST') : ('EUROs')}</span>
                       </td>
                     </tr>
                   )}
