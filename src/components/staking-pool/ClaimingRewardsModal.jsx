@@ -57,7 +57,7 @@ const ClaimingRewardsModal = ({
     if (isPending) {
       setClaimLoading(true);
     } else if (isSuccess) {
-      toast.success(errorMessage || 'Success!');
+      toast.success('Success!');
       setClaimLoading(false);
       handleCloseModal();
     } else if (isError) {
