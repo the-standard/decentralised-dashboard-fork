@@ -77,59 +77,75 @@ const LiquidationPools = () => {
   }, []);
 
   return (
-    <main className="grid gap-4 grid-cols-1 md:grid-cols-2">
-      <div>
-        <Staking />
-      </div>
-      <div>
-        <StakedAssets
-          loading={isLoading}
-          positions={positions || {}}
-          pending={pending || {}}
-        />
-      </div>
-      <div>
-        <Card className="card-compact">
-          <div className="card-body">
-            <Typography variant="h2" className="card-title flex justify-between">
-              {showValue ? (
-                'Asset Value'
-              ) : (
-                'Asset Totals'
-              )}
-              <Button size="sm" color="ghost" onClick={() => setShowValue(!showValue)}>
-                {showValue ? (
-                  <>
-                    <ArrowTrendingUpIcon className="h-4 w-4 inline-block"/>
-                    Show Totals
-                  </>
-                ) : (
-                  <>
-                    <BanknotesIcon className="h-4 w-4 inline-block"/>
-                    Show Values
-                  </>
-                )}
-              </Button>
+    <>
+      <Card className="card-compact mb-4">
+        <div className="card-body">
+          <div role="alert" className="alert alert-warning bg-yellow-400/20 flex flex-col items-start">
+            <Typography variant="h2">
+              Changes With Earning Fees & New Staking Pool
             </Typography>
-            {showValue ? (
-              <>
-                <VolumeChart chartData={chartData || []} />
-              </>
-            ) : (
-              <>
-                <ValueChart chartData={chartData || []} />
-              </>
-            )}
+            <Typography variant="p">
+              With the upcoming release of our new & improved Staking Pool, from <b>17th June '24</b>, we will be moving all earnable fees over to it. 
+              <br/>
+              The existing Liquidation Pool will continue to exist past this date so you can withdraw your staked assets and claim any outstanding rewards.
+            </Typography>
           </div>
-        </Card>
-      </div>
-      <div>
-        <ClaimTokens
-          loading={isLoading}
-          rewards={rewards || []}
-        />
-      </div>
-    </main>
+        </div>
+      </Card>
+      <main className="grid gap-4 grid-cols-1 md:grid-cols-2">
+        <div>
+          <Staking />
+        </div>
+        <div>
+          <StakedAssets
+            loading={isLoading}
+            positions={positions || {}}
+            pending={pending || {}}
+          />
+        </div>
+        <div>
+          <Card className="card-compact">
+            <div className="card-body">
+              <Typography variant="h2" className="card-title flex justify-between">
+                {showValue ? (
+                  'Asset Value'
+                ) : (
+                  'Asset Totals'
+                )}
+                <Button size="sm" color="ghost" onClick={() => setShowValue(!showValue)}>
+                  {showValue ? (
+                    <>
+                      <ArrowTrendingUpIcon className="h-4 w-4 inline-block"/>
+                      Show Totals
+                    </>
+                  ) : (
+                    <>
+                      <BanknotesIcon className="h-4 w-4 inline-block"/>
+                      Show Values
+                    </>
+                  )}
+                </Button>
+              </Typography>
+              {showValue ? (
+                <>
+                  <VolumeChart chartData={chartData || []} />
+                </>
+              ) : (
+                <>
+                  <ValueChart chartData={chartData || []} />
+                </>
+              )}
+            </div>
+          </Card>
+        </div>
+        <div>
+          <ClaimTokens
+            loading={isLoading}
+            rewards={rewards || []}
+          />
+        </div>
+      </main>
+    </>
   );
 };
 
