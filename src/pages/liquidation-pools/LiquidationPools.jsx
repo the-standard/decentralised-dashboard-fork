@@ -85,7 +85,7 @@ const LiquidationPools = () => {
               Changes With Earning Fees & New Staking Pool
             </Typography>
             <Typography variant="p">
-              With the upcoming release of our new & improved Staking Pool, from <b>17th June '24</b>, we will be moving all earnable fees over to it. 
+              With the recent release of our new & improved Staking Pool, from <b>17th June '24</b>, we will be moving all earnable fees over to it. 
               <br/>
               The existing Liquidation Pool will continue to exist past this date so you can withdraw your staked assets and claim any outstanding rewards.
             </Typography>
