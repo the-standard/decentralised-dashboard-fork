@@ -110,9 +110,9 @@ const LiquidationPools = () => {
             <div className="card-body">
               <Typography variant="h2" className="card-title flex justify-between">
                 {showValue ? (
-                  'Liquidity Pool Asset Value'
+                  'Liquidation Pool Asset Value'
                 ) : (
-                  'Liquidity Pool Asset Totals'
+                  'Liquidation Pool Asset Totals'
                 )}
                 <Button size="sm" color="ghost" onClick={() => setShowValue(!showValue)}>
                   {showValue ? (

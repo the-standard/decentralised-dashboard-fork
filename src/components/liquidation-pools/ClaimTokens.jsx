@@ -86,7 +86,7 @@ const ClaimTokens = ({
       <Card className="card-compact w-full">
         <div className="card-body">
           <Typography variant="h2" className="card-title justify-between">
-            Claimable Liquidity Pool Tokens
+            Claimable Liquidation Pool Tokens
           </Typography>
 
           <div className="overflow-x-auto">
