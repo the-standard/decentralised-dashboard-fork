@@ -17,7 +17,6 @@ import {
   useLiquidationPoolStore,
 } from "../../store/Store";
 
-import Staking from "../../components/liquidation-pools/Staking";
 import StakedAssets from "../../components/liquidation-pools/StakedAssets";
 import ClaimTokens from "../../components/liquidation-pools/ClaimTokens";
 import VolumeChart from "../../components/liquidation-pools/VolumeChart";
@@ -94,9 +93,6 @@ const LiquidationPools = () => {
       </Card>
       <main className="grid gap-4 grid-cols-1 md:grid-cols-2">
         <div>
-          <Staking />
-        </div>
-        <div>
           <StakedAssets
             loading={isLoading}
             positions={positions || {}}
@@ -104,13 +100,19 @@ const LiquidationPools = () => {
           />
         </div>
         <div>
+          <ClaimTokens
+            loading={isLoading}
+            rewards={rewards || []}
+          />
+        </div>
+        <div>
           <Card className="card-compact">
             <div className="card-body">
               <Typography variant="h2" className="card-title flex justify-between">
                 {showValue ? (
-                  'Asset Value'
+                  'Liquidity Pool Asset Value'
                 ) : (
-                  'Asset Totals'
+                  'Liquidity Pool Asset Totals'
                 )}
                 <Button size="sm" color="ghost" onClick={() => setShowValue(!showValue)}>
                   {showValue ? (
@@ -137,12 +139,6 @@ const LiquidationPools = () => {
               )}
             </div>
           </Card>
-        </div>
-        <div>
-          <ClaimTokens
-            loading={isLoading}
-            rewards={rewards || []}
-          />
         </div>
       </main>
     </>
