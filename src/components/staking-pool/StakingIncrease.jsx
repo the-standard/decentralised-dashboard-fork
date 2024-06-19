@@ -10,25 +10,21 @@ import {
 } from "wagmi";
 import { arbitrumSepolia } from "wagmi/chains";
 import { ethers } from "ethers";
-import {
-  QuestionMarkCircleIcon,
-} from '@heroicons/react/24/outline';
 
 import {
   useTstAddressStore,
   useErc20AbiStore,
   usesEuroAddressStore,
-  useLiquidationPoolAbiStore,
-  useLiquidationPoolStore,
-} from "../../store/Store";
+  useStakingPoolv2AbiStore,
+  useStakingPoolv2AddressStore,
+} from "../../store/Store.jsx";
 
 import Card from "../ui/Card";
-import Button from "../ui/Button";
 import Typography from "../ui/Typography";
-import Modal from "../ui/Modal";
+import Button from "../ui/Button";
 import Input from "../ui/Input";
 
-const Staking = () => {
+const StakingIncrease = () => {
   const chainId = useChainId();
   const {
     arbitrumTstAddress,
@@ -39,13 +35,12 @@ const Staking = () => {
     arbitrumSepoliasEuroAddress,
   } = usesEuroAddressStore();
   const {
-    arbitrumSepoliaLiquidationPoolAddress,
-    arbitrumLiquidationPoolAddress,
-  } = useLiquidationPoolStore();
-
+    arbitrumSepoliaStakingPoolv2Address,
+    arbitrumStakingPoolv2Address,
+  } = useStakingPoolv2AddressStore();
   const { address } = useAccount();
   const { erc20Abi } = useErc20AbiStore();
-  const { liquidationPoolAbi } = useLiquidationPoolAbiStore();
+  const { stakingPoolv2Abi } = useStakingPoolv2AbiStore();
   const [tstStakeAmount, setTstStakeAmount] = useState(0);
   const [eurosStakeAmount, setEurosStakeAmount] = useState(0);
   const [stage, setStage] = useState('');
@@ -62,8 +57,8 @@ const Staking = () => {
   arbitrumSepoliasEuroAddress :
   arbitrumsEuroAddress;
 
-  const liquidationPoolAddress = chainId === arbitrumSepolia.id ? arbitrumSepoliaLiquidationPoolAddress :
-  arbitrumLiquidationPoolAddress;
+  const stakingPoolv2Address = chainId === arbitrumSepolia.id ? arbitrumSepoliaStakingPoolv2Address :
+  arbitrumStakingPoolv2Address;
 
   const tstContract = {
     address: tstAddress,
@@ -74,7 +69,7 @@ const Staking = () => {
     contracts: [{
       ... tstContract,
       functionName: "allowance",
-      args: [address, liquidationPoolAddress]
+      args: [address, stakingPoolv2Address]
     },{
       ... tstContract,
       functionName: "balanceOf",
@@ -91,7 +86,7 @@ const Staking = () => {
     contracts: [{
       ... eurosContract,
       functionName: "allowance",
-      args: [address, liquidationPoolAddress]
+      args: [address, stakingPoolv2Address]
     },{
       ... eurosContract,
       functionName: "balanceOf",
@@ -112,7 +107,7 @@ const Staking = () => {
   const existingEurosAllowance = eurosData && eurosData[0].result;
   const eurosBalance = eurosData && eurosData[1].result;
 
-  const { writeContract, isError, isPending, isSuccess } = useWriteContract();
+  const { writeContract, isError, isPending, isSuccess, error } = useWriteContract();
 
   const handleApproveTst = async () => {
     setStage('APPROVE_TST');
@@ -121,7 +116,7 @@ const Staking = () => {
         abi: erc20Abi,
         address: tstAddress,
         functionName: "approve",
-        args: [liquidationPoolAddress, tstStakeAmount],
+        args: [stakingPoolv2Address, tstStakeAmount],
       });
     } catch (error) {
       let errorMessage = '';
@@ -140,7 +135,7 @@ const Staking = () => {
           abi: erc20Abi,
           address: eurosAddress,
           functionName: "approve",
-          args: [liquidationPoolAddress, eurosStakeAmount],
+          args: [stakingPoolv2Address, eurosStakeAmount],
         });
   
       } catch (error) {
@@ -158,9 +153,9 @@ const Staking = () => {
     setTimeout(() => {
       try {
         writeContract({
-          abi: liquidationPoolAbi,
-          address: liquidationPoolAddress,
-          functionName: "increasePosition",
+          abi: stakingPoolv2Abi,
+          address: stakingPoolv2Address,
+          functionName: "increaseStake",
           args: [
             tstStakeAmount,
             eurosStakeAmount
@@ -178,7 +173,7 @@ const Staking = () => {
 
   const handleLetsStake = async () => {
     if (existingTstAllowance < tstStakeAmount) {
-        handleApproveTst();
+      handleApproveTst();
     } else {
       if (existingEurosAllowance < eurosStakeAmount) {
         handleApproveEuros();
@@ -194,7 +189,7 @@ const Staking = () => {
         // 
       } else if (isSuccess) {
         setStage('');
-        toast.success("TST Approved");
+        toast.success('TST Approved');
         handleApproveEuros();
       } else if (isError) {
         setStage('');
@@ -206,7 +201,7 @@ const Staking = () => {
         // 
       } else if (isSuccess) {
         setStage('');
-        toast.success("EUROs Approved");
+        toast.success('EUROs Approved');
         handleDepositToken();
       } else if (isError) {
         setStage('');
@@ -218,7 +213,7 @@ const Staking = () => {
         // 
       } else if (isSuccess) {
         setStage('');
-        toast.success("Deposited Successfully");
+        toast.success('Deposited Successfully!');
         eurosInputRef.current.value = "";
         tstInputRef.current.value = "";
         setTstStakeAmount(0);
@@ -236,6 +231,7 @@ const Staking = () => {
     isPending,
     isSuccess,
     isError,
+    error
   ]);
 
   const handleTstAmount = (e) => {
@@ -266,16 +262,14 @@ const Staking = () => {
     <>
       <Card className="card-compact w-full">
         <div className="card-body">
-          <Typography variant="h2" className="card-title flex justify-between">
+          <Typography variant="h2" className="card-title justify-between">
             Deposit
-
-            <Button size="sm" color="ghost" onClick={() => setHelpOpen(true)}>
-              <QuestionMarkCircleIcon className="h-4 w-4 inline-block"/>
-              How It Works
-            </Button>
           </Typography>
-          <Typography variant="p">
-            To start earning fees & buying up liquidated assets at up to a 10% discount, stake your TST & EUROs below.
+          <Typography variant="p" className="mb-2">
+            Increase your TST position to earn EUROs rewards, and increase your EUROs position to earn an assortment of other tokens. 
+          </Typography>
+          <Typography variant="p" className="mb-2">
+            Depositing will automatically claim your existing rewards & compound any EUROs, ending your current staking period and restarting a new one.
           </Typography>
           <hr className="my-2" />
           <div>
@@ -306,7 +300,7 @@ const Staking = () => {
             <div
               className="join w-full mb-4"
             >
-              <Input
+            <Input
                 className="join-item w-full"
                 placeholder="EUROs Amount"
                 type="number"
@@ -321,11 +315,11 @@ const Staking = () => {
                 Max
               </Button>
             </div>
-            <div className="pt-4 flex flex-col-reverse lg:flex-row justify-end items-end">
+            <div className="card-actions flex flex-row justify-end">
               <Button
-                className="w-full lg:w-auto"
                 color="primary"
-                disabled={tstStakeAmount <= 0 && eurosStakeAmount <= 0}
+                loading={isPending}
+                disabled={isPending || tstStakeAmount <= 0 && eurosStakeAmount <= 0}
                 onClick={handleLetsStake}
               >
                 Deposit
@@ -334,63 +328,8 @@ const Staking = () => {
           </div>
         </div>
       </Card>
-      <Modal
-        open={helpOpen}
-        closeModal={() => setHelpOpen(false)}
-        wide
-      >
-        <Typography variant="h2" className="card-title">
-          <QuestionMarkCircleIcon className="mr-2 h-6 w-6 inline-block"/>
-          Liquidation Pool - How It Works
-        </Typography>
-
-        <Typography variant="h2">
-          Earning Fees
-        </Typography>
-
-        <Typography>
-          TST represents your share of the pool. For example, if your stake equals 3% of the pool then you will receive 3% of all fees collected.
-        </Typography>
-
-        <hr className="my-2" />
-
-        <Typography variant="h2">
-          Purchasing Discounted Tokens
-        </Typography>
-
-        <Typography>
-          EUROs will be spent to buy liquidated assets at up to a 10% discount.
-        </Typography>
-        <Typography>
-          TST represents the maximum amount of EUROs you will spend.
-        </Typography>
-        <Typography>
-          300 TST = 300 EUROs even if you have 500 EUROs deposited. This means you should always try to have more TST tokens in the pool than EUROs.
-        </Typography>
-
-        <hr className="my-2" />
-
-        <Typography className="font-bold">
-          Please Note:
-        </Typography>
-
-        <Typography>
-          All deposits will be held for a 24hour maturity period where they cannot be withdrawn, but can still be used for automatically purchasing liquidated assets.
-        </Typography>
-
-        <div className="card-actions flex flex-col-reverse lg:flex-row justify-end">
-          <Button
-            className="w-full lg:w-auto"
-            color="ghost"
-            onClick={() => setHelpOpen(false)}
-          >
-            Close
-          </Button>
-        </div>
-
-      </Modal>
     </>
   );
 };
 
-export default Staking;
+export default StakingIncrease;

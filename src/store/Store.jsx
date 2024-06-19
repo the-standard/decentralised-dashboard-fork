@@ -5,6 +5,7 @@ import chainlinkAbi from "../abis/priceFeeds/chainlink";
 import smartVaultABI from "../abis/smartVault";
 import stakingAbi from "../abis/staking";
 import liquidationPoolAbi from "../abis/liquidationPool";
+import stakingPoolv2Abi from "../abis/stakingPoolV2";
 
 export const useCurrentTheme = create(
   (set) => ({
@@ -76,6 +77,15 @@ export const useLiquidationPoolStore = create() (
   })
 );
 
+export const useStakingPoolv2AddressStore = create()(
+  (set) => ({
+    arbitrumStakingPoolv2Address: "0x2b422Fafc9C5841e6dFaDB383a62406B4BF13Ece",
+    arbitrumSepoliaStakingPoolv2Address: "0x87e9427c95D3a7f637fB5f3aED235ac7F4C62c19",
+    getStakingPoolv2Address: (arbitrumStakingPoolv2Address) =>
+      set(() => ({ stakingPoolv2Address: arbitrumStakingPoolv2Address })),
+  })
+);
+
 export const useChainlinkAbiStore = create() (
   (set) => ({
     chainlinkAbi: chainlinkAbi,
@@ -120,6 +130,14 @@ export const useLiquidationPoolAbiStore = create() (
     liquidationPoolAbi: liquidationPoolAbi,
     setLiquidationPoolAbi: (liquidationPoolAbi) =>
       set(() => ({ liquidationPoolAbi: liquidationPoolAbi })),
+  })
+);
+
+export const useStakingPoolv2AbiStore = create()(
+  (set) => ({
+    stakingPoolv2Abi: stakingPoolv2Abi,
+    getLiquidationPoolAbi: (stakingPoolv2Abi) =>
+      set(() => ({ stakingPoolv2Abi: stakingPoolv2Abi })),
   })
 );
 

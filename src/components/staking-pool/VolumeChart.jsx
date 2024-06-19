@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import ReactApexChart from "react-apexcharts";
 import moment from 'moment';
 
-const ValueChart = ({ chartData }) => {
+const VolumeChart = ({ chartData }) => {
   const [useSeries, setUseSeries] = useState([]);
 
   useEffect(() => {
@@ -14,7 +14,7 @@ const ValueChart = ({ chartData }) => {
           useData.push({name: asset[0], data: []});
         }
         useData.find(section => section.name === asset[0]).data.push([
-          timestamp, asset[2], asset[1]
+          timestamp, asset[1], asset[2]
         ]);
       });
     });
@@ -29,7 +29,7 @@ const ValueChart = ({ chartData }) => {
         options={{
           chart: {
             type: "area",
-            stacked: true,
+            stacked: false,
             foreColor: 'rgba(255,255,255,0.8)',
             toolbar: {
               show: false,
@@ -39,7 +39,7 @@ const ValueChart = ({ chartData }) => {
             },
           },
           noData: {
-            text: 'No Data',
+            text: 'COMING SOON',
             align: 'center',
             verticalAlign: 'middle',
             offsetX: 0,
@@ -54,7 +54,7 @@ const ValueChart = ({ chartData }) => {
             enabled: false,
           },
           title: {
-            // text: "Total Value (USD)",  
+            // text: "Assets",
             align: "left",
             style: {
               color: "#fff",
@@ -84,6 +84,11 @@ const ValueChart = ({ chartData }) => {
             labels: {
               show: true,
               offsetX: -15,
+              formatter: function(value) {
+                return (
+                  value.toFixed(0).toString()
+                )
+              }
             },
           },
           stroke: {
@@ -133,22 +138,19 @@ const ValueChart = ({ chartData }) => {
               title: {
                 formatter: (value) =>  {
                   return (
-                    `${value} (USD): `
+                    `${value}: `
                   )
                 }
               },
-              // title: {
-              //   formatter: () =>  {
-              //     return (
-              //       'Value (USD): '
-              //     )
-              //   }
-              // },
               formatter: function (value) {
-                return `$${value.toString()}`;
+                return value.toFixed(8).toString();
               },
             },
             z: {
+              // title: 'Value (USD): ',
+              // formatter: function (value) {
+              //   return `$${value.toString()}`;
+              // },
               title: '',
               formatter: function () {
                 return '';
@@ -165,4 +167,4 @@ const ValueChart = ({ chartData }) => {
   );
 };
 
-export default ValueChart;
+export default VolumeChart;

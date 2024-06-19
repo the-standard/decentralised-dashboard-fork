@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, Fragment } from "react";
 import { ethers } from "ethers";
 import axios from "axios";
 import {
@@ -108,9 +108,8 @@ const TokenList = ({ assets, assetsLoading }) => {
                     }
 
                     return (
-                      <>
+                      <Fragment key={index}>
                         <tr
-                          key={index}
                           onClick={() => toggleSubRow(index)}
                           className={subRow === index + 'sub' ? (
                             'cursor-pointer hover active'
@@ -158,7 +157,6 @@ const TokenList = ({ assets, assetsLoading }) => {
                           </td>
                         </tr>
                         <tr
-                          key={index + 'sub'}
                           className={subRow === index + 'sub' ? (
                             'glass-alt-bg w-full p-4 h-auto'
                           ) : (
@@ -198,7 +196,7 @@ const TokenList = ({ assets, assetsLoading }) => {
                             )}
                           </td>
                         </tr>
-                      </>
+                      </Fragment>
                     )}
                   )}
                 </tbody>

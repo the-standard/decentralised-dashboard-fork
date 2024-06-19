@@ -119,6 +119,7 @@ const VolumeChart = ({ chartData }) => {
           tooltip: {
             enabled: true,
             shared: true,
+            theme: 'dark',  
             x: {
               show: false,
               // formatter: function (

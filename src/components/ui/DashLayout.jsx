@@ -40,9 +40,9 @@ const DashLayout = ({children}) => {
         sideClassName="tst-sidenav__side bg-base-400/0 z-[1]"
       >
         <TopNav toggleVisible={toggleVisible} />
-        <div className="tst-inner">
-          {children}
-        </div>
+          <div className="tst-inner">
+            {children}
+          </div>
         <Footer />
       </Drawer>
     </div>

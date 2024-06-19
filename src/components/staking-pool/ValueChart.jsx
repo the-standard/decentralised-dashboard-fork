@@ -39,7 +39,7 @@ const ValueChart = ({ chartData }) => {
             },
           },
           noData: {
-            text: 'No Data',
+            text: 'COMING SOON',
             align: 'center',
             verticalAlign: 'middle',
             offsetX: 0,

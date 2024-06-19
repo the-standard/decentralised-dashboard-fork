@@ -7,6 +7,7 @@ import {
   CircleStackIcon,
   BanknotesIcon,
   XMarkIcon,
+  Square3Stack3DIcon
 } from '@heroicons/react/24/outline';
 
 import {
@@ -67,6 +68,20 @@ const SideNav = (props) => {
         </Menu.Item>
         <Menu.Item>
           <NavLink
+            to="/staking-pool"
+            className={({ isActive }) => 
+              isActive ||
+              location.pathname === '/' ||
+              location.pathname.includes('/staking-pool') ?
+              'navbar-item active' : 'navbar-item'
+            }
+          >
+            <Square3Stack3DIcon className="h-6 w-6 inline-block"/>
+            Staking Pool
+          </NavLink>
+        </Menu.Item>
+        <Menu.Item>
+          <NavLink
             to="/liquidation-pools"
             className={({ isActive }) => 
               isActive ||
@@ -100,6 +115,26 @@ const SideNav = (props) => {
               <CircleStackIcon className="h-6 w-6 inline-block"/>
               <span className="md:hidden">
                 Vaults
+              </span>
+            </NavLink>
+          </Menu.Item>
+        </Tooltip>
+        <Tooltip
+          position="right"
+          message="Staking Pool"
+        >
+          <Menu.Item>
+            <NavLink
+              to="/staking-pool"
+              className={({ isActive }) => 
+                isActive ||
+                location.pathname.includes('/staking-pool') ?
+                'navbar-item active' : 'navbar-item'
+              }
+            >
+              <Square3Stack3DIcon className="h-6 w-6 inline-block"/>
+              <span className="md:hidden">
+                Staking Pool
               </span>
             </NavLink>
           </Menu.Item>
