@@ -79,7 +79,7 @@ export const useLiquidationPoolStore = create() (
 
 export const useStakingPoolv2AddressStore = create()(
   (set) => ({
-    arbitrumStakingPoolv2Address: "0xd598035C18eC16bEec41c428922395B060fB12Bf",
+    arbitrumStakingPoolv2Address: "0x2b422Fafc9C5841e6dFaDB383a62406B4BF13Ece",
     arbitrumSepoliaStakingPoolv2Address: "0x87e9427c95D3a7f637fB5f3aED235ac7F4C62c19",
     getStakingPoolv2Address: (arbitrumStakingPoolv2Address) =>
       set(() => ({ stakingPoolv2Address: arbitrumStakingPoolv2Address })),
