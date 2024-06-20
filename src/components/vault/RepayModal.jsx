@@ -4,6 +4,10 @@ import {
   ArrowUpCircleIcon,
 } from '@heroicons/react/24/outline';
 
+import {
+  useWideBorrowModal,
+} from "../../store/Store";
+
 import VaultHealth from "./VaultHealth";
 import EurosCompare from "./EurosCompare";
 
@@ -31,6 +35,8 @@ const RepayModal = (props) => {
     inputRef,
     currentVault,
   } = props;
+
+  const { borrowWide } = useWideBorrowModal();
 
   if (isSuccess) {
     return (
@@ -158,7 +164,7 @@ const RepayModal = (props) => {
       <Modal
         open={open}
         closeModal={closeModal}
-        wide={true}
+        wide={borrowWide}
       >
         <div className="flex flex-col md:flex-row">
           <div className="flex flex-col flex-1">
