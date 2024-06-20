@@ -14,6 +14,13 @@ export const useCurrentTheme = create(
   })
 );
 
+export const useWideBorrowModal = create(
+  (set) => ({
+    borrowWide: false,
+    setBorrowWide: (borrowWide) => set(() => ({ borrowWide: borrowWide })),
+  })
+);
+
 export const useVaultHealthUpdate = create(
   (set) => ({
     vaultHealthUpdateAmount: 0,

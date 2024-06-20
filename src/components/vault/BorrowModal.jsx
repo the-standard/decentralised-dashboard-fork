@@ -4,6 +4,10 @@ import {
   ArrowDownCircleIcon,
 } from '@heroicons/react/24/outline';
 
+import {
+  useWideBorrowModal,
+} from "../../store/Store";
+
 import VaultHealth from "./VaultHealth";
 import EurosCompare from "./EurosCompare";
 
@@ -26,6 +30,8 @@ const BorrowModal = (props) => {
     currentVault,
   } = props;
 
+  const { borrowWide } = useWideBorrowModal();
+
   const navigate = useNavigate();
 
   const currentDebt = ethers.formatEther(currentVault.status.minted.toString());
@@ -36,7 +42,7 @@ const BorrowModal = (props) => {
         <Modal
           open={open}
           closeModal={closeModal}
-          wide={true}
+          wide={false}
         >
           <Typography
             variant="h1"
@@ -133,7 +139,7 @@ const BorrowModal = (props) => {
       <Modal
         open={open}
         closeModal={closeModal}
-        wide={true}
+        wide={borrowWide}
       >
         <div className="flex flex-col md:flex-row">
           <div className="flex flex-col flex-1">
