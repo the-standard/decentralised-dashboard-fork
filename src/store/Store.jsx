@@ -9,7 +9,7 @@ import stakingPoolv2Abi from "../abis/stakingPoolV2";
 
 export const useCurrentTheme = create(
   (set) => ({
-    currentTheme: 'dark',
+    currentTheme: 'deluxe-dark',
     setCurrentTheme: (currentTheme) => set(() => ({ currentTheme: currentTheme })),
   })
 );
