@@ -9,8 +9,15 @@ import stakingPoolv2Abi from "../abis/stakingPoolV2";
 
 export const useCurrentTheme = create(
   (set) => ({
-    currentTheme: 'dark',
+    currentTheme: 'deluxe-dark',
     setCurrentTheme: (currentTheme) => set(() => ({ currentTheme: currentTheme })),
+  })
+);
+
+export const useWideBorrowModal = create(
+  (set) => ({
+    borrowWide: false,
+    setBorrowWide: (borrowWide) => set(() => ({ borrowWide: borrowWide })),
   })
 );
 

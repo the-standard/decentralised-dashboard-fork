@@ -7,6 +7,7 @@ import axios from "axios";
 import {
   useChainlinkAbiStore,
   useUSDToEuroAddressStore,
+  useWideBorrowModal,
 } from "../../store/Store";
 
 import Typography from "../ui/Typography";
@@ -17,6 +18,7 @@ const EurosCompare = () => {
   const { chainlinkAbi } = useChainlinkAbiStore();
   const { arbitrumOneUSDToEuroAddress, arbitrumSepoliaUSDToEuroAddress } =
     useUSDToEuroAddressStore();
+    const { setBorrowWide } = useWideBorrowModal();
 
   const chainlinkContract = {
     abi: chainlinkAbi,
@@ -78,7 +80,17 @@ const EurosCompare = () => {
 
   const showDiscount = Math.abs(currentDiscount);
 
-  if (currentDiscount < 0 || isPending) {
+  useEffect(() => {
+    getPoolData();
+    if (currentDiscount <= 0) {
+      setBorrowWide(false)
+    }
+    if (currentDiscount > 0) {
+      setBorrowWide(true)
+    }
+  }, [currentDiscount])
+
+  if (currentDiscount <= 0 || isPending) {
     return (
       <></>
     );  
