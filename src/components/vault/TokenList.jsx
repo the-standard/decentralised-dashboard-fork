@@ -195,7 +195,7 @@ const TokenList = ({ assets, assetsLoading }) => {
                                   <Button
                                     variant="outline"
                                     disabled={amount <= 0}
-                                    onClick={() => handleClick('SWAP', asset)}
+                                    onClick={() => handleClick('YIELD', asset)}
                                     className="grow"
                                   >
                                     Place In Yield Pool
