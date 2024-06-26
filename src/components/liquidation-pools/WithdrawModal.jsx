@@ -78,8 +78,8 @@ const WithdrawModal = ({
         address: liquidationPoolAddress,
         functionName: "decreasePosition",
         args: [
-          parseEther(tstWithdrawAmount.toString()),
-          parseEther(eurosWithdrawAmount.toString()),
+          tstWithdrawAmount,
+          eurosWithdrawAmount,
         ],
       });
     } catch (error) {
@@ -119,7 +119,7 @@ const WithdrawModal = ({
 
   const handleTstAmount = (e) => {
     if (Number(e.target.value) < 10n ** 21n) {
-      setTstWithdrawAmount(Number(e.target.value));
+      setTstWithdrawAmount(parseEther(e.target.value.toString()));
     }
   };
 
@@ -132,7 +132,7 @@ const WithdrawModal = ({
 
   const handleEurosAmount = (e) => {
     if (Number(e.target.value) < 10n ** 21n) {
-      setEurosWithdrawAmount(Number(e.target.value));
+      setEurosWithdrawAmount(parseEther(e.target.value.toString()));
     }
   };
 
