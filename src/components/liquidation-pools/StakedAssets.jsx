@@ -20,6 +20,8 @@ const StakedAssets = ({
 
   const isLoading = loading;
 
+  console.log('DEBUG')
+
   return (
     <>
       <Card className="card-compact w-full">
@@ -64,7 +66,7 @@ const StakedAssets = ({
             <Button
               onClick={() => setOpen(true)}
               color="primary"
-              // disabled={tstAmount <= 0 && eurosAmount <= 0}
+              disabled={tstAmount <= 0 && eurosAmount <= 0}
             >
               Withdraw
             </Button>
