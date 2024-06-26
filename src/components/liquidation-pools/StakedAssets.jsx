@@ -20,8 +20,6 @@ const StakedAssets = ({
 
   const isLoading = loading;
 
-  console.log('DEBUGGING')
-
   return (
     <>
       <Card className="card-compact w-full">
