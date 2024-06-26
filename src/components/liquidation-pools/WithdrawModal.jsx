@@ -63,14 +63,6 @@ const WithdrawModal = ({
 
   const { writeContract, isError, isPending, isSuccess, error } = useWriteContract();
 
-  const debugTstAvail = tstAvailable;
-  const debugFormatTstAvail = showTstAvailable;
-  const debugEurosAvail = eurosAvailable;
-  const debugFormatEurosAvail = showEurosAvailable;
-
-  console.log({debugTstAvail}, {debugFormatTstAvail})
-  console.log({debugEurosAvail}, {debugFormatEurosAvail})
-
   const handleApproveWithdraw = async () => {
     try {
       writeContract({
