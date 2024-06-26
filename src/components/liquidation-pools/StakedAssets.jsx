@@ -20,7 +20,7 @@ const StakedAssets = ({
 
   const isLoading = loading;
 
-  console.log('DEBUG true')
+  console.log('DEBUG TRUE')
 
   return (
     <>

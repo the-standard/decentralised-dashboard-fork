@@ -63,6 +63,14 @@ const WithdrawModal = ({
 
   const { writeContract, isError, isPending, isSuccess, error } = useWriteContract();
 
+  const debugTstAvail = tstAvailable;
+  const debugFormatTstAvail = showTstAvailable;
+  const debugEurosAvail = eurosAvailable;
+  const debugFormatEurosAvail = showEurosAvailable;
+
+  console.log({debugTstAvail}, {debugFormatTstAvail})
+  console.log({debugEurosAvail}, {debugFormatEurosAvail})
+
   const handleApproveWithdraw = async () => {
     try {
       writeContract({
@@ -96,9 +104,8 @@ const WithdrawModal = ({
       toast.error('There was a problem');
       setShowError(true);
       // TEMP
-      console.log('tst-eth', parseEther(tstWithdrawAmount.toString()), parseEther(eurosWithdrawAmount.toString()),
-      console.log('isError:', error),
-)
+      console.log('tst-eth123123', parseEther(tstWithdrawAmount.toString()), parseEther(eurosWithdrawAmount.toString()));
+      console.log('isError:', error);
       setClaimLoading(false);
       setTstWithdrawAmount(0);
       setEurosWithdrawAmount(0);
