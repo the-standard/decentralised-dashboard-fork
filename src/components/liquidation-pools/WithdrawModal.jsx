@@ -1,11 +1,12 @@
 import { useState, useEffect, useRef } from "react";
+import { toast } from 'react-toastify';
+
 import {
   useWriteContract,
   useChainId,
 } from "wagmi";
 import { arbitrumSepolia } from "wagmi/chains";
-import { ethers } from "ethers";
-import { toast } from 'react-toastify';
+import { formatEther, parseEther } from "viem";
 
 import {
   useLiquidationPoolStore,
@@ -49,11 +50,11 @@ const WithdrawModal = ({
   const tstAvailable = BigInt(tstStakedAmount) - BigInt(tstPending);
   const eurosAvailable = BigInt(eurosStakedAmount) - BigInt(eurosPending);
 
-  const showTstPending = ethers.formatEther(tstPending.toString());
-  const showEurosPending = ethers.formatEther(eurosPending.toString());
+  const showTstPending = formatEther(tstPending.toString());
+  const showEurosPending = formatEther(eurosPending.toString());
 
-  const showTstAvailable = ethers.formatEther(tstAvailable.toString());
-  const showEurosAvailable = ethers.formatEther(eurosAvailable.toString());
+  const showTstAvailable = formatEther(tstAvailable.toString());
+  const showEurosAvailable = formatEther(eurosAvailable.toString());
 
   const hasPending = (tstPending > 0) || (eurosPending > 0);
 
@@ -69,8 +70,8 @@ const WithdrawModal = ({
         address: liquidationPoolAddress,
         functionName: "decreasePosition",
         args: [
-          ethers.parseEther(tstWithdrawAmount.toString()),
-          ethers.parseEther(eurosWithdrawAmount.toString()),
+          parseEther(tstWithdrawAmount.toString()),
+          parseEther(eurosWithdrawAmount.toString()),
         ],
       });
     } catch (error) {
@@ -93,7 +94,9 @@ const WithdrawModal = ({
       handleCloseModal();
     } else if (isError) {
       toast.error('There was a problem');
-      setShowError(true)
+      setShowError(true);
+      // TEMP
+      console.log('isError:', error)
       setClaimLoading(false);
       setTstWithdrawAmount(0);
       setEurosWithdrawAmount(0);
@@ -112,7 +115,7 @@ const WithdrawModal = ({
   };
 
   const handleTstInputMax = () => {
-    const formatBalance = ethers.formatEther(tstAvailable);
+    const formatBalance = formatEther(tstAvailable);
     tstInputRef.current.value = formatBalance;
 
     handleTstAmount({target: {value: formatBalance}});
@@ -125,7 +128,7 @@ const WithdrawModal = ({
   };
 
   const handleEurosInputMax = () => {
-    const formatBalance = ethers.formatEther(eurosAvailable);
+    const formatBalance = formatEther(eurosAvailable);
     eurosInputRef.current.value = formatBalance;
     handleEurosAmount({target: {value: formatBalance}});
   }
