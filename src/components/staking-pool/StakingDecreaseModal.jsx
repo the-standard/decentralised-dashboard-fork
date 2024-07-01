@@ -59,8 +59,8 @@ const StakingDecreaseModal = ({
         address: stakingPoolv2Address,
         functionName: "decreaseStake",
         args: [
-          parseEther(tstWithdrawAmount.toString()),
-          parseEther(eurosWithdrawAmount.toString()),
+          tstWithdrawAmount,
+          eurosWithdrawAmount,
         ],
       });
     } catch (error) {
