@@ -7,6 +7,7 @@ const LiFiWidget = () => {
     // toChain,
     // toToken,
     // fromToken,
+    integrator: 'the-standard',
     appearance: 'dark',
     theme: {
       container: {
@@ -62,7 +63,7 @@ const LiFiWidget = () => {
 
   return (
     <LiFi
-      integrator="The Standard"
+      integrator={widgetConfig.integrator}
       config={widgetConfig}
     />
   );
