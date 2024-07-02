@@ -35,7 +35,7 @@ function App() {
                 <Route path="vault/:vaultId" element={<DashLayout><Vault /></DashLayout>} />
                 <Route path="vault/:vaultId/history" element={<DashLayout><VaultHistory /></DashLayout>} />
                 <Route path="liquidation-pools" element={<DashLayout><LiquidationPools /></DashLayout>} />
-                <Route path="staking-pool/*" element={<DashLayout><StakingPool /></DashLayout>} />
+                <Route path="staking-pool" element={<DashLayout><StakingPool /></DashLayout>} />
                 <Route path="termsofuse" element={<DashLayout><TermsOfUse /></DashLayout>} />
                 <Route path="*" element={<Home/>} />
               </Routes>
