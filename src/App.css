@@ -611,3 +611,16 @@ button.btn.btn-outline:disabled {
   -webkit-mask: radial-gradient(67px, #0000 98%, #000);
   mask: radial-gradient(67px, #0000 98%, #000);
 }
+
+/* LiFiWidget */
+
+div[id^="widget-app-expanded-container-"] {
+  height: unset;
+}
+
+div[id^="widget-relative-container-"] {
+  max-height: unset;
+  height: 100%;
+  min-width: unset;
+  width: 100%;
+}
