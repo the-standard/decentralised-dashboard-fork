@@ -84,9 +84,10 @@ const VaultHistory = () => {
           onClick={() => navigate('/')}
           variant="outline"
           disabled={vaultsLoading}
+          className="pl-2"
         >
           <ChevronLeftIcon className="h-6 w-6 inline-block"/>
-          Return to Vaults
+          All Vaults
         </Button>
         <Button
           onClick={() => navigate(`../vault/${vaultId}`)}
