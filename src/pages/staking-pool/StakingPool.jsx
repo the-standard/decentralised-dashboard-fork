@@ -23,6 +23,8 @@ import StakingRewards from "../../components/staking-pool/StakingRewards";
 import VolumeChart from "../../components/staking-pool/VolumeChart";
 import ValueChart from "../../components/staking-pool/ValueChart";
 
+import LiFiDex from "../../components/staking-pool/LiFiDex";
+
 import Card from "../../components/ui/Card";
 import CenterLoader from "../../components/ui/CenterLoader";
 import Typography from "../../components/ui/Typography";
@@ -120,6 +122,30 @@ const StakingPool = (props) => {
       </div>
 
       <div>
+        <LiFiDex />
+      </div>
+
+      <div>
+        {poolRewardsLoading ? (
+          <Card className="card-compact">
+            <div className="card-body">
+              <CenterLoader />
+            </div>
+          </Card>
+        ) : (
+          <StakingRewards
+            poolRewardsLoading={poolRewardsLoading}
+            rewards={rewards}
+            sEuroAmount={sEuroAmount}
+            collaterals={collaterals}
+            stakedSince={useStakedSince}
+            sEuroDaily={sEuroDaily}
+            collatDaily={collatDaily}
+          />
+        )}
+      </div>
+
+      <div>
         <Card className="card-compact">
           <div className="card-body">
             <Typography variant="h2" className="card-title flex justify-between">
@@ -155,23 +181,6 @@ const StakingPool = (props) => {
         </Card>
       </div>
 
-      {poolRewardsLoading ? (
-        <Card className="card-compact">
-          <div className="card-body">
-            <CenterLoader />
-          </div>
-        </Card>
-      ) : (
-        <StakingRewards
-          poolRewardsLoading={poolRewardsLoading}
-          rewards={rewards}
-          sEuroAmount={sEuroAmount}
-          collaterals={collaterals}
-          stakedSince={useStakedSince}
-          sEuroDaily={sEuroDaily}
-          collatDaily={collatDaily}
-        />
-      )}
     </main>
   );
 };
