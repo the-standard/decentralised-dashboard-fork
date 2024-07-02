@@ -93,9 +93,10 @@ const Vault = () => {
           onClick={() => navigate('/')}
           variant="outline"
           disabled={isLoading}
+          className="pl-2"
         >
           <ChevronLeftIcon className="h-6 w-6 inline-block"/>
-          Return to Vaults
+          All Vaults
         </Button>
         <Button
           onClick={() => navigate('./history')}
@@ -104,8 +105,22 @@ const Vault = () => {
         >
           History
         </Button>
+        <Button
+          onClick={() => handleArbiscanLink()}
+          variant="outline"
+          disabled={isLoading}
+        >
+          Arbiscan
+        </Button>
       </div>
     )
+  };
+
+  const handleArbiscanLink = () => {
+    const arbiscanUrl = chainId === arbitrumSepolia.id
+      ? `https://sepolia.arbiscan.io/address/${vaultAddress}`
+      : `https://arbiscan.io/address/${vaultAddress}`;
+    window.open(arbiscanUrl, "_blank");
   };
 
   if (isLoading) {
