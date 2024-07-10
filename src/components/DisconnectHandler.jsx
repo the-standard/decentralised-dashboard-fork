@@ -1,17 +1,13 @@
 import { useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { useAccount, useAccountEffect } from "wagmi";
+import { useAccount } from "wagmi";
 
 const DisconnectHandler = ({children}) => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { isDisconnected } = useAccount();
-
-  useAccountEffect({
-    onDisconnect() {
-      navigate("/");
-    },
-  })
+  const {
+    isDisconnected,
+  } = useAccount();
 
   useEffect(() => {
     if (

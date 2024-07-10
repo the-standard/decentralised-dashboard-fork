@@ -3,6 +3,8 @@ import TSTIconSmallBG from "../assets/TSTIconSmallBG.png";
 import Card from "../components/ui/Card";
 import Typography from "../components/ui/Typography";
 
+import RainbowConnect from "../components/RainbowConnectButton";
+
 function Welcome(){
 
   return(
@@ -20,7 +22,7 @@ function Welcome(){
               To start staking and earning with TST connect your wallet below.
             </Typography>
             <div className="flex justify-center content-center">
-              <w3m-button />
+              <RainbowConnect />
             </div>
           </div>
         </div>
