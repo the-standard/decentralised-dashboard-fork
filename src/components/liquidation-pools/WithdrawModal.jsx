@@ -95,9 +95,6 @@ const WithdrawModal = ({
     } else if (isError) {
       toast.error('There was a problem');
       setShowError(true);
-      // TEMP
-      console.log('tst-eth123123', parseEther(tstWithdrawAmount.toString()), parseEther(eurosWithdrawAmount.toString()));
-      console.log('isError:', error);
       setClaimLoading(false);
       setTstWithdrawAmount(0);
       setEurosWithdrawAmount(0);

@@ -206,6 +206,14 @@
   position: relative;
 }
 
+.tst-topnav > .navbar-start {
+  width: auto;
+}
+.tst-topnav > .navbar-end {
+  width: 100%;
+  justify-content: end;
+}
+
 .tst-topnav::before {
   content: "";
   position: absolute;

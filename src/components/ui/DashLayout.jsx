@@ -8,6 +8,8 @@ import TopNav from './TopNav';
 import SideNav from './SideNav';
 import Footer from './Footer';
 
+import ChainChecker from "../ChainChecker";
+
 const DashLayout = ({children}) => {
   const [showSideNav, setShowSideNav] = useState(false);
 
@@ -41,7 +43,9 @@ const DashLayout = ({children}) => {
       >
         <TopNav toggleVisible={toggleVisible} />
           <div className="tst-inner">
-            {children}
+            <ChainChecker>
+              {children}
+            </ChainChecker>
           </div>
         <Footer />
       </Drawer>

@@ -1,5 +1,7 @@
 import { LiFiWidget as LiFi } from '@lifi/widget';
 
+const projectId = import.meta.env.VITE_WALLETCONNECT_ID;
+
 const LiFiWidget = () => {
 
   const widgetConfig = {
@@ -7,6 +9,9 @@ const LiFiWidget = () => {
     // toChain,
     // toToken,
     // fromToken,
+    walletConnect: {
+      projectId: projectId,
+    },
     integrator: 'the-standard',
     appearance: 'dark',
     theme: {

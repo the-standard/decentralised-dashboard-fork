@@ -7,7 +7,8 @@ import {
   CircleStackIcon,
   BanknotesIcon,
   XMarkIcon,
-  Square3Stack3DIcon
+  Square3Stack3DIcon,
+  ArrowPathRoundedSquareIcon,
 } from '@heroicons/react/24/outline';
 
 import {
@@ -71,7 +72,6 @@ const SideNav = (props) => {
             to="/staking-pool"
             className={({ isActive }) => 
               isActive ||
-              location.pathname === '/' ||
               location.pathname.includes('/staking-pool') ?
               'navbar-item active' : 'navbar-item'
             }
@@ -92,6 +92,21 @@ const SideNav = (props) => {
             <BanknotesIcon className="h-6 w-6 inline-block"/>
             <span className="md:hidden">
               Liquidation Pools
+            </span>
+          </NavLink>
+        </Menu.Item>
+        <Menu.Item>
+          <NavLink
+              to="/dex"
+              className={({ isActive }) => 
+              isActive ||
+              location.pathname.includes('/dex') ?
+              'navbar-item active' : 'navbar-item'
+            }
+          >
+            <ArrowPathRoundedSquareIcon className="h-6 w-6 inline-block"/>
+            <span className="md:hidden">
+              Cross Dex Exchange
             </span>
           </NavLink>
         </Menu.Item>
@@ -155,6 +170,26 @@ const SideNav = (props) => {
               <BanknotesIcon className="h-6 w-6 inline-block"/>
               <span className="md:hidden">
                 Liquidation Pools
+              </span>
+            </NavLink>
+          </Menu.Item>
+        </Tooltip>
+        <Tooltip
+          position="right"
+          message="Cross Dex Exchange"
+        >
+          <Menu.Item>
+            <NavLink
+              to="/dex"
+              className={({ isActive }) => 
+                isActive ||
+                location.pathname.includes('/dex') ?
+                'navbar-item active' : 'navbar-item'
+              }
+            >
+              <ArrowPathRoundedSquareIcon className="h-6 w-6 inline-block"/>
+              <span className="md:hidden">
+                Cross Dex Exchange
               </span>
             </NavLink>
           </Menu.Item>
