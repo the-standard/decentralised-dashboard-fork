@@ -4,10 +4,9 @@ Uses:
 - HeroIcons
 - ReactToastify
 - Wagmi
-- WalletConnect
+- RainbowKit
 - ethers
 - viem
 
 Required:
-- create WalletConnect account and get project id
 - get alchemy id
