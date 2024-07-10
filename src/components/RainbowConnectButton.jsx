@@ -1,4 +1,7 @@
 import { ConnectButton } from '@rainbow-me/rainbowkit';
+import {
+  arbitrumSepolia
+} from "wagmi/chains";
 
 import {
   ChevronDownIcon,
@@ -74,7 +77,7 @@ const RainbowConnect = () => {
                               alt={chain.name ?? 'Chain icon'}
                               src={chain.iconUrl}
                               className={
-                                chain.id == '421614' ? (
+                                chain.id === arbitrumSepolia.id ? (
                                   'h-6 w-6 border-2 rounded-full border-yellow-400'
                                 ) : ('h-6 w-6')
                               }
