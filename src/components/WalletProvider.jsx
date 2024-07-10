@@ -24,9 +24,11 @@ const WalletProvider = ({ children }) => {
   const { chains, isLoading } = useAvailableChains();
 
   const wagmiConfig = useMemo(() => {
-    const _chains = chains?.length
-      ? (chains.map(convertExtendedChain))
-      : [arbitrum, arbitrumSepolia];
+    const mainChains = chains?.length
+    ? (chains.map(convertExtendedChain))
+    : [arbitrum];
+
+    const _chains = [...mainChains, arbitrumSepolia];
 
     const wagmiConfig = getDefaultConfig({
       appName: 'The Standard',

@@ -47,7 +47,7 @@ const RainbowConnect = () => {
               if (chain.unsupported) {
                 return (
                   <Button
-                    color="primary"
+                    color="error"
                     onClick={openChainModal}
                   >
                     Wrong network
@@ -73,7 +73,11 @@ const RainbowConnect = () => {
                             <img
                               alt={chain.name ?? 'Chain icon'}
                               src={chain.iconUrl}
-                              className="h-6 w-6"
+                              className={
+                                chain.id == '421614' ? (
+                                  'h-6 w-6 border-2 rounded-full border-yellow-400'
+                                ) : ('h-6 w-6')
+                              }
                             />
                           )}
                         </>

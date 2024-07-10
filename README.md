@@ -9,4 +9,5 @@ Uses:
 - viem
 
 Required:
+- create WalletConnect account and get project id
 - get alchemy id
