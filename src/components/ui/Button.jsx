@@ -14,12 +14,21 @@ const Button = (props) => {
     fullWidth,
     loading,
     disabled,
-    onClick
+    onClick,
+    active,
   } = props;
+
+  let useClass = '';
+  if (className) {
+    useClass = className;
+  }
+  if (active) {
+    useClass = `${useClass} active`;
+  }
 
   return (
     <DaisyButton
-      className={` ${className ? className : ''}`}
+      className={useClass}
       shape={shape || ''}
       size={size || ''}
       variant={variant || null}
