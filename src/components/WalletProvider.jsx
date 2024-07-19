@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo, useEffect } from 'react';
 import { WagmiProvider, http } from 'wagmi';
 import { convertExtendedChain } from '@lifi/wallet-management';
 import { useAvailableChains } from '@lifi/widget';
@@ -11,6 +11,7 @@ import '@rainbow-me/rainbowkit/styles.css';
 
 import {
   useCurrentTheme,
+  useCurrentWagmiConfig
 } from "../store/Store";
 
 import CenterLoader from "./ui/CenterLoader";
@@ -19,6 +20,7 @@ const projectId = import.meta.env.VITE_WALLETCONNECT_ID;
 
 const WalletProvider = ({ children }) => {
   const { currentTheme } = useCurrentTheme();
+  const { setCurrentWagmiConfig } = useCurrentWagmiConfig();
   const isLight = currentTheme && currentTheme.includes('light');
 
   const { chains, isLoading } = useAvailableChains();
@@ -42,6 +44,12 @@ const WalletProvider = ({ children }) => {
 
     return wagmiConfig;
   }, [chains]);
+
+  useEffect(() => {
+    if (wagmiConfig) {
+      setCurrentWagmiConfig(wagmiConfig);
+    }
+  }, [wagmiConfig])
 
   let useTheme = darkTheme({overlayBlur: 'small'});
   if (isLight) {
