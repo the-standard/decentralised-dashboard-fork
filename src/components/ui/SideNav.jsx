@@ -8,7 +8,7 @@ import {
   BanknotesIcon,
   XMarkIcon,
   Square3Stack3DIcon,
-  ArrowPathRoundedSquareIcon,
+  // ArrowPathRoundedSquareIcon,
 } from '@heroicons/react/24/outline';
 
 import {
@@ -95,7 +95,7 @@ const SideNav = (props) => {
             </span>
           </NavLink>
         </Menu.Item>
-        <Menu.Item>
+        {/* <Menu.Item>
           <NavLink
               to="/dex"
               className={({ isActive }) => 
@@ -109,7 +109,7 @@ const SideNav = (props) => {
               Cross Dex Exchange
             </span>
           </NavLink>
-        </Menu.Item>
+        </Menu.Item> */}
       </div>
       {/* Med + */}
       <div className="p-2 flex-col gap-2 w-full hidden md:flex">
@@ -174,7 +174,7 @@ const SideNav = (props) => {
             </NavLink>
           </Menu.Item>
         </Tooltip>
-        <Tooltip
+        {/* <Tooltip
           position="right"
           message="Cross Dex Exchange"
         >
@@ -193,7 +193,7 @@ const SideNav = (props) => {
               </span>
             </NavLink>
           </Menu.Item>
-        </Tooltip>
+        </Tooltip> */}
       </div>
       <div className="block md:hidden self-center mt-auto pb-4">
         <ThemeToggle className="dropdown-top" />
