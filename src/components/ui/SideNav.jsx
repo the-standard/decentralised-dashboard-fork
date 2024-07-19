@@ -8,7 +8,6 @@ import {
   BanknotesIcon,
   XMarkIcon,
   Square3Stack3DIcon,
-  // ArrowPathRoundedSquareIcon,
 } from '@heroicons/react/24/outline';
 
 import {
@@ -95,21 +94,6 @@ const SideNav = (props) => {
             </span>
           </NavLink>
         </Menu.Item>
-        {/* <Menu.Item>
-          <NavLink
-              to="/dex"
-              className={({ isActive }) => 
-              isActive ||
-              location.pathname.includes('/dex') ?
-              'navbar-item active' : 'navbar-item'
-            }
-          >
-            <ArrowPathRoundedSquareIcon className="h-6 w-6 inline-block"/>
-            <span className="md:hidden">
-              Cross Dex Exchange
-            </span>
-          </NavLink>
-        </Menu.Item> */}
       </div>
       {/* Med + */}
       <div className="p-2 flex-col gap-2 w-full hidden md:flex">
@@ -174,26 +158,6 @@ const SideNav = (props) => {
             </NavLink>
           </Menu.Item>
         </Tooltip>
-        {/* <Tooltip
-          position="right"
-          message="Cross Dex Exchange"
-        >
-          <Menu.Item>
-            <NavLink
-              to="/dex"
-              className={({ isActive }) => 
-                isActive ||
-                location.pathname.includes('/dex') ?
-                'navbar-item active' : 'navbar-item'
-              }
-            >
-              <ArrowPathRoundedSquareIcon className="h-6 w-6 inline-block"/>
-              <span className="md:hidden">
-                Cross Dex Exchange
-              </span>
-            </NavLink>
-          </Menu.Item>
-        </Tooltip> */}
       </div>
       <div className="block md:hidden self-center mt-auto pb-4">
         <ThemeToggle className="dropdown-top" />

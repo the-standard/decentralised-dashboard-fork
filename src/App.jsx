@@ -11,7 +11,6 @@ import Vault from './pages/vault/Vault';
 import VaultHistory from './pages/vault/VaultHistory';
 import LiquidationPools from './pages/liquidation-pools/LiquidationPools';
 import StakingPool from './pages/staking-pool/StakingPool';
-// import Dex from './pages/dex/Dex';
 import TermsOfUse from './pages/TermsOfUse';
 
 import './App.css';
@@ -32,7 +31,6 @@ function App() {
               <Route path="vault/:vaultId/history" element={<DashLayout><VaultHistory /></DashLayout>} />
               <Route path="liquidation-pools" element={<DashLayout><LiquidationPools /></DashLayout>} />
               <Route path="staking-pool" element={<DashLayout><StakingPool /></DashLayout>} />
-              {/* <Route path="dex/*" element={<DashLayout><Dex /></DashLayout>} /> */}
               <Route path="termsofuse" element={<DashLayout><TermsOfUse /></DashLayout>} />
               <Route path="*" element={<Home/>} />
             </Routes>
