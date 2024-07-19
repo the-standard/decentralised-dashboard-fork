@@ -7,6 +7,13 @@ import stakingAbi from "../abis/staking";
 import liquidationPoolAbi from "../abis/liquidationPool";
 import stakingPoolv2Abi from "../abis/stakingPoolV2";
 
+export const useCurrentWagmiConfig = create(
+  (set) => ({
+    wagmiConfig: null,
+    setCurrentWagmiConfig: (wagmiConfig) => set(() => ({ wagmiConfig: wagmiConfig })),
+  })
+);
+
 export const useCurrentTheme = create(
   (set) => ({
     currentTheme: 'deluxe-dark',

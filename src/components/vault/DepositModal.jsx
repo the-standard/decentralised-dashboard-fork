@@ -19,9 +19,10 @@ import QRCode from "react-qr-code";
 import {
   useVaultAddressStore,
   useErc20AbiStore,
+  useCurrentWagmiConfig
 } from "../../store/Store";
 
-import wagmiConfig from "../../WagmiConfig";
+// import wagmiConfig from "../../WagmiConfig";
 import Modal from "../ui/Modal";
 import Button from "../ui/Button";
 import Typography from "../ui/Typography";
@@ -35,6 +36,8 @@ const DepositModal = (props) => {
     tokenAddress,
     decimals,
   } = props;
+
+  const { wagmiConfig } = useCurrentWagmiConfig();
 
   const [amount, setAmount] = useState(0);
   const [maxBal, setMaxBal] = useState(0);
