@@ -10,7 +10,7 @@ import {
 
 const ThemeToggle = (props) => {
   const classes = props.className || '';
-  const buttonType = props.buttonTyle || 'square';
+  const buttonType = props.buttonType || 'square';
   const { setCurrentTheme } = useCurrentTheme();
 
   const chosenTheme = localStorage.getItem('theme');

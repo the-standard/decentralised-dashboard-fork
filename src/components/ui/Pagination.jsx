@@ -87,9 +87,9 @@ const Pagination = ({
       {showPages.map((value, index) => (
         <Button
           key={index}
-          className="join-item"
           size="sm"
-          variant="outline"
+          className={currentPage === (index + 1) ? 'join-item btn-primary' : 'join-item'}
+          variant={currentPage === (index + 1) ? '' : 'outline'}
           active={currentPage === (index + 1)}
           onClick={() => onPageChange( index + 1)}
         >

@@ -1,6 +1,7 @@
 import { useAccount } from "wagmi";
 import { useNavigate } from "react-router-dom";
 import { Bars3Icon } from '@heroicons/react/24/outline';
+import { ConnectButton } from '@rainbow-me/rainbowkit';
 
 import {
   useCurrentTheme,
@@ -11,6 +12,8 @@ import StandardioLogoBlack from "../../assets/standardiologo-black.svg";
 
 import Button from "./Button";
 import ThemeToggle from "./ThemeToggle";
+
+import RainbowConnect from "../RainbowConnectButton";
 
 const TopNav = (props) => {
   const { toggleVisible } = props;
@@ -48,7 +51,7 @@ const TopNav = (props) => {
           <div className="hidden md:block">
             <ThemeToggle className="dropdown-bottom"/>
           </div>
-          <w3m-button />
+          <RainbowConnect />
         </div>
       </div>
     )

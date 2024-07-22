@@ -155,23 +155,26 @@ const StakingPool = (props) => {
         </Card>
       </div>
 
-      {poolRewardsLoading ? (
-        <Card className="card-compact">
-          <div className="card-body">
-            <CenterLoader />
-          </div>
-        </Card>
-      ) : (
-        <StakingRewards
-          poolRewardsLoading={poolRewardsLoading}
-          rewards={rewards}
-          sEuroAmount={sEuroAmount}
-          collaterals={collaterals}
-          stakedSince={useStakedSince}
-          sEuroDaily={sEuroDaily}
-          collatDaily={collatDaily}
-        />
-      )}
+      <div>
+        {poolRewardsLoading ? (
+          <Card className="card-compact">
+            <div className="card-body">
+              <CenterLoader />
+            </div>
+          </Card>
+        ) : (
+          <StakingRewards
+            poolRewardsLoading={poolRewardsLoading}
+            rewards={rewards}
+            sEuroAmount={sEuroAmount}
+            collaterals={collaterals}
+            stakedSince={useStakedSince}
+            sEuroDaily={sEuroDaily}
+            collatDaily={collatDaily}
+          />
+        )}
+      </div>
+
     </main>
   );
 };

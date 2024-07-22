@@ -7,7 +7,7 @@ import {
   CircleStackIcon,
   BanknotesIcon,
   XMarkIcon,
-  Square3Stack3DIcon
+  Square3Stack3DIcon,
 } from '@heroicons/react/24/outline';
 
 import {
@@ -71,7 +71,6 @@ const SideNav = (props) => {
             to="/staking-pool"
             className={({ isActive }) => 
               isActive ||
-              location.pathname === '/' ||
               location.pathname.includes('/staking-pool') ?
               'navbar-item active' : 'navbar-item'
             }

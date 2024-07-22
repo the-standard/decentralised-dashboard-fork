@@ -86,7 +86,11 @@ const Footer = (props) => {
                       'h-4 w-4 inline-block invert'
                     )
                 ) : (
-                  'h-4 w-4 inline-block'
+                  icon.name === 'Telegram' ? (
+                    'h-4 w-4 inline-block invert'
+                  ) : (
+                    'h-4 w-4 inline-block'
+                    )
                 )
               }
               src={icon.logo}

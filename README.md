@@ -4,7 +4,7 @@ Uses:
 - HeroIcons
 - ReactToastify
 - Wagmi
-- WalletConnect
+- RainbowKit
 - ethers
 - viem
 
