@@ -336,7 +336,9 @@ const Debt = ({
         <Button
           className="w-full lg:w-auto flex-1"
           color="primary"
-          onClick={() => setBorrowOpen(!borrowOpen)}
+          // TEMP disabled
+          // onClick={() => setBorrowOpen(!borrowOpen)}
+          disabled
         >
           <ArrowDownCircleIcon className="h-6 w-6 inline-block"/>
           Borrow
