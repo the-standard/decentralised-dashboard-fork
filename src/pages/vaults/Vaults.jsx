@@ -51,7 +51,7 @@ const Vaults = () => {
     onLogs(logs) {
       if (logs[0] && logs[0].args) {
         const { tokenId } = logs[0] && logs[0].args;
-        setTokenId(tokenId)
+        setTokenId(tokenId);
       }
     }
   });
