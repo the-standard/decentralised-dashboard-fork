@@ -105,7 +105,7 @@ const WithdrawModal = (props) => {
           CollateralWithdrawPreviousTotal: formatPrevTotal,
           CollateralWithdrawNewTotal: formatNewTotal,
         }
-      })
+      });
     } else if (isError) {
       inputRef.current.value = "";
       inputRef.current.focus();
