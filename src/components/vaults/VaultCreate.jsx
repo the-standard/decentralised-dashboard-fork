@@ -118,10 +118,10 @@ const VaultCreate = ({ tokenId }) => {
               <Button
                 className="w-full"
                 color="primary"
-                // disabled
+                disabled
                 // TEMP DISABLED
-                onClick={() => handleMintVault(item.type)}
-                disabled={!item.isActive}
+                // onClick={() => handleMintVault(item.type)}
+                // disabled={!item.isActive}
                 loading={isPending && item.isActive}  
               >
                 {item.isActive ? `Create ${item.type} Vault` : "Coming Soon"}
