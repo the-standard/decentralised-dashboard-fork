@@ -50,8 +50,21 @@ const Vaults = () => {
     pollingInterval: 1000,
     onLogs(logs) {
       if (logs[0] && logs[0].args) {
+        // const { address } = logs[0];
         const { tokenId } = logs[0] && logs[0].args;
-        setTokenId(tokenId)
+        setTokenId(tokenId);
+
+        // TODO add logic for USDs vaults
+        // let vaultType;
+        // if (address === vaultManagerAddress) {
+        //   vaultType = 'EUROs'
+        // }
+
+        plausible('CreateVault', {
+          props: {
+            VaultType: 'EUROs',
+          }
+        });
       }
     }
   });

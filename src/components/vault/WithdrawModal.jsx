@@ -29,7 +29,7 @@ const WithdrawModal = (props) => {
     collateralValue,
   } = props;
 
-  const [amount, setAmount] = useState(0);
+  const [amount, setAmount] = useState(0n);
 
   const { vaultAddress } = useVaultAddressStore();
   const { smartVaultABI } = useSmartVaultABIStore();
@@ -82,9 +82,13 @@ const WithdrawModal = (props) => {
       if (error && error.shortMessage) {
         errorMessage = error.shortMessage;
       }
-      toast.error(errorMessage || 'There was an error2');
+      toast.error(errorMessage || 'There was an error');
     }
   };
+
+  const formatPrevTotal = collateralValue;
+  const formatAmount = ethers.formatUnits(amount);
+  const formatNewTotal = ethers.formatUnits(ethers.parseUnits(formatPrevTotal, decimals) - amount);
 
   useEffect(() => {
     if (isPending) {
@@ -94,6 +98,14 @@ const WithdrawModal = (props) => {
       inputRef.current.focus();
       setTxdata(txRcptData);
       toast.success("Withdraw Successful");
+      plausible('CollateralWithdraw', {
+        props: {
+          CollateralWithdrawToken: symbol,
+          CollateralWithdrawAmount: formatAmount,
+          CollateralWithdrawPreviousTotal: formatPrevTotal,
+          CollateralWithdrawNewTotal: formatNewTotal,
+        }
+      });
     } else if (isError) {
       inputRef.current.value = "";
       inputRef.current.focus();

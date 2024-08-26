@@ -31,6 +31,7 @@ const TokenActions = ({
               tokenAddress={tokenAddress}
               decimals={decimals}
               token={token}
+              collateralValue={collateralValue}
             />
           </>
         );
