@@ -98,14 +98,18 @@ const WithdrawModal = (props) => {
       inputRef.current.focus();
       setTxdata(txRcptData);
       toast.success("Withdraw Successful");
-      plausible('CollateralWithdraw', {
-        props: {
-          CollateralWithdrawToken: symbol,
-          CollateralWithdrawAmount: formatAmount,
-          CollateralWithdrawPreviousTotal: formatPrevTotal,
-          CollateralWithdrawNewTotal: formatNewTotal,
-        }
-      });
+      try {
+        plausible('CollateralWithdraw', {
+          props: {
+            CollateralWithdrawToken: symbol,
+            CollateralWithdrawAmount: formatAmount,
+            CollateralWithdrawPreviousTotal: formatPrevTotal,
+            CollateralWithdrawNewTotal: formatNewTotal,
+          }
+        });
+      } catch (error) {
+        console.log(error);
+      }
     } else if (isError) {
       inputRef.current.value = "";
       inputRef.current.focus();
