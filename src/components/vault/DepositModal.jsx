@@ -73,14 +73,18 @@ const DepositModal = (props) => {
     const formatNewTotal = ethers.formatUnits(ethers.parseUnits(formatPrevTotal, decimals) + amount);
   
     toast.success("Deposit Successful");
-    plausible('CollateralDeposit', {
-      props: {
-        CollateralDepositToken: symbol,
-        CollateralDepositAmount: formatAmount,
-        CollateralDepositPreviousTotal: formatPrevTotal,
-        CollateralDepositNewTotal: formatNewTotal,
-      }
-    });
+    try {
+      plausible('CollateralDeposit', {
+        props: {
+          CollateralDepositToken: symbol,
+          CollateralDepositAmount: formatAmount,
+          CollateralDepositPreviousTotal: formatPrevTotal,
+          CollateralDepositNewTotal: formatNewTotal,
+        }
+      });
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   const walletBalance = balanceData?.value;

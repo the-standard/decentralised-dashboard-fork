@@ -221,14 +221,18 @@ const Debt = ({
     }
   
     // TODO add logic for USDs vaults
-    plausible('DebtIssue', {
-      props: {
-        BorrowToken: 'EUROs',
-        BorrowAmount: formatAmount,
-        BorrowPreviousDebt: formatPrevTotal,
-        BorrowNewDebt: formatNewTotal,
-      }
-    });
+    try {
+      plausible('DebtIssue', {
+        props: {
+          BorrowToken: 'EUROs',
+          BorrowAmount: formatAmount,
+          BorrowPreviousDebt: formatPrevTotal,
+          BorrowNewDebt: formatNewTotal,
+        }
+      });  
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleRepaySuccessReport = () => {
@@ -244,14 +248,18 @@ const Debt = ({
     }
 
     // TODO add logic for USDs vaults
-    plausible('DebtRepay', {
-      props: {
-        RepayToken: 'EUROs',
-        RepayAmount: formatAmount,
-        RepayPreviousDebt: formatPrevTotal,
-        RepayNewDebt: formatNewTotal,
-      }
-    });
+    try {
+      plausible('DebtRepay', {
+        props: {
+          RepayToken: 'EUROs',
+          RepayAmount: formatAmount,
+          RepayPreviousDebt: formatPrevTotal,
+          RepayNewDebt: formatNewTotal,
+        }
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   useEffect(() => {
