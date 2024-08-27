@@ -60,11 +60,15 @@ const Vaults = () => {
         //   vaultType = 'EUROs'
         // }
 
-        plausible('CreateVault', {
-          props: {
-            VaultType: 'EUROs',
-          }
-        });
+        try {
+          plausible('CreateVault', {
+            props: {
+              VaultType: 'EUROs',
+            }
+          });
+        } catch (error) {
+          console.log(error);
+        }
       }
     }
   });
