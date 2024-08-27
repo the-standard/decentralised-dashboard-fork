@@ -35,12 +35,15 @@ const DepositModal = (props) => {
     symbol,
     tokenAddress,
     decimals,
+    collateralValue
   } = props;
+  const [ethPending, setEthPending] = useState(false);
+  const [ethSuccess, setEthSuccess] = useState(false);
 
   const { wagmiConfig } = useCurrentWagmiConfig();
 
-  const [amount, setAmount] = useState(0);
-  const [maxBal, setMaxBal] = useState(0);
+  const [amount, setAmount] = useState(0n);
+  const [maxBal, setMaxBal] = useState(0n);
   const [showQr, setShowQr] = useState(false);
 
   const { vaultAddress } = useVaultAddressStore();
@@ -63,6 +66,26 @@ const DepositModal = (props) => {
       refetch();
     },
   })
+
+  const handleDepositSuccess = () => {
+    const formatPrevTotal = collateralValue;
+    const formatAmount = ethers.formatUnits(amount);
+    const formatNewTotal = ethers.formatUnits(ethers.parseUnits(formatPrevTotal, decimals) + amount);
+  
+    toast.success("Deposit Successful");
+    try {
+      plausible('CollateralDeposit', {
+        props: {
+          CollateralDepositToken: symbol,
+          CollateralDepositAmount: formatAmount,
+          CollateralDepositPreviousTotal: formatPrevTotal,
+          CollateralDepositNewTotal: formatNewTotal,
+        }
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   const walletBalance = balanceData?.value;
 
@@ -110,6 +133,8 @@ const DepositModal = (props) => {
 
   const depositEther = async () => {
     try {
+      setEthSuccess(false);
+      setEthPending(true);
       const txAmount = amount;
       const toAddress = vaultAddress;
       const hash = await sendTransaction(wagmiConfig, {
@@ -120,7 +145,12 @@ const DepositModal = (props) => {
       setTxdata(hash);
       inputRef.current.value = "";
       inputRef.current.focus();
+      setEthPending(false);
+      setEthSuccess(true);
+      handleDepositSuccess();
     } catch (error) {
+      setEthPending(false);
+      setEthSuccess(false);
       console.log(error);
       let errorMessage;
       if (error && error.shortMessage) {
@@ -165,7 +195,7 @@ const DepositModal = (props) => {
     } else if (isSuccess) {
       inputRef.current.value = "";
       inputRef.current.focus();
-      toast.success("Deposit Successful");
+      handleDepositSuccess();
       setTxdata(txRcptData);
     } else if (isError) {
       inputRef.current.value = "";
@@ -294,16 +324,16 @@ const DepositModal = (props) => {
             className="w-full lg:w-auto"
             color="ghost"
             onClick={closeModal}
-            disabled={isPending}
+            disabled={isPending || ethPending}
           >
             Close
           </Button>
           <Button
             className="w-full lg:w-64"
             color="success"
-            disabled={!amount || isPending}
+            disabled={!amount || isPending || ethPending}
             onClick={depositViaMetamask}
-            loading={isPending}
+            loading={isPending || ethPending}
           >
             Confirm
           </Button>

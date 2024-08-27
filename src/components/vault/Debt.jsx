@@ -208,11 +208,66 @@ const Debt = ({
     }
   };
 
+  const handleBorrowSuccessReport = () => {
+    const minted = currentVault?.status?.minted;
+    let formatPrevTotal;
+    if (minted) {
+      formatPrevTotal = ethers.formatEther(minted);
+    }
+    let formatAmount = ethers.formatEther(amount);
+    let formatNewTotal;
+    if (amount && minted) {
+      formatNewTotal = ethers.formatEther(ethers.parseEther(formatPrevTotal) + amount);
+    }
+  
+    // TODO add logic for USDs vaults
+    try {
+      plausible('DebtIssue', {
+        props: {
+          BorrowToken: 'EUROs',
+          BorrowAmount: formatAmount,
+          BorrowPreviousDebt: formatPrevTotal,
+          BorrowNewDebt: formatNewTotal,
+        }
+      });  
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleRepaySuccessReport = () => {
+    const minted = currentVault?.status?.minted;
+    let formatPrevTotal;
+    if (minted) {
+      formatPrevTotal = ethers.formatEther(minted);
+    }
+    let formatAmount = ethers.formatEther(amount);
+    let formatNewTotal;
+    if (amount && minted) {
+      formatNewTotal = ethers.formatEther(ethers.parseEther(formatPrevTotal) - amount);
+    }
+
+    // TODO add logic for USDs vaults
+    try {
+      plausible('DebtRepay', {
+        props: {
+          RepayToken: 'EUROs',
+          RepayAmount: formatAmount,
+          RepayPreviousDebt: formatPrevTotal,
+          RepayNewDebt: formatNewTotal,
+        }
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     if (stage === 'MINT') {
       if (isPending) {
         setBorrowSuccess(false);
       } else if (isSuccess) {
+        handleBorrowSuccessReport();
         setBorrowSuccess(true);
         toast.success("Borrowed Successfully");
         setStage('');
@@ -238,6 +293,7 @@ const Debt = ({
         setRepaySuccess(false)
         setRepayStep(2);
       } else if (isSuccess) {
+        handleRepaySuccessReport();
         setRepaySuccess(true);
         toast.success("Repayed Successfully");
         setRepayStep(1);
@@ -337,8 +393,8 @@ const Debt = ({
           className="w-full lg:w-auto flex-1"
           color="primary"
           // TEMP disabled
-          // onClick={() => setBorrowOpen(!borrowOpen)}
           disabled
+          // onClick={() => setBorrowOpen(!borrowOpen)}
         >
           <ArrowDownCircleIcon className="h-6 w-6 inline-block"/>
           Borrow
