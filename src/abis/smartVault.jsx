@@ -265,6 +265,82 @@ export const abi = [
     "stateMutability": "nonpayable",
     "type": "function"
   },
+  {
+    "inputs": [],
+    "name": "yieldAssets",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "hypervisor",
+            "type": "address"
+          },
+          {
+            "internalType": "address",
+            "name": "token0",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "amount0",
+            "type": "uint256"
+          },
+          {
+            "internalType": "address",
+            "name": "token1",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "amount1",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct SmartVaultV4.YieldPair[]",
+        "name": "_yieldPairs",
+        "type": "tuple[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bytes32",
+        "name": "_symbol",
+        "type": "bytes32"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_euroPercentage",
+        "type": "uint256"
+      }
+    ],
+    "name": "depositYield",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_vault",
+        "type": "address"
+      },
+      {
+        "internalType": "bytes32",
+        "name": "_symbol",
+        "type": "bytes32"
+      }
+    ],
+    "name": "withdrawYield",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  }
 ];
 
 export default abi;
