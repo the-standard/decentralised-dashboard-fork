@@ -1,5 +1,9 @@
 import { useEffect, useState } from "react";
 import { ethers } from "ethers";
+import {
+  useWriteContract,
+  useReadContract,
+} from "wagmi";
 
 import {
   QueueListIcon,
@@ -11,6 +15,15 @@ import TokenIcon from "../ui/TokenIcon";
 import Modal from "../ui/Modal";
 import Button from "../ui/Button";
 import Typography from "../ui/Typography";
+
+import {
+  useVaultAddressStore,
+  usesEuroAddressStore,
+  useErc20AbiStore,
+  useVaultHealthUpdate,
+} from "../../store/Store";
+
+import smartVaultAbi from "../../abis/smartVault";
 
 // TODO TEMP
 const yieldPools = [
@@ -45,17 +58,16 @@ const YieldModal = (props) => {
     open,
     closeModal,
   } = props;
+  const { vaultAddress } = useVaultAddressStore();
   const [ selectedPool, setSelectedPool ] = useState();
   const [ stableRatio, setStableRatio ] = useState(50);
 
-  // TEMP TODO
-  const [ poolsLoading, setPoolsLoading ] = useState(true);
-  useEffect(() => {
-    setTimeout(() => {
-      setPoolsLoading(false)
-    }, "1000");
-  }, []);
-  // TEMP TODO
+  const { data: yieldData, isLoading } = useReadContract({
+    abi: smartVaultAbi,
+    address: vaultAddress,
+    functionName: "yieldAssets",
+    args: [],
+  });
 
   const allowedRatio = stableRatio >= 10 && stableRatio <= 100;
 
@@ -70,7 +82,6 @@ const YieldModal = (props) => {
   if (stableRatio < 25) {
     ratioColor = 'error'
   }
-
 
  
   if (selectedPool) {
@@ -102,13 +113,13 @@ const YieldModal = (props) => {
                 variant="p"
                 className="mb-2"
               >
-                Stable
+                Less Stable
               </Typography>
               <Typography
                 variant="p"
                 className="mb-2 text-right"
               >
-                Unstable
+                More Stable
               </Typography>
             </div>
             <div>
@@ -126,13 +137,13 @@ const YieldModal = (props) => {
                 variant="p"
                 className="mt-2"
               >
-                {stableRatio}%
+                {stableRatio}% Stable
               </Typography>
               <Typography
                 variant="p"
                 className="mt-2 text-right"
               >
-                {100 - stableRatio}%
+                {100 - stableRatio}% Volatile
               </Typography>
             </div>
           </div>
@@ -168,7 +179,14 @@ const YieldModal = (props) => {
       >
         <Typography variant="h2" className="card-title">
           <QueueListIcon className="mr-2 h-6 w-6 inline-block"/>
-          Choose a Yield Pool
+          Yield Pool
+        </Typography>
+
+        <Typography
+          variant="p"
+          className="mb-2"
+        >
+          Confirm below that you are happy to continue with this selected Yield Pool.
         </Typography>
 
         <div className="flex flex-col">
@@ -180,47 +198,37 @@ const YieldModal = (props) => {
                 <th>TVL</th>
               </tr>
             </thead>
-            {poolsLoading ? (null) : (
+            {isLoading ? (null) : (
               <tbody>
-                {yieldPools.map(function(pool, index) {
-                  return (
-                    <>
-                      <tr
-                        key={index}
-                        className="cursor-pointer hover"
-                        onClick={() => setSelectedPool(pool)}
-                      >
-                        <td>
-                          <div className="h-full w-full flex flex-col">
-                            <div className="flex items-center">
-                              <TokenIcon
-                                symbol={pool.assetA}
-                                className="h-8 w-8 p-1 rounded-full bg-base-300/50"
-                              />
-                              <TokenIcon
-                                symbol={pool.assetB}
-                                className="h-8 w-8 p-1 rounded-full bg-base-300/50 -ml-[8px]"
-                              />
-                            </div>
-                            <div className="pt-2 hidden md:table-cell">
-                              {pool.assetA}/{pool.assetB}
-                            </div>
-                          </div>
-                        </td>
-                        <td>
-                          {pool.APY}
-                        </td>
-                        <td>
-                          €{pool.TVL}
-                        </td>
-                      </tr>
-                    </>
-                  )}
-                )}
+                <tr>
+                  <td>
+                    <div className="h-full w-full flex flex-col">
+                      <div className="flex items-center">
+                        <TokenIcon
+                          symbol={'ETH'}
+                          className="h-8 w-8 p-1 rounded-full bg-base-300/50"
+                        />
+                        <TokenIcon
+                          symbol={'USDC'}
+                          className="h-8 w-8 p-1 rounded-full bg-base-300/50 -ml-[8px]"
+                        />
+                      </div>
+                      <div className="pt-2 hidden md:table-cell">
+                        FOO/BAR
+                      </div>
+                    </div>
+                  </td>
+                  <td>
+                    123123
+                  </td>
+                  <td>
+                    €123123
+                  </td>
+                </tr>
               </tbody>
             )}
           </table>
-          {poolsLoading ? (
+          {isLoading ? (
             <CenterLoader />
           ) : (null)}
         </div>
@@ -232,6 +240,15 @@ const YieldModal = (props) => {
             onClick={closeModal}
           >
             Close
+          </Button>
+          <Button
+            className="w-full lg:w-64"
+            color="success"
+            loading={isLoading}
+            disabled={isLoading}
+            onClick={() => setSelectedPool(true)}
+          >
+            Confirm
           </Button>
         </div>
       </Modal>
