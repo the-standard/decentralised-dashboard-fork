@@ -9,6 +9,8 @@ import {
 
 import {
   useCurrentPageStore,
+  usesUSDVaultListPageStore,
+  usesEURVaultListPageStore,
 } from "../../store/Store";
 
 import Card from "../ui/Card";
@@ -19,8 +21,22 @@ import Typography from "../ui/Typography";
 import seurologo from "../../assets/EUROs.svg";
 import susdlogo from "../../assets/USDs.svg";
 
-const VaultList = ({ vaults, vaultsLoading, tokenId }) => {
-  const { setCurrentPage, currentPage } = useCurrentPageStore();
+const VaultList = ({ vaults, vaultsLoading, listType }) => {
+
+  const { setCurrentsUSDPage, currentsUSDPage } = usesUSDVaultListPageStore();
+  const { setCurrentsEURPage, currentsEURPage } = usesEURVaultListPageStore();
+
+  let setCurrentPage;
+  let currentPage;
+
+  if (listType === 'USDs') {
+    setCurrentPage = setCurrentsUSDPage;
+    currentPage = currentsUSDPage;
+  } else {
+    setCurrentPage = setCurrentsEURPage;
+    currentPage = currentsEURPage;
+  }
+
   const navigate = useNavigate();
 
   const sortedVaults = [...vaults].sort((a, b) => {
@@ -70,10 +86,10 @@ const VaultList = ({ vaults, vaultsLoading, tokenId }) => {
 
   return (
     <>
-      <Card className="card-compact">
+      <Card className="card-compact mb-4">
         <div className="card-body">
           <Typography variant="h2" className="card-title">
-            Vault List
+            {listType} Vaults
           </Typography>
 
           <div className="overflow-x-auto">
@@ -137,7 +153,7 @@ const VaultList = ({ vaults, vaultsLoading, tokenId }) => {
                             <Tooltip
                               className="h-full"
                               position="top"
-                              message={('EUROs' || '' )}
+                              message={(vaultType || '' )}
                             >
                               {vaultType === 'EUROs' ? (
                                 <img

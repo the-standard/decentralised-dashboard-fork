@@ -36,7 +36,7 @@ const vaultTypes = [
     borrowRate: "Borrow up to 90.91%",
     type: 'USDs',
     image: susdlogo,
-    isActive: false,
+    isActive: true,
   },
 ];
 
@@ -140,7 +140,7 @@ const VaultCreate = ({ tokenId, vaultType }) => {
                 className="w-full"
                 color="primary"
                 onClick={() => handleMintVault(item.type)}
-                disabled={!item.isActive}
+                disabled={isPending || !item.isActive}
                 loading={isPending && item.isActive}  
               >
                 {item.isActive ? `Create ${item.type} Vault` : "Coming Soon"}

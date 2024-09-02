@@ -23,6 +23,7 @@ import VaultList from "../../components/vaults/VaultList";
 const Vaults = () => {
   const { address: accountAddress } = useAccount();
   const { vaultManagerAbi } = useVaultManagerAbiStore();
+
   const {
     arbitrumSepoliaContractAddress,
     arbitrumContractAddress
@@ -45,9 +46,16 @@ const Vaults = () => {
     ? arbitrumsUSDSepoliaContractAddress
     : arbitrumsUSDContractAddress;      
 
-  const { data: vaultIDs, refetch: refetchVaultIDs } = useReadContract({
-    address: vaultManagerAddress,
+  const { data: sEURvaultIDs, refetch: refetchsEURVaultIDs } = useReadContract({
     abi: vaultManagerAbi,
+    address: vaultManagerAddress,
+    functionName: "vaultIDs",
+    args: [accountAddress || ethers?.constants?.AddressZero]
+  });
+
+  const { data: sUSDvaultIDs, refetch: refetchsUSDVaultIDs } = useReadContract({
+    abi: vaultManagerAbi,
+    address: sUSDVaultManagerAddress,
     functionName: "vaultIDs",
     args: [accountAddress || ethers?.constants?.AddressZero]
   });
@@ -113,24 +121,51 @@ const Vaults = () => {
     }
   });
 
-  const vaultDataContract = {
-    address: vaultManagerAddress,
+  const sEURvaultDataContract = {
     abi: vaultManagerAbi,
+    address: vaultManagerAddress,
     functionName: "vaultData",
   };
 
-  const contracts = vaultIDs?.map((id) => {
+  const sUSDvaultDataContract = {
+    abi: vaultManagerAbi,
+    address: sUSDVaultManagerAddress,
+    functionName: "vaultData",
+  };
+
+  const sEURcontracts = sEURvaultIDs?.map((id) => {
     return ({
-      ...vaultDataContract,
+      ...sEURvaultDataContract,
       args: [id],
     })
   });
 
-  const { data: vaultData, isPending, refetch: refetchVaultData } = useReadContracts({
-    contracts
+  const sUSDcontracts = sUSDvaultIDs?.map((id) => {
+    return ({
+      ...sUSDvaultDataContract,
+      args: [id],
+    })
   });
 
-  const myVaults = vaultData?.map((item) => {
+  const { data: sEURvaultData, isPending: sEURisPending, refetch: refetchsEURVaultData } = useReadContracts({
+    contracts: sEURcontracts
+  });
+
+  const { data: sUSDvaultData, isPending: sUSDisPending, refetch: refetchsUSDVaultData } = useReadContracts({
+    contracts: sUSDcontracts
+  });
+
+  // const allVaultData = [].concat(sEURvaultData, sUSDvaultData);
+
+  const mysEURVaults = sEURvaultData?.map((item) => {
+    if (item && item.result) {
+      return (
+        item.result
+      )    
+    }
+  });
+
+  const mysUSDVaults = sUSDvaultData?.map((item) => {
     if (item && item.result) {
       return (
         item.result
@@ -140,8 +175,10 @@ const Vaults = () => {
 
   useWatchBlockNumber({
     onBlockNumber() {
-      refetchVaultIDs();
-      refetchVaultData();
+      refetchsEURVaultIDs();
+      refetchsEURVaultData();
+      refetchsUSDVaultIDs();
+      refetchsUSDVaultData();
     },
   })
 
@@ -150,13 +187,17 @@ const Vaults = () => {
       <VaultCreate
         tokenId={tokenId}
         vaultType={vaultType}
-        vaults={myVaults || []}
-        vaultsLoading={isPending || false}
+        vaultsLoading={sEURisPending || sUSDisPending || false}
       />
       <VaultList
-        tokenId={tokenId}
-        vaults={myVaults || []}
-        vaultsLoading={isPending || false}
+        listType={'USDs'}
+        vaults={mysUSDVaults || []}
+        vaultsLoading={sUSDisPending || false}
+      />
+      <VaultList
+        listType={'EUROs'}
+        vaults={mysEURVaults || []}
+        vaultsLoading={sEURisPending || false}
       />
     </main>
   );
