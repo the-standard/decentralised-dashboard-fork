@@ -10,6 +10,7 @@ import { arbitrum, arbitrumSepolia } from "wagmi/chains";
 
 import {
   useContractAddressStore,
+  usesUSDContractAddressStore,
   useVaultManagerAbiStore
 } from "../../store/Store";
 
@@ -39,12 +40,17 @@ const vaultTypes = [
   },
 ];
 
-const VaultCreate = ({ tokenId }) => {
+const VaultCreate = ({ tokenId, vaultType }) => {
   const { vaultManagerAbi } = useVaultManagerAbiStore();
   const {
     arbitrumSepoliaContractAddress,
     arbitrumContractAddress,
   } = useContractAddressStore();
+
+  const {
+    arbitrumsUSDSepoliaContractAddress,
+    arbitrumsUSDContractAddress,
+  } = usesUSDContractAddressStore();
 
   const chainId = useChainId();
   const navigate = useNavigate();
@@ -54,26 +60,40 @@ const VaultCreate = ({ tokenId }) => {
       ? arbitrumSepoliaContractAddress
       : arbitrumContractAddress;
 
+  const sUSDVaultManagerAddress =
+  chainId === arbitrumSepolia.id
+    ? arbitrumsUSDSepoliaContractAddress
+    : arbitrumsUSDContractAddress;  
+
   const { writeContract: mintVault, isError, isPending, isSuccess } = useWriteContract();
 
-  const handleMintVault = async () => {
+  const handleMintVault = async (type) => {
     if (chainId !== arbitrumSepolia.id && chainId !== arbitrum.id) {
       toast.error('Please change to Arbitrum network!');
       return;
     }
-    mintVault({
-      abi: vaultManagerAbi,
-      address: vaultManagerAddress,
-      functionName: 'mint',
-      args: [],
-    });
+    let useVaultManagerAddress;
+    if (type === 'EUROs') {
+      useVaultManagerAddress = vaultManagerAddress;
+    }
+    if (type === 'USDs') {
+      useVaultManagerAddress = sUSDVaultManagerAddress;
+    }
+    if (useVaultManagerAddress) {
+      mintVault({
+        abi: vaultManagerAbi,
+        address: useVaultManagerAddress,
+        functionName: 'mint',
+        args: [],
+      });
+    }
   };
 
   useEffect(() => {
     if (isPending) {
       // 
-    } else if (isSuccess && tokenId) {
-      navigate(`/vault/${tokenId.toString()}`);
+    } else if (isSuccess && tokenId && vaultType) {
+      navigate(`/vault/${vaultType.toString()}/${tokenId.toString()}`);
     } else if (isError) {
       // 
     }
@@ -81,7 +101,8 @@ const VaultCreate = ({ tokenId }) => {
     isError,
     isPending,
     isSuccess,
-    tokenId
+    tokenId,
+    vaultType,
   ]);
 
   return (
@@ -118,10 +139,8 @@ const VaultCreate = ({ tokenId }) => {
               <Button
                 className="w-full"
                 color="primary"
-                disabled
-                // TEMP DISABLED
-                // onClick={() => handleMintVault(item.type)}
-                // disabled={!item.isActive}
+                onClick={() => handleMintVault(item.type)}
+                disabled={!item.isActive}
                 loading={isPending && item.isActive}  
               >
                 {item.isActive ? `Create ${item.type} Vault` : "Coming Soon"}

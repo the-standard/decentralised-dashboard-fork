@@ -64,6 +64,16 @@ export const usesEuroAddressStore = create() (
   })
 );
 
+export const usesUSDAddressStore = create() (
+  (set) => ({
+    // TODO Add correct mainnet address
+    arbitrumsUSDAddress: "0x0173184A51CF807Cc386B3F5Dc5689Cae09B81fb",
+    arbitrumSepoliasUSDAddress: "0x0173184A51CF807Cc386B3F5Dc5689Cae09B81fb",
+    setsUSDAddress: (arbitrumsUSDAddress) =>
+      set(() => ({ sEuroAddress: arbitrumsUSDAddress })),
+  })
+);
+
 export const useTstAddressStore = create() (
   (set) => ({
     arbitrumTstAddress: "0xf5A27E55C748bCDdBfeA5477CB9Ae924f0f7fd2e",
@@ -120,6 +130,16 @@ export const useContractAddressStore = create() (
     arbitrumSepoliaContractAddress: "0xBbB704f184E716410a9c00435530eA055CfAD187",
     setContractAddress: (arbitrumContractAddress) =>
       set(() => ({ contractAddress: arbitrumContractAddress })),
+  })
+);
+
+export const usesUSDContractAddressStore = create() (
+  (set) => ({
+    // TODO Add correct mainnet address
+    arbitrumsUSDContractAddress: "0xf752AD9dBacCA40f771164ca03b68844DBB93BF7",
+    arbitrumsUSDSepoliaContractAddress: "0xf752AD9dBacCA40f771164ca03b68844DBB93BF7",
+    setContractAddress: (arbitrumsUSDContractAddress) =>
+      set(() => ({ sUSDContractAddress: arbitrumsUSDContractAddress })),
   })
 );
 
