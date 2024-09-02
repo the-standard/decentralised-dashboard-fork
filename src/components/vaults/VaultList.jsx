@@ -106,6 +106,7 @@ const VaultList = ({ vaults, vaultsLoading, tokenId }) => {
                       }
                     })
                     .map(function(vault, index) {
+                      const vaultType = ethers.decodeBytes32String(vault.status.vaultType);
                       const vaultHealth = computeProgressBar(
                         vault.status.minted,
                         vault.status.totalCollateralValue
@@ -125,7 +126,7 @@ const VaultList = ({ vaults, vaultsLoading, tokenId }) => {
                           key={index}
                           className="cursor-pointer hover"
                           onClick={() => navigate(
-                            `/vault/${
+                            `/vault/${vaultType.toString()}/${
                               BigInt(
                                 vault.tokenId
                               ).toString()
@@ -138,14 +139,26 @@ const VaultList = ({ vaults, vaultsLoading, tokenId }) => {
                               position="top"
                               message={('EUROs' || '' )}
                             >
-                              <img
-                                style={{
-                                  display: "block",
-                                  width: "42px",
-                                }}
-                                src={seurologo}
-                                alt="EUROs"
-                              />
+                              {vaultType === 'EUROs' ? (
+                                <img
+                                  style={{
+                                    display: "block",
+                                    width: "42px",
+                                  }}
+                                  src={seurologo}
+                                  alt="EUROs"
+                                />
+                              ) : null}
+                              {vaultType === 'USDs' ? (
+                                <img
+                                  style={{
+                                    display: "block",
+                                    width: "42px",
+                                  }}
+                                  src={susdlogo}
+                                  alt="USDs"
+                                />
+                              ) : null}
                             </Tooltip>
                           </td>
                           <td>
@@ -168,7 +181,8 @@ const VaultList = ({ vaults, vaultsLoading, tokenId }) => {
                             {truncateToTwoDecimals(
                               ethers.formatEther(vault.status.minted.toString())
                             )}
-                            &nbsp;EUROs
+                            &nbsp;
+                            {vaultType.toString()}
                           </td>
                           <td className="hidden md:table-cell">
                             {vault.status.liquidated ? (
