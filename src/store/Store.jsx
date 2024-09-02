@@ -224,3 +224,17 @@ export const useCurrentPageStore = create(
     setCurrentPage: (currentPage) => set(() => ({ currentPage: currentPage })),
   })
 );
+
+export const usesEURVaultListPageStore = create(
+  (set) => ({
+    currentsEURPage: 1,
+    setCurrentsEURPage: (currentsEURPage) => set(() => ({ currentsEURPage: currentsEURPage })),
+  })
+);
+
+export const usesUSDVaultListPageStore = create(
+  (set) => ({
+    currentsUSDPage: 1,
+    setCurrentsUSDPage: (currentsUSDPage) => set(() => ({ currentsUSDPage: currentsUSDPage })),
+  })
+);
