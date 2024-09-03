@@ -8,6 +8,14 @@ const VaultStats = ({
   vaultType,
 }) => {
 
+  let currencySymbol = '';
+  if (vaultType === 'EUROs') {
+    currencySymbol = '€';
+  }
+  if (vaultType === 'USDs') {
+    currencySymbol = '$';
+  }
+
   const statsItems = [
     {
       title: "Debt",
@@ -16,7 +24,7 @@ const VaultStats = ({
     },
     {
       title: "Balance",
-      value: '€' + Number(
+      value: currencySymbol + Number(
         ethers.formatEther(currentVault.status.totalCollateralValue)
       ).toFixed(2),
       currency: "",

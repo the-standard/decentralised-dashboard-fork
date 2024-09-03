@@ -73,7 +73,6 @@ const Debt = ({
   if (vaultType === 'USDs') {
     sAddress = usdsAddress;
   }
-  
 
   const sContract = {
     address: sAddress,
