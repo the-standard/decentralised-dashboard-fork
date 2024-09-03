@@ -19,6 +19,7 @@ import {
   useVaultIdStore,
   useContractAddressStore,
   useVaultManagerAbiStore,
+  usesUSDContractAddressStore
 } from "../../store/Store";
 
 import CenterLoader from "../../components/ui/CenterLoader";
@@ -41,13 +42,21 @@ function useQuery() {
 }
 
 const Vault = () => {
-  const { vaultId } = useParams();
+  const { vaultType, vaultId } = useParams();
   const { setVaultAddress } = useVaultAddressStore();
   const { vaultStore, setVaultStore } = useVaultStore();
-  const { arbitrumSepoliaContractAddress, arbitrumContractAddress } =
-    useContractAddressStore();
   const { vaultManagerAbi } = useVaultManagerAbiStore();
   const { setVaultID } = useVaultIdStore();
+
+  const {
+    arbitrumSepoliaContractAddress,
+    arbitrumContractAddress
+  } = useContractAddressStore();
+
+  const {
+    arbitrumsUSDSepoliaContractAddress,
+    arbitrumsUSDContractAddress,
+  } = usesUSDContractAddressStore();
 
   //local states
   const { data: blockNumber } = useBlockNumber();
@@ -56,6 +65,8 @@ const Vault = () => {
 
   const chainId = useChainId();
   const query = useQuery();
+
+  const { isConnected, address } = useAccount();
 
   useEffect(() => {
     setVaultID(vaultId);
@@ -70,23 +81,51 @@ const Vault = () => {
       ? arbitrumSepoliaContractAddress
       : arbitrumContractAddress;
 
-  const { data: vaultData, refetch, isLoading } = useReadContract({
-    address: vaultManagerAddress,
+  const sUSDVaultManagerAddress =
+    chainId === arbitrumSepolia.id
+      ? arbitrumsUSDSepoliaContractAddress
+      : arbitrumsUSDContractAddress;          
+
+  const { data: vaultDatasEUR, refetchsEUR, isLoadingsEUR } = useReadContract({
     abi: vaultManagerAbi,
+    address: vaultManagerAddress,
     functionName: "vaultData",
     args: [vaultId],
   });
 
+  const { data: vaultDatasUSD, refetchsUSD, isLoadingsUSD } = useReadContract({
+    abi: vaultManagerAbi,
+    address: sUSDVaultManagerAddress,
+    functionName: "vaultData",
+    args: [vaultId],
+  });
+
+  let currentVault = {};
+  let isLoading = true;
+
+  // const currentVault = vaultDatasEUR;
+
+  if (vaultType === 'EUROs') {
+    currentVault = vaultDatasEUR;
+    isLoading = isLoadingsEUR;
+  }
+
+  if (vaultType === 'USDs') {
+    currentVault = vaultDatasUSD;
+    isLoading = isLoadingsUSD;
+  }
+
   useWatchBlockNumber({
     onBlockNumber() {
       setRenderedBlock(blockNumber);
-      refetch();
+      if (vaultType === 'EUROs') {
+        refetchsEUR();
+      }
+      if (vaultType === 'USDs') {
+        refetchsUSD();
+      }
     },
   })
-
-  const { isConnected, address } = useAccount();
-
-  const currentVault = vaultData;
 
   const vaultNav = (element) => {
     return (
