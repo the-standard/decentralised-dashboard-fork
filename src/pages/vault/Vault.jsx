@@ -86,14 +86,14 @@ const Vault = () => {
       ? arbitrumsUSDSepoliaContractAddress
       : arbitrumsUSDContractAddress;          
 
-  const { data: vaultDatasEUR, refetchsEUR, isLoadingsEUR } = useReadContract({
+  const { data: vaultDatasEUR, refetch: refetchsEUR, isLoading: isLoadingsEUR } = useReadContract({
     abi: vaultManagerAbi,
     address: vaultManagerAddress,
     functionName: "vaultData",
     args: [vaultId],
   });
 
-  const { data: vaultDatasUSD, refetchsUSD, isLoadingsUSD } = useReadContract({
+  const { data: vaultDatasUSD, refetch: refetchsUSD, isLoading: isLoadingsUSD } = useReadContract({
     abi: vaultManagerAbi,
     address: sUSDVaultManagerAddress,
     functionName: "vaultData",
@@ -102,17 +102,18 @@ const Vault = () => {
 
   let currentVault = {};
   let isLoading = true;
-
-  // const currentVault = vaultDatasEUR;
+  let isValidVaultType = false;
 
   if (vaultType === 'EUROs') {
     currentVault = vaultDatasEUR;
     isLoading = isLoadingsEUR;
+    isValidVaultType = true;
   }
 
   if (vaultType === 'USDs') {
     currentVault = vaultDatasUSD;
     isLoading = isLoadingsUSD;
+    isValidVaultType = true;
   }
 
   useWatchBlockNumber({
@@ -177,7 +178,7 @@ const Vault = () => {
     )
   }
 
-  if (!currentVault || !isConnected) {
+  if (!currentVault || !isConnected || !isValidVaultType) {
     return (
       <main>
         <Card className="card-compact">
@@ -225,10 +226,12 @@ const Vault = () => {
               {vaultNav()}
               <VaultStats
                 currentVault={currentVault}
+                vaultType={vaultType}
               />
               <div className="pt-4 hidden md:block">
                 <Debt
                   currentVault={currentVault}
+                  vaultType={vaultType}
                 />
               </div>
             </div>
@@ -236,12 +239,14 @@ const Vault = () => {
               <TokenTotalPie
                 chartData={chartData}
                 currentVault={currentVault}
+                vaultType={vaultType}
                 vaultId={vaultId}
                 vaultVersion={vaultVersion}
               />
               <div className="pt-4 w-full block md:hidden">
                 <Debt
                   currentVault={currentVault}
+                  vaultType={vaultType}
                 />
               </div>
             </div>
@@ -251,6 +256,7 @@ const Vault = () => {
       <div className="flex flex-col md:flex-row mt-4 gap-4 flex-wrap">
         <div className="flex-1 grow-[6]">
           <TokenList
+            vaultType={vaultType}
             assets={assets}
             assetsLoading={!assets.length || assets.length === 0}
           />
