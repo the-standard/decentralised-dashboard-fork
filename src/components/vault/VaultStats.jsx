@@ -1,57 +1,18 @@
 import { ethers } from "ethers";
-import { useReadContracts, useChainId } from "wagmi";
-import { arbitrumSepolia } from "wagmi/chains";
-import {
-  useChainlinkAbiStore,
-  useUSDToEuroAddressStore,
-  useVaultIdStore,
-} from "../../store/Store";
 
 import Typography from "../ui/Typography";
 import VaultHealth from "./VaultHealth";
 
 const VaultStats = ({
   currentVault,
+  vaultType,
 }) => {
-  const chainId = useChainId();
-  const { vaultID } = useVaultIdStore();
-  const { chainlinkAbi } = useChainlinkAbiStore();
-  const { arbitrumOneUSDToEuroAddress, arbitrumSepoliaUSDToEuroAddress } =
-    useUSDToEuroAddressStore();
-
-  const chainlinkContract = {
-    abi: chainlinkAbi,
-    functionName: "latestRoundData",
-  };
-
-  const eurUsdAddress =
-    chainId === arbitrumSepolia.id
-      ? arbitrumSepoliaUSDToEuroAddress
-      : arbitrumOneUSDToEuroAddress;
-
-  const contracts = [
-    {
-      address: eurUsdAddress,
-      ...chainlinkContract,
-    },
-  ];
-
-  const { data: priceData } = useReadContracts({
-    contracts,
-  });
-
-  const prices = priceData?.map((data) => {
-    const result = data.result;
-    if (result && result[1]) {
-      return result[1];
-    }
-  });
 
   const statsItems = [
     {
       title: "Debt",
       value: Number(ethers.formatEther(currentVault.status.minted)).toFixed(2),
-      currency: "EUROs",
+      currency: vaultType,
     },
     {
       title: "Balance",
@@ -68,20 +29,12 @@ const VaultStats = ({
           (100000 - Number(currentVault.mintFeeRate))) /
         100000
       ).toFixed(2),
-      currency: "EUROs",
+      currency: vaultType,
     },
   ];
 
   return (
     <>
-      <div className="flex flex-wrap">
-        {/* <Typography
-          variant="h3"
-          className="mb-2"
-        >
-          Smart Vault #{vaultID}
-        </Typography> */}
-      </div>
       <div className="-mx-1 flex flex-wrap">
         {statsItems.map((item, index) => (
           <div
