@@ -15,7 +15,7 @@ import {
   useVaultManagerAbiStore,
   usesUSDContractAddressStore,
   useContractAddressStore,
-} from "../../store/Store.jsx";
+} from "../../store/Store";
 
 import VaultCreate from "../../components/vaults/VaultCreate";
 import VaultList from "../../components/vaults/VaultList";
@@ -154,8 +154,6 @@ const Vaults = () => {
   const { data: sUSDvaultData, isPending: sUSDisPending, refetch: refetchsUSDVaultData } = useReadContracts({
     contracts: sUSDcontracts
   });
-
-  // const allVaultData = [].concat(sEURvaultData, sUSDvaultData);
 
   const mysEURVaults = sEURvaultData?.map((item) => {
     if (item && item.result) {
