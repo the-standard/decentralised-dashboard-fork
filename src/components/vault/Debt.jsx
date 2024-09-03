@@ -17,6 +17,7 @@ import {
 import {
   useVaultAddressStore,
   usesEuroAddressStore,
+  usesUSDAddressStore,
   useErc20AbiStore,
   useVaultHealthUpdate,
 } from "../../store/Store";
@@ -30,11 +31,20 @@ import Button from "../ui/Button";
 
 const Debt = ({
   currentVault,
+  vaultType
 }) => {
   const { address } = useAccount();
   const { vaultAddress } = useVaultAddressStore();
-  const { arbitrumsEuroAddress, arbitrumSepoliasEuroAddress } =
-    usesEuroAddressStore();
+  const {
+    arbitrumsEuroAddress,
+    arbitrumSepoliasEuroAddress
+  } = usesEuroAddressStore();
+
+  const {
+    arbitrumsUSDAddress,
+    arbitrumSepoliasUSDAddress
+  } = usesUSDAddressStore();
+    
   const { erc20Abi } = useErc20AbiStore();
   const {
     setVaultHealthUpdateType,
@@ -51,19 +61,32 @@ const Debt = ({
   const eurosAddress = chainId === arbitrumSepolia.id ?
     arbitrumSepoliasEuroAddress :
     arbitrumsEuroAddress;
+
+  const usdsAddress = chainId === arbitrumSepolia.id ?
+    arbitrumsUSDAddress :
+    arbitrumSepoliasUSDAddress;
+
+  let sAddress;
+  if (vaultType === 'EUROs') {
+    sAddress = eurosAddress;
+  }
+  if (vaultType === 'USDs') {
+    sAddress = usdsAddress;
+  }
   
-  const eurosContract = {
-    address: eurosAddress,
+
+  const sContract = {
+    address: sAddress,
     abi: erc20Abi,
   }
     
-  const { data: eurosData, refetch } = useReadContracts({
+  const { data: sData, refetch } = useReadContracts({
     contracts: [{
-      ... eurosContract,
+      ... sContract,
       functionName: "allowance",
       args: [address, vaultAddress]
     },{
-      ... eurosContract,
+      ... sContract,
       functionName: "balanceOf",
       args: [address]
     }],
@@ -75,8 +98,8 @@ const Debt = ({
     },
   })
 
-  const allowance = eurosData && eurosData[0].result;
-  const eurosWalletBalance = eurosData && eurosData[1].result;
+  const allowance = sData && sData[0].result;
+  const sWalletBalance = sData && sData[1].result;
 
   const handleAmount = (e, type) => {
     setVaultHealthUpdateType(type);
@@ -90,8 +113,8 @@ const Debt = ({
   const getInputMax = () => {
     const minted = currentVault?.status?.minted;
     const burnFeeRate = currentVault?.burnFeeRate;
-    const maxRepayWei = eurosWalletBalance < (minted + calculateRateAmount(minted, burnFeeRate)) ?
-      eurosWalletBalance * HUNDRED_PC / (HUNDRED_PC + burnFeeRate) :
+    const maxRepayWei = sWalletBalance < (minted + calculateRateAmount(minted, burnFeeRate)) ?
+      sWalletBalance * HUNDRED_PC / (HUNDRED_PC + burnFeeRate) :
       minted;
     const maxRepay = ethers.formatEther(maxRepayWei);
     return maxRepay;
@@ -161,7 +184,7 @@ const Debt = ({
     try {
       writeContract({
         abi: erc20Abi,
-        address: eurosAddress,
+        address: sAddress,
         functionName: "approve",
         args: [vaultAddress, repayFee],
       });
@@ -219,12 +242,11 @@ const Debt = ({
     if (amount && minted) {
       formatNewTotal = ethers.formatEther(ethers.parseEther(formatPrevTotal) + amount);
     }
-  
-    // TODO add logic for USDs vaults
+
     try {
       plausible('DebtIssue', {
         props: {
-          BorrowToken: 'EUROs',
+          BorrowToken: vaultType,
           BorrowAmount: formatAmount,
           BorrowPreviousDebt: formatPrevTotal,
           BorrowNewDebt: formatNewTotal,
@@ -251,7 +273,7 @@ const Debt = ({
     try {
       plausible('DebtRepay', {
         props: {
-          RepayToken: 'EUROs',
+          RepayToken: vaultType,
           RepayAmount: formatAmount,
           RepayPreviousDebt: formatPrevTotal,
           RepayNewDebt: formatNewTotal,
@@ -329,8 +351,8 @@ const Debt = ({
     } else {
       if (amount > currentVault?.status.minted) {
         alert('Repayment amount exceeds debt in vault');
-      } else if (eurosWalletBalance < calculateRepaymentWithFee()) {
-        alert('Repayment amount exceeds your EUROs balance');
+      } else if (sWalletBalance < calculateRepaymentWithFee()) {
+        alert('Repayment amount exceeds your balance');
       } else {
         handleApprovePayment();
       }
