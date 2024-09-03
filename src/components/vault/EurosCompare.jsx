@@ -12,7 +12,7 @@ import {
 
 import Typography from "../ui/Typography";
 
-const EurosCompare = () => {
+const EurosCompare = ({vaultType}) => {
   const [poolData, setPoolData] = useState(undefined);
   const chainId = useChainId();
   const { chainlinkAbi } = useChainlinkAbiStore();
@@ -25,6 +25,7 @@ const EurosCompare = () => {
     functionName: "latestRoundData",
   };
 
+  // TODO get USD prices
   const eurUsdAddress =
     chainId === arbitrumSepolia.id
       ? arbitrumSepoliaUSDToEuroAddress
@@ -54,6 +55,7 @@ const EurosCompare = () => {
   }
 
   const getPoolData = async () => {
+    // TODO add USD mainnet address logic
     try {
       const response = await axios.get(
         `https://api.dexscreener.com/latest/dex/tokens/0x643b34980E635719C15a2D4ce69571a258F940E9`
@@ -88,13 +90,15 @@ const EurosCompare = () => {
     if (currentDiscount > 0) {
       setBorrowWide(true)
     }
+    setBorrowWide(true)
+
   }, [currentDiscount])
 
-  if (currentDiscount <= 0 || isPending) {
-    return (
-      <></>
-    );  
-  }
+  // if (currentDiscount <= 0 || isPending) {
+  //   return (
+  //     <></>
+  //   );  
+  // }
 
   return (
     <div className="flex flex-col md:flex-row flex-1">

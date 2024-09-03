@@ -10,6 +10,7 @@ const TokenActions = ({
   useAsset,
   closeModal,
   assets,
+  vaultType,
 }) => {
   let content;
 
@@ -33,6 +34,7 @@ const TokenActions = ({
               decimals={decimals}
               token={token}
               collateralValue={collateralValue}
+              vaultType={vaultType}
             />
           </>
         );
@@ -48,6 +50,7 @@ const TokenActions = ({
               decimals={decimals}
               token={token}
               collateralValue={collateralValue}
+              vaultType={vaultType}
             />
           </>
         );
@@ -65,6 +68,7 @@ const TokenActions = ({
               collateralValue={collateralValue}
               assets={assets}
               tokenTotal={amount}
+              vaultType={vaultType}
             />
           </>
         );
@@ -82,6 +86,7 @@ const TokenActions = ({
               collateralValue={collateralValue}
               assets={assets}
               tokenTotal={amount}
+              vaultType={vaultType}
             />
           </>
         );

@@ -441,6 +441,7 @@ const Debt = ({
         borrowValues={borrowValues}
         inputRef={inputRef}
         currentVault={currentVault}
+        vaultType={vaultType}
       />
 
       <RepayModal
@@ -460,6 +461,7 @@ const Debt = ({
         toPercentage={toPercentage}
         inputRef={inputRef}
         currentVault={currentVault}
+        vaultType={vaultType}
       />
     </>
   );
