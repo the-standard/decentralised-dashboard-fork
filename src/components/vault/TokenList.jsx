@@ -25,7 +25,15 @@ import TokenIcon from "../ui/TokenIcon";
 import TokenActions from "./TokenActions";
 import TokenValueChart from "./TokenValueChart";
 
-const TokenList = ({ assets, assetsLoading }) => {
+const TokenList = ({ assets, assetsLoading, vaultType }) => {
+
+  let currencySymbol = '';
+  if (vaultType === 'EUROs') {
+    currencySymbol = '€';
+  }
+  if (vaultType === 'USDs') {
+    currencySymbol = '$';
+  }
 
   const chainId = useChainId();
 
@@ -136,7 +144,7 @@ const TokenList = ({ assets, assetsLoading }) => {
                           <td>
                             {ethers.formatUnits(amount, token.dec)}
                             <br/>
-                            €{formattedCollateralValue}
+                            {currencySymbol}{formattedCollateralValue}
                           </td>
                           <td className="hidden md:table-cell">
                             <TokenValueChart
@@ -219,9 +227,9 @@ const TokenList = ({ assets, assetsLoading }) => {
             actionType={actionType}
             useAsset={useAsset}
             closeModal={closeAction}
-            assets={assets}            
+            assets={assets}   
+            vaultType={vaultType}         
           />
-
         </div>
       </Card>
     </>
