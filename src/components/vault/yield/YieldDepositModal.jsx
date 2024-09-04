@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { ethers } from "ethers";
+import { toast } from 'react-toastify';
 import {
   useWriteContract,
   useReadContract,
@@ -22,35 +23,7 @@ import Modal from "../../ui/Modal";
 import Button from "../../ui/Button";
 import Typography from "../../ui/Typography";
 
-import { YieldVaults, YieldGammaVaults } from "./YieldGammaVaults";
-
-// TODO TEMP
-const yieldPools = [
-  {
-    assetA: 'ARB',
-    assetB: 'LINK',
-    APY: '4%',
-    TVL: '1234',
-  },
-  {
-    assetA: 'WBTC',
-    assetB: 'PAXG',
-    APY: '4%',
-    TVL: '1234',
-  },
-  {
-    assetA: 'ARB',
-    assetB: 'SUSHI',
-    APY: '4%',
-    TVL: '1234',
-  },
-  {
-    assetA: 'EUROs',
-    assetB: 'TST',
-    APY: '4%',
-    TVL: '1234',
-  }
-]
+import { YieldVaults } from "./YieldGammaVaults";
 
 const YieldDepositModal = (props) => {
   const {
@@ -65,8 +38,7 @@ const YieldDepositModal = (props) => {
   const formattedSymbol = ethers.encodeBytes32String(symbol);
   const formattedStableRatio = Number(stableRatio * 1000).toString();
 
-  console.log(123123, formattedStableRatio)
-  const { writeContract, error, isError, isPending, isSuccess } = useWriteContract();
+  const { writeContract, isError, isPending, isSuccess } = useWriteContract();
 
   const handleDepositYield = async () => {
     try {
@@ -96,7 +68,7 @@ const YieldDepositModal = (props) => {
       closeModal();
     } else if (isError) {
       //
-      console.log(123213, error)
+      toast.error(errorMessage || 'There was a problem');
     }
   }, [
     isPending,
