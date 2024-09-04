@@ -10,20 +10,19 @@ import {
   AdjustmentsHorizontalIcon
 } from '@heroicons/react/24/outline';
 
-import CenterLoader from "../ui/CenterLoader";
-import TokenIcon from "../ui/TokenIcon";
-import Modal from "../ui/Modal";
-import Button from "../ui/Button";
-import Typography from "../ui/Typography";
-
 import {
   useVaultAddressStore,
-  usesEuroAddressStore,
-  useErc20AbiStore,
-  useVaultHealthUpdate,
-} from "../../store/Store";
+} from "../../../store/Store";
 
-import smartVaultAbi from "../../abis/smartVault";
+import smartVaultAbi from "../../../abis/smartVault";
+
+import CenterLoader from "../../ui/CenterLoader";
+import TokenIcon from "../../ui/TokenIcon";
+import Modal from "../../ui/Modal";
+import Button from "../../ui/Button";
+import Typography from "../../ui/Typography";
+
+import { YieldVaults, YieldGammaVaults } from "./YieldGammaVaults";
 
 // TODO TEMP
 const yieldPools = [
@@ -53,21 +52,58 @@ const yieldPools = [
   }
 ]
 
-const YieldModal = (props) => {
+const YieldDepositModal = (props) => {
   const {
     open,
     closeModal,
+    symbol,
   } = props;
   const { vaultAddress } = useVaultAddressStore();
   const [ selectedPool, setSelectedPool ] = useState();
   const [ stableRatio, setStableRatio ] = useState(50);
 
-  const { data: yieldData, isLoading } = useReadContract({
-    abi: smartVaultAbi,
-    address: vaultAddress,
-    functionName: "yieldAssets",
-    args: [],
-  });
+  const formattedSymbol = ethers.encodeBytes32String(symbol);
+  const formattedStableRatio = Number(stableRatio * 1000).toString();
+
+  console.log(123123, formattedStableRatio)
+  const { writeContract, error, isError, isPending, isSuccess } = useWriteContract();
+
+  const handleDepositYield = async () => {
+    try {
+      writeContract({
+        abi: smartVaultAbi,
+        address: vaultAddress,
+        functionName: "depositYield",
+        args: [
+          formattedSymbol,
+          formattedStableRatio,
+        ],
+      });
+    } catch (error) {
+      let errorMessage;
+      if (error && error.shortMessage) {
+        errorMessage = error.shortMessage;
+      }
+      toast.error(errorMessage || 'There was a problem');
+    }
+  };
+
+  useEffect(() => {
+    if (isPending) {
+      // 
+    } else if (isSuccess) {
+      toast.success("Yield Deposit Successful");
+      closeModal();
+    } else if (isError) {
+      //
+      console.log(123213, error)
+    }
+  }, [
+    isPending,
+    isSuccess,
+    isError,
+    Error,
+  ]);
 
   const allowedRatio = stableRatio >= 10 && stableRatio <= 100;
 
@@ -83,7 +119,45 @@ const YieldModal = (props) => {
     ratioColor = 'error'
   }
 
- 
+  const assetYield = YieldVaults().find(item => item.asset === symbol);
+
+  if (isPending) {
+    return (
+      <>
+        <Modal
+          open={open}
+          closeModal={closeModal}
+          wide={false}
+        >
+          <Typography variant="h2" className="card-title">
+            <AdjustmentsHorizontalIcon className="mr-2 h-6 w-6 inline-block"/>
+            Setting Up Yield Pool
+          </Typography>
+  
+          <CenterLoader />
+  
+          <div className="card-actions pt-4 flex-col-reverse lg:flex-row justify-end">
+            <Button
+              className="w-full lg:w-auto"
+              color="ghost"
+              disabled
+            >
+              Back
+            </Button>
+            <Button
+              className="w-full lg:w-64"
+              color="success"
+              disabled={true}
+              loading={true}
+            >
+              Loading
+            </Button>
+          </div>
+        </Modal>
+      </>
+    );
+  }
+
   if (selectedPool) {
     return (
       <>
@@ -133,18 +207,34 @@ const YieldModal = (props) => {
               />
             </div>
             <div className="flex flex-row justify-between">
-              <Typography
-                variant="p"
-                className="mt-2"
-              >
-                {stableRatio}% Stable
-              </Typography>
-              <Typography
-                variant="p"
-                className="mt-2 text-right"
-              >
-                {100 - stableRatio}% Volatile
-              </Typography>
+              <div className="flex flex-col">
+                <Typography
+                  variant="p"
+                  className="mt-2"
+                >
+                  {stableRatio}% Stable
+                </Typography>
+                <Typography
+                  variant="p"
+                  className="mt-1 text-sm opacity-80"
+                >
+                  USDs/USDC
+                </Typography>
+              </div>
+              <div className="flex flex-col">
+                <Typography
+                  variant="p"
+                  className="mt-2"
+                >
+                  {100 - stableRatio}% Volatile
+                </Typography>
+                <Typography
+                  variant="p"
+                  className="mt-1 text-right text-sm opacity-80"
+                >
+                  {assetYield.pair[0]}/{assetYield.pair[1]}
+                </Typography>
+              </div>
             </div>
           </div>
   
@@ -160,7 +250,7 @@ const YieldModal = (props) => {
               className="w-full lg:w-64"
               color="success"
               disabled={!allowedRatio}
-              onClick={() => setSelectedPool(null)}
+              onClick={() => handleDepositYield()}
             >
               Confirm
             </Button>
@@ -175,7 +265,7 @@ const YieldModal = (props) => {
       <Modal
         open={open}
         closeModal={closeModal}
-        wide={true}
+        wide={false}
       >
         <Typography variant="h2" className="card-title">
           <QueueListIcon className="mr-2 h-6 w-6 inline-block"/>
@@ -186,26 +276,31 @@ const YieldModal = (props) => {
           variant="p"
           className="mb-2"
         >
-          Confirm below that you are happy to continue with this selected Yield Pool.
+          This will place <b>all</b> of your <b>{symbol}</b> into the Yield Pool shown below. You will get to choose the stable/volatile ratio next.
+        </Typography>
+
+        <Typography
+          variant="p"
+          className="mb-2"
+        >
+          Confirm that you are happy to continue with this selected Yield Pool.
         </Typography>
 
         <div className="flex flex-col">
           <table className="table">
             <thead>
               <tr>
-                <th>Earning Yield</th>
-                <th>APY</th>
-                <th>TVL</th>
+                <th>Stable Pair</th>
+                <th>Volatile Pair</th>
               </tr>
             </thead>
-            {isLoading ? (null) : (
-              <tbody>
+            <tbody>
                 <tr>
                   <td>
                     <div className="h-full w-full flex flex-col">
                       <div className="flex items-center">
                         <TokenIcon
-                          symbol={'ETH'}
+                          symbol={'USDs'}
                           className="h-8 w-8 p-1 rounded-full bg-base-300/50"
                         />
                         <TokenIcon
@@ -214,28 +309,35 @@ const YieldModal = (props) => {
                         />
                       </div>
                       <div className="pt-2 hidden md:table-cell">
-                        FOO/BAR
+                        USDs/USDC
                       </div>
                     </div>
                   </td>
                   <td>
-                    123123
-                  </td>
-                  <td>
-                    €123123
+                    <div className="h-full w-full flex flex-col">
+                      <div className="flex items-center">
+                        <TokenIcon
+                          symbol={assetYield.pair[0]}
+                          className="h-8 w-8 p-1 rounded-full bg-base-300/50"
+                        />
+                        <TokenIcon
+                          symbol={assetYield.pair[1]}
+                          className="h-8 w-8 p-1 rounded-full bg-base-300/50 -ml-[8px]"
+                        />
+                      </div>
+                      <div className="pt-2 hidden md:table-cell">
+                        {assetYield.pair[0]}/{assetYield.pair[1]}
+                      </div>
+                    </div>
                   </td>
                 </tr>
               </tbody>
-            )}
           </table>
-          {isLoading ? (
-            <CenterLoader />
-          ) : (null)}
         </div>
 
         <div className="card-actions pt-4 flex-col-reverse lg:flex-row justify-end">
           <Button
-            className="w-full lg:w-64"
+            className="w-full lg:w-auto"
             color="ghost"
             onClick={closeModal}
           >
@@ -244,11 +346,11 @@ const YieldModal = (props) => {
           <Button
             className="w-full lg:w-64"
             color="success"
-            loading={isLoading}
-            disabled={isLoading}
+            loading={isPending}
+            disabled={isPending}
             onClick={() => setSelectedPool(true)}
           >
-            Confirm
+            Next
           </Button>
         </div>
       </Modal>
@@ -257,4 +359,4 @@ const YieldModal = (props) => {
 
 };
 
-export default YieldModal;
+export default YieldDepositModal;

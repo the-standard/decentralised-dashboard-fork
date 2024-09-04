@@ -1,13 +1,39 @@
+import { useState } from "react";
 import { ethers } from "ethers";
+import {
+  useWriteContract,
+  useReadContract,
+} from "wagmi";
 
-import CenterLoader from "../ui/CenterLoader";
-import TokenIcon from "../ui/TokenIcon";
+import {
+  useVaultAddressStore,
+} from "../../../store/Store";
+
+import smartVaultAbi from "../../../abis/smartVault";
+
+import YieldClaimModal from "./YieldClaimModal";
+import { YieldVaults, YieldGammaVaults } from "./YieldGammaVaults";
+
+import CenterLoader from "../../ui/CenterLoader";
+import TokenIcon from "../../ui/TokenIcon";
 
 const YieldList = ({ assets, assetsLoading }) => {
+  const [open, setOpen] = useState(false);
+  const { vaultAddress } = useVaultAddressStore();
+
+  const handleCloseModal = () => {
+    setOpen(false)
+  };
+
+  const { data: yieldData, isLoading } = useReadContract({
+    abi: smartVaultAbi,
+    address: vaultAddress,
+    functionName: "yieldAssets",
+    args: [],
+  });
 
   return (
     <div className="">
-      {/* <table className="table table-fixed"> */}
       <table className="table">
         <thead>
           <tr>
@@ -32,6 +58,7 @@ const YieldList = ({ assets, assetsLoading }) => {
                   <tr
                     key={index}
                     className="cursor-pointer hover"
+                    onClick={() => setOpen(true)}
                   >
                     <td>
                       <div className="h-full w-full flex flex-col">
@@ -66,6 +93,10 @@ const YieldList = ({ assets, assetsLoading }) => {
       {assetsLoading ? (
         <CenterLoader />
       ) : (null)}
+      <YieldClaimModal
+        handleCloseModal={handleCloseModal}
+        isOpen={open}
+      />
     </div>
   );
 };

@@ -18,6 +18,8 @@ import {
   ChevronUpIcon,
 } from '@heroicons/react/24/outline';
 
+import { YieldVaults } from "./yield/YieldGammaVaults";
+
 import Card from "../ui/Card";
 import Button from "../ui/Button";
 import CenterLoader from "../ui/CenterLoader";
@@ -25,7 +27,12 @@ import TokenIcon from "../ui/TokenIcon";
 import TokenActions from "./TokenActions";
 import TokenValueChart from "./TokenValueChart";
 
-const TokenList = ({ assets, assetsLoading, vaultType }) => {
+const TokenList = ({
+  assets,
+  assetsLoading,
+  vaultType,
+  yieldEnabled,
+}) => {
 
   let currencySymbol = '';
   if (vaultType === 'EUROs') {
@@ -115,6 +122,8 @@ const TokenList = ({ assets, assetsLoading, vaultType }) => {
                     if (chartData && chartData[symbol] && chartData[symbol].prices) {
                       useData = chartData[symbol].prices;
                     }
+                    
+                    let tokenYield = YieldVaults().find(item => item.asset === symbol);
 
                     return (
                       <Fragment key={index}>
@@ -202,7 +211,7 @@ const TokenList = ({ assets, assetsLoading, vaultType }) => {
                                   </Button>
                                   <Button
                                     variant="outline"
-                                    disabled={amount <= 0}
+                                    disabled={amount <= 0 || !yieldEnabled || !tokenYield}
                                     onClick={() => handleClick('YIELD', asset)}
                                     className="grow"
                                   >
