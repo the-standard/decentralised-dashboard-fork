@@ -3,7 +3,7 @@ import { ethers } from "ethers";
 import DepositModal from "./DepositModal";
 import WithdrawModal from "./WithdrawModal";
 import SwapModal from "./SwapModal";
-import YieldModal from "./YieldModal";
+import YieldDepositModal from "./yield/YieldDepositModal";
 
 const TokenActions = ({
   actionType,
@@ -76,7 +76,7 @@ const TokenActions = ({
       case 'YIELD':
         content = (
           <>
-            <YieldModal
+            <YieldDepositModal
               open={actionType}
               closeModal={closeModal}          
               symbol={symbol}

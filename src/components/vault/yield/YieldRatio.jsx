@@ -3,7 +3,7 @@ import {
   Tooltip,
 } from 'react-daisyui';
 
-import Typography from "../ui/Typography";
+import Typography from "../../ui/Typography";
 
 const YieldRatio = ({
   currentVault,

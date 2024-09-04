@@ -1,8 +1,5 @@
 import { useEffect, useState, useMemo } from "react";
 import { useParams, useLocation, useNavigate } from "react-router-dom";
-import {
-  ChevronLeftIcon,
-} from '@heroicons/react/24/outline';
 import { ethers } from "ethers";
 import {
   useBlockNumber,
@@ -12,6 +9,12 @@ import {
   useAccount,
 } from "wagmi";
 import { arbitrumSepolia } from "wagmi/chains";
+
+import {
+  QueueListIcon,
+  ChevronLeftIcon,
+  AdjustmentsHorizontalIcon
+} from '@heroicons/react/24/outline';
 
 import {
   useVaultAddressStore,
@@ -30,8 +33,8 @@ import VaultStats from "../../components/vault/VaultStats";
 import TokenList from "../../components/vault/TokenList";
 import VaultSend from "../../components/vault/VaultSend";
 import TokenTotalPie from "../../components/vault/TokenTotalPie";
-import YieldList from "../../components/vault/YieldList";
-import YieldRatio from "../../components/vault/YieldRatio";
+import YieldList from "../../components/vault/yield/YieldList";
+import YieldRatio from "../../components/vault/yield/YieldRatio";
 
 import Card from "../../components/ui/Card";
 import Typography from "../../components/ui/Typography";
@@ -217,6 +220,8 @@ const Vault = () => {
 
   const vaultVersion = vaultStore?.status?.version || '';
 
+  const yieldEnabled = (vaultType === 'USDs') && (vaultVersion >= 4);
+
   return (
     <main>
       <Card className="card-compact">
@@ -259,50 +264,84 @@ const Vault = () => {
             vaultType={vaultType}
             assets={assets}
             assetsLoading={!assets.length || assets.length === 0}
+            yieldEnabled={yieldEnabled}
           />
         </div>
 
-        <div className="flex-1 grow-[3]">
-          <Card className="card-compact">
-            <div className="card-body">
-              {/* TEMP TODO */}
-              <YieldList
-                assets={assets}
-                assetsLoading={!assets.length || assets.length === 0}
-              />
-              <YieldRatio />
-              <div className="flex flex-col mt-2">
-                <div className="flex-1 flex flex-row justify-between">
-                  <Typography
-                    variant="p"
-                  >
-                    Total Yield Earned
-                  </Typography>
-                  <Typography
-                    variant="p"
-                    className="text-right"
-                  >
-                    €TBC.12
-                  </Typography>
-                </div>
-                <div className="flex-1 flex flex-row justify-between">
-                  <Typography
-                    variant="p"
-                  >
-                    Total Balance
-                  </Typography>
-                  <Typography
-                    variant="p"
-                    className="text-right"
-                  >
-                    €TBC.34
-                  </Typography>
-                </div>
+        {yieldEnabled ? (
+          <div className="flex-1 grow-[3]">
+            <Card className="card-compact">
+              <div className="card-body">
+                {/* TEMP TODO */}
+                <YieldList
+                  assets={assets}
+                  assetsLoading={!assets.length || assets.length === 0}
+                />
+                <YieldRatio />
+                <div className="flex flex-col mt-2">
+                  <div className="flex-1 flex flex-row justify-between">
+                    <Typography
+                      variant="p"
+                    >
+                      Total Yield Earned
+                    </Typography>
+                    <Typography
+                      variant="p"
+                      className="text-right"
+                    >
+                      €TBC.12
+                    </Typography>
+                  </div>
+                  <div className="flex-1 flex flex-row justify-between">
+                    <Typography
+                      variant="p"
+                    >
+                      Total Balance
+                    </Typography>
+                    <Typography
+                      variant="p"
+                      className="text-right"
+                    >
+                      €TBC.34
+                    </Typography>
+                  </div>
 
+                </div>
               </div>
-            </div>
-          </Card>
-        </div>
+            </Card>
+          </div>
+        ) : (
+          <div className="flex-1 grow-[3]">
+            <Card className="card-compact">
+              <div className="card-body">
+                <Typography variant="h2" className="card-title flex gap-0">
+                  <AdjustmentsHorizontalIcon className="mr-2 h-6 w-6 inline-block"/>
+                  Earn Yields
+                </Typography>
+                <Typography
+                  variant="p"
+                  className="mb-2"
+                >
+                  Start earning token yields through a mix of volatile collateral and correlated stable asset yield strategies.
+                </Typography>
+                <Typography
+                  variant="p"
+                  className="mb-2"
+                >
+                  Currently only available on V4 USDs vaults.
+                </Typography>
+                <Button
+                  onClick={() => navigate('/')}
+                  variant="outline"
+                  disabled={isLoading}
+                  className="pl-2"
+                >
+                  View My Vaults
+                </Button>
+              </div>
+            </Card>
+          </div>
+        )}
       </div>
       
       <div className="mt-4">

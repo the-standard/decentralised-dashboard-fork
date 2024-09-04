@@ -30,7 +30,7 @@ const Typography = (props) => {
     case 'h3':
       return (
         <h3
-          className={`inline-block text-lg font-medium  ${classes ? classes : ''}`}
+          className={`inline-block text-lg font-medium ${classes ? classes : ''}`}
         >
           {props.children || ''}
         </h3>
