@@ -6,7 +6,7 @@ const Typography = (props) => {
     case 'p':
       return (
         <p
-          className={`inline-block text-base font-normal ${classes ? classes : ''}`}
+          className={`text-base font-normal ${classes ? classes : ''}`}
         >
           {props.children || ''}
         </p>
@@ -14,7 +14,7 @@ const Typography = (props) => {
     case 'h1':
       return (
         <h1
-          className={`inline-block text-2xl font-semibold ${classes ? classes : ''}`}
+          className={`text-2xl font-semibold ${classes ? classes : ''}`}
         >
           {props.children || ''}
         </h1>
@@ -22,7 +22,7 @@ const Typography = (props) => {
     case 'h2':
       return (
         <h2
-          className={`inline-block text-xl font-semibold ${classes ? classes : ''}`}
+          className={`text-xl font-semibold ${classes ? classes : ''}`}
         >
           {props.children || ''}
         </h2>
@@ -30,7 +30,7 @@ const Typography = (props) => {
     case 'h3':
       return (
         <h3
-          className={`inline-block text-lg font-medium ${classes ? classes : ''}`}
+          className={`text-lg font-medium ${classes ? classes : ''}`}
         >
           {props.children || ''}
         </h3>
@@ -38,7 +38,7 @@ const Typography = (props) => {
     default:
       return (
         <p
-          className={`inline-block text-base ${classes ? classes : ''}`}
+          className={`text-base ${classes ? classes : ''}`}
         >
           {props.children || ''}
         </p>

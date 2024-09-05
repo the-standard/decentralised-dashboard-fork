@@ -18,7 +18,10 @@ import {
   ChevronUpIcon,
 } from '@heroicons/react/24/outline';
 
-import { YieldVaults } from "./yield/YieldGammaVaults";
+import {
+  ArbitrumVaults,
+  SepoliaVaults,
+} from "./yield/YieldGammaVaults";
 
 import Card from "../ui/Card";
 import Button from "../ui/Button";
@@ -33,7 +36,6 @@ const TokenList = ({
   vaultType,
   yieldEnabled,
 }) => {
-
   let currencySymbol = '';
   if (vaultType === 'EUROs') {
     currencySymbol = '€';
@@ -43,6 +45,10 @@ const TokenList = ({
   }
 
   const chainId = useChainId();
+
+  const yieldVaultsInfo = chainId === arbitrumSepolia.id
+  ? SepoliaVaults
+  : ArbitrumVaults;
 
   const { vaultStore } = useVaultStore();
 
@@ -123,7 +129,7 @@ const TokenList = ({
                       useData = chartData[symbol].prices;
                     }
                     
-                    let tokenYield = YieldVaults().find(item => item.asset === symbol);
+                    let tokenYield = yieldVaultsInfo.find(item => item.asset === symbol);
 
                     return (
                       <Fragment key={index}>

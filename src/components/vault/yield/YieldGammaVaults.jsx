@@ -1,8 +1,3 @@
-import {
-  useChainId,
-} from "wagmi";
-import { arbitrumSepolia } from "wagmi/chains";
-
 export const ArbitrumVaults = [
   {
     asset: 'USDs',
@@ -10,13 +5,15 @@ export const ArbitrumVaults = [
     symbol: '0x5553447300000000000000000000000000000000000000000000000000000000',
     address: '0x0173184A51CF807Cc386B3F5Dc5689Cae09B81fb',
     dec: '18',
+    collateral: false,
   },
   {
     asset: 'USDC',
     pair: ['USDs', 'USDC'],
     symbol: '0x5553444300000000000000000000000000000000000000000000000000000000',
     address: '0xC305a98F34feD6cfFA7B920D26031372B64Fa74E',
-    dec: '18',
+    dec: '6',
+    collateral: false,
   },
   {
     asset: 'ETH',
@@ -24,6 +21,7 @@ export const ArbitrumVaults = [
     symbol: '0x4554480000000000000000000000000000000000000000000000000000000000',
     address: '0x0000000000000000000000000000000000000000',
     dec: '18',
+    collateral: true,
   },
   {
     asset: 'WETH',
@@ -31,6 +29,7 @@ export const ArbitrumVaults = [
     symbol: '0x5745544800000000000000000000000000000000000000000000000000000000',
     address: '0x82aF49447D8a07e3bd95BD0d56f35241523fBab1',
     dec: '18',
+    collateral: true,
   },
   {
     asset: 'WBTC',
@@ -38,6 +37,7 @@ export const ArbitrumVaults = [
     symbol: '0x5742544300000000000000000000000000000000000000000000000000000000',
     address: '0x2f2a2543B76A4166549F7aaB2e75Bef0aefC5B0f',
     dec: '8',
+    collateral: true,
   },
   {
     asset: 'ARB',
@@ -45,6 +45,7 @@ export const ArbitrumVaults = [
     symbol: '0x4152420000000000000000000000000000000000000000000000000000000000',
     address: '0x912CE59144191C1204E64559FE8253a0e49E6548',
     dec: '18',
+    collateral: true,
   },
   {
     asset: 'LINK',
@@ -52,6 +53,7 @@ export const ArbitrumVaults = [
     symbol: '0x4c494e4b00000000000000000000000000000000000000000000000000000000',
     address: '0xf97f4df75117a78c1A5a0DBb814Af92458539FB4',
     dec: '18',
+    collateral: true,
   },
   {
     asset: 'GMX',
@@ -59,6 +61,7 @@ export const ArbitrumVaults = [
     symbol: '0x474d580000000000000000000000000000000000000000000000000000000000',
     address: '0xfc5A1A6EB076a2C7aD06eD22C90d7E710E35ad0a',
     dec: '18',
+    collateral: true,
   },
   {
     asset: 'RDNT',
@@ -66,6 +69,7 @@ export const ArbitrumVaults = [
     symbol: '0x52444e5400000000000000000000000000000000000000000000000000000000',
     address: '0x3082CC23568eA640225c2467653dB90e9250AaA0',
     dec: '18',
+    collateral: true,
   },
 ];
 
@@ -76,13 +80,15 @@ export const SepoliaVaults = [
     symbol: '0x5553447300000000000000000000000000000000000000000000000000000000',
     address: '0x0173184A51CF807Cc386B3F5Dc5689Cae09B81fb',
     dec: '18',
+    collateral: false,
   },
   {
     asset: 'USDC',
     pair: ['USDs', 'USDC'],
     symbol: '0x5553444300000000000000000000000000000000000000000000000000000000',
     address: '0xC305a98F34feD6cfFA7B920D26031372B64Fa74E',
-    dec: '18',
+    dec: '6',
+    collateral: false,
   },
   {
     asset: 'ETH',
@@ -90,6 +96,7 @@ export const SepoliaVaults = [
     symbol: '0x4554480000000000000000000000000000000000000000000000000000000000',
     address: '0x0000000000000000000000000000000000000000',
     dec: '18',
+    collateral: true,
   },
   {
     asset: 'WETH',
@@ -97,6 +104,7 @@ export const SepoliaVaults = [
     symbol: '0x5745544800000000000000000000000000000000000000000000000000000000',
     address: '0x081eE2A9FE23b69036C5136437Fa2426fD2d7650',
     dec: '18',
+    collateral: true,
   },
   {
     asset: 'WBTC',
@@ -104,13 +112,15 @@ export const SepoliaVaults = [
     symbol: '0x5742544300000000000000000000000000000000000000000000000000000000',
     address: '0x36C85224ac27AccEffC8458c1E1e336C667e3bba',
     dec: '8',
+    collateral: true,
   },
   {
     asset: 'USDs6',
     pair: ['USDs6', 'WETH'],
     symbol: '0x5553447336000000000000000000000000000000000000000000000000000000',
     address: '0xb7269723576B20ed2C3DaBBBe39911402669a395',
-    dec: '18',
+    dec: '6',
+    collateral: true,
   },
   {
     asset: 'USDs18',
@@ -118,6 +128,7 @@ export const SepoliaVaults = [
     symbol: '0x5553447331380000000000000000000000000000000000000000000000000000',
     address: '0xA977E34e4B8583C6928453CC9572Ae032Cc3200a',
     dec: '18',
+    collateral: true,
   },
 ];
 
@@ -167,23 +178,3 @@ export const SepoliaGammaVaults = [
     address: '0x0881d58b146208230D720656320624c386661795',
   },
 ]
-
-export const YieldVaults = () => {
-  const chainId = useChainId();
-
-  const useVaults = chainId === arbitrumSepolia.id
-  ? SepoliaVaults
-  : ArbitrumVaults;
-  
-  return useVaults;
-};
-
-export const YieldGammaVaults = () => {
-  const chainId = useChainId();
-
-  const useGammaVaults = chainId === arbitrumSepolia.id
-  ? SepoliaGammaVaults
-  : ArbitrumGammaVaults;
-    
-  return useGammaVaults;
-};

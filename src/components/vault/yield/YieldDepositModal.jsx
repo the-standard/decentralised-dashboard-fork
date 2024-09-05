@@ -3,8 +3,9 @@ import { ethers } from "ethers";
 import { toast } from 'react-toastify';
 import {
   useWriteContract,
-  useReadContract,
+  useChainId,
 } from "wagmi";
+import { arbitrumSepolia } from "wagmi/chains";
 
 import {
   QueueListIcon,
@@ -15,6 +16,11 @@ import {
   useVaultAddressStore,
 } from "../../../store/Store";
 
+import {
+  ArbitrumVaults,
+  SepoliaVaults,
+} from "./YieldGammaVaults";
+
 import smartVaultAbi from "../../../abis/smartVault";
 
 import CenterLoader from "../../ui/CenterLoader";
@@ -23,8 +29,6 @@ import Modal from "../../ui/Modal";
 import Button from "../../ui/Button";
 import Typography from "../../ui/Typography";
 
-import { YieldVaults } from "./YieldGammaVaults";
-
 const YieldDepositModal = (props) => {
   const {
     open,
@@ -32,6 +36,7 @@ const YieldDepositModal = (props) => {
     symbol,
   } = props;
   const { vaultAddress } = useVaultAddressStore();
+  const chainId = useChainId();
   const [ selectedPool, setSelectedPool ] = useState();
   const [ stableRatio, setStableRatio ] = useState(50);
 
@@ -68,13 +73,12 @@ const YieldDepositModal = (props) => {
       closeModal();
     } else if (isError) {
       //
-      toast.error(errorMessage || 'There was a problem');
+      toast.error('There was a problem');
     }
   }, [
     isPending,
     isSuccess,
     isError,
-    Error,
   ]);
 
   const allowedRatio = stableRatio >= 10 && stableRatio <= 100;
@@ -91,7 +95,11 @@ const YieldDepositModal = (props) => {
     ratioColor = 'error'
   }
 
-  const assetYield = YieldVaults().find(item => item.asset === symbol);
+  const yieldVaultsInfo = chainId === arbitrumSepolia.id
+  ? SepoliaVaults
+  : ArbitrumVaults;
+
+  const assetYield = yieldVaultsInfo.find(item => item.asset === symbol);
 
   if (isPending) {
     return (
