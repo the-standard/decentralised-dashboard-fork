@@ -36,24 +36,51 @@ const Vault = (props) => {
   return (
     <>
       {yieldEnabled ? (
-        <div className="flex-1 grow-[3]">
-          <Card className="card-compact">
-            <div className="card-body">
-              <YieldList
-                yieldData={yieldData}
-                yieldIsPending={isPending}
-              />
-              {/* <YieldRatio /> */}
+        <>
+          {yieldData && yieldData.length ? (
+            <div className="flex-1 grow-[3]">
+              <Card className="card-compact">
+                <div className="card-body">
+                  <YieldList
+                    yieldData={yieldData}
+                    yieldIsPending={isPending}
+                  />
+                  {/* <YieldRatio /> */}
+                </div>
+              </Card>
             </div>
-          </Card>
-        </div>
+          ) : (
+            <div className="flex-1 grow-[3]">
+              <Card className="card-compact">
+                <div className="card-body">
+                  <Typography variant="h2" className="card-title flex gap-0">
+                    <AdjustmentsHorizontalIcon className="mr-2 h-6 w-6 inline-block"/>
+                    Yield Pools
+                  </Typography>
+                  <Typography
+                    variant="p"
+                    className="mb-2"
+                  >
+                    Start earning token through a mix of volatile collateral and correlated stable asset yield strategies.
+                  </Typography>
+                  <Typography
+                    variant="p"
+                    className="mb-2"
+                  >
+                    Get started by placing some of your Collateral tokens into a yield pool now!
+                  </Typography>
+                </div>
+              </Card>
+            </div>  
+          )}
+        </>
       ) : (
         <div className="flex-1 grow-[3]">
           <Card className="card-compact">
             <div className="card-body">
               <Typography variant="h2" className="card-title flex gap-0">
                 <AdjustmentsHorizontalIcon className="mr-2 h-6 w-6 inline-block"/>
-                Earn Yields
+                Yield Pools
               </Typography>
               <Typography
                 variant="p"

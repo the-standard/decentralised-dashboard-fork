@@ -5,18 +5,22 @@ import {
 } from "wagmi";
 import { arbitrumSepolia } from "wagmi/chains";
 
+import {
+  AdjustmentsHorizontalIcon
+} from '@heroicons/react/24/outline';
+
 import YieldClaimModal from "./YieldClaimModal";
 import {
   ArbitrumVaults,
   SepoliaVaults,
 } from "./YieldGammaVaults";
-
 import CenterLoader from "../../ui/CenterLoader";
 import TokenIcon from "../../ui/TokenIcon";
+import Typography from "../../ui/Typography";
 import Button from "../../ui/Button";
 
 const YieldList = (props) => {
-  const { yieldData } = props;
+  const { yieldData, yieldIsPending } = props;
   const [ open, setOpen ] = useState(false);
   const [ yieldPair, setYieldPair ] = useState([]);
   const [ yieldQuantities, setYieldQuantities ] = useState([]);
@@ -43,6 +47,10 @@ const YieldList = (props) => {
 
   return (
     <div className="">
+      <Typography variant="h2" className="card-title flex gap-0">
+        <AdjustmentsHorizontalIcon className="mr-2 h-6 w-6 inline-block"/>
+        Yield Pools
+      </Typography>
       <table className="table">
         <thead>
           <tr>
@@ -129,7 +137,7 @@ const YieldList = (props) => {
                 </tr>
               )}
             )}
-          </tbody>        
+          </tbody>
         ) : (null)}
       </table>
       {yieldData && yieldData.length ? (null) : (
