@@ -9,8 +9,6 @@ import YieldClaimModal from "./YieldClaimModal";
 import {
   ArbitrumVaults,
   SepoliaVaults,
-  YieldVaults,
-  YieldGammaVaults
 } from "./YieldGammaVaults";
 
 import CenterLoader from "../../ui/CenterLoader";
@@ -18,13 +16,26 @@ import TokenIcon from "../../ui/TokenIcon";
 import Button from "../../ui/Button";
 
 const YieldList = (props) => {
-  const { yieldData, yieldIsPending } = props;
+  const { yieldData } = props;
   const [ open, setOpen ] = useState(false);
+  const [ yieldPair, setYieldPair ] = useState([]);
+  const [ yieldQuantities, setYieldQuantities ] = useState([]);
+  const [ yieldHypervisor, setYieldHypervisor ] = useState('');
   const chainId = useChainId();
 
   const handleCloseModal = () => {
-    setOpen(false)
+    setYieldPair([]);
+    setYieldQuantities([]);
+    setYieldHypervisor('');
+    setOpen(false);
   };
+
+  const handleOpenModal = (pair, quantities, hypervisor) => {
+    setYieldPair(pair);
+    setYieldQuantities(quantities);
+    setYieldHypervisor(hypervisor);
+    setOpen(true);
+  }
 
   const yieldVaultsInfo = chainId === arbitrumSepolia.id
   ? SepoliaVaults
@@ -35,7 +46,7 @@ const YieldList = (props) => {
       <table className="table">
         <thead>
           <tr>
-            <th>Earning Yield</th>
+            <th>Yield Pair</th>
             <th>Token Quantities</th>
             <th></th>
           </tr>
@@ -69,12 +80,19 @@ const YieldList = (props) => {
               if (tokenBdetails?.dec) {
                 decB = Number(tokenBdetails.dec);
               }
+              
+              const pair = [symbolA, symbolB];
+              const quantities = [
+                ethers.formatUnits(amountA, decA),
+                ethers.formatUnits(amountB, decB),
+              ];
+              const hypervisor = item.hypervisor;
 
               return (
                 <tr
                   key={index}
                   className="cursor-pointer hover"
-                  onClick={() => setOpen(true)}
+                  onClick={() => handleOpenModal(pair, quantities, hypervisor)}
                 >
                   <td>
                     <div className="h-full w-full flex flex-col">
@@ -94,7 +112,6 @@ const YieldList = (props) => {
                     </div>
                   </td>
                   <td>
-                    {/* TODO add actual decimal */}
                     <b>{symbolA}:<br/></b>
                     {ethers.formatUnits(amountA, decA)}<br/>
                     <b>{symbolB}:<br/></b>
@@ -102,8 +119,8 @@ const YieldList = (props) => {
                   </td>
                   <td>
                     <Button
-                      variant="outline"
-                      onClick={() => setOpen(true)}
+                      color="ghost"
+                      onClick={() => handleOpenModal(pair, quantities, hypervisor)}
                       className="grow"
                     >
                       Claim
@@ -121,6 +138,9 @@ const YieldList = (props) => {
       <YieldClaimModal
         handleCloseModal={handleCloseModal}
         isOpen={open}
+        yieldPair={yieldPair || []}
+        yieldQuantities={yieldQuantities || []}
+        yieldHypervisor={yieldHypervisor || ''}
       />
     </div>
   );

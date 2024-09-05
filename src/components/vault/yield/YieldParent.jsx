@@ -1,14 +1,7 @@
-import { useEffect, useState, useMemo } from "react";
-import { useParams, useLocation, useNavigate } from "react-router-dom";
-import { ethers } from "ethers";
+import { useNavigate } from "react-router-dom";
 import {
-  useBlockNumber,
   useReadContract,
-  useChainId,
-  useWatchBlockNumber,
-  useAccount,
 } from "wagmi";
-import { arbitrumSepolia } from "wagmi/chains";
 
 import {
   AdjustmentsHorizontalIcon
@@ -20,19 +13,20 @@ import {
 } from "../../../store/Store";
 
 import YieldList from "./YieldList";
-import YieldRatio from "./YieldRatio";
+// import YieldRatio from "./YieldRatio";
 
 import Card from "../../ui/Card";
 import Typography from "../../ui/Typography";
-import CenterLoader from "../../ui/CenterLoader";
 import Button from "../../ui/Button";
 
 const Vault = (props) => {
-  const { vaultType, yieldEnabled } = props;
+  const { yieldEnabled } = props;
   const { vaultAddress } = useVaultAddressStore();
   const { smartVaultABI } = useSmartVaultABIStore();
 
-  const { data: yieldData, refetch: refetchYield, isPending: yieldIsPending } = useReadContract({
+  const navigate = useNavigate();
+
+  const { data: yieldData, refetch, isPending } = useReadContract({
     abi: smartVaultABI,
     address: vaultAddress,
     functionName: "yieldAssets",
@@ -45,41 +39,11 @@ const Vault = (props) => {
         <div className="flex-1 grow-[3]">
           <Card className="card-compact">
             <div className="card-body">
-              {/* TEMP TODO */}
               <YieldList
                 yieldData={yieldData}
-                yieldIsPending={yieldIsPending}
+                yieldIsPending={isPending}
               />
-              <YieldRatio />
-              <div className="flex flex-col mt-2">
-                <div className="flex-1 flex flex-row justify-between">
-                  <Typography
-                    variant="p"
-                  >
-                    Total Yield Earned
-                  </Typography>
-                  <Typography
-                    variant="p"
-                    className="text-right"
-                  >
-                    €TBC.12
-                  </Typography>
-                </div>
-                <div className="flex-1 flex flex-row justify-between">
-                  <Typography
-                    variant="p"
-                  >
-                    Total Balance
-                  </Typography>
-                  <Typography
-                    variant="p"
-                    className="text-right"
-                  >
-                    €TBC.34
-                  </Typography>
-                </div>
-
-              </div>
+              {/* <YieldRatio /> */}
             </div>
           </Card>
         </div>
@@ -106,7 +70,6 @@ const Vault = (props) => {
               <Button
                 onClick={() => navigate('/')}
                 variant="outline"
-                disabled={isLoading}
                 className="pl-2"
               >
                 View My Vaults
