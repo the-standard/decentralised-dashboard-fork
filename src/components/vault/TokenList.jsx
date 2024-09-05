@@ -10,13 +10,14 @@ import {
 } from 'react-daisyui';
 
 import {
-  useVaultStore,
-} from "../../store/Store";
-
-import {
   ChevronDownIcon,
   ChevronUpIcon,
+  QueueListIcon,
 } from '@heroicons/react/24/outline';
+
+import {
+  useVaultStore,
+} from "../../store/Store";
 
 import {
   ArbitrumVaults,
@@ -27,6 +28,7 @@ import Card from "../ui/Card";
 import Button from "../ui/Button";
 import CenterLoader from "../ui/CenterLoader";
 import TokenIcon from "../ui/TokenIcon";
+import Typography from "../ui/Typography";
 import TokenActions from "./TokenActions";
 import TokenValueChart from "./TokenValueChart";
 
@@ -96,8 +98,11 @@ const TokenList = ({
     <>
       <Card className="card-compact">
         <div className="card-body">
-          <div className="">
-            {/* <table className="table table-fixed"> */}
+          <div>
+            <Typography variant="h2" className="card-title flex gap-0">
+              <QueueListIcon className="mr-2 h-6 w-6 inline-block"/>
+              Collateral Tokens
+            </Typography>
             <table className="table">
               <thead>
                 <tr>
