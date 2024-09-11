@@ -37,19 +37,22 @@ const YieldClaimModal = ({
   yieldQuantities,
   yieldHypervisor,
 }) => {
-  const [claimAsset, setClaimAsset] = useState();
-  const chainId = useChainId();
   const { vaultAddress } = useVaultAddressStore();
   const { smartVaultABI } = useSmartVaultABIStore();
   const { writeContract, isError, isPending, isSuccess } = useWriteContract();
+  const chainId = useChainId();
+
+  const [claimAsset, setClaimAsset] = useState();
+  const [ yieldStage, setYieldStage ] = useState('');
+  const [ minCollateral, setMinCollateral ] = useState(50);
 
   const yieldVaultsInfo = chainId === arbitrumSepolia.id
   ? SepoliaVaults
   : ArbitrumVaults;
 
-  const gammaYieldVaultsInfo = chainId === arbitrumSepolia.id
-  ? SepoliaGammaVaults
-  : ArbitrumGammaVaults;
+  // const gammaYieldVaultsInfo = chainId === arbitrumSepolia.id
+  // ? SepoliaGammaVaults
+  // : ArbitrumGammaVaults;
 
   let allReturnTokens = [];
 
@@ -65,6 +68,10 @@ const YieldClaimModal = ({
 
   const handleClaimYield = async () => {
     const yieldAsset = ethers.encodeBytes32String(claimAsset);
+    const formattedMinCollateral = Number(minCollateral * 1000).toString();
+    const now = Math.floor(Date.now() / 1000);
+    const deadline = now + 60;    
+
     try {
       writeContract({
         abi: smartVaultABI,
@@ -73,6 +80,8 @@ const YieldClaimModal = ({
         args: [
           yieldHypervisor,
           yieldAsset,
+          formattedMinCollateral,
+          deadline
         ],
       });
     } catch (error) {
@@ -100,6 +109,113 @@ const YieldClaimModal = ({
     isError,
   ]);
 
+  if (isPending) {
+    return (
+      <>
+        <Modal
+          open={open}
+          onClose={() => {
+            handleCloseModal();
+          }}
+          wide={false}
+        >
+          <Typography variant="h2" className="card-title">
+            <ArrowDownCircleIcon className="mr-2 h-6 w-6 inline-block"/>
+            Claiming Your Yield
+          </Typography>
+  
+          <CenterLoader />
+  
+          <div className="card-actions pt-4 flex-col-reverse lg:flex-row justify-end">
+            <Button
+              className="w-full lg:w-auto"
+              color="ghost"
+              disabled
+            >
+              Back
+            </Button>
+            <Button
+              className="w-full lg:w-64"
+              color="success"
+              disabled={true}
+              loading={true}
+            >
+              Loading
+            </Button>
+          </div>
+        </Modal>
+      </>
+    );
+  }
+
+  if (yieldStage === 'COLLATERAL') {
+    return (
+      <>
+        <Modal
+          open={open}
+          onClose={() => {
+            handleCloseModal();
+          }}
+          wide={false}
+        >
+          <Typography variant="h2" className="card-title">
+            <ArrowDownCircleIcon className="mr-2 h-6 w-6 inline-block"/>
+            Choose Minimum Collateral Percentage
+          </Typography>
+
+          <Typography
+            variant="p"
+            className="mb-2"
+          >
+            Your Yield Claim will revert if it's value after withdrawing isn't at least {minCollateral}% of it's current value.
+          </Typography>
+
+  
+          <div className="flex flex-col">
+            <div>
+              <input
+                type="range"
+                min={0}
+                max="100"
+                value={minCollateral}
+                className={`range range-info`}
+                onChange={(e) => setMinCollateral(e.target.value)}
+              />
+            </div>
+            <div className="flex flex-row justify-between">
+              <div className="flex flex-col">
+                <Typography
+                  variant="p"
+                  className="mt-2"
+                >
+                  Minimum Collateral Value: {minCollateral}%
+                </Typography>
+              </div>
+            </div>
+          </div>
+  
+          <div className="card-actions pt-4 flex-col-reverse lg:flex-row justify-end">
+            <Button
+              className="w-full lg:w-auto"
+              color="ghost"
+              onClick={() => setYieldStage('')}
+            >
+              Back
+            </Button>
+            <Button
+              className="w-full lg:w-64"
+              color="success"
+              loading={isPending}
+              disabled={isPending || !claimAsset}
+              onClick={() => handleClaimYield()}
+            >
+              Confirm
+            </Button>
+          </div>
+        </Modal>
+      </>
+    );  
+  }
 
   return (
     <>
@@ -110,108 +226,96 @@ const YieldClaimModal = ({
         }}
       >
         <>
-          {isPending ? (
-            <>
-              <Typography variant="h2" className="card-title">
-                <ArrowDownCircleIcon className="mr-2 h-6 w-6 inline-block"/>
-                Claiming Your Yield
-              </Typography>
-              <CenterLoader />
-            </>
-          ) : (
-            <>
-              <div>
-                <Typography variant="h2" className="card-title">
-                  <ArrowDownCircleIcon className="mr-2 h-6 w-6 inline-block"/>
-                  Claim Your Yields
-                </Typography>
+          <div>
+            <Typography variant="h2" className="card-title">
+              <ArrowDownCircleIcon className="mr-2 h-6 w-6 inline-block"/>
+              Claim Your Yields
+            </Typography>
 
-                <Typography variant="p" className="mb-2">
-                  Claiming your yields will withdraw <b>all</b> of the assets in this pair.
-                </Typography>
+            <Typography variant="p" className="mb-2">
+              Claiming your yields will withdraw <b>all</b> of the assets in this pair.
+            </Typography>
 
-                <Typography
-                  variant="p"
-                  className="mb-2"
-                >
-                  Select which asset you want to claim your yield as.
-                </Typography>
+            <Typography
+              variant="p"
+              className="mb-2"
+            >
+              Select which asset you want to claim your yield as.
+            </Typography>
 
-                <table className="table">
-                  <thead>
-                    <tr>
-                      <th>Yield Pair</th>
-                      <th>Token Quantities</th>
-                    </tr>
-                  </thead>
-                    <tbody>
-                      <tr>
-                        <td>
-                          <div className="h-full w-full flex flex-col">
-                            <div className="flex items-center">
-                              <TokenIcon
-                                symbol={yieldPair[0]}
-                                className="h-8 w-8 p-1 rounded-full bg-base-300/50"
-                              />
-                              <TokenIcon
-                                symbol={yieldPair[1]}
-                                className="h-8 w-8 p-1 rounded-full bg-base-300/50 -ml-[8px]"
-                              />
-                            </div>
-                            <div className="pt-2 hidden md:table-cell">
-                              {yieldPair[0]}/{yieldPair[1]}
-                            </div>
-                          </div>
-                        </td>
-                        <td>
-                          <b>{yieldPair[0]}:<br/></b>
-                          {yieldQuantities[0]}<br/>
-                          <b>{yieldPair[1]}:<br/></b>
-                          {yieldQuantities[1]}
-                        </td>
-                      </tr>
-                    </tbody>
-                </table>
-              </div>
-              <div className="mt-4">
-                <Typography
-                  variant="p"
-                  className="mb-2"
-                >
-                  Claim Yield As:
-                </Typography>
-                <Select
-                  id="yield-asset-select"
-                  value={claimAsset}
-                  label="Asset"
-                  handleChange={handleSetClaimAsset}
-                  optName="asset"
-                  optValue="asset"
-                  options={allReturnTokens || []}
-                  className="w-full mb-4"
-                >
-                </Select>
-              </div>
-              <div className="card-actions pt-4 flex-col-reverse lg:flex-row justify-end">
-                <Button
-                  className="w-full lg:w-auto"
-                  color="ghost"
-                  onClick={handleCloseModal}
-                >
-                  Close
-                </Button>
-                <Button
-                  className="w-full lg:w-64"
-                  color="success"
-                  loading={isPending}
-                  disabled={isPending || !claimAsset}
-                  onClick={() => handleClaimYield()}
-                >
-                  Claim All Yields
-                </Button>
-              </div>
-            </>
-          )}
+            <table className="table">
+              <thead>
+                <tr>
+                  <th>Yield Pair</th>
+                  <th>Token Quantities</th>
+                </tr>
+              </thead>
+                <tbody>
+                  <tr>
+                    <td>
+                      <div className="h-full w-full flex flex-col">
+                        <div className="flex items-center">
+                          <TokenIcon
+                            symbol={yieldPair[0]}
+                            className="h-8 w-8 p-1 rounded-full bg-base-300/50"
+                          />
+                          <TokenIcon
+                            symbol={yieldPair[1]}
+                            className="h-8 w-8 p-1 rounded-full bg-base-300/50 -ml-[8px]"
+                          />
+                        </div>
+                        <div className="pt-2 hidden md:table-cell">
+                          {yieldPair[0]}/{yieldPair[1]}
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <b>{yieldPair[0]}:<br/></b>
+                      {yieldQuantities[0]}<br/>
+                      <b>{yieldPair[1]}:<br/></b>
+                      {yieldQuantities[1]}
+                    </td>
+                  </tr>
+                </tbody>
+            </table>
+          </div>
+          <div className="mt-4">
+            <Typography
+              variant="p"
+              className="mb-2"
+            >
+              Claim Yield As:
+            </Typography>
+            <Select
+              id="yield-asset-select"
+              value={claimAsset}
+              label="Asset"
+              handleChange={handleSetClaimAsset}
+              optName="asset"
+              optValue="asset"
+              options={allReturnTokens || []}
+              className="w-full mb-4"
+            >
+            </Select>
+          </div>
+          <div className="card-actions pt-4 flex-col-reverse lg:flex-row justify-end">
+            <Button
+              className="w-full lg:w-auto"
+              color="ghost"
+              onClick={handleCloseModal}
+            >
+              Close
+            </Button>
+            <Button
+              className="w-full lg:w-64"
+              color="success"
+              loading={isPending}
+              disabled={isPending || !claimAsset}
+              onClick={() => setYieldStage('COLLATERAL')}
+            >
+              Next
+            </Button>
+          </div>
         </>
       </Modal>
     </>

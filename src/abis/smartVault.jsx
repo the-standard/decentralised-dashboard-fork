@@ -314,7 +314,17 @@ export const abi = [
       },
       {
         "internalType": "uint256",
-        "name": "_euroPercentage",
+        "name": "_stablePercentage",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_minCollateralPercentage",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_deadline",
         "type": "uint256"
       }
     ],
@@ -327,16 +337,64 @@ export const abi = [
     "inputs": [
       {
         "internalType": "address",
-        "name": "_vault",
+        "name": "_hypervisor",
         "type": "address"
       },
       {
         "internalType": "bytes32",
         "name": "_symbol",
         "type": "bytes32"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_minCollateralPercentage",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_deadline",
+        "type": "uint256"
       }
     ],
     "name": "withdrawYield",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "bytes32",
+        "name": "_inToken",
+        "type": "bytes32"
+      },
+      {
+        "internalType": "bytes32",
+        "name": "_outToken",
+        "type": "bytes32"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_amount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_minOut",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint24",
+        "name": "_fee",
+        "type": "uint24"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_deadline",
+        "type": "uint256"
+      }
+    ],
+    "name": "swapV4",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
