@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   useReadContract,
@@ -23,6 +24,8 @@ const Vault = (props) => {
   const { yieldEnabled } = props;
   const { vaultAddress } = useVaultAddressStore();
   const { smartVaultABI } = useSmartVaultABIStore();
+  // TODO TEMP
+  const [ demo, setDemo ] = useState(false);
 
   const navigate = useNavigate();
 
@@ -32,6 +35,33 @@ const Vault = (props) => {
     functionName: "yieldAssets",
     args: [],
   });
+
+  // TODO TEMP
+  const demoData = {
+    amountA: 4135957031250000000n,
+    amountB: 4043n,
+    decA: 18,
+    decB: 6,
+    hypervisor: "0x1231231231231231231231231231231231231231",
+    symbolA: "USDs",
+    symbolB: "USDC",
+  }
+  if (demo) {
+    return (
+      <div className="flex-1 grow-[3]">
+        <Card className="card-compact">
+          <div className="card-body">
+            <YieldList
+              yieldData={demoData}
+              yieldIsPending={false}
+              setDemo={setDemo}
+              demo={demo}
+            />
+          </div>
+        </Card>
+      </div>
+    );
+  }
 
   return (
     <>
@@ -44,6 +74,9 @@ const Vault = (props) => {
                   <YieldList
                     yieldData={yieldData}
                     yieldIsPending={isPending}
+                    // TODO TEMP
+                    setDemo={setDemo}
+                    demo={demo}      
                   />
                   {/* <YieldRatio /> */}
                 </div>
@@ -54,14 +87,18 @@ const Vault = (props) => {
               <Card className="card-compact">
                 <div className="card-body">
                   <Typography variant="h2" className="card-title flex gap-0">
-                    <AdjustmentsHorizontalIcon className="mr-2 h-6 w-6 inline-block"/>
+                      {/* TODO TEMP */}
+                      <AdjustmentsHorizontalIcon
+                        className="mr-2 h-6 w-6 inline-block"
+                        onClick={() => setDemo(!demo)}
+                      />
                     Yield Pools
                   </Typography>
                   <Typography
                     variant="p"
                     className="mb-2"
                   >
-                    Start earning token through a mix of volatile collateral and correlated stable asset yield strategies.
+                    Start earning tokens through a mix of volatile collateral and correlated stable asset yield strategies.
                   </Typography>
                   <Typography
                     variant="p"
