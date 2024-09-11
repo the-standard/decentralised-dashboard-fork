@@ -3,6 +3,7 @@ import { ethers } from "ethers";
 import DepositModal from "./DepositModal";
 import WithdrawModal from "./WithdrawModal";
 import SwapModal from "./SwapModal";
+import SwapModalV4 from "./SwapModalV4";
 import YieldDepositModal from "./yield/YieldDepositModal";
 
 const TokenActions = ({
@@ -73,6 +74,24 @@ const TokenActions = ({
           </>
         );
         break;
+      case 'SWAPV4':
+        content = (
+          <>
+            <SwapModalV4
+              open={actionType}
+              closeModal={closeModal}          
+              symbol={symbol}
+              tokenAddress={tokenAddress}
+              decimals={decimals}
+              token={token}
+              collateralValue={collateralValue}
+              assets={assets}
+              tokenTotal={amount}
+              vaultType={vaultType}
+            />
+          </>
+        );
+        break;  
       case 'YIELD':
         content = (
           <>

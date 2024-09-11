@@ -94,6 +94,10 @@ const TokenList = ({
     getChartData();
   }, []);
 
+  const vaultVersion = vaultStore?.status?.version || '';
+
+  const useSwapV4 = vaultVersion >= 4;
+
   return (
     <>
       <Card className="card-compact">
@@ -215,7 +219,13 @@ const TokenList = ({
                                   <Button
                                     variant="outline"
                                     disabled={amount <= 0}
-                                    onClick={() => handleClick('SWAP', asset)}
+                                    onClick={
+                                      useSwapV4 ? (
+                                        () => handleClick('SWAPV4', asset)
+                                      ) : (
+                                        () => handleClick('SWAP', asset)
+                                      )
+                                    }
                                     className="grow"
                                   >
                                     Swap
