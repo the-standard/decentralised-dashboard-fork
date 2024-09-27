@@ -20,7 +20,16 @@ import Typography from "../../ui/Typography";
 import Button from "../../ui/Button";
 
 const YieldList = (props) => {
-  const { yieldData, yieldIsPending } = props;
+  const {
+    yieldData,
+    yieldIsPending,
+    gammaUser,
+    gammaReturns,
+    gammaStats,
+    gammaUserLoading,
+    gammaReturnsLoading,
+    gammaStatsLoading,
+  } = props;
 
   // TODO TEMP
   const { demo, setDemo } = props;
@@ -54,10 +63,8 @@ const YieldList = (props) => {
   return (
     <div className="">
       <Typography variant="h2" className="card-title flex gap-0">
-        {/* TODO TEMP */}
         <AdjustmentsHorizontalIcon
           className="mr-2 h-6 w-6 inline-block"
-          onClick={() => setDemo(!demo)}
         />
         Yield Pools
       </Typography>
@@ -65,67 +72,12 @@ const YieldList = (props) => {
         <thead>
           <tr>
             <th>Yield Pair</th>
+            <th>APY</th>
             <th>Token Quantities</th>
             <th></th>
           </tr>
         </thead>
-        {/* TODO TEMP */}
-        {demo ? (
-          <>
-            <tr
-              className="cursor-pointer hover"
-              onClick={() => handleOpenModal(
-                [demoData.symbolA, demoData.symbolB],
-                [
-                  ethers.formatUnits(demoData.amountA, demoData.decA),
-                  ethers.formatUnits(demoData.amountB, demoData.decB),
-                ],
-                demoData.hypervisor
-              )}
-            >
-              <td>
-                <div className="h-full w-full flex flex-col">
-                  <div className="flex items-center">
-                    <TokenIcon
-                      symbol={demoData.symbolA}
-                      className="h-8 w-8 p-1 rounded-full bg-base-300/50"
-                    />
-                    <TokenIcon
-                      symbol={demoData.symbolB}
-                      className="h-8 w-8 p-1 rounded-full bg-base-300/50 -ml-[8px]"
-                    />
-                  </div>
-                  <div className="pt-2 hidden md:table-cell">
-                    {demoData.symbolA}/{demoData.symbolB}
-                  </div>
-                </div>
-              </td>
-              <td>
-                <b>{demoData.symbolA}:<br/></b>
-                {ethers.formatUnits(demoData.amountA, demoData.decA)}<br/>
-                <b>{demoData.symbolB}:<br/></b>
-                {ethers.formatUnits(demoData.amountB, demoData.decB)}
-              </td>
-              <td>
-                <Button
-                  color="ghost"
-                  onClick={() => handleOpenModal(
-                    [demoData.symbolA, demoData.symbolB],
-                    [
-                      ethers.formatUnits(demoData.amountA, demoData.decA),
-                      ethers.formatUnits(demoData.amountB, demoData.decB),
-                    ],
-                    demoData.hypervisor
-                  )}
-                  className="grow"
-                >
-                  Claim
-                </Button>
-              </td>
-            </tr>
-          </>
-        ) : (
-          <>
+        <>
             {yieldData && yieldData.length ? (
               <tbody>
                 {yieldData.map(function(item, index) {
@@ -162,6 +114,9 @@ const YieldList = (props) => {
                     ethers.formatUnits(amountB, decB),
                   ];
                   const hypervisor = item.hypervisor;
+                  const yieldReturns = gammaReturns?.find((item) => item.hypervisor === hypervisor);
+
+                  const showApy = Number(yieldReturns?.feeApy * 100).toFixed(2);
 
                   return (
                     <tr
@@ -187,6 +142,9 @@ const YieldList = (props) => {
                         </div>
                       </td>
                       <td>
+                        {showApy || ''}%
+                      </td>
+                      <td>
                         <b>{symbolA}:<br/></b>
                         {ethers.formatUnits(amountA, decA)}<br/>
                         <b>{symbolB}:<br/></b>
@@ -207,10 +165,8 @@ const YieldList = (props) => {
               </tbody>
             ) : (null)}
           </>
-        )}
       </table>
-      {/* TODO TEMP */}
-      {demo || yieldData && yieldData.length ? (null) : (
+      {yieldData && yieldData.length ? (null) : (
         <CenterLoader />
       )}
       <YieldClaimModal
