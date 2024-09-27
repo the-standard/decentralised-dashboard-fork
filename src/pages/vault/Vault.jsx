@@ -258,7 +258,7 @@ const Vault = () => {
         </div>
       </Card>
       <div className="flex flex-col md:flex-row mt-4 gap-4 flex-wrap">
-        <div className="flex-1 grow-[6]">
+        <div className="flex-1 grow-[4]">
           <TokenList
             vaultType={vaultType}
             assets={assets}
