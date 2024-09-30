@@ -23,19 +23,19 @@ import susdlogo from "../../assets/USDs.svg";
 
 const vaultTypes = [
   {
-    title: "EUROs (Standard Euro)",
-    para: "Euro pegged stablecoin",
-    borrowRate: "Borrow up to 90.91%",
-    type: 'EUROs',
-    image: seurologo,
-    isActive: true,
-  },
-  {
     title: "USDs (Standard Dollar)",
     para: "US Dollar pegged stablecoin",
     borrowRate: "Borrow up to 90.91%",
     type: 'USDs',
     image: susdlogo,
+    isActive: true,
+  },
+  {
+    title: "EUROs (Standard Euro)",
+    para: "Euro pegged stablecoin",
+    borrowRate: "Borrow up to 90.91%",
+    type: 'EUROs',
+    image: seurologo,
     isActive: true,
   },
 ];
