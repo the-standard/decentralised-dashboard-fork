@@ -73,7 +73,8 @@ const YieldList = (props) => {
           <tr>
             <th>Yield Pair</th>
             <th>APY</th>
-            <th>Token Quantities</th>
+            <th>Value</th>
+            {/* <th>Token Quantities</th> */}
             <th></th>
           </tr>
         </thead>
@@ -116,7 +117,10 @@ const YieldList = (props) => {
                   const hypervisor = item.hypervisor;
                   const yieldReturns = gammaReturns?.find((item) => item.hypervisor === hypervisor);
 
+                  const yieldUser = gammaUser?.[hypervisor];
+
                   const showApy = Number(yieldReturns?.feeApy * 100).toFixed(2);
+                  const showBalance = yieldUser?.balanceUSD.toFixed(2) || '';
 
                   return (
                     <tr
@@ -145,11 +149,14 @@ const YieldList = (props) => {
                         {showApy || ''}%
                       </td>
                       <td>
+                        ${ showBalance || ''}
+                      </td>
+                      {/* <td>
                         <b>{symbolA}:<br/></b>
                         {ethers.formatUnits(amountA, decA)}<br/>
                         <b>{symbolB}:<br/></b>
                         {ethers.formatUnits(amountB, decB)}
-                      </td>
+                      </td> */}
                       <td>
                         <Button
                           color="ghost"

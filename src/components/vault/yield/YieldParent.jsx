@@ -32,6 +32,8 @@ const Vault = (props) => {
   const [ gammaStats, setGammaStats ] = useState([]);
   const [ gammaStatsLoading, setGammaStatsLoading ] = useState(false);
 
+  const [ userSummary, setUserSummary ] = useState([]);
+
   const navigate = useNavigate();
 
   const { data: yieldData, refetch, isPending } = useReadContract({
@@ -41,9 +43,12 @@ const Vault = (props) => {
     args: [],
   });
 
-  const hypervisorAddresses = yieldData && yieldData.length && yieldData.map((item) => {
-    return (item.hypervisor)
-  })
+  let hypervisorAddresses = [];
+  if (yieldData && yieldData.length) {
+    hypervisorAddresses = yieldData.map((item) => {
+      return (item.hypervisor)
+    })
+  }
 
   useEffect(() => {
     if (yieldData && !isPending) {
@@ -146,7 +151,8 @@ const Vault = (props) => {
       const useResponse = demoResponse;
 
       const hypervisorReturns = [];
-      hypervisorAddresses.forEach((hyperaddress) => {
+
+      hypervisorAddresses && hypervisorAddresses.length && hypervisorAddresses.forEach((hyperaddress) => {
         const useReturns = useResponse?.[hyperaddress];
         hypervisorReturns.push({
           hypervisor: hyperaddress,
@@ -256,7 +262,44 @@ const Vault = (props) => {
     }
   };
 
-  // console.log(123123, {gammaUser}, {gammaReturns}, {gammaStats})
+  useEffect(() => {
+    if (yieldData && !isPending) {
+      getUserHypervisorUSD();
+    }
+  }, [gammaUser]);
+
+  const getUserHypervisorUSD = async () => {  
+    const allUSD = [];
+    const totalUSD = {
+      initialTokenUSD: 0,
+      currentUSD: 0,
+      netMarketReturnsUSD: 0,
+      netMarketReturnsPercentage: "0%",
+    };
+    hypervisorAddresses && hypervisorAddresses.length && hypervisorAddresses.forEach((hyperaddress) => {
+      const userHypervisor = gammaUser?.[hyperaddress];
+      const initialTokenUSD = userHypervisor?.returns?.initialTokenUSD;
+      const currentUSD = userHypervisor?.returns?.currentUSD;
+
+      const netMarketReturnsUSD = userHypervisor?.returns?.netMarketReturnsUSD;
+
+      totalUSD.initialTokenUSD = totalUSD.initialTokenUSD + initialTokenUSD;
+      totalUSD.currentUSD = totalUSD.currentUSD + currentUSD;
+      totalUSD.netMarketReturnsUSD = totalUSD.netMarketReturnsUSD + netMarketReturnsUSD;
+
+      allUSD.push({
+        hypervisor: hyperaddress,
+        initialTokenUSD: initialTokenUSD,
+        currentUSD: currentUSD,
+      });
+    });
+
+
+    setUserSummary({
+      hypervisors: allUSD,
+      totalUSD: totalUSD,
+    })
+  };
 
   return (
     <div className="flex-1 grow-[3]">
@@ -276,6 +319,52 @@ const Vault = (props) => {
                   gammaStatsLoading={gammaStatsLoading}
                 />
                 {/* <YieldRatio /> */}
+
+                <div>
+
+                  <div className="flex justify-between">
+                    <Typography
+                      variant="p"
+                    >
+                      Total Yield Earned:
+                    </Typography>
+                    <Typography
+                      variant="p"
+                      className="text-right"
+                    >
+                      {userSummary?.totalUSD?.netMarketReturnsUSD ? (
+                        <>
+                          {userSummary?.totalUSD?.netMarketReturnsUSD < 0 ? (
+                            '-$'
+                          ) : (
+                            '$'
+                          )}
+                          {
+                            Math.abs(
+                              userSummary?.totalUSD?.netMarketReturnsUSD
+                            )?.toFixed(2) || ''
+                          }
+                        </>
+                      ) : (
+                        ''
+                      )}
+                    </Typography>
+                  </div>
+                  <div className="flex justify-between">
+                    <Typography
+                      variant="p"
+                    >
+                      Total Balance:
+                    </Typography>
+                    <Typography
+                      variant="p"
+                      className="text-right"
+                    >
+                      ${userSummary?.totalUSD?.currentUSD?.toFixed(2) || ''}
+                    </Typography>
+                  </div>
+
+                </div>
               </div>
             </Card>
           ) : (
