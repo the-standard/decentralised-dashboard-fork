@@ -10,6 +10,7 @@ import {
 } from '@heroicons/react/24/outline';
 
 import YieldClaimModal from "./YieldClaimModal";
+import YieldViewModal from "./YieldViewModal";
 import {
   ArbitrumVaults,
   SepoliaVaults,
@@ -34,7 +35,7 @@ const YieldList = (props) => {
   // TODO TEMP
   const { demo, setDemo } = props;
 
-  const [ open, setOpen ] = useState(false);
+  const [ open, setOpen ] = useState('');
   const [ yieldPair, setYieldPair ] = useState([]);
   const [ yieldQuantities, setYieldQuantities ] = useState([]);
   const [ yieldHypervisor, setYieldHypervisor ] = useState('');
@@ -44,14 +45,14 @@ const YieldList = (props) => {
     setYieldPair([]);
     setYieldQuantities([]);
     setYieldHypervisor('');
-    setOpen(false);
+    setOpen('');
   };
 
-  const handleOpenModal = (pair, quantities, hypervisor) => {
+  const handleOpenModal = (pair, quantities, hypervisor, type) => {
     setYieldPair(pair);
     setYieldQuantities(quantities);
     setYieldHypervisor(hypervisor);
-    setOpen(true);
+    setOpen(type);
   }
 
   const yieldVaultsInfo = chainId === arbitrumSepolia.id
@@ -126,7 +127,7 @@ const YieldList = (props) => {
                     <tr
                       key={index}
                       className="cursor-pointer hover"
-                      onClick={() => handleOpenModal(pair, quantities, hypervisor)}
+                      onClick={() => handleOpenModal(pair, quantities, hypervisor, 'VIEW')}
                     >
                       <td>
                         <div className="h-full w-full flex flex-col">
@@ -149,7 +150,7 @@ const YieldList = (props) => {
                         {showApy || ''}%
                       </td>
                       <td>
-                        ${ showBalance || ''}
+                        ${showBalance || ''}
                       </td>
                       {/* <td>
                         <b>{symbolA}:<br/></b>
@@ -160,10 +161,10 @@ const YieldList = (props) => {
                       <td>
                         <Button
                           color="ghost"
-                          onClick={() => handleOpenModal(pair, quantities, hypervisor)}
+                          onClick={() => handleOpenModal(pair, quantities, hypervisor, 'VIEW')}
                           className="grow"
                         >
-                          Claim
+                          View
                         </Button>
                       </td>
                     </tr>
@@ -177,11 +178,23 @@ const YieldList = (props) => {
         <CenterLoader />
       )}
       <YieldClaimModal
-        handleCloseModal={handleCloseModal}
-        isOpen={open}
+        handleCloseModal={() => handleCloseModal()}
+        isOpen={open === 'CLAIM'}
         yieldPair={yieldPair || []}
         yieldQuantities={yieldQuantities || []}
         yieldHypervisor={yieldHypervisor || ''}
+        gammaUser={gammaUser}
+      />
+      <YieldViewModal
+        handleCloseModal={() => handleCloseModal()}
+        isOpen={open === 'VIEW'}
+        openClaim={() => handleOpenModal(yieldPair, yieldQuantities, yieldHypervisor, 'CLAIM')}
+        yieldPair={yieldPair || []}
+        yieldQuantities={yieldQuantities || []}
+        yieldHypervisor={yieldHypervisor || ''}
+        gammaUser={gammaUser}
+        gammaReturns={gammaReturns}
+        gammaStats={gammaStats}
       />
     </div>
   );
