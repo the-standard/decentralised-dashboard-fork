@@ -72,6 +72,14 @@ const YieldDepositModal = (props) => {
     }
   };
 
+  const handleStableRatio = (ratio) => {
+    let useRatio = ratio;
+    if (ratio < 10) {
+      useRatio = '10';
+    }
+    setStableRatio(useRatio);
+  };
+
   useEffect(() => {
     if (isPending) {
       // 
@@ -98,18 +106,6 @@ const YieldDepositModal = (props) => {
   ]);
 
   const allowedRatio = stableRatio >= 10 && stableRatio <= 100;
-
-  let ratioColor = 'success';
-
-  if (stableRatio < 75) {
-    ratioColor = 'info'
-  }
-  if (stableRatio < 50) {
-    ratioColor = 'warning'
-  }
-  if (stableRatio < 25) {
-    ratioColor = 'error'
-  }
 
   const yieldVaultsInfo = chainId === arbitrumSepolia.id
   ? SepoliaVaults
@@ -264,9 +260,8 @@ const YieldDepositModal = (props) => {
                 min={0}
                 max="100"
                 value={stableRatio}
-                // className={`range ${ratioColor ? 'range-' + ratioColor : ''}`}
                 className={`range`}
-                onChange={(e) => setStableRatio(e.target.value)}
+                onChange={(e) => handleStableRatio(e.target.value)}
               />
             </div>
             <div className="flex flex-row justify-between">
@@ -275,30 +270,16 @@ const YieldDepositModal = (props) => {
                   variant="p"
                   className="mt-2"
                 >
-                                    {100 - stableRatio}% {assetYield.pair[0]}/{assetYield.pair[1]}
-                  {/* {stableRatio}% USDs/USDC */}
+                  {100 - stableRatio}% {assetYield.pair[0]}/{assetYield.pair[1]}
                 </Typography>
-                {/* <Typography
-                  variant="p"
-                  className="mt-1 text-sm opacity-80"
-                >
-                  USDs/USDC
-                </Typography> */}
               </div>
               <div className="flex flex-col">
                 <Typography
                   variant="p"
                   className="mt-2"
                 >
-                                    {stableRatio}% USDs/USDC
-                  {/* {100 - stableRatio}% {assetYield.pair[0]}/{assetYield.pair[1]} */}
+                  {stableRatio}% USDs/USDC
                 </Typography>
-                {/* <Typography
-                  variant="p"
-                  className="mt-1 text-right text-sm opacity-80"
-                >
-                  {assetYield.pair[0]}/{assetYield.pair[1]}
-                </Typography> */}
               </div>
             </div>
           </div>
