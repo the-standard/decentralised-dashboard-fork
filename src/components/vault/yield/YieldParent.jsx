@@ -88,10 +88,10 @@ const Vault = (props) => {
               "initialTokenUSD": 97.7435385209756,
               "initialTokenCurrentUSD": 95.1822353477134,
               "currentUSD": 82.0144024790318,
-              "netMarketReturnsUSD": -15.7291360419437,
-              "netMarketReturnsPercentage": "-16.09%",
-              "hypervisorReturnsUSD": -13.1678328686816,
-              "hypervisorReturnsPercentage": "-13.83%"
+              "netMarketReturnsUSD": 15.7291360419437,
+              "netMarketReturnsPercentage": "16.09%",
+              "hypervisorReturnsUSD": 13.1678328686816,
+              "hypervisorReturnsPercentage": "13.83%"
             }
           },
           "0x5983C0811239ab91fB8dc72D7414257Dd8a27699": {
@@ -104,10 +104,10 @@ const Vault = (props) => {
               "initialTokenUSD": 778.953353559473,
               "initialTokenCurrentUSD": 785.626624690344,
               "currentUSD": 773.959637099317,
-              "netMarketReturnsUSD": -4.99371646015629,
-              "netMarketReturnsPercentage": "-0.64%",
-              "hypervisorReturnsUSD": -11.6669875910278,
-              "hypervisorReturnsPercentage": "-1.49%"
+              "netMarketReturnsUSD": 4.99371646015629,
+              "netMarketReturnsPercentage": "0.64%",
+              "hypervisorReturnsUSD": 11.6669875910278,
+              "hypervisorReturnsPercentage": "1.49%"
             }
           }
         }

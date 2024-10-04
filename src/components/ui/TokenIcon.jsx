@@ -1,4 +1,4 @@
-
+import placeholderlogo from "../../assets/circle.svg";
 import ethereumlogo from "../../assets/ethereumlogo.svg";
 import wbtclogo from "../../assets/wbtclogo.svg";
 import linklogo from "../../assets/linklogo.svg";
@@ -9,6 +9,9 @@ import tstlogo from "../../assets/standardiologoicon.svg";
 import gmxlogo from "../../assets/gmxlogo.svg";
 import rdntlogo from "../../assets/rdntlogo.svg";
 import sushilogo from "../../assets/sushilogo.svg";
+import susdlogo from "../../assets/usdslogo.svg";
+import usdclogo from "../../assets/usdclogo.svg";
+import wethlogo from "../../assets/wethlogo.svg";
 
 import Typography from "./Typography";
 
@@ -107,7 +110,44 @@ const TokenIcon = ({
           alt="sushi logo"
           className={className ? className : ''}
         />    
+      );
+    case 'USDs':
+      return (
+        <img
+          style={style}
+          src={susdlogo}
+          alt="USDs logo"
+          className={className ? className : ''}
+        />    
+      );
+    case 'USDC':
+      return (
+        <img
+          style={style}
+          src={usdclogo}
+          alt="USDC logo"
+          className={className ? className : ''}
+        />    
+      );
+    case 'WETH':
+      return (
+        <img
+          style={style}
+          src={wethlogo}
+          alt="WETH logo"
+          className={className ? className : ''}
+        />    
       );  
+    case 'USDs6':
+    case 'USDs18':
+      return (
+        <img
+          style={style}
+          src={placeholderlogo}
+          alt="logo"
+          className={className ? className : ''}
+        />    
+      );
     default:
       return (
         <div

@@ -88,6 +88,15 @@ const YieldDepositModal = (props) => {
     isError,
   ]);
 
+  useEffect(() => {
+    if (stableRatio > 0) {
+      const useMin = (stableRatio / 5) * 2;
+      setMinCollateral(useMin);
+    }
+  }, [
+    stableRatio,
+  ]);
+
   const allowedRatio = stableRatio >= 10 && stableRatio <= 100;
 
   let ratioColor = 'success';
@@ -240,13 +249,13 @@ const YieldDepositModal = (props) => {
                 variant="p"
                 className="mb-2"
               >
-                Less Stable
+                Volatile
               </Typography>
               <Typography
                 variant="p"
                 className="mb-2 text-right"
               >
-                More Stable
+                Stable
               </Typography>
             </div>
             <div>
@@ -255,7 +264,8 @@ const YieldDepositModal = (props) => {
                 min={0}
                 max="100"
                 value={stableRatio}
-                className={`range ${ratioColor ? 'range-' + ratioColor : ''}`}
+                // className={`range ${ratioColor ? 'range-' + ratioColor : ''}`}
+                className={`range`}
                 onChange={(e) => setStableRatio(e.target.value)}
               />
             </div>
@@ -265,28 +275,30 @@ const YieldDepositModal = (props) => {
                   variant="p"
                   className="mt-2"
                 >
-                  {stableRatio}% Stable
+                                    {100 - stableRatio}% {assetYield.pair[0]}/{assetYield.pair[1]}
+                  {/* {stableRatio}% USDs/USDC */}
                 </Typography>
-                <Typography
+                {/* <Typography
                   variant="p"
                   className="mt-1 text-sm opacity-80"
                 >
                   USDs/USDC
-                </Typography>
+                </Typography> */}
               </div>
               <div className="flex flex-col">
                 <Typography
                   variant="p"
                   className="mt-2"
                 >
-                  {100 - stableRatio}% Volatile
+                                    {stableRatio}% USDs/USDC
+                  {/* {100 - stableRatio}% {assetYield.pair[0]}/{assetYield.pair[1]} */}
                 </Typography>
-                <Typography
+                {/* <Typography
                   variant="p"
                   className="mt-1 text-right text-sm opacity-80"
                 >
                   {assetYield.pair[0]}/{assetYield.pair[1]}
-                </Typography>
+                </Typography> */}
               </div>
             </div>
           </div>
@@ -306,7 +318,7 @@ const YieldDepositModal = (props) => {
               // onClick={() => handleDepositYield()}
               onClick={() => setYieldStage('COLLATERAL')}
             >
-              Next
+              Confirm
             </Button>
           </div>
         </Modal>
@@ -331,6 +343,13 @@ const YieldDepositModal = (props) => {
           className="mb-2"
         >
           This will place <b>all</b> of your <b>{symbol}</b> into the Yield Pool shown below. You will get to choose the stable/volatile ratio next.
+        </Typography>
+
+        <Typography
+          variant="p"
+          className="mb-2"
+        >
+          The price of yield generation is 1%. This will get distributed to TST stakers.
         </Typography>
 
         <Typography
