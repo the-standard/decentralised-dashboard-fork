@@ -232,7 +232,7 @@ const YieldClaimModal = ({
               <thead>
                 <tr>
                   <th className="pl-0">Claiming Token</th>
-                  <th>Value</th>
+                  <th>Est. Value</th>
                 </tr>
               </thead>
               <tbody>
@@ -282,74 +282,74 @@ const YieldClaimModal = ({
     );  
   }
 
-  if (yieldStage === 'COLLATERAL') {
-    return (
-      <>
-        <Modal
-          open={isOpen}
-          onClose={() => {
-            handleCloseModal();
-          }}
-          wide={false}
-        >
-          <Typography variant="h2" className="card-title">
-            <ArrowDownCircleIcon className="mr-2 h-6 w-6 inline-block"/>
-            Choose Minimum Collateral Percentage
-          </Typography>
+  // if (yieldStage === 'COLLATERAL') {
+  //   return (
+  //     <>
+  //       <Modal
+  //         open={isOpen}
+  //         onClose={() => {
+  //           handleCloseModal();
+  //         }}
+  //         wide={false}
+  //       >
+  //         <Typography variant="h2" className="card-title">
+  //           <ArrowDownCircleIcon className="mr-2 h-6 w-6 inline-block"/>
+  //           Choose Minimum Collateral Percentage
+  //         </Typography>
 
-          <Typography
-            variant="p"
-            className="mb-2"
-          >
-            Your Yield Claim will revert if it's value after withdrawing isn't at least {minCollateral}% of it's current value.
-          </Typography>
+  //         <Typography
+  //           variant="p"
+  //           className="mb-2"
+  //         >
+  //           Your Yield Claim will revert if it's value after withdrawing isn't at least {minCollateral}% of it's current value.
+  //         </Typography>
 
   
-          <div className="flex flex-col">
-            <div>
-              <input
-                type="range"
-                min={0}
-                max="100"
-                value={minCollateral}
-                className={`range range-info`}
-                onChange={(e) => setMinCollateral(e.target.value)}
-              />
-            </div>
-            <div className="flex flex-row justify-between">
-              <div className="flex flex-col">
-                <Typography
-                  variant="p"
-                  className="mt-2"
-                >
-                  Minimum Collateral Value: {minCollateral}%
-                </Typography>
-              </div>
-            </div>
-          </div>
+  //         <div className="flex flex-col">
+  //           <div>
+  //             <input
+  //               type="range"
+  //               min={0}
+  //               max="100"
+  //               value={minCollateral}
+  //               className={`range range-info`}
+  //               onChange={(e) => setMinCollateral(e.target.value)}
+  //             />
+  //           </div>
+  //           <div className="flex flex-row justify-between">
+  //             <div className="flex flex-col">
+  //               <Typography
+  //                 variant="p"
+  //                 className="mt-2"
+  //               >
+  //                 Minimum Collateral Value: {minCollateral}%
+  //               </Typography>
+  //             </div>
+  //           </div>
+  //         </div>
   
-          <div className="card-actions pt-4 flex-col-reverse lg:flex-row justify-end">
-            <Button
-              className="w-full lg:w-auto"
-              color="ghost"
-              onClick={() => setYieldStage('')}
-            >
-              Back
-            </Button>
-            <Button
-              className="w-full lg:w-64"
-              color="success"
-              loading={isPending}
-              disabled={isPending || !claimAsset}
-              onClick={() => setYieldStage('CONFIRM')}
-            >
-              Next
-            </Button>
-          </div>
-        </Modal>
-      </>
-    );  
-  }
+  //         <div className="card-actions pt-4 flex-col-reverse lg:flex-row justify-end">
+  //           <Button
+  //             className="w-full lg:w-auto"
+  //             color="ghost"
+  //             onClick={() => setYieldStage('')}
+  //           >
+  //             Back
+  //           </Button>
+  //           <Button
+  //             className="w-full lg:w-64"
+  //             color="success"
+  //             loading={isPending}
+  //             disabled={isPending || !claimAsset}
+  //             onClick={() => setYieldStage('CONFIRM')}
+  //           >
+  //             Next
+  //           </Button>
+  //         </div>
+  //       </Modal>
+  //     </>
+  //   );  
+  // }
 
   return (
     <>
@@ -483,7 +483,7 @@ const YieldClaimModal = ({
                 color="success"
                 loading={isPending}
                 disabled={isPending || !claimAsset}
-                onClick={() => setYieldStage('COLLATERAL')}
+                onClick={() => setYieldStage('CONFIRM')}
               >
                 Next
               </Button>
