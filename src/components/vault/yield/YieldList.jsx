@@ -32,9 +32,6 @@ const YieldList = (props) => {
     gammaStatsLoading,
   } = props;
 
-  // TODO TEMP
-  const { demo, setDemo } = props;
-
   const [ open, setOpen ] = useState('');
   const [ yieldPair, setYieldPair ] = useState([]);
   const [ yieldQuantities, setYieldQuantities ] = useState([]);
@@ -58,8 +55,6 @@ const YieldList = (props) => {
   const yieldVaultsInfo = chainId === arbitrumSepolia.id
   ? SepoliaVaults
   : ArbitrumVaults;
-
-  const demoData = yieldData;
 
   return (
     <div className="">
@@ -118,7 +113,7 @@ const YieldList = (props) => {
                   const hypervisor = item.hypervisor;
                   const yieldReturns = gammaReturns?.find((item) => item.hypervisor === hypervisor);
 
-                  const yieldUser = gammaUser?.[hypervisor];
+                  const yieldUser = gammaUser?.[hypervisor.toLowerCase()];
 
                   const showApy = Number(yieldReturns?.feeApy * 100).toFixed(2);
                   const showBalance = yieldUser?.balanceUSD.toFixed(2) || '';
@@ -152,12 +147,6 @@ const YieldList = (props) => {
                       <td>
                         ${showBalance || ''}
                       </td>
-                      {/* <td>
-                        <b>{symbolA}:<br/></b>
-                        {ethers.formatUnits(amountA, decA)}<br/>
-                        <b>{symbolB}:<br/></b>
-                        {ethers.formatUnits(amountB, decB)}
-                      </td> */}
                       <td>
                         <Button
                           color="ghost"
