@@ -142,10 +142,26 @@ const YieldList = (props) => {
                         </div>
                       </td>
                       <td>
-                        {showApy || ''}%
+                        {gammaReturnsLoading ? (
+                          <>
+                            <span class="loading loading-bars loading-sm"></span>
+                          </>
+                        ) : (
+                          <>
+                            {showApy || ''}%
+                          </>
+                        )}
                       </td>
                       <td>
-                        ${showBalance || ''}
+                        {gammaUserLoading ? (
+                          <>
+                            <span class="loading loading-bars loading-xs"></span>
+                          </>
+                        ) : (
+                          <>
+                            ${showBalance || ''}
+                          </>
+                        )}
                       </td>
                       <td>
                         <Button

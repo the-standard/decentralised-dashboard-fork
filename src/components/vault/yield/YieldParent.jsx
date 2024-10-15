@@ -209,21 +209,29 @@ const Vault = (props) => {
                       variant="p"
                       className="text-right"
                     >
-                      {userSummary?.totalUSD?.netMarketReturnsUSD ? (
+                      {gammaUserLoading ? (
                         <>
-                          {userSummary?.totalUSD?.netMarketReturnsUSD.toFixed(2) < 0 ? (
-                            '-$'
-                          ) : (
-                            '$'
-                          )}
-                          {
-                            Math.abs(
-                              userSummary?.totalUSD?.netMarketReturnsUSD
-                            )?.toFixed(2) || ''
-                          }
+                          <span class="loading loading-bars loading-xs"></span>
                         </>
                       ) : (
-                        ''
+                        <>
+                          {userSummary?.totalUSD?.netMarketReturnsUSD ? (
+                            <>
+                              {userSummary?.totalUSD?.netMarketReturnsUSD.toFixed(2) < 0 ? (
+                                '-$'
+                              ) : (
+                                '$'
+                              )}
+                              {
+                                Math.abs(
+                                  userSummary?.totalUSD?.netMarketReturnsUSD
+                                )?.toFixed(2) || ''
+                              }
+                            </>
+                          ) : (
+                            ''
+                          )}
+                        </>
                       )}
                     </Typography>
                   </div>
@@ -237,7 +245,15 @@ const Vault = (props) => {
                       variant="p"
                       className="text-right"
                     >
-                      ${userSummary?.totalUSD?.currentUSD?.toFixed(2) || ''}
+                      {gammaUserLoading ? (
+                        <>
+                          <span class="loading loading-bars loading-xs"></span>
+                        </>
+                      ) : (
+                        <>
+                          ${userSummary?.totalUSD?.currentUSD?.toFixed(2) || ''}
+                        </>
+                      )}
                     </Typography>
                   </div>
 
