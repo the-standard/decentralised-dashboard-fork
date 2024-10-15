@@ -40,7 +40,7 @@ const YieldClaimModal = ({
 }) => {
   const { vaultAddress } = useVaultAddressStore();
   const { smartVaultABI } = useSmartVaultABIStore();
-  const { writeContract, isError, isPending, isSuccess } = useWriteContract();
+  const { writeContract, isError, error, isPending, isSuccess } = useWriteContract();
   const chainId = useChainId();
 
   const [claimAsset, setClaimAsset] = useState();
@@ -52,16 +52,15 @@ const YieldClaimModal = ({
   ? SepoliaVaults
   : ArbitrumVaults;
 
-  // const gammaYieldVaultsInfo = chainId === arbitrumSepolia.id
-  // ? SepoliaGammaVaults
-  // : ArbitrumGammaVaults;
-
   let allReturnTokens = [];
 
-  if (yieldPair.toString() === 'USDs,USDC') {
+  const isStablePair = yieldPair.includes('USDs') && yieldPair.includes('USDC');
+
+  if (isStablePair) {
     allReturnTokens = yieldVaultsInfo.filter(item => item.collateral === true);
   } else {
-    allReturnTokens = yieldVaultsInfo.filter(item => item.pair.toString() === yieldPair.toString());
+    console.log
+    allReturnTokens = yieldVaultsInfo.filter(item => item.pair.every(i => yieldPair.includes(i)));
   }
 
   const handleSetClaimAsset = (e) => {
@@ -111,7 +110,7 @@ const YieldClaimModal = ({
     isError,
   ]);
 
-  const positionUser = gammaUser?.[yieldHypervisor] || {};
+  const positionUser = gammaUser?.[yieldHypervisor.toLowerCase()] || {};
   const currentUSD = positionUser.returns?.currentUSD || 0;
   const hypervisorReturnsUSD = positionUser?.returns?.hypervisorReturnsUSD;
 
