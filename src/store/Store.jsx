@@ -66,8 +66,7 @@ export const usesEuroAddressStore = create() (
 
 export const usesUSDAddressStore = create() (
   (set) => ({
-    // TODO Add correct mainnet address
-    arbitrumsUSDAddress: "0x0173184A51CF807Cc386B3F5Dc5689Cae09B81fb",
+    arbitrumsUSDAddress: "0x2Ea0bE86990E8Dac0D09e4316Bb92086F304622d",
     arbitrumSepoliasUSDAddress: "0x0173184A51CF807Cc386B3F5Dc5689Cae09B81fb",
     setsUSDAddress: (arbitrumsUSDAddress) =>
       set(() => ({ sEuroAddress: arbitrumsUSDAddress })),
@@ -135,8 +134,7 @@ export const useContractAddressStore = create() (
 
 export const usesUSDContractAddressStore = create() (
   (set) => ({
-    // TODO Add correct mainnet address
-    arbitrumsUSDContractAddress: "0xf752AD9dBacCA40f771164ca03b68844DBB93BF7",
+    arbitrumsUSDContractAddress: "0x496aB4A155C8fE359Cd28d43650fAFA0A35322Fb",
     arbitrumsUSDSepoliaContractAddress: "0xf752AD9dBacCA40f771164ca03b68844DBB93BF7",
     setContractAddress: (arbitrumsUSDContractAddress) =>
       set(() => ({ sUSDContractAddress: arbitrumsUSDContractAddress })),

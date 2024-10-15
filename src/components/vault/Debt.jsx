@@ -268,7 +268,7 @@ const Debt = ({
       formatNewTotal = ethers.formatEther(ethers.parseEther(formatPrevTotal) - amount);
     }
 
-    // TODO add logic for USDs vaults
+    // TODO add plausible logic for USDs vaults
     try {
       plausible('DebtRepay', {
         props: {

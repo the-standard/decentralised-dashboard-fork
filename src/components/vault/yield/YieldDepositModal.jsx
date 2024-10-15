@@ -45,7 +45,7 @@ const YieldDepositModal = (props) => {
   const formattedStableRatio = Number(stableRatio * 1000).toString();
   const formattedMinCollateral = Number(minCollateral * 1000).toString();
 
-  const { writeContract, isError, isPending, isSuccess } = useWriteContract();
+  const { writeContract, isError, error, isPending, isSuccess } = useWriteContract();
 
   const handleDepositYield = async () => {
     const now = Math.floor(Date.now() / 1000);
@@ -88,6 +88,7 @@ const YieldDepositModal = (props) => {
       closeModal();
     } else if (isError) {
       //
+      console.log(error)
       toast.error('There was a problem');
     }
   }, [
@@ -149,72 +150,6 @@ const YieldDepositModal = (props) => {
       </>
     );
   }
-
-  // if (yieldStage === 'COLLATERAL') {
-  //   return (
-  //     <>
-  //       <Modal
-  //         open={open}
-  //         closeModal={closeModal}
-  //         wide={false}
-  //       >
-  //         <Typography variant="h2" className="card-title">
-  //           <AdjustmentsHorizontalIcon className="mr-2 h-6 w-6 inline-block"/>
-  //           Choose Minimum Collateral Percentage
-  //         </Typography>
-
-  //         <Typography
-  //           variant="p"
-  //           className="mb-2"
-  //         >
-  //           Your Yield Deposit will revert if it's value after depositing isn't at least {minCollateral}% of it's current value.
-  //         </Typography>
-
-  
-  //         <div className="flex flex-col">
-  //           <div>
-  //             <input
-  //               type="range"
-  //               min={0}
-  //               max="100"
-  //               value={minCollateral}
-  //               className={`range range-info`}
-  //               onChange={(e) => setMinCollateral(e.target.value)}
-  //             />
-  //           </div>
-  //           <div className="flex flex-row justify-between">
-  //             <div className="flex flex-col">
-  //               <Typography
-  //                 variant="p"
-  //                 className="mt-2"
-  //               >
-  //                 Minimum Collateral Value: {minCollateral}%
-  //               </Typography>
-  //             </div>
-  //           </div>
-  //         </div>
-  
-  //         <div className="card-actions pt-4 flex-col-reverse lg:flex-row justify-end">
-  //           <Button
-  //             className="w-full lg:w-auto"
-  //             color="ghost"
-  //             onClick={() => setYieldStage('STABILITY')}
-  //           >
-  //             Back
-  //           </Button>
-  //           <Button
-  //             className="w-full lg:w-64"
-  //             color="success"
-  //             disabled={!allowedRatio}
-  //             onClick={() => handleDepositYield()}
-  //           >
-  //             Confirm
-  //           </Button>
-  //         </div>
-  //       </Modal>
-  //     </>
-  //   );  
-  // }
 
   if (yieldStage === 'STABILITY') {
     return (
