@@ -135,8 +135,7 @@ export const SepoliaVaults = [
 export const ArbitrumGammaVaults = [
   {
     pair: ['USDs', 'USDC'],
-    // TODO add mainnet address
-    address: '0x0000000000000000000000000000000000000000'
+    address: '0x547a116a2622876ce1c8d19d41c683c8f7bec5c0',
   },
   {
     pair: ['WETH', 'WBTC'],
