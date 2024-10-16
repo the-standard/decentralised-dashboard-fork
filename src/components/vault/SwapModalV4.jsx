@@ -62,8 +62,9 @@ const SwapModalV4 = ({
         `https://smart-vault-api.thestandard.io/estimate_swap?in=${swapIn}&out=${swapOut}&amount=${swapAmount}`
       );
       const data = response.data;
-      setReceiveAmount(BigInt(data));
-      inputReceiveRef.current.value = ethers.formatUnits(data.toString(), receiveDecimals);
+      const useReceive = BigInt(data) * BigInt(95) / BigInt(100);
+      setReceiveAmount(useReceive);
+      inputReceiveRef.current.value = ethers.formatUnits(Number(useReceive).toString(), receiveDecimals);
       setSwapLoading(false);
     } catch (error) {
       console.log(error);
@@ -136,6 +137,7 @@ const SwapModalV4 = ({
       setReceiveAmount(0);
       setReceiveAsset('');
     } else if (isError) {
+      console.error(error)
       toast.error('There was a problem');
       setSwapLoading(false);
       inputRef.current.value = "";
