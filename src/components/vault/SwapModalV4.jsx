@@ -10,6 +10,7 @@ import {
 import {
   useVaultAddressStore,
   useSmartVaultABIStore,
+  useSmartVaultSwapV4ABIStore,
 } from "../../store/Store";
 
 import Button from "../ui/Button";
@@ -36,7 +37,7 @@ const SwapModalV4 = ({
   const inputRef = useRef(null);
   const inputReceiveRef = useRef(null);
   const { vaultAddress } = useVaultAddressStore();
-  const { smartVaultABI } = useSmartVaultABIStore();
+  const { smartVaultSwapV4ABI } = useSmartVaultSwapV4ABIStore();
   
   const handlereceiveAsset = (e) => {
     setReceiveAsset(e.target.value);
@@ -62,8 +63,9 @@ const SwapModalV4 = ({
         `https://smart-vault-api.thestandard.io/estimate_swap?in=${swapIn}&out=${swapOut}&amount=${swapAmount}`
       );
       const data = response.data;
-      setReceiveAmount(BigInt(data));
-      inputReceiveRef.current.value = ethers.formatUnits(data.toString(), receiveDecimals);
+      const useReceive = BigInt(data) * BigInt(95) / BigInt(100);
+      setReceiveAmount(useReceive);
+      inputReceiveRef.current.value = ethers.formatUnits(Number(useReceive).toString(), receiveDecimals);
       setSwapLoading(false);
     } catch (error) {
       console.log(error);
@@ -104,9 +106,9 @@ const SwapModalV4 = ({
     const deadline = now + 60;    
     try {
       writeContract({
-        abi: smartVaultABI,
+        abi: smartVaultSwapV4ABI,
         address: vaultAddress,
-        functionName: "swapV4",
+        functionName: "swap",
         args: [
           ethers.encodeBytes32String(symbol),
           ethers.encodeBytes32String(receiveAsset),
@@ -136,6 +138,7 @@ const SwapModalV4 = ({
       setReceiveAmount(0);
       setReceiveAsset('');
     } else if (isError) {
+      console.error(error)
       toast.error('There was a problem');
       setSwapLoading(false);
       inputRef.current.value = "";
