@@ -200,6 +200,9 @@ const YieldList = (props) => {
         gammaUser={gammaUser}
         gammaReturns={gammaReturns}
         gammaStats={gammaStats}
+        gammaUserLoading={gammaUserLoading}
+        gammaReturnsLoading={gammaReturnsLoading}
+        gammaStatsLoading={gammaStatsLoading}
       />
     </div>
   );
