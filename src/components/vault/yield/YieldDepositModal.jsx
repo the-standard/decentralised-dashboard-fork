@@ -195,7 +195,7 @@ const YieldDepositModal = (props) => {
                 min={0}
                 max="100"
                 value={stableRatio}
-                className={`range`}
+                className={`range [--range-shdw:unset] [&::-webkit-slider-thumb]:bg-white`}
                 onChange={(e) => handleStableRatio(e.target.value)}
               />
             </div>

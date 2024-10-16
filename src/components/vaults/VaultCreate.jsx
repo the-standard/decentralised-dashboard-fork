@@ -36,7 +36,7 @@ const vaultTypes = [
     borrowRate: "Borrow up to 90.91%",
     type: 'EUROs',
     image: seurologo,
-    isActive: true,
+    isActive: false,
   },
 ];
 
@@ -65,24 +65,26 @@ const VaultCreate = ({ tokenId, vaultType }) => {
     ? arbitrumsUSDSepoliaContractAddress
     : arbitrumsUSDContractAddress;  
 
-  const { writeContract: mintVault, isError, isPending, isSuccess } = useWriteContract();
+  const { writeContract: mintVaultEur, isError: isErrorEur, isPending: isPendingEur, isSuccess: isSuccessEur } = useWriteContract();
+  const { writeContract: mintVaultUsd, isError: isErrorUsd, isPending: isPendingUsd, isSuccess: isSuccessUsd } = useWriteContract();
 
   const handleMintVault = async (type) => {
     if (chainId !== arbitrumSepolia.id && chainId !== arbitrum.id) {
       toast.error('Please change to Arbitrum network!');
       return;
     }
-    let useVaultManagerAddress;
     if (type === 'EUROs') {
-      useVaultManagerAddress = vaultManagerAddress;
+      mintVaultEur({
+        abi: vaultManagerAbi,
+        address: vaultManagerAddress,
+        functionName: 'mint',
+        args: [],
+      });
     }
     if (type === 'USDs') {
-      useVaultManagerAddress = sUSDVaultManagerAddress;
-    }
-    if (useVaultManagerAddress) {
-      mintVault({
+      mintVaultUsd({
         abi: vaultManagerAbi,
-        address: useVaultManagerAddress,
+        address: sUSDVaultManagerAddress,
         functionName: 'mint',
         args: [],
       });
@@ -90,65 +92,82 @@ const VaultCreate = ({ tokenId, vaultType }) => {
   };
 
   useEffect(() => {
-    if (isPending) {
+    if (isPendingEur || isPendingUsd) {
       // 
-    } else if (isSuccess && tokenId && vaultType) {
+    } else if ((isSuccessEur || isSuccessUsd) && tokenId && vaultType) {
       navigate(`/vault/${vaultType.toString()}/${tokenId.toString()}`);
-    } else if (isError) {
-      // 
+    } else if (isErrorEur || isErrorUsd) {
+      toast.error('There was a problem');
     }
   }, [
-    isError,
-    isPending,
-    isSuccess,
+    isErrorEur,
+    isErrorUsd,
+    isPendingEur,
+    isPendingUsd,
+    isSuccessEur,
+    isSuccessUsd,
     tokenId,
     vaultType,
   ]);
 
   return (
     <div className="flex flex-col md:flex-row gap-4 mb-4">
-      {vaultTypes.map((item) => (
-        <Card className="flex-1 card-compact">
-          <div className="card-body">
-            <div
-              className="flex flex-col md:flex-row"
-            >
-              <div className="mb-4 md:mb-0 flex justify-center">
-                <img
-                  className="w-[60px] mr-4"
-                  src={item.image}
-                />
-              </div>
-              <div className="flex flex-col my-auto mx-0">
-                <Typography
-                  variant="h2"
-                >
-                  {item.title}
-                </Typography>
-                <Typography
-                  variant="p"
-                >
-                  {item.para}
-                </Typography>
-              </div>
-            </div>
-
-            <div
-              className="card-actions pt-4"
-            >
-              <Button
-                className="w-full"
-                color="primary"
-                onClick={() => handleMintVault(item.type)}
-                disabled={isPending || !item.isActive}
-                loading={isPending && item.isActive}  
+      {vaultTypes.map((item) => {        
+        return (
+          <Card className="flex-1 card-compact">
+            <div className="card-body">
+              <div
+                className="flex flex-col md:flex-row"
               >
-                {item.isActive ? `Create ${item.type} Vault` : "Coming Soon"}
-              </Button>
+                <div className="mb-4 md:mb-0 flex justify-center">
+                  <img
+                    className="w-[60px] mr-4"
+                    src={item.image}
+                  />
+                </div>
+                <div className="flex flex-col my-auto mx-0">
+                  <Typography
+                    variant="h2"
+                  >
+                    {item.title}
+                  </Typography>
+                  <Typography
+                    variant="p"
+                  >
+                    {item.para}
+                  </Typography>
+                </div>
+              </div>
+
+              <div
+                className="card-actions pt-4"
+              >
+                { item.type === 'USDs' ? (
+                  <Button
+                    className="w-full"
+                    color="primary"
+                    onClick={() => handleMintVault(item.type)}
+                    disabled={isPendingUsd || isPendingEur || !item.isActive}
+                    loading={isPendingUsd && item.isActive}  
+                  >
+                    {item.isActive ? `Create ${item.type} Vault` : "Coming Soon"}
+                  </Button>
+                ) : (
+                  <Button
+                    className="w-full"
+                    color="primary"
+                    onClick={() => handleMintVault(item.type)}
+                    disabled={isPendingUsd || isPendingEur || !item.isActive}
+                    loading={isPendingEur && item.isActive}  
+                  >
+                    {item.isActive ? `Create ${item.type} Vault` : "Coming Soon"}
+                  </Button>
+                )}
+              </div>
             </div>
-            </div>
-        </Card>
-      ))}
+          </Card>
+        )}
+      )}
     </div>
   );
 };

@@ -7,8 +7,13 @@ import {
 import axios from "axios";
 
 import {
-  AdjustmentsHorizontalIcon
+  AdjustmentsHorizontalIcon,
+  QuestionMarkCircleIcon
 } from '@heroicons/react/24/outline';
+
+import {
+  Tooltip,
+} from 'react-daisyui';
 
 import {
   useVaultAddressStore,
@@ -16,7 +21,6 @@ import {
 } from "../../../store/Store";
 
 import YieldList from "./YieldList";
-// import YieldRatio from "./YieldRatio";
 
 import Card from "../../ui/Card";
 import Typography from "../../ui/Typography";
@@ -149,6 +153,8 @@ const Vault = (props) => {
       currentUSD: 0,
       netMarketReturnsUSD: 0,
       netMarketReturnsPercentage: "0%",
+      hypervisorReturnsUSD: 0,
+      hypervisorReturnsPercentage: "0%",
     };
 
     hypervisorAddresses && hypervisorAddresses.length && hypervisorAddresses.forEach((hyperaddress) => {
@@ -160,10 +166,12 @@ const Vault = (props) => {
       const currentUSD = userHypervisor?.returns?.currentUSD;
 
       const netMarketReturnsUSD = userHypervisor?.returns?.netMarketReturnsUSD;
+      const hypervisorReturnsUSD = userHypervisor?.returns?.hypervisorReturnsUSD;
 
       totalUSD.initialTokenUSD = totalUSD.initialTokenUSD + initialTokenUSD;
       totalUSD.currentUSD = totalUSD.currentUSD + currentUSD;
       totalUSD.netMarketReturnsUSD = totalUSD.netMarketReturnsUSD + netMarketReturnsUSD;
+      totalUSD.hypervisorReturnsUSD = totalUSD.hypervisorReturnsUSD + hypervisorReturnsUSD;
 
       allUSD.push({
         hypervisor: useAddress,
@@ -203,7 +211,7 @@ const Vault = (props) => {
                     <Typography
                       variant="p"
                     >
-                      Total Yield Earned:
+                      Total Yield Earned
                     </Typography>
                     <Typography
                       variant="p"
@@ -215,6 +223,51 @@ const Vault = (props) => {
                         </>
                       ) : (
                         <>
+                          {userSummary?.totalUSD?.hypervisorReturnsUSD ? (
+                            <>
+                              {userSummary?.totalUSD?.hypervisorReturnsUSD.toFixed(2) < 0 ? (
+                                '-$'
+                              ) : (
+                                '$'
+                              )}
+                              {
+                                Math.abs(
+                                  userSummary?.totalUSD?.hypervisorReturnsUSD
+                                )?.toFixed(2) || ''
+                              }
+                            </>
+                          ) : (
+                            ''
+                          )}
+                        </>
+                      )}
+                    </Typography>
+                  </div>
+                  <div className="flex justify-between">
+                    <Typography
+                      variant="p"
+                    >
+                      <span className="opacity-60">Total Yield Earned (Market)</span>
+                      <Tooltip
+                        className="flex-col justify-center items-center cursor-pointer"
+                        position="top"
+                        message={'Your total yield earned, including market changes since your deposit.'}
+                      >
+                        <QuestionMarkCircleIcon
+                          className="mb-1 ml-1 h-5 w-5 inline-block opacity-60"
+                        />
+                      </Tooltip>
+                    </Typography>
+                    <Typography
+                      variant="p"
+                      className="text-right"
+                    >
+                      {gammaUserLoading ? (
+                        <>
+                          <span class="loading loading-bars loading-xs"></span>
+                        </>
+                      ) : (
+                        <span className="opacity-60 mb-4 block">
                           {userSummary?.totalUSD?.netMarketReturnsUSD ? (
                             <>
                               {userSummary?.totalUSD?.netMarketReturnsUSD.toFixed(2) < 0 ? (
@@ -231,7 +284,7 @@ const Vault = (props) => {
                           ) : (
                             ''
                           )}
-                        </>
+                        </span>
                       )}
                     </Typography>
                   </div>
@@ -239,7 +292,7 @@ const Vault = (props) => {
                     <Typography
                       variant="p"
                     >
-                      Total Balance:
+                      Total Balance
                     </Typography>
                     <Typography
                       variant="p"
