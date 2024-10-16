@@ -10,6 +10,7 @@ import {
 import {
   useVaultAddressStore,
   useSmartVaultABIStore,
+  useSmartVaultSwapV4ABIStore,
 } from "../../store/Store";
 
 import Button from "../ui/Button";
@@ -36,7 +37,7 @@ const SwapModalV4 = ({
   const inputRef = useRef(null);
   const inputReceiveRef = useRef(null);
   const { vaultAddress } = useVaultAddressStore();
-  const { smartVaultABI } = useSmartVaultABIStore();
+  const { smartVaultSwapV4ABI } = useSmartVaultSwapV4ABIStore();
   
   const handlereceiveAsset = (e) => {
     setReceiveAsset(e.target.value);
@@ -105,9 +106,9 @@ const SwapModalV4 = ({
     const deadline = now + 60;    
     try {
       writeContract({
-        abi: smartVaultABI,
+        abi: smartVaultSwapV4ABI,
         address: vaultAddress,
-        functionName: "swapV4",
+        functionName: "swap",
         args: [
           ethers.encodeBytes32String(symbol),
           ethers.encodeBytes32String(receiveAsset),
