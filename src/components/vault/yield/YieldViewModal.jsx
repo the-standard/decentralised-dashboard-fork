@@ -66,9 +66,9 @@ const YieldViewModal = ({
     setClaimAsset(e.target.value);
   };
 
-  const positionUser = gammaUser?.[yieldHypervisor] || {};
-  const positionStats = gammaStats?.find(item => item.hypervisor === yieldHypervisor);
-  const positionReturns = gammaReturns?.find((item) => item.hypervisor === yieldHypervisor);
+  const positionUser = gammaUser?.[yieldHypervisor.toLowerCase()] || {};
+  const positionStats = gammaStats?.find(item => item.hypervisor.toLowerCase() === yieldHypervisor.toLowerCase());
+  const positionReturns = gammaReturns?.find((item) => item.hypervisor.toLowerCase() === yieldHypervisor.toLowerCase());
 
   const initialUSD = positionUser?.returns?.initialTokenUSD || 0;
   const initialTokenCurrentUSD = positionUser?.returns?.initialTokenCurrentUSD || 0;

@@ -121,7 +121,7 @@ const Vault = (props) => {
 
       const hypervisorStats = [];
       hypervisorAddresses.forEach((hyperaddress) => {
-        const useStats = useResponse?.[hyperaddress];
+        const useStats = useResponse?.[hyperaddress.toLowerCase()];
         hypervisorStats.push({
           hypervisor: hyperaddress,
           ... useStats,
