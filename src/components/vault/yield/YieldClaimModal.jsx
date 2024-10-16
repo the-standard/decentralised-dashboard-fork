@@ -59,7 +59,6 @@ const YieldClaimModal = ({
   if (isStablePair) {
     allReturnTokens = yieldVaultsInfo.filter(item => item.collateral === true);
   } else {
-    console.log
     allReturnTokens = yieldVaultsInfo.filter(item => item.pair.every(i => yieldPair.includes(i)));
   }
 

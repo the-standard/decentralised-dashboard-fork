@@ -38,7 +38,7 @@ const YieldDepositModal = (props) => {
   const { vaultAddress } = useVaultAddressStore();
   const chainId = useChainId();
   const [ yieldStage, setYieldStage ] = useState('');
-  const [ stableRatio, setStableRatio ] = useState(75);
+  const [ stableRatio, setStableRatio ] = useState(10);
   const [ minCollateral, setMinCollateral ] = useState(50);
 
   const formattedSymbol = ethers.encodeBytes32String(symbol);

@@ -28,13 +28,16 @@ const VaultList = ({ vaults, vaultsLoading, listType }) => {
 
   let setCurrentPage;
   let currentPage;
+  let currencySymbol = '';
 
   if (listType === 'USDs') {
     setCurrentPage = setCurrentsUSDPage;
     currentPage = currentsUSDPage;
+    currencySymbol = '$';
   } else {
     setCurrentPage = setCurrentsEURPage;
     currentPage = currentsEURPage;
+    currencySymbol = '€';
   }
 
   const navigate = useNavigate();
@@ -184,7 +187,7 @@ const VaultList = ({ vaults, vaultsLoading, listType }) => {
                             {BigInt(vault.tokenId).toString()}
                           </td>
                           <td className="hidden md:table-cell">
-                            €
+                            {currencySymbol}
                             {truncateToTwoDecimals(
                               ethers.formatEther(
                                 BigInt(
