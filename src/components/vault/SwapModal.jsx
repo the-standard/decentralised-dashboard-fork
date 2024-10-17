@@ -32,6 +32,7 @@ const SwapModal = ({
   const [swapAssets, setSwapAssets] = useState();
   const [amount, setAmount] = useState(0);
   const [receiveAmount, setReceiveAmount] = useState(0);
+  const [receiveQuote, setReceiveQuote] = useState(undefined);
   const [receiveAsset, setReceiveAsset] = useState('');
   const [receiveDecimals, setReceiveDecimals] = useState();
   const { vaultStore } = useVaultStore();
@@ -66,6 +67,7 @@ const SwapModal = ({
       const data = response.data;
       const useReceive = BigInt(data) * BigInt(95) / BigInt(100);
       setReceiveAmount(useReceive);
+      setReceiveQuote(useReceive);
       inputReceiveRef.current.value = ethers.formatUnits(Number(useReceive).toString(), receiveDecimals);
       setSwapLoading(false);
     } catch (error) {
@@ -133,6 +135,7 @@ const SwapModal = ({
       inputRef.current.value = "";
       setAmount(0);
       setReceiveAmount(0);
+      setReceiveQuote(undefined);
       setReceiveAsset('');
     } else if (isError) {
       toast.error('There was a problem');
@@ -140,6 +143,7 @@ const SwapModal = ({
       inputRef.current.value = "";
       setAmount(0);
       setReceiveAmount(0);
+      setReceiveQuote(undefined);
       setReceiveAsset('');
     }
   }, [
@@ -172,6 +176,18 @@ const SwapModal = ({
               </Typography>
 
               <div>
+                {receiveQuote <= 0 ? (
+                  <div role="alert" className="alert alert-warning bg-yellow-400/20 mb-2">
+                    <span>
+                      <b>No direct trade available</b>.
+                      <br/>
+                      Please swap to ETH or WETH first to get this trade to work.
+                    </span>
+                  </div>
+                ) : (
+                  null
+                )}
+
                 <div>
                   <div className="flex justify-between">
                     <Typography
@@ -202,16 +218,14 @@ const SwapModal = ({
                       )}
                       disabled={swapLoading}
                     />
-                    {symbol !== "ETH" && symbol !== "AGOR" && (
-                      <Button
-                        className="join-item"
-                        variant="outline"
-                        onClick={handleMaxBalance}
-                        disabled={swapLoading}
-                      >
-                        Max
-                      </Button>
-                    )}
+                    <Button
+                      className="join-item"
+                      variant="outline"
+                      onClick={handleMaxBalance}
+                      disabled={swapLoading}
+                    >
+                      Max
+                    </Button>
                   </div>
                 </div>
 
