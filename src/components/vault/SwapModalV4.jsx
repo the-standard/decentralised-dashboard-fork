@@ -30,6 +30,7 @@ const SwapModalV4 = ({
   const [swapLoading, setSwapLoading] = useState(false);
   const [swapAssets, setSwapAssets] = useState();
   const [amount, setAmount] = useState(0);
+  const [swapFee, setSwapFee] = useState(3000);
   const [receiveAmount, setReceiveAmount] = useState(0);
   const [receiveQuote, setReceiveQuote] = useState(undefined);
   const [receiveAsset, setReceiveAsset] = useState('');
@@ -80,6 +81,27 @@ const SwapModalV4 = ({
   }, [amount, receiveAsset]);
 
   useEffect(() => {
+    if (symbol && receiveAsset) {
+      const swapPair = [symbol, receiveAsset];
+
+      let useFee = 3000;
+      if (
+        ((swapPair.includes('ETH') || swapPair.includes('WETH')) && swapPair.includes('WBTC')) ||
+        ((swapPair.includes('ETH') || swapPair.includes('WETH')) && swapPair.includes('ARB'))
+      ) {
+        useFee = 500;
+      }
+      if (
+        ((swapPair.includes('ETH') || swapPair.includes('WETH')) && swapPair.includes('GMX'))
+      ) {
+        useFee = 10000;
+      }
+
+      setSwapFee(useFee);
+    }
+  }, [symbol, receiveAsset]);
+
+  useEffect(() => {
     const useAssets = [];
     assets.map((asset) => {
       const token = asset.token;
@@ -104,7 +126,8 @@ const SwapModalV4 = ({
 
   const handleSwapTokens = async () => {
     const now = Math.floor(Date.now() / 1000);
-    const deadline = now + 60;    
+    const deadline = now + 60;
+
     try {
       writeContract({
         abi: smartVaultSwapV4ABI,
@@ -115,10 +138,10 @@ const SwapModalV4 = ({
           ethers.encodeBytes32String(receiveAsset),
           amount,
           receiveAmount,
-          3000,
+          swapFee,
           deadline
         ],
-    });
+      });
     } catch (error) {
       let errorMessage = '';
       if (error && error.shortMessage) {
@@ -163,6 +186,8 @@ const SwapModalV4 = ({
   };
 
   const total = ethers.formatUnits(tokenTotal, decimals);
+
+  const showSwapFee = Number(swapFee / 10000);
 
   if (open) {
     return (
@@ -249,6 +274,20 @@ const SwapModalV4 = ({
                   className="w-full mb-4"
                 >
                 </Select>
+              </div>
+              <div>
+                <Typography
+                  variant="p"
+                  className="mb-2"
+                >
+                  Trading Fee:
+                </Typography>
+                <Typography
+                  variant="h4"
+                  className="mb-4"
+                >
+                  {showSwapFee}%
+                </Typography>
               </div>
               <div>
                 <Typography
