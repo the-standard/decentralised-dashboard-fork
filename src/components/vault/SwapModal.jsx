@@ -254,6 +254,20 @@ const SwapModal = ({
                     variant="p"
                     className="mb-2"
                   >
+                    Trading Fee:
+                  </Typography>
+                  <Typography
+                    variant="h4"
+                    className="mb-4"
+                  >
+                    0.3%
+                  </Typography>
+                </div>
+                <div>
+                  <Typography
+                    variant="p"
+                    className="mb-2"
+                  >
                     Min. Return:
                   </Typography>
                   <Input
