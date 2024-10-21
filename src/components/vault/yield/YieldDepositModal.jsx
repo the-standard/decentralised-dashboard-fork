@@ -170,7 +170,7 @@ const YieldDepositModal = (props) => {
           >
             Choose how much volatile collateral you want to use to earn a yield, and what percentage you would like in safer, correlated, stable asset yield strategies.
             <br/>
-            A minimum of 10% stable is required. 
+            Recommended 10% stable.
           </Typography>
 
   

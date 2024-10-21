@@ -115,7 +115,7 @@ const YieldList = (props) => {
 
                   const yieldUser = gammaUser?.[hypervisor.toLowerCase()];
 
-                  const showApy = Number(yieldReturns?.feeApy * 100).toFixed(2);
+                  const showApy = Number(yieldReturns?.feeApy * 100).toFixed(2) || '';
                   const showBalance = yieldUser?.balanceUSD.toFixed(2) || '';
 
                   return (

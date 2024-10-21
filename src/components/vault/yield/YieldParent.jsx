@@ -212,6 +212,15 @@ const Vault = (props) => {
                       variant="p"
                     >
                       Total Yield Earned
+                      <Tooltip
+                        className="flex-col justify-center items-center cursor-pointer before:w-[12rem]"
+                        position="top"
+                        message={'Your total yield earned, based on the price of your tokens at deposit.'}
+                      >
+                        <QuestionMarkCircleIcon
+                          className="mb-1 ml-1 h-5 w-5 inline-block opacity-60"
+                        />
+                      </Tooltip>
                     </Typography>
                     <Typography
                       variant="p"
@@ -249,9 +258,9 @@ const Vault = (props) => {
                     >
                       <span className="opacity-60">Total Yield Earned (Market)</span>
                       <Tooltip
-                        className="flex-col justify-center items-center cursor-pointer"
+                        className="flex-col justify-center items-center cursor-pointer before:w-[12rem]"
                         position="top"
-                        message={'Your total yield earned, including market changes since your deposit.'}
+                        message={'Your total yield earned, based on the current market rate of your deposited tokens.'}
                       >
                         <QuestionMarkCircleIcon
                           className="mb-1 ml-1 h-5 w-5 inline-block opacity-60"
@@ -293,6 +302,15 @@ const Vault = (props) => {
                       variant="p"
                     >
                       Total Balance
+                      <Tooltip
+                        className="flex-col justify-center items-center cursor-pointer before:w-[12rem]"
+                        position="top"
+                        message={'The current value of all your yield pair tokens together.'}
+                      >
+                        <QuestionMarkCircleIcon
+                          className="mb-1 ml-1 h-5 w-5 inline-block opacity-60"
+                        />
+                      </Tooltip>
                     </Typography>
                     <Typography
                       variant="p"
