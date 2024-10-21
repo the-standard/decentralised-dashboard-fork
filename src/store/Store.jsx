@@ -3,7 +3,7 @@ import vaultManagerAbi from "../abis/vaultManager";
 import erc20Abi from "../abis/erc20";
 import chainlinkAbi from "../abis/priceFeeds/chainlink";
 import smartVaultABI from "../abis/smartVault";
-import smartVaultSwapV4ABI from "../abis/smartVaultSwapV4";
+import smartVaultV4ABI from "../abis/smartVaultV4";
 import stakingAbi from "../abis/staking";
 import liquidationPoolAbi from "../abis/liquidationPool";
 import stakingPoolv2Abi from "../abis/stakingPoolV2";
@@ -124,9 +124,9 @@ export const useSmartVaultABIStore = create() (
   })
 );
 
-export const useSmartVaultSwapV4ABIStore = create() (
+export const useSmartVaultV4ABIStore = create() (
   () => ({
-    smartVaultSwapV4ABI,
+    smartVaultV4ABI,
   })
 );
 

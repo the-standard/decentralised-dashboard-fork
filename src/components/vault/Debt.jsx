@@ -63,8 +63,8 @@ const Debt = ({
     arbitrumsEuroAddress;
 
   const usdsAddress = chainId === arbitrumSepolia.id ?
-    arbitrumsUSDAddress :
-    arbitrumSepoliasUSDAddress;
+    arbitrumSepoliasUSDAddress :
+    arbitrumsUSDAddress;
 
   let sAddress;
   if (vaultType === 'EUROs') {
