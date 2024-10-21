@@ -112,6 +112,15 @@ const YieldViewModal = ({
               <div className="flex-1">
                 <Typography variant="p">
                   Principle at Deposit
+                  <Tooltip
+                    className="flex-col justify-center items-center cursor-pointer before:w-[12rem]"
+                    position="right"
+                    message={'The value of your tokens at deposit.'}
+                  >
+                    <QuestionMarkCircleIcon
+                      className="mb-1 ml-1 h-5 w-5 inline-block opacity-60"
+                    />
+                  </Tooltip>
                 </Typography>
                 <Typography variant="h2">
                   {gammaUserLoading ? (
@@ -128,6 +137,15 @@ const YieldViewModal = ({
               <div className="flex-1">
                 <Typography variant="p">
                   Principle Currently
+                  <Tooltip
+                    className="flex-col justify-center items-center cursor-pointer before:w-[12rem]"
+                    position="left"
+                    message={'The value of your deposited tokens based on current market rates.'}
+                  >
+                    <QuestionMarkCircleIcon
+                      className="mb-1 ml-1 h-5 w-5 inline-block opacity-60"
+                    />
+                  </Tooltip>
                 </Typography>
                 <Typography variant="h2">
                   {gammaUserLoading ? (
@@ -146,6 +164,15 @@ const YieldViewModal = ({
               <div className="flex-1">
                 <Typography variant="p">
                   Total Yield
+                  <Tooltip
+                    className="flex-col justify-center items-center cursor-pointer before:w-[12rem]"
+                    position="right"
+                    message={'Your total yield earned, based on the price of your tokens at deposit.'}
+                    >
+                    <QuestionMarkCircleIcon
+                      className="mb-1 ml-1 h-5 w-5 inline-block opacity-60"
+                    />
+                  </Tooltip>
                 </Typography>
                 <Typography variant="h2">
                   {gammaUserLoading ? (
@@ -183,7 +210,7 @@ const YieldViewModal = ({
                   <Tooltip
                     className="flex-col justify-center items-center cursor-pointer before:w-[12rem]"
                     position="left"
-                    message={'Your total yield earned, including market changes since your deposit.'}
+                    message={'Your total yield earned, based on the current market rate of your deposited tokens.'}
                   >
                     <QuestionMarkCircleIcon
                       className="mb-1 ml-1 h-5 w-5 inline-block opacity-60"
@@ -226,6 +253,15 @@ const YieldViewModal = ({
               <div className="flex-1">
                 <Typography variant="p">
                   Net Value
+                  <Tooltip
+                    className="flex-col justify-center items-center cursor-pointer before:w-[12rem]"
+                    position="right"
+                    message={'The current value of both of your tokens together.'}
+                  >
+                    <QuestionMarkCircleIcon
+                      className="mb-1 ml-1 h-5 w-5 inline-block opacity-60"
+                    />
+                  </Tooltip>
                 </Typography>
                 <Typography variant="h2">
                   {gammaUserLoading ? (
