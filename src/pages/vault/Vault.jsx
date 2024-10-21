@@ -21,7 +21,6 @@ import {
   useContractAddressStore,
   useVaultManagerAbiStore,
   usesUSDContractAddressStore,
-  useSmartVaultABIStore,
 } from "../../store/Store";
 
 import CenterLoader from "../../components/ui/CenterLoader";
@@ -226,11 +225,12 @@ const Vault = () => {
       <Card className="card-compact">
         <div className="card-body">
           <div className="flex flex-col md:flex-row">
-            <div className="flex-1">
+            <div className="w-full md:w-2/3">
               {vaultNav()}
               <VaultStats
                 currentVault={currentVault}
                 vaultType={vaultType}
+                isLoading={isLoading}
               />
               <div className="pt-4 hidden md:block">
                 <Debt
@@ -239,7 +239,7 @@ const Vault = () => {
                 />
               </div>
             </div>
-            <div className="flex-1 flex flex-col justify-center items-center">
+            <div className="w-full md:w-1/3 flex flex-col justify-center items-center">
               <TokenTotalPie
                 chartData={chartData}
                 currentVault={currentVault}
