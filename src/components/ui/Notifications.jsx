@@ -16,8 +16,7 @@ import Button from "./Button";
 import Modal from "./Modal";
 import Typography from "./Typography";
 
-// const notifDate = '20240722';
-const notifDate = '20241120';
+const notifDate = '20240722';
 
 const Notifications = (props) => {
   const [isOpen, setIsOpen] = useState(false);
