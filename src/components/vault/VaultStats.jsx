@@ -139,6 +139,8 @@ const VaultStats = ({
         )
       ),
       currency: vaultType,
+      tooltip: false,
+      show: true,
     },
     {
       title: "Balance",
@@ -152,6 +154,21 @@ const VaultStats = ({
         )
       ),
       currency: "",
+      tooltip: false,
+      show: true,
+    },
+    {
+      title: "Total Borrow Limit",
+      value: (
+        isLoadingSupplyLimit || isLoadingTotalSupply ? (
+          <span class="loading loading-bars loading-xs"></span>
+        ) : (
+          Number(ethers.formatEther(availableSupply)).toFixed(2)
+        )
+      ),
+      currency: vaultType,
+      tooltip: `Total ${vaultType} remaining available on this network for all users.`,
+      show: vaultType === 'USDs',
     },
     {
       title: "Borrow up to",
@@ -171,92 +188,53 @@ const VaultStats = ({
         )
       ),
       currency: vaultType,
+      tooltip: `Total ${vaultType} you can borrow, based on your balance.`,
+      show: true,
     },
   ];
-
-  const statsItemsV4 = [
-    {
-      title: "Current Supply Limit",
-      value: (
-        isLoadingSupplyLimit ? (
-          <span class="loading loading-bars loading-xs"></span>
-        ) : (
-          Number(ethers.formatEther(supplyLimit)).toFixed(2)
-        )
-      ),
-      currency: vaultType,
-      tooltip: `Max ${vaultType} allowed to be in circulation on this network.`
-    },
-    {
-      title: "Current Total Supply",
-      value: (
-        isLoadingTotalSupply ? (
-          <span class="loading loading-bars loading-xs"></span>
-        ) : (
-          Number(ethers.formatEther(totalSupply)).toFixed(2)
-        )
-      ),
-      currency: vaultType,
-      tooltip: `Total ${vaultType} in circulation on this network.`
-    },
-    {
-      title: "Supply Available",
-      value: (
-        isLoadingSupplyLimit || isLoadingTotalSupply ? (
-          <span class="loading loading-bars loading-xs"></span>
-        ) : (
-          Number(ethers.formatEther(availableSupply)).toFixed(2)
-        )
-      ),
-      currency: vaultType,
-      tooltip: `Total ${vaultType} remaining available on this network.`
-    },
-  ];
-
-  let useStats = statsItems;
-
-  if (vaultType === 'USDs') {
-    useStats = [...statsItems, ...statsItemsV4];
-  }
 
   return (
     <>
       <div className="-mx-1 flex flex-wrap">
-        {useStats.map((item, index) => (
-          <div
-            className="w-1/2 px-1 my-2 sm:my-2 sm:w-1/2 lg:my-0 lg:w-1/3 pb-2"
-            key={index}
-          >
-            <Typography
-              variant="p"
-            >
-              {item.title}
-              {item.tooltip ? (
-                <Tooltip
-                className="flex-col justify-center items-center cursor-pointer before:w-[12rem]"
-                position="top"
-                message={item.tooltip}
+        {statsItems.map((item, index) => {
+          if (item.show) {
+            return (
+              <div
+                className="w-1/2 px-1 my-2 sm:my-2 sm:w-1/2 lg:my-0 lg:w-1/4 pb-2"
+                key={index}
               >
-                <QuestionMarkCircleIcon
-                  className="mb-1 ml-1 h-5 w-5 inline-block opacity-60"
-                />
-              </Tooltip>
-              ) : (null)}
-            </Typography>
-            <div>
-              <Typography
-                variant="h2"
-              >
-                {item.value}&nbsp;
-              </Typography>
-              <Typography
-                variant="p"
-              >
-                {item.currency}
-              </Typography>
-            </div>
-          </div>
-        ))}
+                <Typography
+                  variant="p"
+                >
+                  {item.title}
+                  {item.tooltip ? (
+                    <Tooltip
+                    className="flex-col justify-center items-center cursor-pointer before:w-[12rem]"
+                    position="top"
+                    message={item.tooltip}
+                  >
+                    <QuestionMarkCircleIcon
+                      className="mb-1 ml-1 h-5 w-5 inline-block opacity-60"
+                    />
+                  </Tooltip>
+                  ) : (null)}
+                </Typography>
+                <div>
+                  <Typography
+                    variant="h2"
+                  >
+                    {item.value}&nbsp;
+                  </Typography>
+                  <Typography
+                    variant="p"
+                  >
+                    {item.currency}
+                  </Typography>
+                </div>
+              </div>  
+            )
+          }
+        })}
         <div className="w-full px-1 mt-4">
           {currentVault.status.liquidated ? (
             <Typography variant="h1" className="text-error">
