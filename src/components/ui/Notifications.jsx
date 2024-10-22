@@ -36,7 +36,7 @@ const Notifications = (props) => {
 
   let hasUnread = false;
 
-  if (daysSince < 7) {
+  if (daysSince < 14) {
     hasUnread = true;
   }
 
@@ -44,7 +44,7 @@ const Notifications = (props) => {
     hasUnread = false;
   }
 
-  if (daysSince >= 7) {
+  if (daysSince >= 14) {
     hasUnread = false;
   }
 
