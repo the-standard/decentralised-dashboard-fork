@@ -73,6 +73,7 @@ const Debt = ({
   if (vaultType === 'USDs') {
     sAddress = usdsAddress;
   }
+  const borrowEnabled = vaultType != 'EUROs';
 
   const sContract = {
     address: sAddress,
@@ -413,9 +414,8 @@ const Debt = ({
         <Button
           className="w-full lg:w-auto flex-1"
           color="primary"
-          // TEMP disabled
-          disabled
-          // onClick={() => setBorrowOpen(!borrowOpen)}
+          disabled={!borrowEnabled}
+          onClick={() => setBorrowOpen(!borrowOpen)}
         >
           <ArrowDownCircleIcon className="h-6 w-6 inline-block"/>
           Borrow
