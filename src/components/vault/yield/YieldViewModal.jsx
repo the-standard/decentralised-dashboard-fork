@@ -39,7 +39,11 @@ const YieldViewModal = ({
   const netMarketReturnsUSD = positionUser?.returns?.netMarketReturnsUSD;
   const netMarketReturnsPercentage = positionUser?.returns?.netMarketReturnsPercentage;
   const tvlUSD = Number(positionStats?.tvlUSD) || 0;
-  const showApy = Number(positionReturns?.feeApy * 100).toFixed(2);
+
+  let showApy = '0';
+  if (positionReturns?.feeApy) {
+    showApy = Number(positionReturns?.feeApy * 100).toFixed(2);
+  }
 
   return (
     <>
