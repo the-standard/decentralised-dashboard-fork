@@ -188,7 +188,7 @@ const VaultStats = ({
         )
       ),
       currency: vaultType,
-      tooltip: `Total ${vaultType} you can borrow, based on your balance.`,
+      tooltip: `Total ${vaultType} you can borrow, based on your balance & global limit.`,
       show: true,
     },
   ];

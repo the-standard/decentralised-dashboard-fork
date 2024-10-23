@@ -45,7 +45,7 @@ const TokenValueChart = ({ data, symbol }) => {
 
   useEffect(() => {
     renderColor();
-  }, []);
+  }, [convertedData]);
 
   useEffect(() => {
     const handleResize = () => {
