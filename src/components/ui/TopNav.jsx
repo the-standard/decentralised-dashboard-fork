@@ -50,7 +50,7 @@ const TopNav = (props) => {
           <div className="hidden md:block">
             <ThemeToggle className="dropdown-bottom"/>
           </div>
-          <Notifications />
+          {/* <Notifications /> */}
           <RainbowConnect />
         </div>
       </div>
