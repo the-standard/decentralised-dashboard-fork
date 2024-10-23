@@ -109,6 +109,7 @@ const VaultHealth = ({
             max="100"
             color={tHealthColour || 'primary'}
             className="bg-transparent"
+            style={{ "--value": "70", "--size": "12rem", "--thickness": "2rem" }}
           />
         </Tooltip>
       </div>

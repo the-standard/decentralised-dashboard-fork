@@ -10,24 +10,47 @@ import {
 } from 'react-daisyui';
 
 import {
+  ChevronDownIcon,
+  ChevronUpIcon,
+  QueueListIcon,
+} from '@heroicons/react/24/outline';
+
+import {
   useVaultStore,
 } from "../../store/Store";
 
 import {
-  ChevronDownIcon,
-  ChevronUpIcon,
-} from '@heroicons/react/24/outline';
+  ArbitrumVaults,
+  SepoliaVaults,
+} from "./yield/YieldGammaVaults";
 
 import Card from "../ui/Card";
 import Button from "../ui/Button";
 import CenterLoader from "../ui/CenterLoader";
 import TokenIcon from "../ui/TokenIcon";
+import Typography from "../ui/Typography";
 import TokenActions from "./TokenActions";
 import TokenValueChart from "./TokenValueChart";
 
-const TokenList = ({ assets, assetsLoading }) => {
+const TokenList = ({
+  assets,
+  assetsLoading,
+  vaultType,
+  yieldEnabled,
+}) => {
+  let currencySymbol = '';
+  if (vaultType === 'EUROs') {
+    currencySymbol = '€';
+  }
+  if (vaultType === 'USDs') {
+    currencySymbol = '$';
+  }
 
   const chainId = useChainId();
+
+  const yieldVaultsInfo = chainId === arbitrumSepolia.id
+  ? SepoliaVaults
+  : ArbitrumVaults;
 
   const { vaultStore } = useVaultStore();
 
@@ -71,12 +94,20 @@ const TokenList = ({ assets, assetsLoading }) => {
     getChartData();
   }, []);
 
+  const vaultVersion = vaultStore?.status?.version || '';
+
+  const useSwapV4 = vaultVersion >= 4;
+
   return (
     <>
       <Card className="card-compact">
         <div className="card-body">
-          <div className="">
-            <table className="table table-fixed">
+          <div>
+            <Typography variant="h2" className="card-title flex gap-0">
+              <QueueListIcon className="mr-2 h-6 w-6 inline-block"/>
+              Collateral Tokens
+            </Typography>
+            <table className="table">
               <thead>
                 <tr>
                   <th>Asset</th>
@@ -106,6 +137,8 @@ const TokenList = ({ assets, assetsLoading }) => {
                     if (chartData && chartData[symbol] && chartData[symbol].prices) {
                       useData = chartData[symbol].prices;
                     }
+                    
+                    let tokenYield = yieldVaultsInfo.find(item => item.asset === symbol);
 
                     return (
                       <Fragment key={index}>
@@ -135,7 +168,7 @@ const TokenList = ({ assets, assetsLoading }) => {
                           <td>
                             {ethers.formatUnits(amount, token.dec)}
                             <br/>
-                            €{formattedCollateralValue}
+                            {currencySymbol}{formattedCollateralValue}
                           </td>
                           <td className="hidden md:table-cell">
                             <TokenValueChart
@@ -143,6 +176,7 @@ const TokenList = ({ assets, assetsLoading }) => {
                               symbol={symbol}
                             />
                           </td>
+                          <td className="table-cell md:hidden"></td>
                           <td className="text-right">
                             <Button
                               shape="circle"
@@ -163,11 +197,10 @@ const TokenList = ({ assets, assetsLoading }) => {
                             'glass-alt-bg w-full hidden h-0'
                           )}
                         >
-                          <td className="hidden md:table-cell"></td>
-                          <td colSpan="3">
+                          <td colSpan="4">
                             {vaultStore.status.liquidated ? null : (
                               <>
-                                <div className="flex flex-row gap-4">
+                                <div className="flex flex-row flex-wrap gap-4">
                                   <Button
                                     variant="outline"
                                     onClick={() => handleClick('DEPOSIT', asset)}
@@ -186,10 +219,24 @@ const TokenList = ({ assets, assetsLoading }) => {
                                   <Button
                                     variant="outline"
                                     disabled={amount <= 0}
-                                    onClick={() => handleClick('SWAP', asset)}
+                                    onClick={
+                                      useSwapV4 ? (
+                                        () => handleClick('SWAPV4', asset)
+                                      ) : (
+                                        () => handleClick('SWAP', asset)
+                                      )
+                                    }
                                     className="grow"
                                   >
                                     Swap
+                                  </Button>
+                                  <Button
+                                    variant="outline"
+                                    disabled={amount <= 0 || !yieldEnabled || !tokenYield}
+                                    onClick={() => handleClick('YIELD', asset)}
+                                    className="grow"
+                                  >
+                                    Place In Yield Pool
                                   </Button>
                                 </div>
                               </>
@@ -210,9 +257,9 @@ const TokenList = ({ assets, assetsLoading }) => {
             actionType={actionType}
             useAsset={useAsset}
             closeModal={closeAction}
-            assets={assets}            
+            assets={assets}   
+            vaultType={vaultType}         
           />
-
         </div>
       </Card>
     </>

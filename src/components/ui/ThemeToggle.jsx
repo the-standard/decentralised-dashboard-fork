@@ -15,26 +15,6 @@ const ThemeToggle = (props) => {
 
   const chosenTheme = localStorage.getItem('theme');
 
-  // const toggleTheme = () => {
-  //   switch (chosenTheme) {
-  //     case 'deluxe-light':
-  //       saveTheme("deluxe-dark");
-  //       break;
-  //     case 'deluxe-dark':
-  //       saveTheme("deluxe-light");
-  //       break;
-  //     case 'nebula-light':
-  //       saveTheme("nebula-dark");
-  //       break;
-  //     case 'nebula-dark':
-  //       saveTheme("nebula-light");
-  //       break;  
-  //     default:
-  //       saveTheme("nebula-dark");
-  //       break;
-  //   }  
-  // }
-
   const setTheme = (theme) => {
     saveTheme(theme);
   }

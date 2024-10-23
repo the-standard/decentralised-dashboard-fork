@@ -1,8 +1,5 @@
 import { useEffect, useState, useMemo } from "react";
 import { useParams, useLocation, useNavigate } from "react-router-dom";
-import {
-  ChevronLeftIcon,
-} from '@heroicons/react/24/outline';
 import { ethers } from "ethers";
 import {
   useBlockNumber,
@@ -14,11 +11,16 @@ import {
 import { arbitrumSepolia } from "wagmi/chains";
 
 import {
+  ChevronLeftIcon,
+} from '@heroicons/react/24/outline';
+
+import {
   useVaultAddressStore,
   useVaultStore,
   useVaultIdStore,
   useContractAddressStore,
   useVaultManagerAbiStore,
+  usesUSDContractAddressStore,
 } from "../../store/Store";
 
 import CenterLoader from "../../components/ui/CenterLoader";
@@ -30,6 +32,8 @@ import TokenList from "../../components/vault/TokenList";
 import VaultSend from "../../components/vault/VaultSend";
 import TokenTotalPie from "../../components/vault/TokenTotalPie";
 
+import YieldParent from "../../components/vault/yield/YieldParent";
+
 import Card from "../../components/ui/Card";
 import Typography from "../../components/ui/Typography";
 
@@ -39,13 +43,21 @@ function useQuery() {
 }
 
 const Vault = () => {
-  const { vaultId } = useParams();
+  const { vaultType, vaultId } = useParams();
   const { setVaultAddress } = useVaultAddressStore();
   const { vaultStore, setVaultStore } = useVaultStore();
-  const { arbitrumSepoliaContractAddress, arbitrumContractAddress } =
-    useContractAddressStore();
   const { vaultManagerAbi } = useVaultManagerAbiStore();
   const { setVaultID } = useVaultIdStore();
+
+  const {
+    arbitrumSepoliaContractAddress,
+    arbitrumContractAddress
+  } = useContractAddressStore();
+
+  const {
+    arbitrumsUSDSepoliaContractAddress,
+    arbitrumsUSDContractAddress,
+  } = usesUSDContractAddressStore();
 
   //local states
   const { data: blockNumber } = useBlockNumber();
@@ -54,6 +66,8 @@ const Vault = () => {
 
   const chainId = useChainId();
   const query = useQuery();
+
+  const { isConnected, address } = useAccount();
 
   useEffect(() => {
     setVaultID(vaultId);
@@ -68,23 +82,52 @@ const Vault = () => {
       ? arbitrumSepoliaContractAddress
       : arbitrumContractAddress;
 
-  const { data: vaultData, refetch, isLoading } = useReadContract({
-    address: vaultManagerAddress,
+  const sUSDVaultManagerAddress =
+    chainId === arbitrumSepolia.id
+      ? arbitrumsUSDSepoliaContractAddress
+      : arbitrumsUSDContractAddress;          
+
+  const { data: vaultDatasEUR, refetch: refetchsEUR, isLoading: isLoadingsEUR } = useReadContract({
     abi: vaultManagerAbi,
+    address: vaultManagerAddress,
     functionName: "vaultData",
     args: [vaultId],
   });
 
+  const { data: vaultDatasUSD, refetch: refetchsUSD, isLoading: isLoadingsUSD } = useReadContract({
+    abi: vaultManagerAbi,
+    address: sUSDVaultManagerAddress,
+    functionName: "vaultData",
+    args: [vaultId],
+  });
+
+  let currentVault = {};
+  let isLoading = true;
+  let isValidVaultType = false;
+
+  if (vaultType === 'EUROs') {
+    currentVault = vaultDatasEUR;
+    isLoading = isLoadingsEUR;
+    isValidVaultType = true;
+  }
+
+  if (vaultType === 'USDs') {
+    currentVault = vaultDatasUSD;
+    isLoading = isLoadingsUSD;
+    isValidVaultType = true;
+  }
+
   useWatchBlockNumber({
     onBlockNumber() {
       setRenderedBlock(blockNumber);
-      refetch();
+      if (vaultType === 'EUROs') {
+        refetchsEUR();
+      }
+      if (vaultType === 'USDs') {
+        refetchsUSD();
+      }
     },
   })
-
-  const { isConnected, address } = useAccount();
-
-  const currentVault = vaultData;
 
   const vaultNav = (element) => {
     return (
@@ -136,7 +179,7 @@ const Vault = () => {
     )
   }
 
-  if (!currentVault || !isConnected) {
+  if (!currentVault || !isConnected || !isValidVaultType) {
     return (
       <main>
         <Card className="card-compact">
@@ -175,42 +218,58 @@ const Vault = () => {
 
   const vaultVersion = vaultStore?.status?.version || '';
 
+  const yieldEnabled = (vaultType === 'USDs') && (vaultVersion >= 4);
+
   return (
     <main>
       <Card className="card-compact">
         <div className="card-body">
           <div className="flex flex-col md:flex-row">
-            <div className="flex-1">
+            <div className="w-full md:w-2/3">
               {vaultNav()}
               <VaultStats
                 currentVault={currentVault}
+                vaultType={vaultType}
+                isLoading={isLoading}
               />
               <div className="pt-4 hidden md:block">
                 <Debt
                   currentVault={currentVault}
+                  vaultType={vaultType}
                 />
               </div>
             </div>
-            <div className="flex-1 flex flex-col justify-center items-center">
+            <div className="w-full md:w-1/3 flex flex-col justify-center items-center">
               <TokenTotalPie
                 chartData={chartData}
                 currentVault={currentVault}
+                vaultType={vaultType}
                 vaultId={vaultId}
                 vaultVersion={vaultVersion}
               />
               <div className="pt-4 w-full block md:hidden">
                 <Debt
                   currentVault={currentVault}
+                  vaultType={vaultType}
                 />
               </div>
             </div>
           </div>
         </div>
       </Card>
-      <div className="mt-4">
-        <TokenList
-          assets={assets}
-          assetsLoading={!assets.length || assets.length === 0}
+      <div className="flex flex-col md:flex-row mt-4 gap-4 flex-wrap">
+        <div className="flex-1 grow-[4]">
+          <TokenList
+            vaultType={vaultType}
+            assets={assets}
+            assetsLoading={!assets.length || assets.length === 0}
+            yieldEnabled={yieldEnabled}
+          />
+        </div>
+
+        <YieldParent
+          yieldEnabled={yieldEnabled}
+          vaultType={vaultType}
         />
       </div>
       

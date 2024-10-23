@@ -13,8 +13,9 @@ import { arbitrumSepolia } from "wagmi/chains";
 
 import {
   useVaultManagerAbiStore,
+  usesUSDContractAddressStore,
   useContractAddressStore,
-} from "../../store/Store.jsx";
+} from "../../store/Store";
 
 import VaultCreate from "../../components/vaults/VaultCreate";
 import VaultList from "../../components/vaults/VaultList";
@@ -22,23 +23,47 @@ import VaultList from "../../components/vaults/VaultList";
 const Vaults = () => {
   const { address: accountAddress } = useAccount();
   const { vaultManagerAbi } = useVaultManagerAbiStore();
-  const { arbitrumSepoliaContractAddress, arbitrumContractAddress } = useContractAddressStore();
+
+  const {
+    arbitrumSepoliaContractAddress,
+    arbitrumContractAddress
+  } = useContractAddressStore();
+
+  const {
+    arbitrumsUSDSepoliaContractAddress,
+    arbitrumsUSDContractAddress,
+  } = usesUSDContractAddressStore();
 
   const chainId = useChainId();
+
   const vaultManagerAddress =
     chainId === arbitrumSepolia.id
       ? arbitrumSepoliaContractAddress
       : arbitrumContractAddress;
 
-  const { data: vaultIDs, refetch: refetchVaultIDs } = useReadContract({
-    address: vaultManagerAddress,
+  const sUSDVaultManagerAddress =
+  chainId === arbitrumSepolia.id
+    ? arbitrumsUSDSepoliaContractAddress
+    : arbitrumsUSDContractAddress;      
+
+  const { data: sEURvaultIDs, refetch: refetchsEURVaultIDs } = useReadContract({
     abi: vaultManagerAbi,
+    address: vaultManagerAddress,
+    functionName: "vaultIDs",
+    args: [accountAddress || ethers?.constants?.AddressZero]
+  });
+
+  const { data: sUSDvaultIDs, refetch: refetchsUSDVaultIDs } = useReadContract({
+    abi: vaultManagerAbi,
+    address: sUSDVaultManagerAddress,
     functionName: "vaultIDs",
     args: [accountAddress || ethers?.constants?.AddressZero]
   });
 
   const [tokenId, setTokenId] = useState();
+  const [vaultType, setVaultType] = useState();
 
+  // Watch for EUROs Vaults
   useWatchContractEvent({
     abi: vaultManagerAbi,
     address: vaultManagerAddress,
@@ -50,15 +75,9 @@ const Vaults = () => {
     pollingInterval: 1000,
     onLogs(logs) {
       if (logs[0] && logs[0].args) {
-        // const { address } = logs[0];
         const { tokenId } = logs[0] && logs[0].args;
         setTokenId(tokenId);
-
-        // TODO add logic for USDs vaults
-        // let vaultType;
-        // if (address === vaultManagerAddress) {
-        //   vaultType = 'EUROs'
-        // }
+        setVaultType('EUROs');
 
         try {
           plausible('CreateVault', {
@@ -73,24 +92,78 @@ const Vaults = () => {
     }
   });
 
-  const vaultDataContract = {
-    address: vaultManagerAddress,
+  // Watch for USDs Vaults
+  useWatchContractEvent({
     abi: vaultManagerAbi,
+    address: sUSDVaultManagerAddress,
+    eventName: "VaultDeployed",
+    args: {
+      owner: accountAddress
+    },
+    poll: true,
+    pollingInterval: 1000,
+    onLogs(logs) {
+      if (logs[0] && logs[0].args) {
+        const { tokenId } = logs[0] && logs[0].args;
+        setTokenId(tokenId);
+        setVaultType('USDs');
+
+        try {
+          plausible('CreateVault', {
+            props: {
+              VaultType: 'USDs',
+            }
+          });
+        } catch (error) {
+          console.log(error);
+        }
+      }
+    }
+  });
+
+  const sEURvaultDataContract = {
+    abi: vaultManagerAbi,
+    address: vaultManagerAddress,
     functionName: "vaultData",
   };
 
-  const contracts = vaultIDs?.map((id) => {
+  const sUSDvaultDataContract = {
+    abi: vaultManagerAbi,
+    address: sUSDVaultManagerAddress,
+    functionName: "vaultData",
+  };
+
+  const sEURcontracts = sEURvaultIDs?.map((id) => {
     return ({
-      ...vaultDataContract,
+      ...sEURvaultDataContract,
       args: [id],
     })
   });
 
-  const { data: vaultData, isPending, refetch: refetchVaultData } = useReadContracts({
-    contracts
+  const sUSDcontracts = sUSDvaultIDs?.map((id) => {
+    return ({
+      ...sUSDvaultDataContract,
+      args: [id],
+    })
   });
 
-  const myVaults = vaultData?.map((item) => {
+  const { data: sEURvaultData, isPending: sEURisPending, refetch: refetchsEURVaultData } = useReadContracts({
+    contracts: sEURcontracts
+  });
+
+  const { data: sUSDvaultData, isPending: sUSDisPending, refetch: refetchsUSDVaultData } = useReadContracts({
+    contracts: sUSDcontracts
+  });
+
+  const mysEURVaults = sEURvaultData?.map((item) => {
+    if (item && item.result) {
+      return (
+        item.result
+      )    
+    }
+  });
+
+  const mysUSDVaults = sUSDvaultData?.map((item) => {
     if (item && item.result) {
       return (
         item.result
@@ -100,8 +173,10 @@ const Vaults = () => {
 
   useWatchBlockNumber({
     onBlockNumber() {
-      refetchVaultIDs();
-      refetchVaultData();
+      refetchsEURVaultIDs();
+      refetchsEURVaultData();
+      refetchsUSDVaultIDs();
+      refetchsUSDVaultData();
     },
   })
 
@@ -109,13 +184,18 @@ const Vaults = () => {
     <main>
       <VaultCreate
         tokenId={tokenId}
-        vaults={myVaults || []}
-        vaultsLoading={isPending || false}
+        vaultType={vaultType}
+        vaultsLoading={sEURisPending || sUSDisPending || false}
       />
       <VaultList
-        tokenId={tokenId}
-        vaults={myVaults || []}
-        vaultsLoading={isPending || false}
+        listType={'USDs'}
+        vaults={mysUSDVaults || []}
+        vaultsLoading={sUSDisPending || false}
+      />
+      <VaultList
+        listType={'EUROs'}
+        vaults={mysEURVaults || []}
+        vaultsLoading={sEURisPending || false}
       />
     </main>
   );

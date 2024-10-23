@@ -3,6 +3,7 @@ import vaultManagerAbi from "../abis/vaultManager";
 import erc20Abi from "../abis/erc20";
 import chainlinkAbi from "../abis/priceFeeds/chainlink";
 import smartVaultABI from "../abis/smartVault";
+import smartVaultV4ABI from "../abis/smartVaultV4";
 import stakingAbi from "../abis/staking";
 import liquidationPoolAbi from "../abis/liquidationPool";
 import stakingPoolv2Abi from "../abis/stakingPoolV2";
@@ -64,6 +65,15 @@ export const usesEuroAddressStore = create() (
   })
 );
 
+export const usesUSDAddressStore = create() (
+  (set) => ({
+    arbitrumsUSDAddress: "0x2Ea0bE86990E8Dac0D09e4316Bb92086F304622d",
+    arbitrumSepoliasUSDAddress: "0x0173184A51CF807Cc386B3F5Dc5689Cae09B81fb",
+    setsUSDAddress: (arbitrumsUSDAddress) =>
+      set(() => ({ sEuroAddress: arbitrumsUSDAddress })),
+  })
+);
+
 export const useTstAddressStore = create() (
   (set) => ({
     arbitrumTstAddress: "0xf5A27E55C748bCDdBfeA5477CB9Ae924f0f7fd2e",
@@ -114,12 +124,27 @@ export const useSmartVaultABIStore = create() (
   })
 );
 
+export const useSmartVaultV4ABIStore = create() (
+  () => ({
+    smartVaultV4ABI,
+  })
+);
+
 export const useContractAddressStore = create() (
   (set) => ({
     arbitrumContractAddress: "0xba169cceCCF7aC51dA223e04654Cf16ef41A68CC",
     arbitrumSepoliaContractAddress: "0xBbB704f184E716410a9c00435530eA055CfAD187",
     setContractAddress: (arbitrumContractAddress) =>
       set(() => ({ contractAddress: arbitrumContractAddress })),
+  })
+);
+
+export const usesUSDContractAddressStore = create() (
+  (set) => ({
+    arbitrumsUSDContractAddress: "0x496aB4A155C8fE359Cd28d43650fAFA0A35322Fb",
+    arbitrumsUSDSepoliaContractAddress: "0xf752AD9dBacCA40f771164ca03b68844DBB93BF7",
+    setContractAddress: (arbitrumsUSDContractAddress) =>
+      set(() => ({ sUSDContractAddress: arbitrumsUSDContractAddress })),
   })
 );
 
@@ -202,5 +227,19 @@ export const useCurrentPageStore = create(
   (set) => ({
     currentPage: 1,
     setCurrentPage: (currentPage) => set(() => ({ currentPage: currentPage })),
+  })
+);
+
+export const usesEURVaultListPageStore = create(
+  (set) => ({
+    currentsEURPage: 1,
+    setCurrentsEURPage: (currentsEURPage) => set(() => ({ currentsEURPage: currentsEURPage })),
+  })
+);
+
+export const usesUSDVaultListPageStore = create(
+  (set) => ({
+    currentsUSDPage: 1,
+    setCurrentsUSDPage: (currentsUSDPage) => set(() => ({ currentsUSDPage: currentsUSDPage })),
   })
 );

@@ -28,8 +28,8 @@ function App() {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="vaults" element={<DashLayout><Vaults /></DashLayout>} />
-              <Route path="vault/:vaultId" element={<DashLayout><Vault /></DashLayout>} />
-              <Route path="vault/:vaultId/history" element={<DashLayout><VaultHistory /></DashLayout>} />
+              <Route path="vault/:vaultType/:vaultId" element={<DashLayout><Vault /></DashLayout>} />
+              <Route path="vault/:vaultType/:vaultId/history" element={<DashLayout><VaultHistory /></DashLayout>} />
               <Route path="liquidation-pools" element={<DashLayout><LiquidationPools /></DashLayout>} />
               <Route path="staking-pool" element={<DashLayout><StakingPool /></DashLayout>} />
               <Route path="dex/*" element={<DashLayout><Dex /></DashLayout>} />

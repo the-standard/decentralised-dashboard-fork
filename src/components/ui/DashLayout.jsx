@@ -62,7 +62,7 @@ const DashLayout = ({children}) => {
         <TopNav toggleVisible={toggleVisible} />
           <div className="tst-inner">
             <ChainChecker>
-              <Card className="card-compact mb-4">
+              {/* <Card className="card-compact mb-4">
                 <div className="card-body">
                   <Typography variant="h2" className="card-title flex justify-between">
                     <span>
@@ -124,7 +124,7 @@ const DashLayout = ({children}) => {
 
                   </div>
                 </div>
-              </Card>
+              </Card> */}
 
               {children}
             </ChainChecker>

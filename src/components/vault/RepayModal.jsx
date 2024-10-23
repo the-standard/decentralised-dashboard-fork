@@ -34,6 +34,7 @@ const RepayModal = (props) => {
     toPercentage,
     inputRef,
     currentVault,
+    vaultType,
   } = props;
 
   const { borrowWide } = useWideBorrowModal();
@@ -47,13 +48,13 @@ const RepayModal = (props) => {
         >
           <Typography variant="h2" className="card-title">
             <ArrowUpCircleIcon className="mr-2 h-6 w-6 inline-block"/>
-            Repaying EUROs
+            Repaying {vaultType}
           </Typography>
 
           <Typography
             variant="h3"
           >
-            You just repayed {amount} EUROs successfully!
+            You just repayed {amount} {vaultType} successfully!
           </Typography>
 
           <div className="card-actions pt-4 flex-col-reverse lg:flex-row justify-end">
@@ -78,7 +79,7 @@ const RepayModal = (props) => {
           closeModal={closeModal}
         >
           <Typography variant="h2" className="card-title">
-            Confirm Your EUROs Spending cap
+            Confirm Your {vaultType} Spending cap
           </Typography>
   
           <Typography
@@ -170,7 +171,7 @@ const RepayModal = (props) => {
           <div className="flex flex-col flex-1">
             <Typography variant="h2" className="card-title">
               <ArrowUpCircleIcon className="mr-2 h-6 w-6 inline-block"/>
-              Repaying EUROs
+              Repaying {vaultType}
             </Typography>
 
             <div className="flex justify-between">
@@ -191,7 +192,7 @@ const RepayModal = (props) => {
             >
               <Input
                 className="join-item w-full"
-                placeholder="Amount of EUROs you want to repay"
+                placeholder={`Amount of ${vaultType} you want to repay`}
                 type="number"
                 onChange={(e) => handleAmount(e, 'REPAY')}
                 disabled={isPending}
@@ -254,7 +255,9 @@ const RepayModal = (props) => {
               </Button>
             </div>
           </div>
-          <EurosCompare />
+          {vaultType === 'EUROs' ? (
+            <EurosCompare vaultType={vaultType}/>
+          ) : null}
         </div>
       </Modal>
     </>
