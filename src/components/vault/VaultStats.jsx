@@ -158,7 +158,7 @@ const VaultStats = ({
       show: true,
     },
     {
-      title: "Total Borrow Limit",
+      title: "Global Borrow Limit",
       value: (
         isLoadingSupplyLimit || isLoadingTotalSupply ? (
           <span class="loading loading-bars loading-xs"></span>
