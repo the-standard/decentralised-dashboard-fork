@@ -12,6 +12,7 @@ import sushilogo from "../../assets/sushilogo.svg";
 import susdlogo from "../../assets/usdslogo.svg";
 import usdclogo from "../../assets/usdclogo.svg";
 import wethlogo from "../../assets/wethlogo.svg";
+import merkllogo from "../../assets/merkllogo.webp";
 
 import Typography from "./Typography";
 
@@ -19,6 +20,7 @@ const TokenIcon = ({
   symbol,
   style,
   className,
+  isMerkl,
 }) => {
   switch (symbol) {
     case 'ETH':
@@ -26,7 +28,7 @@ const TokenIcon = ({
         <img
           style={style}
           src={ethereumlogo}
-          alt="ETH logo"
+          alt={`${symbol} logo`}
           className={className ? className : ''}
         />  
       );
@@ -35,7 +37,7 @@ const TokenIcon = ({
         <img
           style={style}
           src={tstlogo}
-          alt="TST logo"
+          alt={`${symbol} logo`}
           className={className ? className : ''}
         />  
       );
@@ -44,7 +46,7 @@ const TokenIcon = ({
         <img
           style={style}
           src={seurologo}
-          alt="EUROs logo"
+          alt={`${symbol} logo`}
           className={className ? className : ''}
         />  
       );
@@ -53,7 +55,7 @@ const TokenIcon = ({
         <img
           style={style}
           src={wbtclogo}
-          alt="WBTC logo"
+          alt={`${symbol} logo`}
           className={className ? className : ''}
         />  
       );
@@ -62,7 +64,7 @@ const TokenIcon = ({
         <img
           style={style}
           src={linklogo}
-          alt="LINK logo"
+          alt={`${symbol} logo`}
           className={className ? className : ''}
         />  
       );
@@ -71,7 +73,7 @@ const TokenIcon = ({
         <img
           style={style}
           src={arblogo}
-          alt="ARB logo"
+          alt={`${symbol} logo`}
           className={className ? className : ''}
         />  
       );
@@ -80,7 +82,7 @@ const TokenIcon = ({
         <img
           style={style}
           src={paxglogo}
-          alt="PAXG logo"
+          alt={`${symbol} logo`}
           className={className ? className : ''}
         />  
       );
@@ -89,7 +91,7 @@ const TokenIcon = ({
         <img
           style={style}
           src={gmxlogo}
-          alt="gmx logo"
+          alt={`${symbol} logo`}
           className={className ? className : ''}
         />    
       );
@@ -98,7 +100,7 @@ const TokenIcon = ({
         <img
           style={style}
           src={rdntlogo}
-          alt="rdnt logo"
+          alt={`${symbol} logo`}
           className={className ? className : ''}
         />    
       );
@@ -107,7 +109,7 @@ const TokenIcon = ({
         <img
           style={style}
           src={sushilogo}
-          alt="sushi logo"
+          alt={`${symbol} logo`}
           className={className ? className : ''}
         />    
       );
@@ -116,7 +118,7 @@ const TokenIcon = ({
         <img
           style={style}
           src={susdlogo}
-          alt="USDs logo"
+          alt={`${symbol} logo`}
           className={className ? className : ''}
         />    
       );
@@ -125,7 +127,7 @@ const TokenIcon = ({
         <img
           style={style}
           src={usdclogo}
-          alt="USDC logo"
+          alt={`${symbol} logo`}
           className={className ? className : ''}
         />    
       );
@@ -134,7 +136,7 @@ const TokenIcon = ({
         <img
           style={style}
           src={wethlogo}
-          alt="WETH logo"
+          alt={`${symbol} logo`}
           className={className ? className : ''}
         />    
       );  
@@ -144,11 +146,21 @@ const TokenIcon = ({
         <img
           style={style}
           src={placeholderlogo}
-          alt="logo"
+          alt={`${symbol} logo`}
           className={className ? className : ''}
         />    
       );
     default:
+      if (isMerkl) {
+        return (
+          <img
+            style={style}
+            src={merkllogo}
+            alt={`${symbol} logo`}
+            className={className ? className : ''}
+          />
+        )
+      }
       return (
         <div
           className={className ? className : ''}

@@ -51,7 +51,7 @@ const VaultHistory = () => {
           All Vaults
         </Button>
         <Button
-          onClick={() => navigate(`../vault/${vaultId}`)}
+          onClick={() => navigate(`../vault/${vaultType.toString()}/${vaultId}`)}
           variant="outline"
           disabled={vaultsLoading}
         >
