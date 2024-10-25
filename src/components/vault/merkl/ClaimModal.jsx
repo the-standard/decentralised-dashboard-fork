@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { ethers } from "ethers";
 import { toast } from 'react-toastify';
 import {
@@ -31,8 +31,6 @@ const ClaimModal = (props) => {
   const { merklDistributorAddress } = useMerklAddressStore();
   const { merklABI } = useMerklABIStore();
   const { vaultAddress } = useVaultAddressStore();
-
-  const [amount, setAmount] = useState(0n);
 
   const { writeContract, isError, isPending, isSuccess } = useWriteContract();
 

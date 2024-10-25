@@ -15,13 +15,9 @@ const TokenActions = ({
     const symbol = useAsset?.symbol;
     const decimals = useAsset?.decimals;
     const balanceRaw = useAsset?.balanceOf;
-    const claimedRaw = useAsset?.accumulated;
-    const unclaimedRaw = useAsset?.unclaimed;
     const tokenAddress = useAsset?.tokenAddress;
 
     const balance = ethers.formatUnits(balanceRaw, decimals);
-    const claimed = ethers.formatUnits(claimedRaw, decimals);
-    const unclaimed = ethers.formatUnits(unclaimedRaw, decimals);
 
     switch (actionType) {
       case 'WITHDRAW':

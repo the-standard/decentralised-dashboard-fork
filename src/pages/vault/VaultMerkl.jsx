@@ -5,7 +5,6 @@ import {
   useChainId,
   useBlockNumber,
   useWatchBlockNumber,
-  useReadContracts,
 } from "wagmi";
 
 import axios from "axios";
@@ -54,7 +53,7 @@ const VaultMerkl = () => {
 
   const isLight = currentTheme && currentTheme.includes('light');
 
-  const vaultNav = (element) => {
+  const vaultNav = () => {
     return (
       <div className="flex flex-col sm:flex-row mb-4">
         <div className="flex flex-1 sm:flex-auto flex-wrap gap-4">
