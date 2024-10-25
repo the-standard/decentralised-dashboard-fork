@@ -38,13 +38,13 @@ const ClaimModal = (props) => {
     return (vaultAddress)
   });
   const claimTokens = useAssets && useAssets.length && useAssets.map(function(asset, index) {
-    return (asset.tokenAddress)
+    return (asset?.tokenAddress)
   });
   const claimAmounts = useAssets && useAssets.length && useAssets.map(function(asset, index) {
-    return (asset.accumulated)
+    return (asset?.accumulated)
   });
   const claimProofs = useAssets && useAssets.length && useAssets.map(function(asset, index) {
-    return (asset.proof)
+    return (asset?.proof)
   });
 
   const handleClaimToken = async () => {
@@ -118,7 +118,7 @@ const ClaimModal = (props) => {
                   const unclaimed = ethers.formatUnits(unclaimedRaw, decimals);
 
                   return (
-                    <tr>
+                    <tr key={index}>
                       <td className="pl-0">
                         <div className="h-full w-full flex flex-row">
                           <div className="flex items-center">

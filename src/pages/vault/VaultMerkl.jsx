@@ -117,10 +117,12 @@ const VaultMerkl = () => {
   }, [currentVault, vaultsLoading]);
 
   const getMerklRewardsData = async () => {  
+    const { vaultAddress } = currentVault.status;
+
     try {
       setMerklRewardsLoading(true);
       const response = await axios.get(
-        `https://api.merkl.xyz/v3/userRewards?chainId=42161&proof=true&user=0xccD724B9af92A3A389150334556330EfD3f59487`
+        `https://api.merkl.xyz/v3/userRewards?chainId=42161&proof=true&user=${vaultAddress}`
       );
 
       const useData = response?.data;
@@ -143,7 +145,6 @@ const VaultMerkl = () => {
       console.log(error);
     }
   };
-
 
   if (vaultsLoading) {
     return (

@@ -56,15 +56,15 @@ const RewardList = ({
   }
 
   const { data: merklBalances, isLoading: merklBalancesLoading } = useReadContracts({
-    contracts:merklRewards && merklRewards.length && merklRewards.map((item) =>({
-      address: item.tokenAddress,
+    contracts:merklRewards.map((item) =>({
+      address: item?.tokenAddress,
       abi: erc20Abi,
       functionName: "balanceOf",
       args: [vaultAddress],
     }))
   })
 
-  const merklData = merklRewards && merklRewards.length && merklRewards.map((item, index) => {
+  const merklData = merklRewards.map((item, index) => {
     let useBalance = 0n;
     if (merklBalances) {
       if (merklBalances[index]) {
@@ -75,11 +75,13 @@ const RewardList = ({
           ...merklRewards[index],
           balanceOf: useBalance
         }    
+      } else {
+        return {};
       }
     }
   });
 
-  const hasClaims = merklData.find(item => item.unclaimed > 0);
+  const hasClaims = merklData.find(item => item?.unclaimed > 0);
 
   return (
     <>
@@ -99,22 +101,37 @@ const RewardList = ({
           </thead>
           {merklRewardsLoading || merklBalancesLoading ? (null) : (
             <tbody>
-              {merklData && merklData.length && merklData.map(function(asset, index) {
-                const handleClick = (type, asset) => {
-                  setActionType(type);
-                  setUseAsset(asset);
-                };
+              {merklData && merklData.length ? (
+                <>
+                  {merklData.map(function(asset, index) {
+                    const handleClick = (type, asset) => {
+                      setActionType(type);
+                      setUseAsset(asset);
+                    };
 
-                return (
-                  <RewardItem
-                    vaultType={vaultType}
-                    index={index}
-                    asset={asset}
-                    handleClick={handleClick}
-                    toggleSubRow={toggleSubRow}
-                    subRow={subRow}
-                  />
-                )}
+                    return (
+                      <RewardItem
+                        key={index}
+                        vaultType={vaultType}
+                        index={index}
+                        asset={asset}
+                        handleClick={handleClick}
+                        toggleSubRow={toggleSubRow}
+                        subRow={subRow}
+                      />
+                    )}
+                  )}
+                </>
+              ) : (
+                <>
+                  <tr className="glass-alt-bg w-full p-4 h-auto">
+                    <td colSpan="4">
+                      <b>No Rewards Earned Yet.</b>
+                      <br/>
+                      Start earning by placing your tokens into the yield pool.
+                    </td>
+                  </tr>
+                </>
               )}
             </tbody>
           )}
