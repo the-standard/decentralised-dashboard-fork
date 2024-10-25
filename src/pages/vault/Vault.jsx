@@ -141,6 +141,15 @@ const Vault = () => {
           <ChevronLeftIcon className="h-6 w-6 inline-block"/>
           All Vaults
         </Button>
+        {vaultType === 'USDs' ? (
+          <Button
+            onClick={() => navigate('./merkl')}
+            variant="outline"
+            disabled={isLoading}
+          >
+            Merkl Rewards
+          </Button>
+        ) : null}
         <Button
           onClick={() => navigate('./history')}
           variant="outline"

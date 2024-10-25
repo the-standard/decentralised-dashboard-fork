@@ -26,7 +26,7 @@ import Card from "../../ui/Card";
 import Typography from "../../ui/Typography";
 import Button from "../../ui/Button";
 
-const Vault = (props) => {
+const YieldParent = (props) => {
   const { yieldEnabled } = props;
   const { vaultAddress } = useVaultAddressStore();
   const { smartVaultABI } = useSmartVaultABIStore();
@@ -389,4 +389,4 @@ const Vault = (props) => {
   )
 };
 
-export default Vault;
+export default YieldParent;
