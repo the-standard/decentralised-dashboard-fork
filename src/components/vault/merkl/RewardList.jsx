@@ -5,6 +5,14 @@ import {
 } from 'react-daisyui';
 
 import {
+  useAccount,
+  useReadContracts,
+  useWriteContract,
+  useChainId,
+  useWatchBlockNumber,
+} from "wagmi";
+
+import {
   ChevronDownIcon,
   ChevronUpIcon,
   QueueListIcon,
@@ -12,19 +20,29 @@ import {
 
 import {
   useVaultStore,
+  useErc20AbiStore,
+  useVaultAddressStore,
 } from "../../../store/Store";
 
-import Card from "../../ui/Card";
 import Button from "../../ui/Button";
 import CenterLoader from "../../ui/CenterLoader";
 import TokenIcon from "../../ui/TokenIcon";
 import Typography from "../../ui/Typography";
+import TokenActions from "./TokenActions";
+import RewardItem from "./RewardItem";
 
 const RewardList = ({
   merklRewards,
   merklRewardsLoading,
   vaultType,
 }) => {
+  const { vaultStore } = useVaultStore();
+  const { erc20Abi } = useErc20AbiStore();
+  const { vaultAddress } = useVaultAddressStore();
+
+  const [actionType, setActionType] = useState();
+  const [useAsset, setUseAsset] = useState();
+  const [subRow, setSubRow] = useState('0sub');
 
   let currencySymbol = '';
   if (vaultType === 'EUROs') {
@@ -34,9 +52,9 @@ const RewardList = ({
     currencySymbol = '$';
   }
 
-  const { vaultStore } = useVaultStore();
-
-  const [subRow, setSubRow] = useState('0sub');
+  const closeAction = () => {
+    setActionType('');
+  }
 
   const toggleSubRow = (index) => {
     const useRow = index + 'sub';
@@ -50,126 +68,78 @@ const RewardList = ({
 
   const vaultVersion = vaultStore?.status?.version || '';
 
-  const useSwapV4 = vaultVersion >= 4;
+  const { data: merklBalances, isLoading: merklBalancesLoading } = useReadContracts({
+    contracts:merklRewards && merklRewards.length && merklRewards.map((item) =>({
+      address: item.tokenAddress,
+      abi: erc20Abi,
+      functionName: "balanceOf",
+      args: [vaultAddress],
+    }))
+  })
+
+  const merklData = merklRewards && merklRewards.length && merklRewards.map((item, index) => {
+    let useBalance = 0n;
+    if (merklBalances) {
+      if (merklBalances[index]) {
+        if (merklBalances[index].result) {
+          useBalance = rewardDecimals[index].result;
+        }
+        return {
+          ...merklRewards[index],
+          balanceOf: useBalance
+        }    
+      }
+    }
+  });
 
   return (
     <>
-      {/* <Card className="card-compact">
-        <div className="card-body"> */}
-          <div>
-            <Typography variant="h2" className="card-title flex gap-0">
-              <QueueListIcon className="mr-2 h-6 w-6 inline-block"/>
-              Merkl Reward Tokens
-            </Typography>
-            <table className="table table-fixed">
-              <thead>
-                <tr>
-                  <th>Asset</th>
-                  <th>Tokens</th>
-                  <th>&nbsp;</th>
-                </tr>
-              </thead>
-              {merklRewardsLoading ? (null) : (
-                <tbody>
-                  {merklRewards.map(function(asset, index) {
-                    const claimed = asset?.accumulated || '';
-                    const unclaimed = asset?.unclaimed || '';
-                    const symbol = asset.symbol || '';
+      <div>
+        <Typography variant="h2" className="card-title flex gap-0">
+          <QueueListIcon className="mr-2 h-6 w-6 inline-block"/>
+          Merkl Reward Tokens
+        </Typography>
+        <table className="table table-fixed">
+          <thead>
+            <tr>
+              <th>Asset</th>
+              <th>Balance</th>
+              <th>Unclaimed</th>
+              <th>&nbsp;</th>
+            </tr>
+          </thead>
+          {merklRewardsLoading || merklBalancesLoading ? (null) : (
+            <tbody>
+              {merklData && merklData.length && merklData.map(function(asset, index) {
+                const handleClick = (type, asset) => {
+                  setActionType(type);
+                  setUseAsset(asset);
+                };
 
-                    return (
-                      <Fragment key={index}>
-                        <tr
-                          onClick={() => toggleSubRow(index)}
-                          className={subRow === index + 'sub' ? (
-                            'cursor-pointer hover active'
-                          ) : (
-                            'cursor-pointer hover'
-                          )}
-                        >
-                          <td>
-                            <div className="h-full w-full flex items-center">
-                              <Tooltip
-                                className="h-full"
-                                position="top"
-                                message={(symbol || '' )}
-                              >
-                                <TokenIcon
-                                  symbol={symbol}
-                                  style={{ height: "2rem", width: "2rem" }}
-                                  isMerkl={true}
-                                />
-                              </Tooltip>
-                              <div className="p-4 hidden md:table-cell">{symbol}</div>
-                            </div>
-                          </td>
-                          <td>
-                            <span className="opacity-60">
-                              Accumulated:
-                            </span>
-                            <br/>
-                            {ethers.formatUnits(claimed, asset.decimals)}
-                            <br/>
-                            <span className="opacity-60">
-                              Unclaimed:
-                            </span>
-                            <br/>
-                            {ethers.formatUnits(unclaimed, asset.decimals)}
-                          </td>
-                          <td className="text-right">
-                            <Button
-                              shape="circle"
-                              color="ghost"
-                            >
-                              {subRow === index + 'sub' ? (
-                                <ChevronUpIcon className="w-6 h-6"/>
-                              ) : (
-                                <ChevronDownIcon className="w-6 h-6"/>
-                              )}
-                            </Button>
-                          </td>
-                        </tr>
-                        <tr
-                          className={subRow === index + 'sub' ? (
-                            'glass-alt-bg w-full p-4 h-auto'
-                          ) : (
-                            'glass-alt-bg w-full hidden h-0'
-                          )}
-                        >
-                          <td colSpan="3">
-                            <>
-                              <div className="flex flex-col sm:flex-row flex-wrap gap-4">
-                                <Button
-                                  variant="outline"
-                                  disabled={claimed <= 0}
-                                  onClick={() => handleClick('WITHDRAW', asset)}
-                                  className="grow"
-                                >
-                                  Withdraw
-                                </Button>
-                                <Button
-                                  variant="outline"
-                                  onClick={() => handleClick('DEPOSIT', asset)}
-                                  disabled={unclaimed <= 0}
-                                  className="grow"
-                                >
-                                  Claim
-                                </Button>
-                              </div>
-                            </>
-                          </td>
-                        </tr>
-                      </Fragment>
-                    )}
-                  )}
-                </tbody>
+                return (
+                  <RewardItem
+                    vaultType={vaultType}
+                    index={index}
+                    asset={asset}
+                    handleClick={handleClick}
+                    toggleSubRow={toggleSubRow}
+                    subRow={subRow}
+                  />
+                )}
               )}
-            </table>
-            {merklRewardsLoading ? (
-              <CenterLoader />
-            ) : (null)}
-          </div>
-        {/* </div>
-      </Card> */}
+            </tbody>
+          )}
+        </table>
+        {merklRewardsLoading || merklBalancesLoading ? (
+          <CenterLoader />
+        ) : (null)}
+      </div>
+      <TokenActions
+        actionType={actionType}
+        useAsset={useAsset}
+        closeModal={closeAction}
+        vaultType={vaultType}         
+      />
     </>
   );
 };

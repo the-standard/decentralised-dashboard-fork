@@ -3,7 +3,9 @@ import { useNavigate, useParams } from "react-router-dom";
 import {
   useReadContract,
   useChainId,
+  useBlockNumber,
   useWatchBlockNumber,
+  useReadContracts,
 } from "wagmi";
 
 import axios from "axios";
@@ -17,6 +19,8 @@ import {
   useCurrentTheme,
   useContractAddressStore,
   useVaultManagerAbiStore,
+  useVaultAddressStore,
+  useVaultStore,
 } from "../../store/Store";
 
 import MerklPoweredDark from "../../assets/merkl-powered-dark.svg";
@@ -30,11 +34,19 @@ import Button from "../../components/ui/Button";
 
 const VaultMerkl = () => {
   const chainId = useChainId();
-  const { arbitrumSepoliaContractAddress, arbitrumContractAddress } = useContractAddressStore();
+  const {
+    arbitrumSepoliaContractAddress,
+    arbitrumContractAddress
+  } = useContractAddressStore();
   const { vaultManagerAbi } = useVaultManagerAbiStore();
+  const { setVaultAddress } = useVaultAddressStore();
+  const { vaultStore, setVaultStore } = useVaultStore();
   const { vaultType, vaultId } = useParams();
   const { currentTheme } = useCurrentTheme();
   const navigate = useNavigate();
+
+  const { data: blockNumber } = useBlockNumber();
+  const [renderedBlock, setRenderedBlock] = useState(blockNumber);
 
   const [vaultsLoading, setVaultsLoading] = useState(true);
   const [ merklRewards, setMerklRewards ] = useState({});
@@ -67,7 +79,7 @@ const VaultMerkl = () => {
           <img
             src={isLight ? (MerklPoweredLight) : (MerklPoweredDark)}
             alt="Powered By Merkl"
-            className="h-10"
+            className="h-8"
           />
         </div>
       </div>
@@ -161,6 +173,15 @@ const VaultMerkl = () => {
   }
 
   const { vaultAddress } = currentVault.status;
+
+  if (
+    vaultStore.tokenId !== currentVault.tokenId ||
+    blockNumber !== renderedBlock
+  ) {
+    setVaultStore(currentVault);
+    setVaultAddress(vaultAddress);
+    setRenderedBlock(blockNumber);
+  }
 
   return (
     <div>
