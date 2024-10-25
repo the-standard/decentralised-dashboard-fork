@@ -1,6 +1,7 @@
 import React from "react";
 import { ethers } from "ethers";
 import WithdrawModal from "./WithdrawModal";
+import ClaimModal from "./ClaimModal";
 
 const TokenActions = ({
   actionType,
@@ -38,6 +39,18 @@ const TokenActions = ({
           </>
         );
         break;
+      case 'CLAIM':
+        content = (
+          <>
+            <ClaimModal
+              open={actionType}
+              closeModal={closeModal}          
+              useAssets={[useAsset]}
+              vaultType={vaultType}
+            />
+          </>
+        );
+        break;  
       default:
         content = <></>;
         break;

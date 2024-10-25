@@ -1,45 +1,34 @@
-import { useState, Fragment } from "react";
-import { ethers } from "ethers";
-import {
-  Tooltip,
-} from 'react-daisyui';
+import { useState } from "react";
 
 import {
-  useAccount,
   useReadContracts,
-  useWriteContract,
-  useChainId,
-  useWatchBlockNumber,
 } from "wagmi";
 
 import {
-  ChevronDownIcon,
-  ChevronUpIcon,
   QueueListIcon,
 } from '@heroicons/react/24/outline';
 
 import {
-  useVaultStore,
   useErc20AbiStore,
   useVaultAddressStore,
 } from "../../../store/Store";
 
 import Button from "../../ui/Button";
 import CenterLoader from "../../ui/CenterLoader";
-import TokenIcon from "../../ui/TokenIcon";
 import Typography from "../../ui/Typography";
 import TokenActions from "./TokenActions";
 import RewardItem from "./RewardItem";
+import ClaimModal from "./ClaimModal";
 
 const RewardList = ({
   merklRewards,
   merklRewardsLoading,
   vaultType,
 }) => {
-  const { vaultStore } = useVaultStore();
   const { erc20Abi } = useErc20AbiStore();
   const { vaultAddress } = useVaultAddressStore();
 
+  const [claimAllOpen, setClaimAllOpen] = useState(false);
   const [actionType, setActionType] = useState();
   const [useAsset, setUseAsset] = useState();
   const [subRow, setSubRow] = useState('0sub');
@@ -66,8 +55,6 @@ const RewardList = ({
     }
   }
 
-  const vaultVersion = vaultStore?.status?.version || '';
-
   const { data: merklBalances, isLoading: merklBalancesLoading } = useReadContracts({
     contracts:merklRewards && merklRewards.length && merklRewards.map((item) =>({
       address: item.tokenAddress,
@@ -91,6 +78,8 @@ const RewardList = ({
       }
     }
   });
+
+  const hasClaims = merklData.find(item => item.unclaimed > 0);
 
   return (
     <>
@@ -133,13 +122,38 @@ const RewardList = ({
         {merklRewardsLoading || merklBalancesLoading ? (
           <CenterLoader />
         ) : (null)}
+
+        <div className="pt-4 flex flex-row justify-end">
+          <Button
+            className="w-full lg:w-64"
+            variant="outline"
+            disabled={!hasClaims || merklRewardsLoading || merklBalancesLoading}
+            onClick={() => setClaimAllOpen(true)}
+            loading={merklRewardsLoading || merklBalancesLoading}
+            wide
+          >
+            {hasClaims ? (
+              'Claim All Rewards'
+            ) : (
+              'No Rewards to Claim'
+            )}
+          </Button>
+        </div>
       </div>
       <TokenActions
         actionType={actionType}
         useAsset={useAsset}
         closeModal={closeAction}
-        vaultType={vaultType}         
+        vaultType={vaultType}     
       />
+      <ClaimModal
+        open={claimAllOpen}
+        closeModal={() => setClaimAllOpen(false)}          
+        useAssets={merklData}
+        vaultType={vaultType}
+        parentLoading={merklRewardsLoading || merklBalancesLoading}  
+      />
+
     </>
   );
 };

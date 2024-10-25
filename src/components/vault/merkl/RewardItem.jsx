@@ -93,18 +93,18 @@ const RewardItem = ({
               <Button
                 variant="outline"
                 onClick={() => handleClick('WITHDRAW', asset)}
-                disabled={claimed <= 0}
+                disabled={balance <= 0}
                 className="grow"
               >
                 Withdraw
               </Button>
               <Button
                 variant="outline"
-                onClick={() => handleClick('WITHDRAW', asset)}
+                onClick={() => handleClick('CLAIM', asset)}
                 disabled={unclaimed <= 0}
                 className="grow"
               >
-                Claim
+                Claim Rewards
               </Button>
             </div>
           </>
