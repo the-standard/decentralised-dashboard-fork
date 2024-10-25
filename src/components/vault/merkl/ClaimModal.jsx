@@ -20,14 +20,13 @@ import Button from "../../ui/Button";
 import Typography from "../../ui/Typography";
 import Input from "../../ui/Input";
 
-const WithdrawModal = (props) => {
+const ClaimModal = (props) => {
   const {
     open,
     closeModal,
     symbol,
     decimals,
     balance,
-    tokenAddress,
   } = props;
 
   const [amount, setAmount] = useState(0n);
@@ -46,16 +45,16 @@ const WithdrawModal = (props) => {
 
   const { writeContract, isError, isPending, isSuccess } = useWriteContract();
 
-  const handleWithdrawToken = async () => {
+  const handleWithdrawCollateral = async () => {
     try {
       writeContract({
         abi: smartVaultABI,
         address: vaultAddress,
-        functionName: "removeAsset",
+        functionName: "removeCollateral",
         args: [
-          tokenAddress,
+          ethers.encodeBytes32String(symbol),
           amount,
-          address,
+          address
         ],
       });
     } catch (error) {
@@ -66,6 +65,10 @@ const WithdrawModal = (props) => {
       toast.error(errorMessage || 'There was an error');
     }
   };
+
+  const formatPrevTotal = balance;
+  const formatAmount = ethers.formatUnits(amount);
+  const formatNewTotal = ethers.formatUnits(ethers.parseUnits(formatPrevTotal, decimals) - amount);
 
   useEffect(() => {
     if (isPending) {
@@ -116,13 +119,7 @@ const WithdrawModal = (props) => {
             <ArrowDownCircleIcon className="mr-2 h-6 w-6 inline-block"/>
             Withdraw {symbol}
           </Typography>
-          <div className="flex justify-between">
-            <Typography
-              variant="p"
-            >
-              This transaction may revert if the token you are withdrawing is being used as collateral and would leave your vault undercollateralised.
-            </Typography>
-          </div>
+
           <div className="flex justify-between">
             <Typography
               variant="p"
@@ -174,7 +171,7 @@ const WithdrawModal = (props) => {
               className="w-full lg:w-64"
               color="success"
               disabled={!amount || isPending}
-              onClick={handleWithdrawToken}
+              onClick={handleWithdrawCollateral}
               loading={isPending}
               wide
             >
@@ -187,4 +184,4 @@ const WithdrawModal = (props) => {
   );
 };
 
-export default WithdrawModal;
+export default ClaimModal;
