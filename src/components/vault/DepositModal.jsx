@@ -145,6 +145,7 @@ const DepositModal = (props) => {
       setTxdata(hash);
       inputRef.current.value = "";
       inputRef.current.focus();
+      setAmount(0n);
       setEthPending(false);
       setEthSuccess(true);
       handleDepositSuccess();
@@ -157,6 +158,9 @@ const DepositModal = (props) => {
         errorMessage = error.shortMessage;
       }
       toast.error(errorMessage || 'There was a problem');
+      inputRef.current.value = "";
+      inputRef.current.focus();
+      setAmount(0n);
     }
   };
 
@@ -179,6 +183,7 @@ const DepositModal = (props) => {
         toast.error(errorMessage || 'There was a problem');  
         inputRef.current.value = "";
         inputRef.current.focus();
+        setAmount(0n);
       }
     }
   };
@@ -197,9 +202,11 @@ const DepositModal = (props) => {
       inputRef.current.focus();
       handleDepositSuccess();
       setTxdata(txRcptData);
+      setAmount(0n);
     } else if (isError) {
       inputRef.current.value = "";
       inputRef.current.focus();
+      setAmount(0n);
     }
   }, [
     isPending,
