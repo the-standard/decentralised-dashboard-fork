@@ -45,6 +45,20 @@ export default {
           'base-content' : 'rgba(255,255,255,0.8)',
         },
       },
+      {
+        'simple-light': {
+          ...require("daisyui/src/theming/themes")["light"],
+          'primary' : '#5617de',
+          'base-content' : 'rgba(0,0,0,0.8)',
+        },
+      },
+      {
+        'simple-dark': {
+          ...require("daisyui/src/theming/themes")["dark"],
+          'primary' : '#5617de',
+          'base-content' : 'rgba(255,255,255,0.8)',
+        },
+      },
     ],
   },
 }

@@ -98,6 +98,8 @@ const WithdrawModal = (props) => {
       inputRef.current.focus();
       setTxdata(txRcptData);
       toast.success("Withdraw Successful");
+      setAmount(0n);
+      closeModal();
       try {
         plausible('CollateralWithdraw', {
           props: {
@@ -113,6 +115,8 @@ const WithdrawModal = (props) => {
     } else if (isError) {
       inputRef.current.value = "";
       inputRef.current.focus();
+      toast.error('There was an error');
+      setAmount(0n);
     }
   }, [
     isPending,
