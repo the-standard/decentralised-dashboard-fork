@@ -80,6 +80,24 @@ const ThemeToggle = (props) => {
             Nebula Light
             <SunIcon className="w-4 h-4"/>
           </Button>
+          <Button
+            color="ghost"
+            size="sm"
+            className="justify-between"
+            onClick={() => setTheme('simple-dark')} 
+          >
+            Simple Dark
+            <MoonIcon className="w-4 h-4"/>
+          </Button>
+          <Button
+            color="ghost"
+            size="sm"
+            className="justify-between"
+            onClick={() => setTheme('simple-light')} 
+          >
+            Simple Light
+            <SunIcon className="w-4 h-4"/>
+          </Button>
         </div>
       </div>
     </div>
