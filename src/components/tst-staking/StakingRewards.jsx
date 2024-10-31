@@ -17,11 +17,8 @@ import ClaimingRewardsModal from "./ClaimingRewardsModal";
 
 const StakingRewards = ({
   stakedSince,
-  rewardRate,
-  sEuroAmount,
   collaterals,
   poolRewardsLoading,
-  sEuroDaily,
   collatDaily,
 }) => {
   const [open, setOpen] = useState(false);
@@ -90,22 +87,11 @@ const StakingRewards = ({
     }
   });
 
-  const useRows = [
-    {
-      key: 'EUROs',
-      asset: 'EUROs',
-      amount: sEuroAmount,
-      decimals: 18,
-      dailyReward: sEuroDaily,
-    },
-    ...rewardData
-  ]
-  
   const handleCloseModal = () => {
     setOpen(false)
   };
 
-  const rows = useRows || [];
+  const rows = rewardData || [];
 
   let noRewards = true;
   if (rows.some(e => e.amount > 0)) {
@@ -145,10 +131,10 @@ const StakingRewards = ({
             {poolRewardsLoading ? (null) : (
               <tbody>
                 {rows.map(function(asset, index) {
-                  const amount = asset?.amount;
+                  const amount = asset?.amount || 0n;
                   const decimals = asset?.decimals;
                   const symbol = asset?.asset;
-                  const dailyReward = asset?.dailyReward;
+                  const dailyReward = asset?.dailyReward || 0n;
 
                   return(
                     <tr key={index}>
@@ -160,7 +146,7 @@ const StakingRewards = ({
                       </td>
                       <td className="whitespace-nowrap">
                         {ethers.formatUnits(dailyReward, decimals)}
-                        <span className="opacity-40"> / {symbol === 'EUROs' ? ('TST') : ('EUROs')}</span>
+                        <span className="opacity-40"> / TST</span>
                       </td>
                     </tr>
                   )}

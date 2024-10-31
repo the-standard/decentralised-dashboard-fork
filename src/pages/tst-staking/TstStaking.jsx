@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import moment from 'moment';
 import {
   useReadContract,
@@ -14,8 +15,8 @@ import {
 } from '@heroicons/react/24/outline';
 
 import {
-  useStakingPoolv2AbiStore,
-  useStakingPoolv2AddressStore,
+  useStakingPoolv3AbiStore,
+  useStakingPoolv3AddressStore,
 } from "../../store/Store";
 
 import StakingIncrease from "../../components/tst-staking/StakingIncrease";
@@ -28,39 +29,40 @@ import Typography from "../../components/ui/Typography";
 import Button from "../../components/ui/Button";
 
 const TstStaking = (props) => {
-  const { stakingPoolv2Abi } = useStakingPoolv2AbiStore();
+  const { stakingPoolv3Abi } = useStakingPoolv3AbiStore();
   const [showValue, setShowValue] = useState(false);
+  const navigate = useNavigate();
 
   const {
-    arbitrumSepoliaStakingPoolv2Address,
-    arbitrumStakingPoolv2Address,
-  } = useStakingPoolv2AddressStore();
+    arbitrumSepoliaStakingPoolv3Address,
+    arbitrumStakingPoolv3Address,
+  } = useStakingPoolv3AddressStore();
 
   const { address } = useAccount();
   const chainId = useChainId();
 
-  const stakingPoolv2Address =
+  const stakingPoolv3Address =
   chainId === arbitrumSepolia.id
-    ? arbitrumSepoliaStakingPoolv2Address
-    : arbitrumStakingPoolv2Address;
+    ? arbitrumSepoliaStakingPoolv3Address
+    : arbitrumStakingPoolv3Address;
 
   const { data: poolPositions, refetch: refetchPositions } = useReadContract({
-    address: stakingPoolv2Address,
-    abi: stakingPoolv2Abi,
+    address: stakingPoolv3Address,
+    abi: stakingPoolv3Abi,
     functionName: "positions",
     args: [address],
   });
 
   const { data: poolRewards, isLoading: poolRewardsLoading, refetch: refetchRewards } = useReadContract({
-    address: stakingPoolv2Address,
-    abi: stakingPoolv2Abi,
+    address: stakingPoolv3Address,
+    abi: stakingPoolv3Abi,
     functionName: "projectedEarnings",
     args: [address],
   });
 
   const { data: dailyYield, refetch: refetchDailyReward } = useReadContract({
-    address: stakingPoolv2Address,
-    abi: stakingPoolv2Abi,
+    address: stakingPoolv3Address,
+    abi: stakingPoolv3Abi,
     functionName: "dailyYield",
     args: [],
   });
@@ -77,25 +79,16 @@ const TstStaking = (props) => {
   const rewards = poolRewards;
   const dailyRewards = dailyYield;
 
-
-  let sEuroAmount = 0n;
   let collaterals = [];
 
-  if (rewards && rewards[0]) {
-    sEuroAmount = rewards[0] || 0n;
-  }
-  if (rewards && rewards[1]) {
-    collaterals = rewards[1] || [];
+  if (rewards) {
+    collaterals = rewards || [];
   }
 
-  let sEuroDaily = 0n;
   let collatDaily = [];
 
-  if (dailyRewards && dailyRewards[0]) {
-    sEuroDaily = dailyRewards[0] || 0n;
-  }
-  if (dailyRewards && dailyRewards[1]) {
-    collatDaily = dailyRewards[1] || [];
+  if (dailyRewards) {
+    collatDaily = dailyRewards || [];
   }
 
   let stakedSince = 0;
@@ -118,29 +111,12 @@ const TstStaking = (props) => {
           </Typography>
 
           <Typography variant="p">
-            These pools have been depreciated and will no longer be generating new rewards.
+            Stake TST to earn USDs & more tokens daily.
           </Typography>
 
           <Typography variant="p">
-            We recommend collecting any outstanding rewards and withdrawing your staked tokens.
+            If you're looking for our previous staking pools, <span className="underline cursor-pointer" onClick={() => navigate("/legacy-pools")}>they can be found here</span>.
           </Typography>
-
-          <div className="flex flex-wrap mt-4 gap-4">
-            <Button
-              onClick={() => setShowPool('STAKE-EUROSTST')}
-              variant="outline"
-              active
-            >
-              EUROs & TST Staking
-            </Button>
-            <Button
-              onClick={() => setShowPool('LIQUIDITY-POOL')}
-              variant="outline"
-            >
-              Liquidity Pool
-            </Button>
-          </div>
-
 
         </div>
       </Card>
@@ -149,10 +125,9 @@ const TstStaking = (props) => {
 
         <div>
           <StakingIncrease />
-        </div>
-
-        <div>
-          <StakingAssets positions={positions}/>
+          <div className="mt-4">
+            <StakingAssets positions={positions}/>
+          </div>
         </div>
 
         <div>
@@ -166,13 +141,12 @@ const TstStaking = (props) => {
             <StakingRewards
               poolRewardsLoading={poolRewardsLoading}
               rewards={rewards}
-              sEuroAmount={sEuroAmount}
               collaterals={collaterals}
               stakedSince={useStakedSince}
-              sEuroDaily={sEuroDaily}
               collatDaily={collatDaily}
             />
           )}
+
         </div>
 
       </main>

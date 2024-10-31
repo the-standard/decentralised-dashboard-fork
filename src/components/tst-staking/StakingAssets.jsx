@@ -25,16 +25,11 @@ const StakingAssets = ({
   }
 
   const tstAmount = positions[1] || 0;
-  const eurosAmount = positions[2] || 0;
 
   const useRows = [
     {
       asset: 'TST',
       amount: tstAmount || 0
-    },
-    {
-      asset: 'EUROs',
-      amount: eurosAmount || 0
     },
   ]
 

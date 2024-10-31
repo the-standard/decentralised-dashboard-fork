@@ -9,8 +9,8 @@ import { arbitrumSepolia } from "wagmi/chains";
 import { formatEther, parseEther } from "viem";
 
 import {
-  useStakingPoolv2AddressStore,
-  useStakingPoolv2AbiStore
+  useStakingPoolv3AddressStore,
+  useStakingPoolv3AbiStore
 } from "../../store/Store";
 
 import Button from "../ui/Button";
@@ -25,42 +25,36 @@ const StakingDecreaseModal = ({
   handleCloseModal,
 }) => {
   const {
-    arbitrumSepoliaStakingPoolv2Address,
-    arbitrumStakingPoolv2Address,
-  } = useStakingPoolv2AddressStore();
-  const { stakingPoolv2Abi } = useStakingPoolv2AbiStore();
+    arbitrumSepoliaStakingPoolv3Address,
+    arbitrumStakingPoolv3Address,
+  } = useStakingPoolv3AddressStore();
+  const { stakingPoolv3Abi } = useStakingPoolv3AbiStore();
   const [claimLoading, setClaimLoading] = useState(false);
   const [showError, setShowError] = useState(false);
   const [tstWithdrawAmount, setTstWithdrawAmount] = useState(0);
-  const [eurosWithdrawAmount, setEurosWithdrawAmount] = useState(0);
   const chainId = useChainId();
 
   const tstInputRef = useRef(null);
-  const eurosInputRef = useRef(null);
 
   const tstPosition = stakedPositions?.find((item) => item.asset === 'TST');
-  const eurosPosition = stakedPositions?.find((item) => item.asset === 'EUROs');
 
   const tstStakedAmount = tstPosition?.amount;
-  const eurosStakedAmount = eurosPosition?.amount;
 
   const useTstStakedAmount = formatEther(tstStakedAmount.toString());
-  const useEurosStakedAmount = formatEther(eurosStakedAmount.toString());
 
-  const stakingPoolv2Address = chainId === arbitrumSepolia.id ? arbitrumSepoliaStakingPoolv2Address :
-  arbitrumStakingPoolv2Address;
+  const stakingPoolv3Address = chainId === arbitrumSepolia.id ? arbitrumSepoliaStakingPoolv3Address :
+  arbitrumStakingPoolv3Address;
 
   const { writeContract, isError, isPending, isSuccess, error } = useWriteContract();
 
   const handleApproveWithdraw = async () => {
     try {
       writeContract({
-        abi: stakingPoolv2Abi,
-        address: stakingPoolv2Address,
+        abi: stakingPoolv3Abi,
+        address: stakingPoolv3Address,
         functionName: "decreaseStake",
         args: [
           tstWithdrawAmount,
-          eurosWithdrawAmount,
         ],
       });
     } catch (error) {
@@ -79,13 +73,11 @@ const StakingDecreaseModal = ({
       toast.success('Success!');
       setClaimLoading(false);
       setTstWithdrawAmount(0);
-      setEurosWithdrawAmount(0);
       handleCloseModal();
     } else if (isError) {
       setShowError(true)
       setClaimLoading(false);
       setTstWithdrawAmount(0);
-      setEurosWithdrawAmount(0);
     }
   }, [
     isPending,
@@ -104,18 +96,6 @@ const StakingDecreaseModal = ({
     const formatBalance = formatEther(tstStakedAmount);
     tstInputRef.current.value = formatBalance;
     handleTstAmount({target: {value: formatBalance}});
-  }
-
-  const handleEurosAmount = (e) => {
-    if (Number(e.target.value) < 10n ** 21n) {
-      setEurosWithdrawAmount(parseEther(e.target.value.toString()));
-    }
-  };
-
-  const handleEurosInputMax = () => {
-    const formatBalance = formatEther(eurosStakedAmount);
-    eurosInputRef.current.value = formatBalance;
-    handleEurosAmount({target: {value: formatBalance}});
   }
 
   if (showError) {
@@ -187,7 +167,7 @@ const StakingDecreaseModal = ({
           {claimLoading ? (
             <>
               <Typography variant="h2" className="card-title">
-                Claiming Your Rewards
+                Withdrawing & Claiming Your Rewards
               </Typography>
               <CenterLoader />
             </>
@@ -195,43 +175,31 @@ const StakingDecreaseModal = ({
             <>
               <div>
                 <Typography variant="h2" className="card-title">
-                  Withdraw Your Tokens
+                  Withdraw Your Staked TST
                 </Typography>
                 <Typography variant="p" className="mb-2">
-                  Here you can reduce your position by withdrawing your tokens.
+                  Here you can reduce your position by withdrawing your TST.
                 </Typography>
                 <Typography variant="p" className="mb-2">
                   Any withdrawals will automatically claim your existing rewards, ending your current staking period and restarting a new one.
                 </Typography>
-                <hr className="my-2" />
               </div>
 
-              <div
-                className="flex flex-row mb-2 items-center justify-start"
-              >
-                <Typography variant="p">
-                  Available TST:
+              <div className="flex justify-between">
+                <Typography
+                  variant="p"
+                  className="pb-2"
+                >
+                  TST Withdraw Amount
                 </Typography>
-                <Typography variant="p">
-                  {useTstStakedAmount || '0'}
-                </Typography>
-              </div>
-              <div
-                className="flex flex-row mb-2 items-center justify-start"
-              >
-                <Typography variant="p">
-                  Available EUROs:
-                </Typography>
-                <Typography variant="p">
-                  {useEurosStakedAmount || '0'}
+                <Typography
+                  variant="p"
+                  className="text-right"
+                >
+                  Available: {useTstStakedAmount || '0'}
                 </Typography>
               </div>
 
-              <hr className="my-2" />
-
-              <Typography variant="p" className="mb-2">
-                Withdraw Amounts:
-              </Typography>
               <div
                 className="join w-full mb-4"
               >
@@ -250,28 +218,10 @@ const StakingDecreaseModal = ({
                   Max
                 </Button>
               </div>
-              <div
-                className="join w-full mb-4"
-              >
-                <Input
-                  className="join-item w-full"
-                  placeholder="EUROs Amount"
-                  type="number"
-                  onChange={handleEurosAmount}
-                  useRef={eurosInputRef}
-                />
-                <Button
-                  className="join-item"
-                  variant="outline"
-                  onClick={() => handleEurosInputMax()}
-                >
-                  Max
-                </Button>
-              </div>
               <Button
                 onClick={handleApproveWithdraw}
                 color="primary"
-                disabled={!(tstWithdrawAmount > 0) && !(eurosWithdrawAmount > 0)}
+                disabled={!(tstWithdrawAmount > 0)}
               >
                 Withdraw
               </Button>
