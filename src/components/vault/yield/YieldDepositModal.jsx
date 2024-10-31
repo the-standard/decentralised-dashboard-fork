@@ -161,18 +161,33 @@ const YieldDepositModal = (props) => {
         >
           <Typography variant="h2" className="card-title">
             <AdjustmentsHorizontalIcon className="mr-2 h-6 w-6 inline-block"/>
-            Choose Stable Ratio
+            Choose Your Allocation
+          </Typography>
+
+          <Typography variant="h3">
+            Balancing Stability & Growth Potential
           </Typography>
 
           <Typography
             variant="p"
             className="mb-2"
           >
-            Choose how much volatile collateral you want to use to earn a yield, and what percentage you would like in safer, correlated, stable asset yield strategies.
-            <br/>
-            Recommended 10% stable.
+            Volatile pools (like {assetYield.pair[0]}/{assetYield.pair[1]}) can unlock high returns from UNISWAP trading fees, though short-term price shifts may temporarily impact returns. Over time, fees often outpace impermanent loss (IL) fluctuations, leading to positive yields.
           </Typography>
 
+          <Typography
+            variant="p"
+            className="mb-2"
+          >
+            We require at least 10% of your collateral in the correlated stable pool (USDs/USDC). Stable pools provide consistent, lower-risk yields, shielding a portion of your assets from the effects of impermanent loss. You can increase this allocation for even more stability.
+          </Typography>
+
+          <Typography
+            variant="p"
+            className="mb-2"
+          >
+            By choosing your mix, you&apos;re setting up for both the potential rewards of volatility and the steady benefits of stability.
+          </Typography>
   
           <div className="flex flex-col">
             <div className="flex flex-row justify-between">
