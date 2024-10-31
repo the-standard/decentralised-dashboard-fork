@@ -31,13 +31,14 @@ const LegacyPools = (props) => {
             <Button
               onClick={() => setShowPool('STAKE-EUROSTST')}
               variant="outline"
-              active
+              active={showPool === 'STAKE-EUROSTST'}
             >
               EUROs & TST Staking
             </Button>
             <Button
               onClick={() => setShowPool('LIQUIDITY-POOL')}
               variant="outline"
+              active={showPool === 'LIQUIDITY-POOL'}
             >
               Liquidity Pool
             </Button>
