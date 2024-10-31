@@ -605,7 +605,9 @@ button.btn.btn-success:not(:disabled) {
 }
 
 .btn.btn-primary:hover,
-button.btn.btn-primary:hover {
+button.btn.btn-primary:hover,
+.btn.btn-primary.active,
+button.btn.btn-primary.active {
   color: rgb(var(--btn-solid-color));
   background: rgba(var(--primary-color), 1);
   box-shadow: var(--btn-solid-outline-hover),
@@ -667,7 +669,9 @@ button.btn.btn-outline:not(:disabled) {
 }
 
 .btn.btn-outline:hover,
-button.btn.btn-outline:hover {
+button.btn.btn-outline:hover,
+.btn.btn-outline.active,
+button.btn.btn-outline.active {
   color: var(--alt-btn-txt-color);
   background: rgba(255,255,255, 0.1);
   box-shadow: var(--btn-outline-outline-hover),

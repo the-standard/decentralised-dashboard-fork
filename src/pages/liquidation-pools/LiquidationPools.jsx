@@ -5,12 +5,7 @@ import {
   useChainId,
   useWatchBlockNumber
 } from "wagmi";
-import axios from "axios";
 import { arbitrumSepolia } from "wagmi/chains";
-import {
-  ArrowTrendingUpIcon,
-  BanknotesIcon,
-} from '@heroicons/react/24/outline';
 
 import {
   useLiquidationPoolAbiStore,
@@ -19,11 +14,6 @@ import {
 
 import StakedAssets from "../../components/liquidation-pools/StakedAssets";
 import ClaimTokens from "../../components/liquidation-pools/ClaimTokens";
-import VolumeChart from "../../components/liquidation-pools/VolumeChart";
-import ValueChart from "../../components/liquidation-pools/ValueChart";
-import Card from "../../components/ui/Card";
-import Typography from "../../components/ui/Typography";
-import Button from "../../components/ui/Button";
 
 const LiquidationPools = () => {
   const [chartData, setChartData] = useState(undefined);
@@ -60,37 +50,8 @@ const LiquidationPools = () => {
   const pending = liquidationPool && liquidationPool[1];
   const rewards = liquidationPool && liquidationPool[2];
 
-  const getChartData = async () => {
-    try {
-      const response = await axios.get(
-        `https://smart-vault-api.thestandard.io/liquidation_pools/${address}`
-      );
-      setChartData(response?.data);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  useEffect(() => {
-    getChartData();
-  }, []);
-
   return (
     <>
-      <Card className="card-compact mb-4">
-        <div className="card-body">
-          <div role="alert" className="alert alert-warning bg-yellow-400/20 flex flex-col items-start">
-            <Typography variant="h2">
-              Changes With Earning Fees & New Staking Pool
-            </Typography>
-            <Typography variant="p">
-              With the recent release of our new & improved Staking Pool, from <b>17th June '24</b>, we will be moving all earnable fees over to it. 
-              <br/>
-              The existing Liquidation Pool will continue to exist past this date so you can withdraw your staked assets and claim any outstanding rewards.
-            </Typography>
-          </div>
-        </div>
-      </Card>
       <main className="grid gap-4 grid-cols-1 md:grid-cols-2">
         <div>
           <StakedAssets
@@ -104,41 +65,6 @@ const LiquidationPools = () => {
             loading={isLoading}
             rewards={rewards || []}
           />
-        </div>
-        <div>
-          <Card className="card-compact">
-            <div className="card-body">
-              <Typography variant="h2" className="card-title flex justify-between">
-                {showValue ? (
-                  'Liquidation Pool Asset Value'
-                ) : (
-                  'Liquidation Pool Asset Totals'
-                )}
-                <Button size="sm" color="ghost" onClick={() => setShowValue(!showValue)}>
-                  {showValue ? (
-                    <>
-                      <ArrowTrendingUpIcon className="h-4 w-4 inline-block"/>
-                      Show Totals
-                    </>
-                  ) : (
-                    <>
-                      <BanknotesIcon className="h-4 w-4 inline-block"/>
-                      Show Values
-                    </>
-                  )}
-                </Button>
-              </Typography>
-              {showValue ? (
-                <>
-                  <VolumeChart chartData={chartData || []} />
-                </>
-              ) : (
-                <>
-                  <ValueChart chartData={chartData || []} />
-                </>
-              )}
-            </div>
-          </Card>
         </div>
       </main>
     </>
