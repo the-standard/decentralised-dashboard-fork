@@ -8,7 +8,8 @@ import {
   BanknotesIcon,
   XMarkIcon,
   Square3Stack3DIcon,
-  ArrowPathRoundedSquareIcon
+  ArrowPathRoundedSquareIcon,
+  ArchiveBoxIcon
 } from '@heroicons/react/24/outline';
 
 import {
@@ -82,21 +83,6 @@ const SideNav = (props) => {
         </Menu.Item>
         <Menu.Item>
           <NavLink
-            to="/liquidation-pools"
-            className={({ isActive }) => 
-              isActive ||
-              location.pathname.includes('/liquidation-pools') ?
-              'navbar-item active' : 'navbar-item'
-            }
-          >
-            <BanknotesIcon className="h-6 w-6 inline-block"/>
-            <span className="md:hidden">
-              Liquidation Pools
-            </span>
-          </NavLink>
-        </Menu.Item>
-        <Menu.Item>
-          <NavLink
             to="/dex"
             className={({ isActive }) => 
               isActive ||
@@ -106,6 +92,21 @@ const SideNav = (props) => {
           >
             <ArrowPathRoundedSquareIcon className="h-6 w-6 inline-block"/>
             Cross-Chain Dex
+          </NavLink>
+        </Menu.Item>
+        <Menu.Item>
+          <NavLink
+            to="/legacy-pools"
+            className={({ isActive }) => 
+              isActive ||
+              location.pathname.includes('/legacy-pools') ?
+              'navbar-item active' : 'navbar-item'
+            }
+          >
+            <ArchiveBoxIcon className="h-6 w-6 inline-block"/>
+            <span className="md:hidden">
+              Legacy Pools
+            </span>
           </NavLink>
         </Menu.Item>
       </div>
@@ -154,26 +155,6 @@ const SideNav = (props) => {
         </Tooltip>
         <Tooltip
           position="right"
-          message="Liquidation Pools"
-        >
-          <Menu.Item>
-            <NavLink
-              to="/liquidation-pools"
-              className={({ isActive }) => 
-                isActive ||
-                location.pathname.includes('/liquidation-pools') ?
-                'navbar-item active' : 'navbar-item'
-              }
-            >
-              <BanknotesIcon className="h-6 w-6 inline-block"/>
-              <span className="md:hidden">
-                Liquidation Pools
-              </span>
-            </NavLink>
-          </Menu.Item>
-        </Tooltip>
-        <Tooltip
-          position="right"
           message="Cross-Chain Dex"
         >
           <Menu.Item>
@@ -188,6 +169,26 @@ const SideNav = (props) => {
               <ArrowPathRoundedSquareIcon className="h-6 w-6 inline-block"/>
               <span className="md:hidden">
                 Cross-Chain Dex
+              </span>
+            </NavLink>
+          </Menu.Item>
+        </Tooltip>
+        <Tooltip
+          position="right"
+          message="Legacy Pools"
+        >
+          <Menu.Item>
+            <NavLink
+              to="/legacy-pools"
+              className={({ isActive }) => 
+                isActive ||
+                location.pathname.includes('/legacy-pools') ?
+                'navbar-item active' : 'navbar-item'
+              }
+            >
+              <ArchiveBoxIcon className="h-6 w-6 inline-block"/>
+              <span className="md:hidden">
+                Legacy Pools
               </span>
             </NavLink>
           </Menu.Item>
