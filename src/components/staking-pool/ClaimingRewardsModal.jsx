@@ -148,7 +148,7 @@ const ClaimingRewardsModal = ({
                 <Typography variant="p" className="mb-2">
                   Claiming your rewards will end your current staking period and restart a new one.
                 </Typography>
-                <Typography variant="p" className="mb-2">
+                {/* <Typography variant="p" className="mb-2">
                   By opting to compound your EUROs rewards, those EUROs will be added to the EUROs in your new stake.
                 </Typography>
                 <div className="mb-2">
@@ -157,7 +157,7 @@ const ClaimingRewardsModal = ({
                     onChange={() => setCompound(!compound)}
                     label="I would like to compound my EUROs rewards"
                   />
-                </div>
+                </div> */}
               </div>
               <Button
                 color="primary"
