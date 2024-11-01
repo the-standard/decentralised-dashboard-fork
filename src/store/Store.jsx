@@ -16,13 +16,6 @@ export const useCurrentWagmiConfig = create(
   })
 );
 
-export const useCurrentTheme = create(
-  (set) => ({
-    currentTheme: 'deluxe-dark',
-    setCurrentTheme: (currentTheme) => set(() => ({ currentTheme: currentTheme })),
-  })
-);
-
 export const useWideBorrowModal = create(
   (set) => ({
     borrowWide: false,

@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { Bars3Icon } from '@heroicons/react/24/outline';
 
 import {
-  useCurrentTheme,
+  useLocalThemeModeStore,
 } from "../../store/Store";
 
 import StandardioLogoWhite from "../../assets/standardiologo-white.svg";
@@ -19,9 +19,9 @@ const TopNav = (props) => {
   const { toggleVisible } = props;
   const { address } = useAccount();
   const navigate = useNavigate();
-  const { currentTheme } = useCurrentTheme();
+  const { localThemeModeStore } = useLocalThemeModeStore();
 
-  const isLight = currentTheme && currentTheme.includes('light');
+  const isLight = localThemeModeStore && localThemeModeStore.includes('light');
 
   if (address) {
     return (
