@@ -2,9 +2,16 @@ import {
   useThemeSettingsOpenStore,
   useLocalThemeStore,
   useLocalThemeModePrefStore,
+  useLocalThemeModeStore,
 } from "../../store/Store";
 
+import {
+  SunIcon,
+  MoonIcon,
+} from '@heroicons/react/24/solid';
+
 import Modal from "./Modal";
+import Button from "./Button";
 import Typography from "./Typography";
 import Select from "./Select";
 
@@ -43,6 +50,7 @@ const ThemeSettings = () => {
 
   const { localThemeStore, setLocalThemeStore } = useLocalThemeStore();
   const { localThemeModePrefStore, setLocalThemeModePrefStore } = useLocalThemeModePrefStore();
+  const { localThemeModeStore } = useLocalThemeModeStore();
 
   const chosenTheme = localThemeStore;
 
@@ -55,6 +63,8 @@ const ThemeSettings = () => {
     setLocalThemeModePrefStore(e.target.value)
   }
 
+  const isLight = localThemeModeStore && localThemeModeStore.includes('light');
+
   return (
     <>
       <Modal
@@ -63,6 +73,17 @@ const ThemeSettings = () => {
           setThemeSettingsOpenStore(false);
         }}
       >
+        <Typography variant="h2" className="card-title">
+          {isLight ? (
+            <SunIcon className="w-6 h-6"/>
+          ) : (
+            <MoonIcon className="w-6 h-6"/>
+          )}
+          Theme Settings
+        </Typography>
+        <Typography variant="p" className="mb-2">
+          Select your preferred Theme, and Dark/Light mode settings below.
+        </Typography>
         <div>
           <Typography
             variant="p"
@@ -98,6 +119,17 @@ const ThemeSettings = () => {
             className="w-full mb-4"
           >
           </Select>
+        </div>
+        <div className="card-actions pt-4 flex-col-reverse lg:flex-row justify-end">
+          <Button
+            className="w-full lg:w-auto"
+            variant="outline"
+            onClick={() => {
+              setThemeSettingsOpenStore(false);
+            }}
+          >
+            Close
+          </Button>
         </div>
       </Modal>
     </>
