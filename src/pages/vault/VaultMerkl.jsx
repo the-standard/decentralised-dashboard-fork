@@ -15,7 +15,7 @@ import {
 } from '@heroicons/react/24/outline';
 
 import {
-  useCurrentTheme,
+  useLocalThemeModeStore,
   useContractAddressStore,
   useVaultManagerAbiStore,
   useVaultAddressStore,
@@ -41,7 +41,7 @@ const VaultMerkl = () => {
   const { setVaultAddress } = useVaultAddressStore();
   const { vaultStore, setVaultStore } = useVaultStore();
   const { vaultType, vaultId } = useParams();
-  const { currentTheme } = useCurrentTheme();
+  const { localThemeModeStore } = useLocalThemeModeStore();
   const navigate = useNavigate();
 
   const { data: blockNumber } = useBlockNumber();
@@ -51,7 +51,7 @@ const VaultMerkl = () => {
   const [ merklRewards, setMerklRewards ] = useState({});
   const [ merklRewardsLoading, setMerklRewardsLoading ] = useState(true);
 
-  const isLight = currentTheme && currentTheme.includes('light');
+  const isLight = localThemeModeStore && localThemeModeStore.includes('light');
 
   const vaultNav = () => {
     return (
