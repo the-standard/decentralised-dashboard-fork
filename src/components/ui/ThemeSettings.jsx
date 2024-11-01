@@ -1,7 +1,7 @@
 import {
   useThemeSettingsOpenStore,
   useLocalThemeStore,
-  useLocalModePrefStore,
+  useLocalThemeModePrefStore,
 } from "../../store/Store";
 
 import Modal from "./Modal";
@@ -42,17 +42,17 @@ const ThemeSettings = () => {
   const { themeSettingsOpenStore, setThemeSettingsOpenStore } = useThemeSettingsOpenStore();
 
   const { localThemeStore, setLocalThemeStore } = useLocalThemeStore();
-  const { localModePrefStore, setLocalModePrefStore } = useLocalModePrefStore();
+  const { localThemeModePrefStore, setLocalThemeModePrefStore } = useLocalThemeModePrefStore();
 
   const chosenTheme = localThemeStore;
 
-  const chosenModePref = localModePrefStore;
+  const chosenModePref = localThemeModePrefStore;
 
   const handleThemeChange = (e) => {
     setLocalThemeStore(e.target.value)
   }
   const handleModePrefChange = (e) => {
-    setLocalModePrefStore(e.target.value)
+    setLocalThemeModePrefStore(e.target.value)
   }
 
   return (
