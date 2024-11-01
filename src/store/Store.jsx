@@ -17,13 +17,6 @@ export const useCurrentWagmiConfig = create(
   })
 );
 
-export const useCurrentTheme = create(
-  (set) => ({
-    currentTheme: 'deluxe-dark',
-    setCurrentTheme: (currentTheme) => set(() => ({ currentTheme: currentTheme })),
-  })
-);
-
 export const useWideBorrowModal = create(
   (set) => ({
     borrowWide: false,
@@ -274,5 +267,30 @@ export const usesUSDVaultListPageStore = create(
   (set) => ({
     currentsUSDPage: 1,
     setCurrentsUSDPage: (currentsUSDPage) => set(() => ({ currentsUSDPage: currentsUSDPage })),
+  })
+);
+
+export const useThemeSettingsOpenStore = create(
+  (set) => ({
+    themeSettingsOpenStore: false,
+    setThemeSettingsOpenStore: (themeSettingsOpenStore) => set(() => ({ themeSettingsOpenStore: themeSettingsOpenStore })),
+  })
+);
+export const useLocalThemeStore = create(
+  (set) => ({
+    localThemeStore: 'deluxe',
+    setLocalThemeStore: (localThemeStore) => set(() => ({ localThemeStore: localThemeStore })),
+  })
+);
+export const useLocalThemeModeStore = create(
+  (set) => ({
+    localThemeModeStore: 'dark',
+    setLocalThemeModeStore: (localThemeModeStore) => set(() => ({ localThemeModeStore: localThemeModeStore })),
+  })
+);
+export const useLocalThemeModePrefStore = create(
+  (set) => ({
+    localThemeModePrefStore: 'device',
+    setLocalThemeModePrefStore: (localThemeModePrefStore) => set(() => ({ localThemeModePrefStore: localThemeModePrefStore })),
   })
 );
