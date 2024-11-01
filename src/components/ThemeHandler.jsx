@@ -4,20 +4,17 @@ import {
 } from 'react-daisyui';
 
 import {
-  useCurrentTheme,
   useLocalThemeStore,
-  useLocalModeStore,
-  useLocalModePrefStore,
+  useLocalThemeModeStore,
+  useLocalThemeModePrefStore,
 } from "../store/Store";
 
 import ThemeSettings from "./ui/ThemeSettings";
 
 const ThemeHandler = ({children}) => {
-  const { currentTheme, setCurrentTheme } = useCurrentTheme();
-
   const { localThemeStore, setLocalThemeStore } = useLocalThemeStore();
-  const { localModeStore, setLocalModeStore } = useLocalModeStore();
-  const { localModePrefStore, setLocalModePrefStore } = useLocalModePrefStore();
+  const { localThemeModeStore, setLocalThemeModeStore } = useLocalThemeModeStore();
+  const { localThemeModePrefStore, setLocalThemeModePrefStore } = useLocalThemeModePrefStore();
 
   const localTheme = localStorage.getItem('theme');
   const localModePref = localStorage.getItem('modePref');
@@ -43,7 +40,7 @@ const ThemeHandler = ({children}) => {
     if (localModePref) {
       useModePref = localModePref;
     }
-    setLocalModePrefStore(useModePref);
+    setLocalThemeModePrefStore(useModePref);
   }, [])
 
   useEffect(() => {
@@ -51,17 +48,17 @@ const ThemeHandler = ({children}) => {
   }, [localThemeStore])
   
   useEffect(() => {
-    localStorage.setItem('modePref', localModePrefStore)
+    localStorage.setItem('modePref', localThemeModePrefStore)
     handleDarkMode();
-  }, [localModePrefStore])
+  }, [localThemeModePrefStore])
 
   const handleDarkMode = () => {
-    switch(localModePrefStore){
+    switch(localThemeModePrefStore){
       case 'dark':
-        setLocalModeStore('dark');
+        setLocalThemeModeStore('dark');
         break;
       case 'light':
-        setLocalModeStore('light');
+        setLocalThemeModeStore('light');
         break;
       case 'device':
         useDeviceAppearance();
@@ -75,16 +72,16 @@ const ThemeHandler = ({children}) => {
   const useDeviceAppearance = () => {
     if (window.matchMedia) {
       if(window.matchMedia('(prefers-color-scheme: dark)').matches){
-        setLocalModeStore('dark');
+        setLocalThemeModeStore('dark');
       } else {
-        setLocalModeStore('light');
+        setLocalThemeModeStore('light');
       }
     } else {
-      setLocalModeStore('dark');
+      setLocalThemeModeStore('dark');
     }
   }
 
-  const useDaisyTheme = `${localThemeStore}-${localModeStore}`;
+  const useDaisyTheme = `${localThemeStore}-${localThemeModeStore}`;
 
   return (
     <Theme dataTheme={useDaisyTheme} className="tst-bg">

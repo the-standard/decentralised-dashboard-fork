@@ -271,15 +271,15 @@ export const useLocalThemeStore = create(
     setLocalThemeStore: (localThemeStore) => set(() => ({ localThemeStore: localThemeStore })),
   })
 );
-export const useLocalModeStore = create(
+export const useLocalThemeModeStore = create(
   (set) => ({
-    localModeStore: 'dark',
-    setLocalModeStore: (localModeStore) => set(() => ({ localModeStore: localModeStore })),
+    localThemeModeStore: 'dark',
+    setLocalThemeModeStore: (localThemeModeStore) => set(() => ({ localThemeModeStore: localThemeModeStore })),
   })
 );
-export const useLocalModePrefStore = create(
+export const useLocalThemeModePrefStore = create(
   (set) => ({
-    localModePrefStore: 'device',
-    setLocalModePrefStore: (localModePrefStore) => set(() => ({ localModePrefStore: localModePrefStore })),
+    localThemeModePrefStore: 'device',
+    setLocalThemeModePrefStore: (localThemeModePrefStore) => set(() => ({ localThemeModePrefStore: localThemeModePrefStore })),
   })
 );

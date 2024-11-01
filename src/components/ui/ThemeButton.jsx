@@ -1,6 +1,6 @@
 import {
   useThemeSettingsOpenStore,
-  useLocalModeStore,
+  useLocalThemeModeStore,
 } from "../../store/Store";
 
 import Button from "./Button";
@@ -13,9 +13,9 @@ import {
 const ThemeButton = () => {
   const { setThemeSettingsOpenStore } = useThemeSettingsOpenStore();
 
-  const { localModeStore } = useLocalModeStore();
+  const { localThemeModeStore } = useLocalThemeModeStore();
 
-  const isLight = localModeStore && localModeStore.includes('light');
+  const isLight = localThemeModeStore && localThemeModeStore.includes('light');
 
   return (
     <>
