@@ -10,7 +10,7 @@ import StandardioLogoWhite from "../../assets/standardiologo-white.svg";
 import StandardioLogoBlack from "../../assets/standardiologo-black.svg";
 
 import Button from "./Button";
-import ThemeToggle from "./ThemeToggle";
+import ThemeSettings from "./ThemeSettings";
 import Notifications from "./Notifications";
 
 import RainbowConnect from "../RainbowConnectButton";
@@ -48,7 +48,7 @@ const TopNav = (props) => {
         </div>
         <div className="navbar-end">
           <div className="hidden md:block">
-            <ThemeToggle className="dropdown-bottom"/>
+            <ThemeSettings />
           </div>
           {/* <Notifications /> */}
           <RainbowConnect />
