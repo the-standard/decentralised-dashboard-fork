@@ -5,7 +5,7 @@ import {
 } from 'react-daisyui';
 
 import {
-  useCurrentTheme,
+  useLocalThemeModeStore,
 } from "../../store/Store";
 
 import {
@@ -32,8 +32,8 @@ const DashLayout = ({children}) => {
     setShowSideNav(visible => !visible);
   }, []);
 
-  const { currentTheme } = useCurrentTheme();
-  const isLight = currentTheme && currentTheme.includes('light');
+  const { localThemeModeStore } = useLocalThemeModeStore();
+  const isLight = localThemeModeStore && localThemeModeStore.includes('light');
 
   return (
     <div className="tst-con">

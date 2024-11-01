@@ -3,15 +3,15 @@ import { useNavigate } from "react-router-dom";
 import { Bars3Icon } from '@heroicons/react/24/outline';
 
 import {
-  useCurrentTheme,
+  useLocalThemeModeStore,
 } from "../../store/Store";
 
 import StandardioLogoWhite from "../../assets/standardiologo-white.svg";
 import StandardioLogoBlack from "../../assets/standardiologo-black.svg";
 
 import Button from "./Button";
-import ThemeToggle from "./ThemeToggle";
-import Notifications from "./Notifications";
+import ThemeButton from "./ThemeButton";
+// import Notifications from "./Notifications";
 
 import RainbowConnect from "../RainbowConnectButton";
 
@@ -19,9 +19,9 @@ const TopNav = (props) => {
   const { toggleVisible } = props;
   const { address } = useAccount();
   const navigate = useNavigate();
-  const { currentTheme } = useCurrentTheme();
+  const { localThemeModeStore } = useLocalThemeModeStore();
 
-  const isLight = currentTheme && currentTheme.includes('light');
+  const isLight = localThemeModeStore && localThemeModeStore.includes('light');
 
   if (address) {
     return (
@@ -48,7 +48,7 @@ const TopNav = (props) => {
         </div>
         <div className="navbar-end">
           <div className="hidden md:block">
-            <ThemeToggle className="dropdown-bottom"/>
+            <ThemeButton />
           </div>
           {/* <Notifications /> */}
           <RainbowConnect />

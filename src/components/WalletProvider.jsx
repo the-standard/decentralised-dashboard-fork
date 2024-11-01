@@ -10,7 +10,7 @@ import {
 import '@rainbow-me/rainbowkit/styles.css';
 
 import {
-  useCurrentTheme,
+  useLocalThemeModeStore,
   useCurrentWagmiConfig
 } from "../store/Store";
 
@@ -19,9 +19,9 @@ import CenterLoader from "./ui/CenterLoader";
 const projectId = import.meta.env.VITE_WALLETCONNECT_ID;
 
 const WalletProvider = ({ children }) => {
-  const { currentTheme } = useCurrentTheme();
+  const { localThemeModeStore } = useLocalThemeModeStore();
   const { setCurrentWagmiConfig } = useCurrentWagmiConfig();
-  const isLight = currentTheme && currentTheme.includes('light');
+  const isLight = localThemeModeStore && localThemeModeStore.includes('light');
 
   const { chains, isLoading } = useAvailableChains();
 
