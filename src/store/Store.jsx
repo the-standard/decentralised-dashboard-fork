@@ -259,6 +259,12 @@ export const usesUSDVaultListPageStore = create(
   })
 );
 
+export const useThemeSettingsOpenStore = create(
+  (set) => ({
+    themeSettingsOpenStore: false,
+    setThemeSettingsOpenStore: (themeSettingsOpenStore) => set(() => ({ themeSettingsOpenStore: themeSettingsOpenStore })),
+  })
+);
 export const useLocalThemeStore = create(
   (set) => ({
     localThemeStore: 'deluxe',

@@ -10,6 +10,8 @@ import {
   useLocalModePrefStore,
 } from "../store/Store";
 
+import ThemeSettings from "./ui/ThemeSettings";
+
 const ThemeHandler = ({children}) => {
   const { currentTheme, setCurrentTheme } = useCurrentTheme();
 
@@ -53,14 +55,6 @@ const ThemeHandler = ({children}) => {
     handleDarkMode();
   }, [localModePrefStore])
 
-  // const handleDarkMode = () => {
-  //   if (localModePref) {
-  //     hasLocalModePref();
-  //   } else {
-  //     useDeviceAppearance();
-  //   }
-  // }
-
   const handleDarkMode = () => {
     switch(localModePrefStore){
       case 'dark':
@@ -95,6 +89,7 @@ const ThemeHandler = ({children}) => {
   return (
     <Theme dataTheme={useDaisyTheme} className="tst-bg">
       {children}
+      <ThemeSettings />
     </Theme>
   )
 };
