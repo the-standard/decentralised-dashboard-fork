@@ -12,7 +12,7 @@ import {
 } from '@heroicons/react/24/outline';
 
 import {
-  useCurrentTheme,
+  useLocalThemeModeStore,
 } from "../../store/Store";
 
 import StandardioLogoWhite from "../../assets/standardiologo-white.svg";
@@ -25,9 +25,9 @@ const SideNav = (props) => {
   const { toggleVisible } = props;
   const location = useLocation();
   const navigate = useNavigate();
-  const { currentTheme } = useCurrentTheme();
+  const { localThemeModeStore } = useLocalThemeModeStore();
 
-  const isLight = currentTheme && currentTheme.includes('light');
+  const isLight = localThemeModeStore && localThemeModeStore.includes('light');
 
   return (
     <Menu className="p-0 text-base-content tst-sidenav">

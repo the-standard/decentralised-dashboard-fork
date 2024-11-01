@@ -2,7 +2,7 @@ import { useState } from "react";
 import moment from 'moment';
 
 import {
-  useCurrentTheme,
+  useLocalThemeModeStore,
 } from "../../store/Store";
 
 import {
@@ -20,8 +20,8 @@ const notifDate = '20240722';
 
 const Notifications = (props) => {
   const [isOpen, setIsOpen] = useState(false);
-  const { currentTheme } = useCurrentTheme();
-  const isLight = currentTheme && currentTheme.includes('light');
+  const { localThemeModeStore } = useLocalThemeModeStore();
+  const isLight = localThemeModeStore && localThemeModeStore.includes('light');
 
   const notifRead = localStorage.getItem("notifRead");
 

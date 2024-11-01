@@ -1,5 +1,5 @@
 import {
-  useCurrentTheme,
+  useLocalThemeModeStore,
 } from "../../store/Store";
 
 import Button from "./Button";
@@ -53,8 +53,8 @@ const icons = [
 ];
 
 const Footer = (props) => {
-  const { currentTheme } = useCurrentTheme();
-  const isLight = currentTheme && currentTheme.includes('light');
+  const { localThemeModeStore } = useLocalThemeModeStore();
+  const isLight = localThemeModeStore && localThemeModeStore.includes('light');
 
   return (
     <footer className="tst-footer items-center p-4 tst-footer mt-20 gap-2 flex flex-col md:flex-row">
