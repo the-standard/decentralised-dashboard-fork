@@ -19,7 +19,7 @@ import StandardioLogoWhite from "../../assets/standardiologo-white.svg";
 import StandardioLogoBlack from "../../assets/standardiologo-black.svg";
 
 import Button from "./Button";
-import ThemeToggle from "./ThemeToggle";
+import ThemeSettings from "./ThemeSettings";
 
 const SideNav = (props) => {
   const { toggleVisible } = props;
@@ -43,7 +43,6 @@ const SideNav = (props) => {
             alt="TheStandard.io Logo"
             className="h-5"
           />
-          {/* {import.meta.env.VITE_COMPANY_DAPP_NAME || ''} */}
         </Button>
         <Button color="ghost" onClick={toggleVisible}>
           <XMarkIcon className="h-6 w-6 inline-block"/>
@@ -194,7 +193,7 @@ const SideNav = (props) => {
         </Tooltip>
       </div>
       <div className="block md:hidden self-center mt-auto pb-4">
-        <ThemeToggle className="dropdown-top" />
+        <ThemeSettings />
       </div>
     </Menu>
   );

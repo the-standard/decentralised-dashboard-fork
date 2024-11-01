@@ -258,3 +258,22 @@ export const usesUSDVaultListPageStore = create(
     setCurrentsUSDPage: (currentsUSDPage) => set(() => ({ currentsUSDPage: currentsUSDPage })),
   })
 );
+
+export const useLocalThemeStore = create(
+  (set) => ({
+    localThemeStore: 'deluxe',
+    setLocalThemeStore: (localThemeStore) => set(() => ({ localThemeStore: localThemeStore })),
+  })
+);
+export const useLocalModeStore = create(
+  (set) => ({
+    localModeStore: 'dark',
+    setLocalModeStore: (localModeStore) => set(() => ({ localModeStore: localModeStore })),
+  })
+);
+export const useLocalModePrefStore = create(
+  (set) => ({
+    localModePrefStore: 'device',
+    setLocalModePrefStore: (localModePrefStore) => set(() => ({ localModePrefStore: localModePrefStore })),
+  })
+);
