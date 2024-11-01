@@ -19,7 +19,7 @@ import StandardioLogoWhite from "../../assets/standardiologo-white.svg";
 import StandardioLogoBlack from "../../assets/standardiologo-black.svg";
 
 import Button from "./Button";
-import ThemeSettings from "./ThemeSettings";
+import ThemeButton from "./ThemeButton";
 
 const SideNav = (props) => {
   const { toggleVisible } = props;
@@ -193,7 +193,7 @@ const SideNav = (props) => {
         </Tooltip>
       </div>
       <div className="block md:hidden self-center mt-auto pb-4">
-        <ThemeSettings />
+        <ThemeButton />
       </div>
     </Menu>
   );

@@ -1,21 +1,12 @@
-import { useEffect, useRef, useState } from "react";
-
 import {
-  useCurrentTheme,
+  useThemeSettingsOpenStore,
   useLocalThemeStore,
-  useLocalModeStore,
   useLocalModePrefStore,
 } from "../../store/Store";
 
 import Modal from "./Modal";
-import Button from "./Button";
 import Typography from "./Typography";
 import Select from "./Select";
-
-import {
-  SunIcon,
-  MoonIcon,
-} from '@heroicons/react/24/solid';
 
 const allThemes = [
   {
@@ -47,19 +38,15 @@ const allModes = [
   },
 ];
 
-const ThemeToggle = (props) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const { setCurrentTheme } = useCurrentTheme();
+const ThemeSettings = () => {
+  const { themeSettingsOpenStore, setThemeSettingsOpenStore } = useThemeSettingsOpenStore();
 
   const { localThemeStore, setLocalThemeStore } = useLocalThemeStore();
-  const { localModeStore } = useLocalModeStore();
   const { localModePrefStore, setLocalModePrefStore } = useLocalModePrefStore();
 
   const chosenTheme = localThemeStore;
 
   const chosenModePref = localModePrefStore;
-
-  const isLight = localModeStore && localModeStore.includes('light');
 
   const handleThemeChange = (e) => {
     setLocalThemeStore(e.target.value)
@@ -70,22 +57,10 @@ const ThemeToggle = (props) => {
 
   return (
     <>
-      <Button
-        shape="circle"
-        color="ghost"
-        className="md:mr-2"
-        onClick={() => setIsOpen(true)}
-      >
-        {isLight ? (
-          <SunIcon className="w-6 h-6"/>
-        ) : (
-          <MoonIcon className="w-6 h-6"/>
-        )}
-      </Button>
       <Modal
-        open={isOpen}
+        open={themeSettingsOpenStore}
         closeModal={() => {
-          setIsOpen(false);
+          setThemeSettingsOpenStore(false);
         }}
       >
         <div>
@@ -130,4 +105,4 @@ const ThemeToggle = (props) => {
 
 };
 
-export default ThemeToggle;
+export default ThemeSettings;
