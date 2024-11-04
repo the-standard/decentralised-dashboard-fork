@@ -16,7 +16,7 @@ import {
 
 import {
   useLocalThemeModeStore,
-  useContractAddressStore,
+  usesUSDContractAddressStore,
   useVaultManagerAbiStore,
   useVaultAddressStore,
   useVaultStore,
@@ -33,10 +33,12 @@ import Button from "../../components/ui/Button";
 
 const VaultMerkl = () => {
   const chainId = useChainId();
+
   const {
-    arbitrumSepoliaContractAddress,
-    arbitrumContractAddress
-  } = useContractAddressStore();
+    arbitrumsUSDSepoliaContractAddress,
+    arbitrumsUSDContractAddress
+  } = usesUSDContractAddressStore();
+
   const { vaultManagerAbi } = useVaultManagerAbiStore();
   const { setVaultAddress } = useVaultAddressStore();
   const { vaultStore, setVaultStore } = useVaultStore();
@@ -93,13 +95,14 @@ const VaultMerkl = () => {
     }, 1000);
   }, []);
 
-  const vaultManagerAddress = chainId === arbitrumSepolia.id ?
-      arbitrumSepoliaContractAddress :
-      arbitrumContractAddress;
+  const sUSDVaultManagerAddress =
+    chainId === arbitrumSepolia.id
+      ? arbitrumsUSDSepoliaContractAddress
+      : arbitrumsUSDContractAddress;          
 
   const { data: vaultData, refetch } = useReadContract({
-    address: vaultManagerAddress,
     abi: vaultManagerAbi,
+    address: sUSDVaultManagerAddress,
     functionName: "vaultData",
     args: [vaultId],
   });

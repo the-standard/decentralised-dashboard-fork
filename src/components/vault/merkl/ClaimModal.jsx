@@ -32,7 +32,7 @@ const ClaimModal = (props) => {
   const { merklABI } = useMerklABIStore();
   const { vaultAddress } = useVaultAddressStore();
 
-  const { writeContract, isError, isPending, isSuccess } = useWriteContract();
+  const { writeContract, isError, isPending, isSuccess, error } = useWriteContract();
 
   const claimUsers = useAssets && useAssets.length && useAssets.map(function(asset, index) {
     return (vaultAddress)
@@ -75,12 +75,14 @@ const ClaimModal = (props) => {
     } else if (isSuccess) {
       toast.success("Claim Successful");
     } else if (isError) {
+      console.error(error)
       toast.error('There was an error');
     }
   }, [
     isPending,
     isSuccess,
     isError,
+    error,
   ]);
 
   return (
