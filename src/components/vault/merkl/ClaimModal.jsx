@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { useParams } from "react-router-dom";
 import { ethers } from "ethers";
 import { toast } from 'react-toastify';
 import {
@@ -12,6 +13,7 @@ import {
   useVaultAddressStore,
   useMerklAddressStore,
   useMerklABIStore,
+  useSmartVaultV4ABIStore,
 } from "../../../store/Store";
 
 import Modal from "../../ui/Modal";
@@ -31,6 +33,9 @@ const ClaimModal = (props) => {
   const { merklDistributorAddress } = useMerklAddressStore();
   const { merklABI } = useMerklABIStore();
   const { vaultAddress } = useVaultAddressStore();
+  const { smartVaultV4ABI } = useSmartVaultV4ABIStore();
+
+  const { vaultId } = useParams();
 
   const { writeContract, isError, isPending, isSuccess, error } = useWriteContract();
 
@@ -48,24 +53,49 @@ const ClaimModal = (props) => {
   });
 
   const handleClaimToken = async () => {
-    try {
-      writeContract({
-        abi: merklABI,
-        address: merklDistributorAddress,
-        functionName: "claim",
-        args: [
-          claimUsers,
-          claimTokens,
-          claimAmounts,
-          claimProofs
-        ],
-      });
-    } catch (error) {
-      let errorMessage = '';
-      if (error && error.shortMessage) {
-        errorMessage = error.shortMessage;
+    if (vaultId <= 49) {
+      // LEGACY CODE FOR OLD VAULTS
+      try {
+        writeContract({
+          abi: merklABI,
+          address: merklDistributorAddress,
+          functionName: "claim",
+          args: [
+            claimUsers,
+            claimTokens,
+            claimAmounts,
+            claimProofs
+          ],
+        });
+      } catch (error) {
+        let errorMessage = '';
+        if (error && error.shortMessage) {
+          errorMessage = error.shortMessage;
+        }
+        toast.error(errorMessage || 'There was an error');
       }
-      toast.error(errorMessage || 'There was an error');
+    } else {
+      // CURRENT CODE
+      try {
+        writeContract({
+          abi: smartVaultV4ABI,
+          address: vaultAddress,
+          functionName: "merklClaim",
+          args: [
+            merklDistributorAddress,
+            claimUsers,
+            claimTokens,
+            claimAmounts,
+            claimProofs
+          ],
+        });
+      } catch (error) {
+        let errorMessage = '';
+        if (error && error.shortMessage) {
+          errorMessage = error.shortMessage;
+        }
+        toast.error(errorMessage || 'There was an error');
+      }
     }
   };
 

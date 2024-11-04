@@ -62,6 +62,39 @@ export const abi = [
     ],
     "stateMutability": "view",
     "type": "function"
+  },
+  {
+    "type": "function",
+    "name": "merklClaim",
+    "inputs": [
+        {
+            "name": "_distributor",
+            "type": "address",
+            "internalType": "address"
+        },
+        {
+            "name": "users",
+            "type": "address[]",
+            "internalType": "address[]"
+        },
+        {
+            "name": "tokens",
+            "type": "address[]",
+            "internalType": "address[]"
+        },
+        {
+            "name": "amounts",
+            "type": "uint256[]",
+            "internalType": "uint256[]"
+        },
+        {
+            "name": "proofs",
+            "type": "bytes32[][]",
+            "internalType": "bytes32[][]"
+        }
+    ],
+    "outputs": [],
+    "stateMutability": "nonpayable"
   }
 ];
 
