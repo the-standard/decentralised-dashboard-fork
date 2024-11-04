@@ -13,22 +13,22 @@ import {
 } from '@heroicons/react/24/outline';
 
 import {
-  useCurrentTheme,
+  useLocalThemeModeStore,
 } from "../../store/Store";
 
 import StandardioLogoWhite from "../../assets/standardiologo-white.svg";
 import StandardioLogoBlack from "../../assets/standardiologo-black.svg";
 
 import Button from "./Button";
-import ThemeToggle from "./ThemeToggle";
+import ThemeButton from "./ThemeButton";
 
 const SideNav = (props) => {
   const { toggleVisible } = props;
   const location = useLocation();
   const navigate = useNavigate();
-  const { currentTheme } = useCurrentTheme();
+  const { localThemeModeStore } = useLocalThemeModeStore();
 
-  const isLight = currentTheme && currentTheme.includes('light');
+  const isLight = localThemeModeStore && localThemeModeStore.includes('light');
 
   return (
     <Menu className="p-0 text-base-content tst-sidenav">
@@ -44,7 +44,6 @@ const SideNav = (props) => {
             alt="TheStandard.io Logo"
             className="h-5"
           />
-          {/* {import.meta.env.VITE_COMPANY_DAPP_NAME || ''} */}
         </Button>
         <Button color="ghost" onClick={toggleVisible}>
           <XMarkIcon className="h-6 w-6 inline-block"/>
@@ -195,7 +194,7 @@ const SideNav = (props) => {
         </Tooltip>
       </div>
       <div className="block md:hidden self-center mt-auto pb-4">
-        <ThemeToggle className="dropdown-top" />
+        <ThemeButton />
       </div>
     </Menu>
   );
