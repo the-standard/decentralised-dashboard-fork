@@ -93,7 +93,7 @@ const SideNav = (props) => {
             Cross-Chain Dex
           </NavLink>
         </Menu.Item>
-        <Menu.Item>
+        {/* <Menu.Item>
           <NavLink
             to="/legacy-pools"
             className={({ isActive }) => 
@@ -107,7 +107,7 @@ const SideNav = (props) => {
               Legacy Pools
             </span>
           </NavLink>
-        </Menu.Item>
+        </Menu.Item> */}
       </div>
       {/* Med + */}
       <div className="p-2 flex-col gap-2 w-full hidden md:flex">
@@ -172,7 +172,7 @@ const SideNav = (props) => {
             </NavLink>
           </Menu.Item>
         </Tooltip>
-        <Tooltip
+        {/* <Tooltip
           position="right"
           message="Legacy Pools"
         >
@@ -191,7 +191,7 @@ const SideNav = (props) => {
               </span>
             </NavLink>
           </Menu.Item>
-        </Tooltip>
+        </Tooltip> */}
       </div>
       <div className="block md:hidden self-center mt-auto pb-4">
         <ThemeButton />
