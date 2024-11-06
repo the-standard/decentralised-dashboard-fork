@@ -1,8 +1,14 @@
 import { LiFiWidget as LiFi } from '@lifi/widget';
 
+import {
+  useLocalThemeModeStore,
+} from "../store/Store";
+
 const projectId = import.meta.env.VITE_WALLETCONNECT_ID;
 
 const LiFiWidget = () => {
+  const { localThemeModeStore } = useLocalThemeModeStore();
+  const isLight = localThemeModeStore && localThemeModeStore.includes('light');
 
   const widgetConfig = {
     // fromChain,
@@ -13,7 +19,7 @@ const LiFiWidget = () => {
       projectId: projectId,
     },
     integrator: 'the-standard',
-    appearance: 'dark',
+    appearance: isLight ? 'light' : 'dark',
     theme: {
       container: {
         border: `1px solid rgb(234, 234, 234)`,
