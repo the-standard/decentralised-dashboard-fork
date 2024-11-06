@@ -3,14 +3,6 @@ import Modal from "../../ui/Modal";
 import Typography from "../../ui/Typography";
 import TokenIcon from "../../ui/TokenIcon";
 
-import {
-  QuestionMarkCircleIcon
-} from '@heroicons/react/24/outline';
-
-import {
-  Tooltip,
-} from 'react-daisyui';
-
 const formatUSD = (value) => {
   if (value) {
     return new Intl.NumberFormat('en-US', {
