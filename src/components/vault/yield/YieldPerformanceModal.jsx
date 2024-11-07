@@ -189,8 +189,8 @@ const YieldPerformanceModal = ({
                 <Typography variant="p">
                   Current Value
                 </Typography>
-                <Typography variant="h1" className="font-bold">
-                  ${currentUSD?.toFixed(2) || ''}
+                <Typography variant="h1" className="font-bold flex items-center">
+                  <span className="text-sm inline-block font-normal">~</span>${currentUSD?.toFixed(2) || ''}
                 </Typography>
               </div>
             </div>
