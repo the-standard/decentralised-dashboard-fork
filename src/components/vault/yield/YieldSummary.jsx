@@ -148,49 +148,6 @@ const YieldSummary = ({
           </Typography>
         </div>
         <div className="bg-base-300/40 p-4 rounded-lg w-full flex items-center">
-          <Typography variant="p">
-            Assets in Yield Pools
-          </Typography>
-          {gammaUserLoading ? (
-            <>
-              <span class="loading loading-bars loading-md"></span>
-            </>
-          ) : (
-            <>
-              <Typography variant="p" className="text-end">
-                {formatUSD(metrics.totalBalance)}
-              </Typography>
-            </>
-          )}
-        </div>
-        <div className="bg-base-300/40 p-4 rounded-lg w-full flex items-center">
-          <Typography variant="p">
-            Yield Generated
-          </Typography>
-          <div>
-            {gammaUserLoading ? (
-              <>
-                <span class="loading loading-bars loading-md"></span>
-              </>
-            ) : (
-              <>
-                <Typography
-                  variant="p"
-                  className={`text-end ${getYieldColor(metrics.totalYieldEarned)}`}
-                >
-                  {formatUSD(metrics.totalYieldEarned)}
-                </Typography>
-                <Typography
-                  variant="p"
-                  className={`text-end ${getYieldColor(metrics.weightedAverageYieldAPY)}`}
-                >
-                  {formatPercentage(metrics.weightedAverageYieldAPY)} APY
-                </Typography>
-              </>
-            )}
-          </div>
-        </div>
-        <div className="bg-base-300/40 p-4 rounded-lg w-full flex items-center">
           <div className="w-full">
             <Typography variant="p">
               Market Movement
@@ -222,8 +179,50 @@ const YieldSummary = ({
             )}
           </div>
         </div>
+        <div className="bg-base-300/40 p-4 rounded-lg w-full flex items-center">
+          <Typography variant="p">
+            Yield Generated
+          </Typography>
+          <div>
+            {gammaUserLoading ? (
+              <>
+                <span class="loading loading-bars loading-md"></span>
+              </>
+            ) : (
+              <>
+                <Typography
+                  variant="p"
+                  className={`text-end ${getYieldColor(metrics.totalYieldEarned)}`}
+                >
+                  {formatUSD(metrics.totalYieldEarned)}
+                </Typography>
+                <Typography
+                  variant="p"
+                  className={`text-end ${getYieldColor(metrics.weightedAverageYieldAPY)}`}
+                >
+                  {formatPercentage(metrics.weightedAverageYieldAPY)} APY
+                </Typography>
+              </>
+            )}
+          </div>
+        </div>
+        <div className="bg-base-300/40 p-4 rounded-lg w-full flex items-center">
+          <Typography variant="p">
+            Assets in Yield Pools
+          </Typography>
+          {gammaUserLoading ? (
+            <>
+              <span class="loading loading-bars loading-md"></span>
+            </>
+          ) : (
+            <>
+              <Typography variant="p" className="text-end">
+                {formatUSD(metrics.totalBalance)}
+              </Typography>
+            </>
+          )}
+        </div>
       </div>
-
       <div className="grid grid-cols-1 gap-4 mb-4">
         <div className="bg-info/20 p-4 rounded-lg w-full">
           <div className="flex gap-3">
