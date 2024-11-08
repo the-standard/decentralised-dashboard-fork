@@ -159,7 +159,7 @@ const YieldSummary = ({
           <div className="w-full">
             {gammaUserLoading ? (
               <>
-                <span class="loading loading-bars loading-md"></span>
+                <span className="loading loading-bars loading-md"></span>
               </>
             ) : (
               <>
@@ -186,7 +186,7 @@ const YieldSummary = ({
           <div>
             {gammaUserLoading ? (
               <>
-                <span class="loading loading-bars loading-md"></span>
+                <span className="loading loading-bars loading-md"></span>
               </>
             ) : (
               <>
@@ -212,7 +212,7 @@ const YieldSummary = ({
           </Typography>
           {gammaUserLoading ? (
             <>
-              <span class="loading loading-bars loading-md"></span>
+              <span className="loading loading-bars loading-md"></span>
             </>
           ) : (
             <>

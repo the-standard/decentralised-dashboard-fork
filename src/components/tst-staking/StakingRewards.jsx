@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { ethers } from "ethers";
 import {
   useReadContracts,
 } from "wagmi";
@@ -8,29 +7,40 @@ import {
   useErc20AbiStore,
 } from "../../store/Store";
 
-import Button from "../ui/Button";
 import Card from "../ui/Card";
-import Typography from "../ui/Typography";
 import CenterLoader from "../ui/CenterLoader";
 
-import ClaimingRewardsModal from "./ClaimingRewardsModal";
+import StakingSummary from "./StakingSummary";
+import StakingRewardsList from "./StakingRewardsList";
 
 const StakingRewards = ({
-  stakedSince,
-  collaterals,
+  positions,
   poolRewardsLoading,
+  dailyYieldLoading,
+  rewards,
+  collaterals,
+  stakedSince,
+  rawStakedSince,
   collatDaily,
+  priceData,
+  priceDataLoading,
 }) => {
-  const [open, setOpen] = useState(false);
   const { erc20Abi } = useErc20AbiStore();
 
-  if (poolRewardsLoading) {
+  if (poolRewardsLoading || dailyYieldLoading || priceDataLoading) {
     return (
-      <Card className="card-compact">
-        <div className="card-body">
-          <CenterLoader />
-        </div>
-      </Card>
+      <>
+        <Card className="card-compact mb-4">
+          <div className="card-body">
+            <CenterLoader />
+          </div>
+        </Card>
+        <Card className="card-compact">
+          <div className="card-body">
+            <CenterLoader />
+          </div>
+        </Card>
+      </>
     )
   }
 
@@ -87,93 +97,42 @@ const StakingRewards = ({
     }
   });
 
-  const handleCloseModal = () => {
-    setOpen(false)
-  };
-
-  const rows = rewardData || [];
-
-  let noRewards = true;
-  if (rows.some(e => e.amount > 0)) {
-    noRewards = false;
+  const handleDailyPrices = () => {
+    const prices = {};
+    for (const [token, tokenData] of Object.entries(priceData)) {
+      if (tokenData.prices && tokenData.prices.length > 0) {
+        const latestPrice = tokenData.prices[tokenData.prices.length - 1].price;
+        // Convert price to USD considering decimals
+        prices[token] = parseFloat(latestPrice) / 1000000;
+      }
+    }
+    return prices;
   }
 
+  const latestPrices = handleDailyPrices();
+
   return (
-    <Card className="card-compact w-full">
-      <div className="card-body">
-        <Typography variant="h2" className="card-title justify-between">
-          Projected Rewards
-        </Typography>
-        <div>
-          <Typography variant="p" className="mb-2">
-            You can earn rewards every 24 hours after your staking period begins.
-          </Typography>
-          <Typography variant="p" className="mb-2">
-            Your reward rates are based on a the number of tokens you have staked.
-          </Typography>
-          {stakedSince ? (
-            <Typography variant="p">
-              Staked Since:
-              <b> {stakedSince}</b>
-            </Typography>
-          ) : null}
-        </div>
-
-        <div className="overflow-x-auto">
-          <table className="table table-zebra">
-            <thead>
-              <tr>
-                <th>Asset</th>
-                <th>Amount</th>
-                <th>Daily Reward Per Token</th>
-              </tr>
-            </thead>
-            {poolRewardsLoading ? (null) : (
-              <tbody>
-                {rows.map(function(asset, index) {
-                  const amount = asset?.amount || 0n;
-                  const decimals = asset?.decimals;
-                  const symbol = asset?.asset;
-                  const dailyReward = asset?.dailyReward || 0n;
-
-                  return(
-                    <tr key={index}>
-                      <td>
-                        {symbol}
-                      </td>
-                      <td>
-                        {ethers.formatUnits(amount, decimals)}
-                      </td>
-                      <td className="whitespace-nowrap">
-                        {ethers.formatUnits(dailyReward, decimals)}
-                        <span className="opacity-40"> / TST</span>
-                      </td>
-                    </tr>
-                  )}
-                )}
-              </tbody>
-            )}
-          </table>
-          {poolRewardsLoading ? (
-            <CenterLoader slim />
-          ) : (null)}
-        </div>
-
-        <div className="card-actions flex flex-row justify-end">
-          <Button
-            color="primary"
-            onClick={() => setOpen(true)}
-            disabled={noRewards}
-          >
-            Claim
-          </Button>
-        </div>
-        <ClaimingRewardsModal
-          handleCloseModal={handleCloseModal}
-          isOpen={open}
-        />
-      </div>
-    </Card>
+    <div className="grid gap-4 grid-cols-1">
+      <StakingSummary
+        positions={positions}
+        poolRewardsLoading={poolRewardsLoading}
+        dailyYieldLoading={dailyYieldLoading}
+        rewards={rewards}
+        rewardsData={rewardData}
+        collaterals={collaterals}
+        stakedSince={stakedSince}
+        rawStakedSince={rawStakedSince}
+        collatDaily={collatDaily}
+        latestPrices={latestPrices}
+      />
+      <StakingRewardsList
+        positions={positions}
+        poolRewardsLoading={poolRewardsLoading}
+        dailyYieldLoading={dailyYieldLoading}
+        rewardData={rewardData}
+        latestPrices={latestPrices}
+      />
+    </div>
   )
 };
 

@@ -151,7 +151,7 @@ const YieldPerformanceModal = ({
                 </Typography>
                 {gammaStatsLoading ? (
                   <>
-                    <span class="loading loading-bars loading-md"></span>
+                    <span className="loading loading-bars loading-md"></span>
                   </>
                 ) : (
                   <>
@@ -167,7 +167,7 @@ const YieldPerformanceModal = ({
                 </Typography>
                 {gammaReturnsLoading ? (
                   <>
-                    <span class="loading loading-bars loading-md"></span>
+                    <span className="loading loading-bars loading-md"></span>
                   </>
                 ) : (
                   <>
