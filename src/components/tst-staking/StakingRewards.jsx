@@ -80,7 +80,8 @@ const StakingRewards = ({
     for (const [token, tokenData] of Object.entries(priceData)) {
       if (tokenData.prices && tokenData.prices.length > 0) {
         const latestPrice = tokenData.prices[tokenData.prices.length - 1].price;
-        prices[token] = parseFloat(latestPrice) / 1000000;
+        // convert to dollar value
+        prices[token] = parseFloat(latestPrice) / 100000000;
       }
     }
     return prices;
