@@ -8,17 +8,6 @@ import CenterLoader from "../ui/CenterLoader";
 
 import ClaimingRewardsModal from "./ClaimingRewardsModal";
 
-const formatUSD = (value) => {
-  if (value >= 0) {
-    return new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'USD',
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2
-    }).format(Math.abs(value));  
-  }
-};
-
 const StakingRewardsList = ({
   stakedSince,
   poolRewardsLoading,
@@ -43,15 +32,17 @@ const StakingRewardsList = ({
 
   const rewardsWithPrices = rewardData.map(reward => {
     const useAmount = ethers.formatUnits(reward.amount, reward.decimals);
+    const useRate = ethers.formatUnits(reward.dailyReward, reward.decimals);
     const price = latestPrices[reward.asset] || 1; // Default to 1 for stablecoins
     const usdValue = parseFloat(useAmount) * price;
+    const usdRate = parseFloat(useRate) * price;
     return {
       ...reward,
       usdValue: usdValue,
+      usdRate: usdRate,
       price: price
     };
   })
-
   const rows = rewardsWithPrices || [];
 
   let noRewards = true;
@@ -87,7 +78,6 @@ const StakingRewardsList = ({
               <tr>
                 <th>Asset</th>
                 <th>Amount</th>
-                <th>Value (USD)</th>
                 <th>Daily Rate Per TST</th>
               </tr>
             </thead>
@@ -99,6 +89,7 @@ const StakingRewardsList = ({
                   const symbol = asset?.asset;
                   const dailyReward = asset?.dailyReward || 0n;
                   const value = asset?.usdValue || 0;
+                  const rate = asset?.usdRate || 0;
 
                   return(
                     <tr key={index}>
@@ -106,13 +97,16 @@ const StakingRewardsList = ({
                         {symbol}
                       </td>
                       <td>
-                        {ethers.formatUnits(amount, decimals)}
+                        {ethers.formatUnits(amount, decimals)}<br/>
+                        <span className="opacity-50">
+                          ~${value.toFixed(8)}
+                        </span>
                       </td>
                       <td>
-                        {formatUSD(value)}
-                      </td>
-                      <td className="whitespace-nowrap">
-                        {ethers.formatUnits(dailyReward, decimals)}
+                        {ethers.formatUnits(dailyReward, decimals)}<br/>
+                        <span className="opacity-50">
+                          ~${rate.toFixed(8)}
+                        </span>
                       </td>
                     </tr>
                   )}
