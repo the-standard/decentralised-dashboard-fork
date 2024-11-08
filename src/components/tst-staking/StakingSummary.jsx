@@ -127,7 +127,6 @@ const STATUS_TIERS = [
     iconColor: 'text-gray-600'
   }
 ];
-<i data-lucide="shield" className="h-6 w-6 text-emerald-500"></i>
 
 const formatNumber = (number, decimals = 2) => {
   if (typeof number === 'string') number = parseFloat(number);
