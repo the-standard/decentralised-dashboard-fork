@@ -58,8 +58,6 @@ const StakingRewardsList = ({
     noRewards = false;
   }
 
-  console.log(123213, {rewardsWithPrices}, {latestPrices})
-
   return (
     <Card className="card-compact w-full">
       <div className="card-body">
