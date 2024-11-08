@@ -42,8 +42,9 @@ const StakingRewardsList = ({
   };
 
   const rewardsWithPrices = rewardData.map(reward => {
+    const useAmount = ethers.formatUnits(reward.amount, reward.decimals);
     const price = latestPrices[reward.asset] || 1; // Default to 1 for stablecoins
-    const usdValue = parseFloat(reward.amount) * price;
+    const usdValue = parseFloat(useAmount) * price;
     return {
       ...reward,
       usdValue: usdValue,
@@ -57,6 +58,7 @@ const StakingRewardsList = ({
   if (rows.some(e => e.amount > 0)) {
     noRewards = false;
   }
+
 
   return (
     <Card className="card-compact w-full">
