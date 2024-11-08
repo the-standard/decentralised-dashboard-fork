@@ -393,7 +393,7 @@ const StakingSummary = ({
           Participate in protocol governance
         </Typography>
 
-        {/* <div className="grid grid-cols-3 gap-4 mb-4"> */}
+        {/* <div className="grid grid-cols-3 gap-4 mb-2"> */}
         <div className="grid grid-cols-1 gap-2 mb-2">
           <div className="bg-base-300/40 p-4 rounded-lg w-full flex items-center">
             <div className="w-full">
