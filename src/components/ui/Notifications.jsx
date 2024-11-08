@@ -56,9 +56,9 @@ const Notifications = (props) => {
       >
         <div className="relative">
           {hasUnread ? (
-            <span class="absolute flex h-3 w-3 -top-1 -end-1">
-              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-error opacity-75"></span>
-              <span class="relative inline-flex rounded-full h-3 w-3 bg-error"></span>
+            <span className="absolute flex h-3 w-3 -top-1 -end-1">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-error opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-3 w-3 bg-error"></span>
             </span>
           ) : null}
           <BellIcon className="w-6 h-6 inline-block"/>

@@ -101,7 +101,7 @@ const BorrowModal = (props) => {
   //             </Button>
 
   //           </div>
-  //           <div class="divider md:divider-horizontal">OR</div>
+  //           <div className="divider md:divider-horizontal">OR</div>
   //           <div className="flex-1">
   //             <Typography
   //               variant="h2"

@@ -14,7 +14,6 @@ import { ethers } from "ethers";
 import {
   useTstAddressStore,
   useErc20AbiStore,
-  usesEuroAddressStore,
   useStakingPoolv3AbiStore,
   useStakingPoolv3AddressStore,
 } from "../../store/Store.jsx";
@@ -31,10 +30,6 @@ const StakingIncrease = () => {
     arbitrumSepoliaTstAddress,
   } = useTstAddressStore();
   const {
-    arbitrumsEuroAddress,
-    arbitrumSepoliasEuroAddress,
-  } = usesEuroAddressStore();
-  const {
     arbitrumSepoliaStakingPoolv3Address,
     arbitrumStakingPoolv3Address,
   } = useStakingPoolv3AddressStore();
@@ -43,7 +38,6 @@ const StakingIncrease = () => {
   const { stakingPoolv3Abi } = useStakingPoolv3AbiStore();
   const [tstStakeAmount, setTstStakeAmount] = useState(0);
   const [stage, setStage] = useState('');
-  const [helpOpen, setHelpOpen] = useState(false);
 
   const tstInputRef = useRef(null);
 
@@ -197,9 +191,6 @@ const StakingIncrease = () => {
             Depositing will automatically claim your existing rewards, ending your current staking period and restarting a new one.
           </Typography>
           <div>
-            {/* <Typography variant="p" className="pb-2">
-              TST Deposit Amount
-            </Typography> */}
             <div className="flex justify-between">
               <Typography
                 variant="p"
@@ -238,6 +229,7 @@ const StakingIncrease = () => {
                 loading={isPending}
                 disabled={isPending || tstStakeAmount <= 0 }
                 onClick={handleLetsStake}
+                className="w-full lg:w-1/2"
               >
                 Deposit
               </Button>
