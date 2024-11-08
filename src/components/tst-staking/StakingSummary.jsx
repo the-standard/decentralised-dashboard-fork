@@ -150,14 +150,9 @@ const formatUSD = (value) => {
 
 const StakingSummary = ({
   positions,
-  poolRewardsLoading,
-  dailyYieldLoading,
-  rewards,
   rewardsData,
-  collaterals,
   stakedSince,
   rawStakedSince,
-  collatDaily,
   latestPrices,
 }) => {
   const [open, setOpen] = useState(false);

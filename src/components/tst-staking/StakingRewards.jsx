@@ -1,4 +1,3 @@
-import { useState } from "react";
 import {
   useReadContracts,
 } from "wagmi";
@@ -6,9 +5,6 @@ import {
 import {
   useErc20AbiStore,
 } from "../../store/Store";
-
-import Card from "../ui/Card";
-import CenterLoader from "../ui/CenterLoader";
 
 import StakingSummary from "./StakingSummary";
 import StakingRewardsList from "./StakingRewardsList";
@@ -23,26 +19,8 @@ const StakingRewards = ({
   rawStakedSince,
   collatDaily,
   priceData,
-  priceDataLoading,
 }) => {
   const { erc20Abi } = useErc20AbiStore();
-
-  if (poolRewardsLoading || dailyYieldLoading || priceDataLoading) {
-    return (
-      <>
-        <Card className="card-compact mb-4">
-          <div className="card-body">
-            <CenterLoader />
-          </div>
-        </Card>
-        <Card className="card-compact">
-          <div className="card-body">
-            <CenterLoader />
-          </div>
-        </Card>
-      </>
-    )
-  }
 
   const { data: rewardDecimals } = useReadContracts({
     contracts:collaterals.map((item) =>({
@@ -102,7 +80,6 @@ const StakingRewards = ({
     for (const [token, tokenData] of Object.entries(priceData)) {
       if (tokenData.prices && tokenData.prices.length > 0) {
         const latestPrice = tokenData.prices[tokenData.prices.length - 1].price;
-        // Convert price to USD considering decimals
         prices[token] = parseFloat(latestPrice) / 1000000;
       }
     }
