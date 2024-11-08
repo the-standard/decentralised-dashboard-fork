@@ -89,6 +89,8 @@ const StakingRewards = ({
 
   const latestPrices = handleDailyPrices();
 
+  console.log(10101, rewardData)
+
   return (
     <div className="grid gap-4 grid-cols-1">
       <StakingSummary
