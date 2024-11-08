@@ -20,7 +20,7 @@ import Input from "../ui/Input";
 import CenterLoader from "../ui/CenterLoader";
 
 const StakingDecreaseModal = ({
-  stakedPositions,
+  tstAmount,
   isOpen,
   handleCloseModal,
 }) => {
@@ -36,9 +36,7 @@ const StakingDecreaseModal = ({
 
   const tstInputRef = useRef(null);
 
-  const tstPosition = stakedPositions?.find((item) => item.asset === 'TST');
-
-  const tstStakedAmount = tstPosition?.amount;
+  const tstStakedAmount = tstAmount;
 
   const useTstStakedAmount = formatEther(tstStakedAmount.toString());
 

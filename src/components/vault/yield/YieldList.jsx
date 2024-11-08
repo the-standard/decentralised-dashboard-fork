@@ -149,7 +149,7 @@ const YieldList = (props) => {
                       <td>
                         {gammaReturnsLoading ? (
                           <>
-                            <span class="loading loading-bars loading-sm"></span>
+                            <span className="loading loading-bars loading-sm"></span>
                           </>
                         ) : (
                           <>
@@ -160,7 +160,7 @@ const YieldList = (props) => {
                       <td>
                         {gammaUserLoading ? (
                           <>
-                            <span class="loading loading-bars loading-xs"></span>
+                            <span className="loading loading-bars loading-xs"></span>
                           </>
                         ) : (
                           <>

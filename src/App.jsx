@@ -11,7 +11,6 @@ import Vault from './pages/vault/Vault';
 import VaultHistory from './pages/vault/VaultHistory';
 import VaultMerkl from './pages/vault/VaultMerkl';
 import TstStaking from './pages/tst-staking/TstStaking';
-import StakingPool from './pages/staking-pool/StakingPoolLegacy';
 import LegacyPools from './pages/legacy-pools/LegacyPools';
 import TermsOfUse from './pages/TermsOfUse';
 import Dex from './pages/dex/Dex';

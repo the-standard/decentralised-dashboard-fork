@@ -83,7 +83,7 @@ const YieldViewModal = ({
                 <Typography variant="h2">
                 {gammaStatsLoading ? (
                   <>
-                    <span class="loading loading-bars loading-xs"></span>
+                    <span className="loading loading-bars loading-xs"></span>
                   </>
                 ) : (
                   <>
@@ -99,7 +99,7 @@ const YieldViewModal = ({
                 <Typography variant="h2">
                 {gammaReturnsLoading ? (
                   <>
-                    <span class="loading loading-bars loading-xs"></span>
+                    <span className="loading loading-bars loading-xs"></span>
                   </>
                 ) : (
                   <>
@@ -129,7 +129,7 @@ const YieldViewModal = ({
                 <Typography variant="h2">
                   {gammaUserLoading ? (
                     <>
-                      <span class="loading loading-bars loading-xs"></span>
+                      <span className="loading loading-bars loading-xs"></span>
                     </>
                   ) : (
                     <>
@@ -154,7 +154,7 @@ const YieldViewModal = ({
                 <Typography variant="h2">
                   {gammaUserLoading ? (
                     <>
-                      <span class="loading loading-bars loading-xs"></span>
+                      <span className="loading loading-bars loading-xs"></span>
                     </>
                   ) : (
                     <>
@@ -181,7 +181,7 @@ const YieldViewModal = ({
                 <Typography variant="h2">
                   {gammaUserLoading ? (
                     <>
-                      <span class="loading loading-bars loading-xs"></span>
+                      <span className="loading loading-bars loading-xs"></span>
                     </>
                   ) : (
                     <>
@@ -224,7 +224,7 @@ const YieldViewModal = ({
                 <Typography variant="h2">
                   {gammaUserLoading ? (
                     <>
-                      <span class="loading loading-bars loading-xs"></span>
+                      <span className="loading loading-bars loading-xs"></span>
                     </>
                   ) : (
                     <>
@@ -270,7 +270,7 @@ const YieldViewModal = ({
                 <Typography variant="h2">
                   {gammaUserLoading ? (
                     <>
-                      <span class="loading loading-bars loading-xs"></span>
+                      <span className="loading loading-bars loading-xs"></span>
                     </>
                   ) : (
                     <>
