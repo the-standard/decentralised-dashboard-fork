@@ -229,6 +229,7 @@ const StakingIncrease = () => {
                 loading={isPending}
                 disabled={isPending || tstStakeAmount <= 0 }
                 onClick={handleLetsStake}
+                className="w-full lg:w-1/2"
               >
                 Deposit
               </Button>
