@@ -213,13 +213,14 @@ const StakingSummary = ({
   function getDaysStaked() {
     const start = moment.unix((Number(rawStakedSince)));
     const today = moment();
-    const testSince = start.diff(today, 'days')+1;
-    return testSince;
+    const since = today.diff(start, 'days');
+    return since;
   }
 
   const calculateSimpleAPY = (stakedAmount, totalRewardsValue, daysStaked) => {
     const dailyEarnings = totalRewardsValue / daysStaked;
     const annualEarningsPerTST = (dailyEarnings * 365) / stakedAmount;
+    // console.log(123123, stakedAmount, totalRewardsValue, daysStaked)
     return annualEarningsPerTST * 100;
   }
 
