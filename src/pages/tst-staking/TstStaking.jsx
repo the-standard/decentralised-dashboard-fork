@@ -10,8 +10,6 @@ import {
 } from "wagmi";
 import { arbitrumSepolia } from "wagmi/chains";
 import {
-  ArrowTrendingUpIcon,
-  BanknotesIcon,
   Square3Stack3DIcon,
 } from '@heroicons/react/24/outline';
 
@@ -21,17 +19,14 @@ import {
 } from "../../store/Store";
 
 import StakingIncrease from "../../components/tst-staking/StakingIncrease";
-import StakingAssets from "../../components/tst-staking/StakingAssets";
 import StakingRewards from "../../components/tst-staking/StakingRewards";
 
 import Card from "../../components/ui/Card";
 import CenterLoader from "../../components/ui/CenterLoader";
 import Typography from "../../components/ui/Typography";
-import Button from "../../components/ui/Button";
 
 const TstStaking = (props) => {
   const { stakingPoolv3Abi } = useStakingPoolv3AbiStore();
-  const [showValue, setShowValue] = useState(false);
   const navigate = useNavigate();
 
   const {
@@ -153,25 +148,34 @@ const TstStaking = (props) => {
         </div>
 
         <div>
-          {poolRewardsLoading ? (
-            <Card className="card-compact">
-              <div className="card-body">
-                <CenterLoader />
-              </div>
-            </Card>
+          {poolRewardsLoading || dailyYieldLoading || priceDataLoading ? (
+            <>
+              <Card className="card-compact mb-4">
+                <div className="card-body">
+                  <CenterLoader />
+                </div>
+              </Card>
+              <Card className="card-compact">
+                <div className="card-body">
+                  <CenterLoader />
+                </div>
+              </Card>
+            </>
           ) : (
-            <StakingRewards
-              positions={positions}
-              poolRewardsLoading={poolRewardsLoading}
-              dailyYieldLoading={dailyYieldLoading}
-              rewards={rewards}
-              collaterals={collaterals}
-              stakedSince={useStakedSince}
-              rawStakedSince={stakedSince}
-              collatDaily={collatDaily}
-              priceData={priceData}
-              priceDataLoading={priceDataLoading}
-            />
+            <>
+              <StakingRewards
+                positions={positions}
+                poolRewardsLoading={poolRewardsLoading}
+                dailyYieldLoading={dailyYieldLoading}
+                rewards={rewards}
+                collaterals={collaterals}
+                stakedSince={useStakedSince}
+                rawStakedSince={stakedSince}
+                collatDaily={collatDaily}
+                priceData={priceData}
+                priceDataLoading={priceDataLoading}
+              />
+            </>
           )}
 
         </div>

@@ -8,10 +8,22 @@ import CenterLoader from "../ui/CenterLoader";
 
 import ClaimingRewardsModal from "./ClaimingRewardsModal";
 
+const formatUSD = (value) => {
+  if (value >= 0) {
+    return new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'USD',
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
+    }).format(Math.abs(value));  
+  }
+};
+
 const StakingRewardsList = ({
   stakedSince,
   poolRewardsLoading,
   rewardData,
+  latestPrices,
 }) => {
   const [open, setOpen] = useState(false);
 
@@ -29,7 +41,17 @@ const StakingRewardsList = ({
     setOpen(false)
   };
 
-  const rows = rewardData || [];
+  const rewardsWithPrices = rewardData.map(reward => {
+    const price = latestPrices[reward.asset] || 1; // Default to 1 for stablecoins
+    const usdValue = parseFloat(reward.amount) * price;
+    return {
+      ...reward,
+      usdValue: usdValue,
+      price: price
+    };
+  })
+
+  const rows = rewardsWithPrices || [];
 
   let noRewards = true;
   if (rows.some(e => e.amount > 0)) {
@@ -63,7 +85,8 @@ const StakingRewardsList = ({
               <tr>
                 <th>Asset</th>
                 <th>Amount</th>
-                <th>Daily Reward Per Token</th>
+                <th>Value (USD)</th>
+                <th>Daily Rate Per TST</th>
               </tr>
             </thead>
             {poolRewardsLoading ? (null) : (
@@ -73,6 +96,7 @@ const StakingRewardsList = ({
                   const decimals = asset?.decimals;
                   const symbol = asset?.asset;
                   const dailyReward = asset?.dailyReward || 0n;
+                  const value = asset?.usdValue || 0;
 
                   return(
                     <tr key={index}>
@@ -82,9 +106,11 @@ const StakingRewardsList = ({
                       <td>
                         {ethers.formatUnits(amount, decimals)}
                       </td>
+                      <td>
+                        {formatUSD(value)}
+                      </td>
                       <td className="whitespace-nowrap">
                         {ethers.formatUnits(dailyReward, decimals)}
-                        <span className="opacity-40"> / TST</span>
                       </td>
                     </tr>
                   )}
