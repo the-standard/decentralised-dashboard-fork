@@ -211,34 +211,47 @@ const StakingSummary = ({
   }
 
   function getDaysStaked() {
-    const start = moment.unix((Number(rawStakedSince)));
+    let start = moment.unix((Number(rawStakedSince)));
     const today = moment();
+    if (!rawStakedSince) {
+      start = today;
+    }
     const since = today.diff(start, 'days');
     return since;
   }
 
+  // const calculateSimpleAPY = (stakedAmount, totalRewardsValue, daysStaked) => {
+  //   const dailyEarnings = Number(totalRewardsValue / daysStaked) || 0;
+  //   const annualEarningsPerTST = (dailyEarnings * 365) / Number(stakedAmount) || 0;
+  //   return annualEarningsPerTST * 100;
+  // }
   const calculateSimpleAPY = (stakedAmount, totalRewardsValue, daysStaked) => {
-    const dailyEarnings = totalRewardsValue / daysStaked;
-    const annualEarningsPerTST = (dailyEarnings * 365) / stakedAmount;
-    // console.log(123123, stakedAmount, totalRewardsValue, daysStaked)
-    return annualEarningsPerTST * 100;
+    const dailyEarnings = totalRewardsValue || 0;
+    const annualEarningsPerTST = (dailyEarnings * 365) / Number(stakedAmount) || 0;
+
+    return annualEarningsPerTST;
   }
 
   const rewardsWithPrices = rewardsData.map(reward => {
     const useAmount = ethers.formatUnits(reward.amount, reward.decimals);
+    const useRate = ethers.formatUnits(reward.dailyReward, reward.decimals);
     const price = latestPrices[reward.asset] || 1; // Default to 1 for stablecoins
     const usdValue = parseFloat(useAmount) * price;
+    const usdRate = parseFloat(useRate) * price;
     return {
       ...reward,
       usdValue: usdValue,
+      usdRate: usdRate,
       price: price
     };
   })
 
-  const totalValue = rewardsWithPrices.reduce((sum, reward) => sum + reward.usdValue, 0) || 0;
+
+  const totalValueUSD = rewardsWithPrices.reduce((sum, reward) => sum + reward.usdValue, 0) || 0;
+  const totalRateUSD = rewardsWithPrices.reduce((sum, reward) => sum + reward.usdRate, 0) || 0;
 
   const daysStaked = getDaysStaked() || 0;
-  const dailyEarnings = (totalValue / daysStaked) || 0;
+  const dailyEarnings = (totalRateUSD / daysStaked) || 0;
   const monthlyProjection = (dailyEarnings * 30) || 0;
 
   const currentTier = getCurrentTier(stakedAmount);
@@ -248,7 +261,7 @@ const StakingSummary = ({
   if (nextTier?.minAmount) {
     progress = (stakedAmount / nextTier.minAmount) * 100;
   }
-  const apyDisplay = calculateSimpleAPY(stakedAmount, totalValue, daysStaked) + '%' || '0%';
+  const apyDisplay = calculateSimpleAPY(stakedAmount, totalRateUSD, daysStaked) + '%' || '0%';
 
   let stakeRatio = 'TODO.DOTO';
 
@@ -275,7 +288,7 @@ const StakingSummary = ({
             Participate in protocol governance
           </Typography>
   
-          <div className="grid grid-cols-2 gap-4 mb-4">
+          <div className="grid grid-cols-1 gap-4 mb-4">
             <div className="bg-base-300/40 p-4 rounded-lg w-full flex items-center">
               <div className="w-full">
                 <Typography variant="p">
@@ -286,7 +299,7 @@ const StakingSummary = ({
                 </Typography>
               </div>
             </div>
-            <div className="bg-base-300/40 p-4 rounded-lg w-full flex items-center">
+            {/* <div className="bg-base-300/40 p-4 rounded-lg w-full flex items-center">
               <div className="w-full">
                 <Typography variant="p">
                   Historical APY
@@ -304,7 +317,7 @@ const StakingSummary = ({
                   0%
                 </Typography>
               </div>
-            </div>  
+            </div>   */}
           </div>
   
           <div className="grid grid-cols-1 gap-4 mb-4">
@@ -343,7 +356,7 @@ const StakingSummary = ({
                   Total Value Accrued
                 </Typography>
                 <Typography variant="h2">
-                  {formatUSD(totalValue)}
+                  {formatUSD(totalValueUSD)}
                 </Typography>
               </div>
             </div>
@@ -381,7 +394,7 @@ const StakingSummary = ({
         </Typography>
 
         {/* <div className="grid grid-cols-3 gap-4 mb-4"> */}
-        <div className="grid grid-cols-2 gap-2 mb-2">
+        <div className="grid grid-cols-1 gap-2 mb-2">
           <div className="bg-base-300/40 p-4 rounded-lg w-full flex items-center">
             <div className="w-full">
               <Typography variant="p">
@@ -392,7 +405,7 @@ const StakingSummary = ({
               </Typography>
             </div>
           </div>
-          <div className="bg-base-300/40 p-4 rounded-lg w-full flex items-center">
+          {/* <div className="bg-base-300/40 p-4 rounded-lg w-full flex items-center">
             <div className="w-full">
               <Typography variant="p">
                 Historical APY
@@ -410,7 +423,7 @@ const StakingSummary = ({
                 {apyDisplay}
               </Typography>
             </div>
-          </div>
+          </div> */}
           {/* <div className="bg-base-300/40 p-4 rounded-lg w-full flex items-center">
             <div className="w-full">
               <Typography variant="p">
@@ -474,7 +487,7 @@ const StakingSummary = ({
                 Total Value Accrued
               </Typography>
               <Typography variant="h2">
-                {formatUSD(totalValue)}
+                {formatUSD(totalValueUSD)}
               </Typography>
               <Typography variant="p">
                 Current market prices
