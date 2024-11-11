@@ -251,7 +251,10 @@ const StakingSummary = ({
   const totalRateUSD = rewardsWithPrices.reduce((sum, reward) => sum + reward.usdRate, 0) || 0;
 
   const daysStaked = getDaysStaked() || 0;
-  const dailyEarnings = (totalRateUSD / daysStaked) || 0;
+  let dailyEarnings = (totalRateUSD / daysStaked) || 0;
+  if (!(daysStaked >= 1)) {
+    dailyEarnings = 0;
+  }
   const monthlyProjection = (dailyEarnings * 30) || 0;
 
   const currentTier = getCurrentTier(stakedAmount);
@@ -446,21 +449,39 @@ const StakingSummary = ({
 
         </div>
 
-        <div className="grid grid-cols-1 gap-2 mb-2">
-          <div className="bg-base-300/40 p-4 rounded-lg w-full">
-            <div className="flex justify-between items-center mb-2">
-              <Typography variant="p" className="font-bold">
-                Your Daily Earnings
-              </Typography>
-              <Typography variant="p" className={`text-end text-green-500`}>
-                {formatUSD(dailyEarnings)}
+        {daysStaked >= 1 ? (
+          <div className="grid grid-cols-1 gap-2 mb-2">
+            <div className="bg-base-300/40 p-4 rounded-lg w-full">
+              <div className="flex justify-between items-center mb-2">
+                <Typography variant="p" className="font-bold">
+                  Your Daily Earnings
+                </Typography>
+                <Typography variant="p" className={`text-end text-green-500`}>
+                  {formatUSD(dailyEarnings)}
+                </Typography>
+              </div>
+              <Typography variant="p">
+                Earning {formatUSD(monthlyProjection)} monthly at current rates
               </Typography>
             </div>
-            <Typography variant="p">
-              Earning {formatUSD(monthlyProjection)} monthly at current rates
-            </Typography>
           </div>
-        </div>
+        ) : (
+          <div className="grid grid-cols-1 gap-2 mb-2">
+            <div className="bg-base-300/40 p-4 rounded-lg w-full">
+              <div className="flex justify-between items-center mb-2">
+                <Typography variant="p" className="font-bold">
+                  Your Daily Earnings
+                </Typography>
+                <Typography variant="p" className={`text-end text-green-500`}>
+                  {formatUSD(0)}
+                </Typography>
+              </div>
+              <Typography variant="p">
+                Rates will be calculated after the first 24 hours period passes
+              </Typography>
+            </div>
+          </div>
+        )}
 
         <div className="bg-emerald-400/20 p-4 rounded-lg w-full">
           <div className="flex items-center justify-between mb-2">
