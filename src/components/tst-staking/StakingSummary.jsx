@@ -274,7 +274,7 @@ const StakingSummary = ({
 
   const lowestTier = STATUS_TIERS[STATUS_TIERS.length - 1];
 
-  const shareText = `🏆 ${currentTier.name} on @TheStandardIO\n\n💫 Staking ${formatNumber(stakedAmount)} TST\n💰 Earning ${formatUSD(dailyEarnings)} daily\n⚡️ Supporting zero-interest borrowing\n\nJoin the future of DeFi!\nthestandard.io`;
+  const shareText = `🏆 Yes! I made it to ${currentTier.name} on @TheStandard_io\n\n💫 Staking ${formatNumber(stakedAmount)} TST\n💰 Earning ${formatUSD(dailyEarnings)} daily\n⚡️ Supporting zero-interest borrowing\n\nJoin the future of DeFi!\nthestandard.io`;
 
   if (!rawStakedSince) {
     return (

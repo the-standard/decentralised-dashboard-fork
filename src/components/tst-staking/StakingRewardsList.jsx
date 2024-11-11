@@ -99,13 +99,13 @@ const StakingRewardsList = ({
                       <td>
                         {ethers.formatUnits(amount, decimals)}<br/>
                         <span className="opacity-50">
-                          ~${value.toFixed(8)}
+                          ${value.toFixed(8)}
                         </span>
                       </td>
                       <td>
                         {ethers.formatUnits(dailyReward, decimals)}<br/>
                         <span className="opacity-50">
-                          ~${rate.toFixed(8)}
+                          ${rate.toFixed(8)}
                         </span>
                       </td>
                     </tr>
