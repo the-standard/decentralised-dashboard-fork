@@ -717,3 +717,27 @@ button.btn.btn-outline:disabled {
   -webkit-mask: radial-gradient(67px, #0000 98%, #000);
   mask: radial-gradient(67px, #0000 98%, #000);
 }
+
+.btn-ping-wrap {
+  position: relative;
+  display: flex;
+}
+
+.btn-ping-wrap > .btn {
+  z-index: 1;
+}
+
+.btn-ping {
+  position: absolute;
+  opacity: 0.75;
+  animation: btn-ping 1s cubic-bezier(0, 0, 0.2, 1) infinite;
+  z-index: 0;
+}
+
+@keyframes btn-ping {
+  75%,
+  100% {
+    transform: scaleX(1.1)scaleY(1.5);
+    opacity: 0;
+  }
+}
