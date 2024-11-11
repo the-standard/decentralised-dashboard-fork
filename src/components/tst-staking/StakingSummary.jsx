@@ -228,9 +228,13 @@ const StakingSummary = ({
   const calculateSimpleAPY = (stakedAmount, totalRewardsValue, daysStaked) => {
     const dailyEarnings = totalRewardsValue || 0;
     const annualEarningsPerTST = (dailyEarnings * 365) / Number(stakedAmount) || 0;
-
     return annualEarningsPerTST;
   }
+
+  // const calculateSimpleAPY = (totalValueUSD, dailyEarnings) => {    
+  //   const apy = Number(dailyEarnings * 365);
+  //   return apy;
+  // }
 
   const rewardsWithPrices = rewardsData.map(reward => {
     const useAmount = ethers.formatUnits(reward.amount, reward.decimals);
@@ -245,7 +249,6 @@ const StakingSummary = ({
       price: price
     };
   })
-
 
   const totalValueUSD = rewardsWithPrices.reduce((sum, reward) => sum + reward.usdValue, 0) || 0;
   const totalRateUSD = rewardsWithPrices.reduce((sum, reward) => sum + reward.usdRate, 0) || 0;
@@ -265,6 +268,7 @@ const StakingSummary = ({
     progress = (stakedAmount / nextTier.minAmount) * 100;
   }
   const apyDisplay = calculateSimpleAPY(stakedAmount, totalRateUSD, daysStaked) + '%' || '0%';
+  // const apyDisplay = calculateSimpleAPY(totalValueUSD, dailyEarnings).toFixed(8) + '%' || '0%';
 
   let stakeRatio = 'TODO.DOTO';
 
@@ -396,8 +400,7 @@ const StakingSummary = ({
           Participate in protocol governance
         </Typography>
 
-        {/* <div className="grid grid-cols-3 gap-4 mb-2"> */}
-        <div className="grid grid-cols-1 gap-2 mb-2">
+        <div className="grid grid-cols-1 gap-4 mb-2">
           <div className="bg-base-300/40 p-4 rounded-lg w-full flex items-center">
             <div className="w-full">
               <Typography variant="p">
