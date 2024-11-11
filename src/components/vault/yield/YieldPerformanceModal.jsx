@@ -253,7 +253,7 @@ const YieldPerformanceModal = ({
             </Button>
             <Button
               className="w-full lg:w-64"
-              color="error"
+              variant="outline"
               onClick={() => openClaim()}
             >
               Stop Earning Yield
