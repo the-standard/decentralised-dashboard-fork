@@ -149,8 +149,6 @@ const VaultMerkl = () => {
     }
   };
 
-  console.log(1231312313131233, {merklRewards})
-
   if (vaultsLoading) {
     return (
       <div>
