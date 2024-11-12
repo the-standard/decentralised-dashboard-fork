@@ -69,7 +69,7 @@ const RewardList = ({
     if (merklBalances) {
       if (merklBalances[index]) {
         if (merklBalances[index].result) {
-          useBalance = rewardDecimals[index].result;
+          useBalance = merklBalances[index].result;
         }
         return {
           ...merklRewards[index],
