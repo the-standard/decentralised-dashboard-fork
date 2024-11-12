@@ -14,6 +14,8 @@ import {
 } from '@heroicons/react/24/outline';
 
 import {
+  useTstAddressStore,
+  useErc20AbiStore,
   useStakingPoolv3AbiStore,
   useStakingPoolv3AddressStore,
 } from "../../store/Store";
@@ -27,15 +29,25 @@ import Typography from "../../components/ui/Typography";
 
 const TstStaking = (props) => {
   const { stakingPoolv3Abi } = useStakingPoolv3AbiStore();
-  const navigate = useNavigate();
+  const { erc20Abi } = useErc20AbiStore();
 
   const {
     arbitrumSepoliaStakingPoolv3Address,
     arbitrumStakingPoolv3Address,
   } = useStakingPoolv3AddressStore();
+  
+  const {
+    arbitrumTstAddress,
+    arbitrumSepoliaTstAddress,
+  } = useTstAddressStore();
 
+  const navigate = useNavigate();
   const { address } = useAccount();
   const chainId = useChainId();
+
+  const tstAddress = chainId === arbitrumSepolia.id ?
+  arbitrumSepoliaTstAddress :
+  arbitrumTstAddress;
 
   const stakingPoolv3Address =
   chainId === arbitrumSepolia.id
@@ -63,11 +75,19 @@ const TstStaking = (props) => {
     args: [],
   });
 
+  const { data: tstGlobalBalance, isLoading: tstGlobalBalanceLoading, refetch: refetchTstGlobalBalance } = useReadContract({
+    address: tstAddress,
+    abi: erc20Abi,
+    functionName: "balanceOf",
+    args: [stakingPoolv3Address],
+  });
+
   useWatchBlockNumber({
     onBlockNumber() {
       refetchPositions();
       refetchRewards();
       refetchDailyReward();
+      refetchTstGlobalBalance();
     },
   })
 
@@ -174,6 +194,8 @@ const TstStaking = (props) => {
                 collatDaily={collatDaily}
                 priceData={priceData}
                 priceDataLoading={priceDataLoading}
+                tstGlobalBalance={tstGlobalBalance}
+                tstGlobalBalanceLoading={tstGlobalBalanceLoading}
               />
             </>
           )}

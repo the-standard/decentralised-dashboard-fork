@@ -19,6 +19,8 @@ const StakingRewards = ({
   rawStakedSince,
   collatDaily,
   priceData,
+  tstGlobalBalance,
+  tstGlobalBalanceLoading,
 }) => {
   const { erc20Abi } = useErc20AbiStore();
 
@@ -102,6 +104,8 @@ const StakingRewards = ({
         rawStakedSince={rawStakedSince}
         collatDaily={collatDaily}
         latestPrices={latestPrices}
+        tstGlobalBalance={tstGlobalBalance}
+        tstGlobalBalanceLoading={tstGlobalBalanceLoading}
       />
       <StakingRewardsList
         positions={positions}

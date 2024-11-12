@@ -81,6 +81,8 @@ const RewardList = ({
     }
   });
 
+  console.log(123123, {merklBalances}, {merklRewards})
+
   const hasClaims = merklData.find(item => item?.unclaimed > 0);
 
   return (
