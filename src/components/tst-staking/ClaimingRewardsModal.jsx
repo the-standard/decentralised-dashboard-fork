@@ -7,42 +7,40 @@ import { arbitrumSepolia } from "wagmi/chains";
 import { toast } from 'react-toastify';
 
 import {
-  useStakingPoolv2AddressStore,
-  useStakingPoolv2AbiStore
+  useStakingPoolv3AddressStore,
+  useStakingPoolv3AbiStore
 } from "../../store/Store";
 
 import Button from "../ui/Button";
 import Modal from "../ui/Modal";
 import Typography from "../ui/Typography";
 import CenterLoader from "../ui/CenterLoader";
-import Checkbox from "../ui/Checkbox";
 
 const ClaimingRewardsModal = ({
   isOpen,
   handleCloseModal,
 }) => {
   const {
-    arbitrumSepoliaStakingPoolv2Address,
-    arbitrumStakingPoolv2Address,
-  } = useStakingPoolv2AddressStore();
-  const { stakingPoolv2Abi } = useStakingPoolv2AbiStore();
+    arbitrumSepoliaStakingPoolv3Address,
+    arbitrumStakingPoolv3Address,
+  } = useStakingPoolv3AddressStore();
+  const { stakingPoolv3Abi } = useStakingPoolv3AbiStore();
   const [claimLoading, setClaimLoading] = useState(false);
   const [showError, setShowError] = useState(false);
-  const [compound, setCompound] = useState(false);
   const chainId = useChainId();
 
-  const stakingPoolv2Address = chainId === arbitrumSepolia.id ? arbitrumSepoliaStakingPoolv2Address :
-  arbitrumStakingPoolv2Address;
+  const stakingPoolv3Address = chainId === arbitrumSepolia.id ? arbitrumSepoliaStakingPoolv3Address :
+  arbitrumStakingPoolv3Address;
 
   const { writeContract, isError, isPending, isSuccess, error } = useWriteContract();
 
   const handleApproveClaim = async () => {
     try {
       writeContract({
-        abi: stakingPoolv2Abi,
-        address: stakingPoolv2Address,
+        abi: stakingPoolv3Abi,
+        address: stakingPoolv3Address,
         functionName: "claim",
-        args: [compound],
+        args: [],
       });
     } catch (error) {
       let errorMessage = '';
@@ -148,16 +146,6 @@ const ClaimingRewardsModal = ({
                 <Typography variant="p" className="mb-2">
                   Claiming your rewards will end your current staking period and restart a new one.
                 </Typography>
-                {/* <Typography variant="p" className="mb-2">
-                  By opting to compound your EUROs rewards, those EUROs will be added to the EUROs in your new stake.
-                </Typography>
-                <div className="mb-2">
-                  <Checkbox
-                    checked={compound}
-                    onChange={() => setCompound(!compound)}
-                    label="I would like to compound my EUROs rewards"
-                  />
-                </div> */}
               </div>
               <Button
                 color="primary"

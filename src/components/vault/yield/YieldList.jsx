@@ -11,6 +11,7 @@ import {
 
 import YieldClaimModal from "./YieldClaimModal";
 import YieldViewModal from "./YieldViewModal";
+import YieldPerformanceModal from "./YieldPerformanceModal";
 import {
   ArbitrumVaults,
   SepoliaVaults,
@@ -148,7 +149,7 @@ const YieldList = (props) => {
                       <td>
                         {gammaReturnsLoading ? (
                           <>
-                            <span class="loading loading-bars loading-sm"></span>
+                            <span className="loading loading-bars loading-sm"></span>
                           </>
                         ) : (
                           <>
@@ -159,7 +160,7 @@ const YieldList = (props) => {
                       <td>
                         {gammaUserLoading ? (
                           <>
-                            <span class="loading loading-bars loading-xs"></span>
+                            <span className="loading loading-bars loading-xs"></span>
                           </>
                         ) : (
                           <>
@@ -194,7 +195,7 @@ const YieldList = (props) => {
         yieldHypervisor={yieldHypervisor || ''}
         gammaUser={gammaUser}
       />
-      <YieldViewModal
+      <YieldPerformanceModal
         handleCloseModal={() => handleCloseModal()}
         isOpen={open === 'VIEW'}
         openClaim={() => handleOpenModal(yieldPair, yieldQuantities, yieldHypervisor, 'CLAIM')}

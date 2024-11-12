@@ -8,6 +8,7 @@ import merklABI from "../abis/merkl";
 import stakingAbi from "../abis/staking";
 import liquidationPoolAbi from "../abis/liquidationPool";
 import stakingPoolv2Abi from "../abis/stakingPoolV2";
+import stakingPoolv3Abi from "../abis/stakingPoolV3";
 
 export const useCurrentWagmiConfig = create(
   (set) => ({
@@ -104,6 +105,15 @@ export const useStakingPoolv2AddressStore = create()(
   })
 );
 
+export const useStakingPoolv3AddressStore = create()(
+  (set) => ({
+    arbitrumStakingPoolv3Address: "0xA27A9F6Bac7f3C530EAF324Ae45F33Bc113c1E83",
+    arbitrumSepoliaStakingPoolv3Address: "0x9bfEADec553110AbB9e2fbE54ccD9AD903f21961",
+    getStakingPoolv3Address: (arbitrumStakingPoolv3Address) =>
+      set(() => ({ stakingPoolv3Address: arbitrumStakingPoolv3Address })),
+  })
+);
+
 export const useChainlinkAbiStore = create() (
   (set) => ({
     chainlinkAbi: chainlinkAbi,
@@ -185,6 +195,14 @@ export const useStakingPoolv2AbiStore = create()(
     stakingPoolv2Abi: stakingPoolv2Abi,
     getLiquidationPoolAbi: (stakingPoolv2Abi) =>
       set(() => ({ stakingPoolv2Abi: stakingPoolv2Abi })),
+  })
+);
+
+export const useStakingPoolv3AbiStore = create()(
+  (set) => ({
+    stakingPoolv3Abi: stakingPoolv3Abi,
+    getLiquidationPoolAbi: (stakingPoolv3Abi) =>
+      set(() => ({ stakingPoolv3Abi: stakingPoolv3Abi })),
   })
 );
 

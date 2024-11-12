@@ -103,7 +103,7 @@ const EurosCompare = ({vaultType}) => {
   return (
     <div className="flex flex-col md:flex-row flex-1">
       <div className="flex flex-col md:flex-row">
-        <div class="divider md:divider-horizontal" />
+        <div className="divider md:divider-horizontal" />
         <div>
           <div className="mb-2">
             <Typography

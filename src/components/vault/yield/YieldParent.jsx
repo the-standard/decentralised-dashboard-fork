@@ -8,12 +8,7 @@ import axios from "axios";
 
 import {
   AdjustmentsHorizontalIcon,
-  QuestionMarkCircleIcon
 } from '@heroicons/react/24/outline';
-
-import {
-  Tooltip,
-} from 'react-daisyui';
 
 import {
   useVaultAddressStore,
@@ -21,6 +16,7 @@ import {
 } from "../../../store/Store";
 
 import YieldList from "./YieldList";
+import YieldSummary from "./YieldSummary";
 
 import Card from "../../ui/Card";
 import Typography from "../../ui/Typography";
@@ -168,6 +164,9 @@ const YieldParent = (props) => {
       const netMarketReturnsUSD = userHypervisor?.returns?.netMarketReturnsUSD;
       const hypervisorReturnsUSD = userHypervisor?.returns?.hypervisorReturnsUSD;
 
+      const hypervisorReturnsPercentage = userHypervisor?.returns?.hypervisorReturnsPercentage;
+      const netMarketReturnsPercentage = userHypervisor?.returns?.netMarketReturnsPercentage;
+
       totalUSD.initialTokenUSD = totalUSD.initialTokenUSD + initialTokenUSD;
       totalUSD.currentUSD = totalUSD.currentUSD + currentUSD;
       totalUSD.netMarketReturnsUSD = totalUSD.netMarketReturnsUSD + netMarketReturnsUSD;
@@ -177,6 +176,10 @@ const YieldParent = (props) => {
         hypervisor: useAddress,
         initialTokenUSD: initialTokenUSD,
         currentUSD: currentUSD,
+        netMarketReturnsUSD: netMarketReturnsUSD,
+        hypervisorReturnsUSD: hypervisorReturnsUSD,
+        hypervisorReturnsPercentage: hypervisorReturnsPercentage,
+        netMarketReturnsPercentage: netMarketReturnsPercentage,
       });
     });
 
@@ -191,146 +194,31 @@ const YieldParent = (props) => {
       {yieldEnabled ? (
         <>
           {yieldData && yieldData.length ? (
-            <Card className="card-compact">
-              <div className="card-body">
-                <YieldList
-                  yieldData={yieldData}
-                  yieldIsPending={isPending}
-                  gammaUser={gammaUser}
-                  gammaReturns={gammaReturns}
-                  gammaStats={gammaStats}
-                  gammaUserLoading={gammaUserLoading}
-                  gammaReturnsLoading={gammaReturnsLoading}
-                  gammaStatsLoading={gammaStatsLoading}
-                />
-                {/* <YieldRatio /> */}
-
-                <div>
-
-                  <div className="flex justify-between">
-                    <Typography
-                      variant="p"
-                    >
-                      Total Yield Earned
-                      <Tooltip
-                        className="flex-col justify-center items-center cursor-pointer before:w-[12rem]"
-                        position="top"
-                        message={'Your total yield earned, based on the price of your tokens at deposit.'}
-                      >
-                        <QuestionMarkCircleIcon
-                          className="mb-1 ml-1 h-5 w-5 inline-block opacity-60"
-                        />
-                      </Tooltip>
-                    </Typography>
-                    <Typography
-                      variant="p"
-                      className="text-right"
-                    >
-                      {gammaUserLoading ? (
-                        <>
-                          <span class="loading loading-bars loading-xs"></span>
-                        </>
-                      ) : (
-                        <>
-                          {userSummary?.totalUSD?.hypervisorReturnsUSD ? (
-                            <>
-                              {userSummary?.totalUSD?.hypervisorReturnsUSD.toFixed(2) < 0 ? (
-                                '-$'
-                              ) : (
-                                '$'
-                              )}
-                              {
-                                Math.abs(
-                                  userSummary?.totalUSD?.hypervisorReturnsUSD
-                                )?.toFixed(2) || ''
-                              }
-                            </>
-                          ) : (
-                            ''
-                          )}
-                        </>
-                      )}
-                    </Typography>
-                  </div>
-                  <div className="flex justify-between">
-                    <Typography
-                      variant="p"
-                    >
-                      <span className="opacity-60">Total Yield Earned (Market)</span>
-                      <Tooltip
-                        className="flex-col justify-center items-center cursor-pointer before:w-[12rem]"
-                        position="top"
-                        message={'Your total yield earned, based on the current market rate of your deposited tokens.'}
-                      >
-                        <QuestionMarkCircleIcon
-                          className="mb-1 ml-1 h-5 w-5 inline-block opacity-60"
-                        />
-                      </Tooltip>
-                    </Typography>
-                    <Typography
-                      variant="p"
-                      className="text-right"
-                    >
-                      {gammaUserLoading ? (
-                        <>
-                          <span class="loading loading-bars loading-xs"></span>
-                        </>
-                      ) : (
-                        <span className="opacity-60 mb-4 block">
-                          {userSummary?.totalUSD?.netMarketReturnsUSD ? (
-                            <>
-                              {userSummary?.totalUSD?.netMarketReturnsUSD.toFixed(2) < 0 ? (
-                                '-$'
-                              ) : (
-                                '$'
-                              )}
-                              {
-                                Math.abs(
-                                  userSummary?.totalUSD?.netMarketReturnsUSD
-                                )?.toFixed(2) || ''
-                              }
-                            </>
-                          ) : (
-                            ''
-                          )}
-                        </span>
-                      )}
-                    </Typography>
-                  </div>
-                  <div className="flex justify-between">
-                    <Typography
-                      variant="p"
-                    >
-                      Total Balance
-                      <Tooltip
-                        className="flex-col justify-center items-center cursor-pointer before:w-[12rem]"
-                        position="top"
-                        message={'The current value of all your yield pair tokens together.'}
-                      >
-                        <QuestionMarkCircleIcon
-                          className="mb-1 ml-1 h-5 w-5 inline-block opacity-60"
-                        />
-                      </Tooltip>
-                    </Typography>
-                    <Typography
-                      variant="p"
-                      className="text-right"
-                    >
-                      {gammaUserLoading ? (
-                        <>
-                          <span class="loading loading-bars loading-xs"></span>
-                        </>
-                      ) : (
-                        <>
-                          ${userSummary?.totalUSD?.currentUSD?.toFixed(2) || ''}
-                        </>
-                      )}
-                    </Typography>
-                  </div>
-
+            <>
+              <Card className="card-compact mb-4">
+                <div className="card-body">
+                  <YieldList
+                    yieldData={yieldData}
+                    yieldIsPending={isPending}
+                    gammaUser={gammaUser}
+                    gammaReturns={gammaReturns}
+                    gammaStats={gammaStats}
+                    gammaUserLoading={gammaUserLoading}
+                    gammaReturnsLoading={gammaReturnsLoading}
+                    gammaStatsLoading={gammaStatsLoading}
+                  />
                 </div>
-              </div>
-            </Card>
+              </Card>
+              <Card className="card-compact">
+                <div className="card-body">
+                  <YieldSummary
+                    gammaUser={gammaUser}
+                    gammaUserLoading={gammaUserLoading}
+                    userSummary={userSummary}
+                  />
+                </div>
+              </Card>
+            </>
           ) : (
             <Card className="card-compact">
               <div className="card-body">

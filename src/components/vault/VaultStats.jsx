@@ -133,7 +133,7 @@ const VaultStats = ({
       title: "Debt",
       value: (
         currentVaultLoading ? (
-          <span class="loading loading-bars loading-xs"></span>
+          <span className="loading loading-bars loading-xs"></span>
         ) : (
           Number(ethers.formatEther(minted)).toFixed(2)
         )
@@ -146,7 +146,7 @@ const VaultStats = ({
       title: "Balance",
       value: (
         currentVaultLoading ? (
-          <span class="loading loading-bars loading-xs"></span>
+          <span className="loading loading-bars loading-xs"></span>
         ) : (
           currencySymbol + Number(
             ethers.formatEther(totalCollateralValue)
@@ -161,7 +161,7 @@ const VaultStats = ({
       title: "Global Borrow Limit",
       value: (
         isLoadingSupplyLimit || isLoadingTotalSupply ? (
-          <span class="loading loading-bars loading-xs"></span>
+          <span className="loading loading-bars loading-xs"></span>
         ) : (
           Number(ethers.formatEther(availableSupply)).toFixed(2)
         )
@@ -175,13 +175,13 @@ const VaultStats = ({
       value: (
         vaultType === 'USDs' ? (
           currentVaultLoading || isLoadingSupplyLimit || isLoadingTotalSupply ? (
-            <span class="loading loading-bars loading-xs"></span>
+            <span className="loading loading-bars loading-xs"></span>
           ) : (
             Number(maxBorrow).toFixed(2)
           )
         ) : (
           currentVaultLoading ? (
-            <span class="loading loading-bars loading-xs"></span>
+            <span className="loading loading-bars loading-xs"></span>
           ) : (
             Number(maxBorrow).toFixed(2)
           )
@@ -209,14 +209,14 @@ const VaultStats = ({
                   {item.title}
                   {item.tooltip ? (
                     <Tooltip
-                    className="flex-col justify-center items-center cursor-pointer before:w-[12rem]"
-                    position="top"
-                    message={item.tooltip}
-                  >
-                    <QuestionMarkCircleIcon
-                      className="mb-1 ml-1 h-5 w-5 inline-block opacity-60"
-                    />
-                  </Tooltip>
+                      className="flex-col justify-center items-center cursor-pointer before:w-[12rem]"
+                      position="top"
+                      message={item.tooltip}
+                    >
+                      <QuestionMarkCircleIcon
+                        className="mb-1 ml-1 h-5 w-5 inline-block opacity-60"
+                      />
+                    </Tooltip>
                   ) : (null)}
                 </Typography>
                 <div>

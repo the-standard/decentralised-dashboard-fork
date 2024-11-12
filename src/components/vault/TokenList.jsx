@@ -230,14 +230,20 @@ const TokenList = ({
                                   >
                                     Swap
                                   </Button>
-                                  <Button
-                                    variant="outline"
-                                    disabled={amount <= 0 || !yieldEnabled || !tokenYield}
-                                    onClick={() => handleClick('YIELD', asset)}
-                                    className="grow"
-                                  >
-                                    Place In Yield Pool
-                                  </Button>
+                                  <div className="btn-ping-wrap grow">
+                                    <Button
+                                      // variant="outline"
+                                      color="success"
+                                      disabled={amount <= 0 || !yieldEnabled || !tokenYield}
+                                      onClick={() => handleClick('YIELD', asset)}
+                                      className="grow"
+                                    >
+                                      Place In Yield Pool
+                                    </Button>
+                                    {(amount <= 0 || !yieldEnabled || !tokenYield) ? (null) : (
+                                      <span class="btn-ping h-full w-full rounded-lg bg-green-400 opacity-75"></span>
+                                    )}
+                                  </div>
                                 </div>
                               </>
                             )}

@@ -605,7 +605,9 @@ button.btn.btn-success:not(:disabled) {
 }
 
 .btn.btn-primary:hover,
-button.btn.btn-primary:hover {
+button.btn.btn-primary:hover,
+.btn.btn-primary.active,
+button.btn.btn-primary.active {
   color: rgb(var(--btn-solid-color));
   background: rgba(var(--primary-color), 1);
   box-shadow: var(--btn-solid-outline-hover),
@@ -667,7 +669,9 @@ button.btn.btn-outline:not(:disabled) {
 }
 
 .btn.btn-outline:hover,
-button.btn.btn-outline:hover {
+button.btn.btn-outline:hover,
+.btn.btn-outline.active,
+button.btn.btn-outline.active {
   color: var(--alt-btn-txt-color);
   background: rgba(255,255,255, 0.1);
   box-shadow: var(--btn-outline-outline-hover),
@@ -712,4 +716,28 @@ button.btn.btn-outline:disabled {
   box-shadow: inset 0px 0px 20px 1px rgba(255, 255, 255, 0.2);
   -webkit-mask: radial-gradient(67px, #0000 98%, #000);
   mask: radial-gradient(67px, #0000 98%, #000);
+}
+
+.btn-ping-wrap {
+  position: relative;
+  display: flex;
+}
+
+.btn-ping-wrap > .btn {
+  z-index: 1;
+}
+
+.btn-ping {
+  position: absolute;
+  opacity: 0.75;
+  animation: btn-ping 1s cubic-bezier(0, 0, 0.2, 1) infinite;
+  z-index: 0;
+}
+
+@keyframes btn-ping {
+  75%,
+  100% {
+    transform: scaleX(1.1)scaleY(1.5);
+    opacity: 0;
+  }
 }
