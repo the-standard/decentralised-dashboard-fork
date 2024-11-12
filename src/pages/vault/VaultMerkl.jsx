@@ -60,20 +60,20 @@ const VaultMerkl = () => {
       <div className="flex flex-col sm:flex-row mb-4">
         <div className="flex flex-1 sm:flex-auto flex-wrap gap-4">
           <Button
-            onClick={() => navigate('/')}
+            onClick={() => navigate(`../vault/${vaultType.toString()}/${vaultId}`)}
             variant="outline"
             disabled={vaultsLoading}
             className="pl-2"
           >
             <ChevronLeftIcon className="h-6 w-6 inline-block"/>
-            All Vaults
+            Back To Vault
           </Button>
           <Button
-            onClick={() => navigate(`../vault/${vaultType.toString()}/${vaultId}`)}
+            onClick={() => navigate('/')}
             variant="outline"
             disabled={vaultsLoading}
           >
-            Manage Vault
+            All Vaults
           </Button>
         </div>
         <div className="hidden sm:flex flex-1 sm:flex-auto justify-start sm:justify-end">

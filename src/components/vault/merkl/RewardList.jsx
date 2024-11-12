@@ -9,6 +9,14 @@ import {
 } from '@heroicons/react/24/outline';
 
 import {
+  Tooltip,
+} from 'react-daisyui';
+
+import {
+  QuestionMarkCircleIcon,
+} from '@heroicons/react/24/outline';
+
+import {
   useErc20AbiStore,
   useVaultAddressStore,
 } from "../../../store/Store";
@@ -93,10 +101,49 @@ const RewardList = ({
         <table className="table table-fixed">
           <thead>
             <tr>
-              <th>Asset</th>
-              <th>Balance</th>
-              <th>Unclaimed</th>
-              <th>&nbsp;</th>
+              <th>
+                Asset
+              </th>
+              <th>
+                Current Balance
+                <Tooltip
+                  className="flex-col justify-center items-center cursor-pointer before:max-w-[20rem] whitespace-normal"
+                  position="top"
+                  message="Your current total claimed balance. Also includes any tokens you have stored as vault collateral."
+                >
+                  <QuestionMarkCircleIcon
+                    className="mb-1 ml-1 h-5 w-5 inline-block opacity-60"
+                  />
+                </Tooltip>
+              </th>
+              <th className="hidden md:table-cell">
+                Lifetime Accumulated
+                <Tooltip
+                  className="flex-col justify-center items-center cursor-pointer before:max-w-[20rem] whitespace-normal"
+                  position="top"
+                  message="Your total earned tokens over the lifetime of your position. This includes unclaimed tokens and previously withdrawn tokens."
+                >
+                  <QuestionMarkCircleIcon
+                    className="mb-1 ml-1 h-5 w-5 inline-block opacity-60"
+                  />
+                </Tooltip>
+              </th>
+              <th className="table-cell md:hidden">&nbsp;</th>
+              <th>
+                Unclaimed
+                <Tooltip
+                  className="flex-col justify-center items-center cursor-pointer before:max-w-[20rem] whitespace-normal"
+                  position="top"
+                  message="Your current unclaimed rewards"
+                >
+                  <QuestionMarkCircleIcon
+                    className="mb-1 ml-1 h-5 w-5 inline-block opacity-60"
+                  />
+                </Tooltip>
+              </th>
+              <th>
+                &nbsp;
+              </th>
             </tr>
           </thead>
           {merklRewardsLoading || merklBalancesLoading ? (null) : (
