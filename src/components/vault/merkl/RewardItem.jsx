@@ -64,6 +64,10 @@ const RewardItem = ({
         <td>
           {ethers.formatUnits(balance, decimals)}
         </td>
+        <td className="hidden md:table-cell">
+          {ethers.formatUnits(claimed, decimals)}
+        </td>
+        <td className="table-cell md:hidden"></td>
         <td>
           {ethers.formatUnits(unclaimed, decimals)}
         </td>
@@ -87,7 +91,7 @@ const RewardItem = ({
           'glass-alt-bg w-full hidden h-0'
         )}
       >
-        <td colSpan="4">
+        <td colSpan="5">
           <>
             <div className="flex flex-col sm:flex-row flex-wrap gap-4">
               <Button

@@ -249,7 +249,7 @@ const YieldPerformanceModal = ({
               variant="outline"
               onClick={handleCloseModal}
             >
-              Return to Vault
+              Back
             </Button>
             <Button
               className="w-full lg:w-64"

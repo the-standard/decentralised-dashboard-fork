@@ -263,7 +263,7 @@ const YieldClaimModal = ({
               variant="outline"
               onClick={() => setYieldStage('')}
             >
-              Return to Vault
+              Back
             </Button>
             <Button
               className="w-full lg:w-64"
@@ -317,7 +317,7 @@ const YieldClaimModal = ({
                 variant="outline"
                 onClick={handleCloseModal}
               >
-                Return to Vault
+                Back
               </Button>
               <Button
                 className="w-full lg:w-64"
@@ -408,7 +408,7 @@ const YieldClaimModal = ({
                 variant="outline"
                 onClick={handleCloseModal}
               >
-                Return to Vault
+                Back
               </Button>
               <Button
                 className="w-full lg:w-64"
