@@ -104,6 +104,7 @@ const ClaimModal = (props) => {
       // 
     } else if (isSuccess) {
       toast.success("Claim Successful");
+      closeModal();
     } else if (isError) {
       console.error(error)
       toast.error('There was an error');
