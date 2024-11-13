@@ -196,9 +196,9 @@ const YieldSummary = ({
             <Typography variant="p">
               Yield Generated
             </Typography>
-            {/* <Typography variant="p" className="opacity-40">
-              APY without Merkl rewards
-            </Typography> */}
+            <Typography variant="p" className="opacity-40">
+              Including Merkl rewards
+            </Typography>
           </div>
           <div className="w-full">
             {gammaUserLoading ? (
