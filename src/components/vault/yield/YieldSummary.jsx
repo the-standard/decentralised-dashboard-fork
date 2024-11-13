@@ -135,7 +135,7 @@ const YieldSummary = ({
     // Market is neutral/down, strategy building
     return (
       <span>
-        Your {formatUSD(totalBalance)} position is actively accumulating trading fees in TheStandard's yield pools. While the market impact is {formatUSD(totalMarketYield)} ({formatPercentage(weightedAverageMarketAPY)}), the strategy is building reserves through trading fees, currently at {formatUSD(totalYieldEarned)} ({formatPercentage(weightedAverageYieldAPY)}). This approach typically shows its strength over longer holding periods as fees accumulate.
+        Your {formatUSD(totalBalance)} position is actively accumulating trading fees in TheStandard's yield pools. While the market impact is {formatUSD(totalMarketYield)} ({formatPercentage(weightedAverageMarketAPY) || '0%'}), the strategy is building reserves through trading fees, currently at {formatUSD(totalYieldEarned)} ({formatPercentage(weightedAverageYieldAPY) || '0%'}). This approach typically shows its strength over longer holding periods as fees accumulate.
       </span>
     );
   };
@@ -217,7 +217,7 @@ const YieldSummary = ({
                   variant="p"
                   className={`text-end ${getYieldColor(metrics.weightedAverageYieldAPY)}`}
                 >
-                  {formatPercentage(metrics.weightedAverageYieldAPY)} APY
+                  {formatPercentage(metrics.weightedAverageYieldAPY) || '0%'} APY
                 </Typography>
               </>
             )}

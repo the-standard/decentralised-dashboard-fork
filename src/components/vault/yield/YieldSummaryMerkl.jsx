@@ -117,7 +117,7 @@ const YieldSummaryMerkl = ({
         ) : (
           <>
             <Typography variant="p" className="text-end">
-              {formatUSD(totalUSD)}
+              {formatUSD(totalUSD) || '$0.00'}
             </Typography>
           </>
         )}
