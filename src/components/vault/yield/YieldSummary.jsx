@@ -4,6 +4,12 @@ import {
   PresentationChartLineIcon
 } from '@heroicons/react/24/outline';
 
+import {
+  useMerklRewardsUSD,
+} from "../../../store/Store";
+
+import YieldSummaryMerkl from "./YieldSummaryMerkl";
+
 const formatUSD = (value) => {
   if (value) {
     return new Intl.NumberFormat('en-US', {
@@ -23,9 +29,11 @@ const formatPercentage = (value) => {
 
 const YieldSummary = ({
   gammaUserLoading,
-  userSummary
+  userSummary,
+  merklRewards,
+  merklRewardsLoading,
 }) => {
-
+  const { merklRewardsUSD } = useMerklRewardsUSD();
 
   let positions = [];
 
@@ -53,6 +61,10 @@ const YieldSummary = ({
       weightedYieldSum += (parseFloat(position.hypervisorReturnsPercentage) * weight);
       weightedMarketYieldSum += (parseFloat(position.netMarketReturnsPercentage) * weight);
     });
+
+    if (merklRewardsUSD) {
+      totalYieldEarned += merklRewardsUSD
+    }
 
     return {
       totalBalance,
@@ -141,7 +153,7 @@ const YieldSummary = ({
             <PresentationChartLineIcon
               className="mr-2 h-6 w-6 inline-block"
             />
-            Yield Pool Summary
+            Yield Summary
           </Typography>
           <Typography variant="p">
             {getPerformanceMessage(metrics.totalYieldEarned, metrics.totalMarketYield)}
@@ -180,10 +192,15 @@ const YieldSummary = ({
           </div>
         </div>
         <div className="bg-base-300/40 p-4 rounded-lg w-full flex items-center">
-          <Typography variant="p">
-            Yield Generated
-          </Typography>
-          <div>
+          <div className="w-full">
+            <Typography variant="p">
+              Yield Generated
+            </Typography>
+            {/* <Typography variant="p" className="opacity-40">
+              APY without Merkl rewards
+            </Typography> */}
+          </div>
+          <div className="w-full">
             {gammaUserLoading ? (
               <>
                 <span className="loading loading-bars loading-md"></span>
@@ -206,21 +223,27 @@ const YieldSummary = ({
             )}
           </div>
         </div>
-        <div className="bg-base-300/40 p-4 rounded-lg w-full flex items-center">
-          <Typography variant="p">
-            Assets in Yield Pools
-          </Typography>
-          {gammaUserLoading ? (
-            <>
-              <span className="loading loading-bars loading-md"></span>
-            </>
-          ) : (
-            <>
-              <Typography variant="p" className="text-end">
-                {formatUSD(metrics.totalBalance)}
-              </Typography>
-            </>
-          )}
+        <div className="grid grid-cols-2 gap-4">
+          <div className="bg-base-300/40 p-4 rounded-lg w-full flex items-center">
+            <Typography variant="p">
+              Assets in Yield Pools
+            </Typography>
+            {gammaUserLoading ? (
+              <>
+                <span className="loading loading-bars loading-md"></span>
+              </>
+            ) : (
+              <>
+                <Typography variant="p" className="text-end">
+                  {formatUSD(metrics.totalBalance)}
+                </Typography>
+              </>
+            )}
+          </div>
+          <YieldSummaryMerkl
+            merklRewards={merklRewards}
+            merklRewardsLoading={merklRewardsLoading}
+          />
         </div>
       </div>
       <div className="grid grid-cols-1 gap-4 mb-4">

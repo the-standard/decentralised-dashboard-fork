@@ -294,3 +294,10 @@ export const useLocalThemeModePrefStore = create(
     setLocalThemeModePrefStore: (localThemeModePrefStore) => set(() => ({ localThemeModePrefStore: localThemeModePrefStore })),
   })
 );
+
+export const useMerklRewardsUSD = create(
+  (set) => ({
+    merklRewardsUSD: 0,
+    setMerklRewardsUSD: (merklRewardsUSD) => set(() => ({ merklRewardsUSD: merklRewardsUSD })),
+  })
+);
