@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import { ethers } from "ethers";
 import {
@@ -19,10 +20,15 @@ import {
 
 import VaultCreate from "../../components/vaults/VaultCreate";
 import VaultList from "../../components/vaults/VaultList";
+import Card from "../../components/ui/Card";
+import Typography from "../../components/ui/Typography";
+import Button from "../../components/ui/Button";
 
 const Vaults = () => {
   const { address: accountAddress } = useAccount();
   const { vaultManagerAbi } = useVaultManagerAbiStore();
+
+  const navigate = useNavigate();
 
   const {
     arbitrumSepoliaContractAddress,
@@ -182,6 +188,36 @@ const Vaults = () => {
 
   return (
     <main>
+      <Card className="flex-1 card-compact mb-4">
+        <div className="card-body">
+          <div
+            className="flex flex-col md:flex-row"
+          >
+            <div className="flex flex-col my-auto mx-0">
+              <Typography variant="h2" className="card-title">
+              Stake TST Today | Earn Protocol Fees + Early Governance | Join Before $10M TVL
+              </Typography>
+              <Typography variant="h3">
+                💰 1% of all yield pool deposits<br/>
+                💸 Up to 5% of debt minting fees<br/>
+                💎 1% of all collateral trades
+              </Typography>
+            </div>
+          </div>
+
+          <div
+            className="card-actions"
+          >
+            <Button
+              className="w-auto"
+              color="primary"
+              onClick={() => navigate('../staking-pool')}
+            >
+              Start Staking
+            </Button>
+          </div>
+        </div>
+      </Card>
       <VaultCreate
         tokenId={tokenId}
         vaultType={vaultType}
