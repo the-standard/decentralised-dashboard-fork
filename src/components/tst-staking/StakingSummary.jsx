@@ -396,9 +396,18 @@ const StakingSummary = ({
               <Typography variant="p">
                 Total TST Staked
               </Typography>
-              <Typography variant="h2">
-                {stakedAmount} TST
-              </Typography>
+              <Tooltip
+                className="flex-col justify-center items-center cursor-pointer before:w-[12rem]"
+                position="top"
+                message={`${stakedAmount} TST`}
+              >
+                <Typography variant="h2">
+                  {stakedAmount ? (
+                    Number.parseFloat(Number(stakedAmount).toFixed(4))
+                  ) : ('0')}
+                  &nbsp;TST
+                </Typography>
+              </Tooltip>
             </div>
           </div>
           <div className="bg-base-300/40 p-4 rounded-lg w-full flex items-center">
