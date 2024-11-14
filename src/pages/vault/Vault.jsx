@@ -274,6 +274,37 @@ const Vault = () => {
             assetsLoading={!assets.length || assets.length === 0}
             yieldEnabled={yieldEnabled}
           />
+          <Card className="flex-1 card-compact mt-4">
+            <div className="card-body">
+              <div
+                className="flex flex-col md:flex-row"
+              >
+                <div className="flex flex-col my-auto mx-0">
+                  <Typography variant="h2" className="card-title">
+                    Earn From Every Transaction | TST stakers receive:
+                  </Typography>
+                  <Typography variant="p">
+                    💰 1% of all yield pool deposits<br/>
+                    💸 Up to 5% of debt minting fees<br/>
+                    💎 1% of all collateral trades
+                  </Typography>
+                </div>
+              </div>
+
+              <div
+                className="card-actions pt-4"
+              >
+                <Button
+                  className="w-full"
+                  color="primary"
+                  onClick={() => navigate('../staking-pool')}
+                >
+                  Start Staking
+                </Button>
+              </div>
+            </div>
+          </Card>
+
         </div>
 
         <YieldParent
