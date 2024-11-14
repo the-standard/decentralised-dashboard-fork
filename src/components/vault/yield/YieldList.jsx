@@ -164,7 +164,7 @@ const YieldList = (props) => {
                           </>
                         ) : (
                           <>
-                            ${showBalance || ''}
+                            ${showBalance || '0.00'}
                           </>
                         )}
                       </td>

@@ -172,7 +172,7 @@ const RewardList = ({
               ) : (
                 <>
                   <tr className="glass-alt-bg w-full p-4 h-auto">
-                    <td colSpan="4">
+                    <td colSpan="5">
                       <b>No Rewards Earned Yet.</b>
                       <br/>
                       Start earning by placing your tokens into the yield pool.

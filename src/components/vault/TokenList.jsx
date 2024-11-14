@@ -241,7 +241,7 @@ const TokenList = ({
                                       Place In Yield Pool
                                     </Button>
                                     {(amount <= 0 || !yieldEnabled || !tokenYield) ? (null) : (
-                                      <span class="btn-ping h-full w-full rounded-lg bg-green-400 opacity-75"></span>
+                                      <span className="btn-ping h-full w-full rounded-lg bg-green-400 opacity-75"></span>
                                     )}
                                   </div>
                                 </div>
