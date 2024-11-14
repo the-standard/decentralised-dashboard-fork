@@ -14,6 +14,7 @@ import {
 
 import {
   useVaultAddressStore,
+  useLocalThemeModeStore,
 } from "../../../store/Store";
 
 import {
@@ -36,6 +37,7 @@ const YieldDepositModal = (props) => {
     symbol,
   } = props;
   const { vaultAddress } = useVaultAddressStore();
+  const { localThemeModeStore } = useLocalThemeModeStore();
   const chainId = useChainId();
   const [ yieldStage, setYieldStage ] = useState('');
   const [ stableRatio, setStableRatio ] = useState(10);
@@ -46,6 +48,8 @@ const YieldDepositModal = (props) => {
   const formattedMinCollateral = Number(minCollateral * 1000).toString();
 
   const { writeContract, isError, error, isPending, isSuccess } = useWriteContract();
+
+  const isLight = localThemeModeStore && localThemeModeStore.includes('light');
 
   const handleDepositYield = async () => {
     const now = Math.floor(Date.now() / 1000);
@@ -210,7 +214,10 @@ const YieldDepositModal = (props) => {
                 min={0}
                 max="100"
                 value={stableRatio}
-                className={`range [--range-shdw:unset] [&::-webkit-slider-thumb]:bg-white`}
+                className={isLight ? 
+                  `range [--range-shdw:unset] [&::-webkit-slider-thumb]:bg-primary` :
+                  `range [--range-shdw:unset] [&::-webkit-slider-thumb]:bg-white`
+                }
                 onChange={(e) => handleStableRatio(e.target.value)}
               />
             </div>

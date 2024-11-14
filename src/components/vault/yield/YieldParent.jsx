@@ -22,7 +22,7 @@ import Card from "../../ui/Card";
 import Typography from "../../ui/Typography";
 import Button from "../../ui/Button";
 
-const Vault = (props) => {
+const YieldParent = (props) => {
   const { yieldEnabled } = props;
   const { vaultAddress } = useVaultAddressStore();
   const { smartVaultABI } = useSmartVaultABIStore();
@@ -32,6 +32,8 @@ const Vault = (props) => {
   const [ gammaReturnsLoading, setGammaReturnsLoading ] = useState(false);
   const [ gammaStats, setGammaStats ] = useState([]);
   const [ gammaStatsLoading, setGammaStatsLoading ] = useState(false);
+  const [ merklRewards, setMerklRewards ] = useState([]);
+  const [ merklRewardsLoading, setMerklRewardsLoading ] = useState(true);
 
   const [ userSummary, setUserSummary ] = useState([]);
 
@@ -64,6 +66,38 @@ const Vault = (props) => {
       getGammaStats();
     }
   }, [yieldData, isPending]);
+
+  useEffect(() => {
+    getMerklRewardsData();
+  }, [vaultAddress]);
+
+  const getMerklRewardsData = async () => {  
+    try {
+      setMerklRewardsLoading(true);
+      const response = await axios.get(
+        `https://api.merkl.xyz/v3/userRewards?chainId=42161&proof=true&user=${vaultAddress}`
+      );
+
+      const useData = response?.data;
+
+      const rewardsArray = [];
+
+      Object.keys(useData).forEach(key => {
+        const value = useData[key];
+        const rewardItem = {
+          tokenAddress: key,
+          ... value
+        }
+        rewardsArray.push(rewardItem);
+      });
+
+      setMerklRewards(rewardsArray);
+      setMerklRewardsLoading(false);
+    } catch (error) {
+      setMerklRewardsLoading(false);
+      console.log(error);
+    }
+  };
 
   const getGammaUserData = async () => {  
     try {
@@ -215,6 +249,8 @@ const Vault = (props) => {
                     gammaUser={gammaUser}
                     gammaUserLoading={gammaUserLoading}
                     userSummary={userSummary}
+                    merklRewards={merklRewards}
+                    merklRewardsLoading={merklRewardsLoading}
                   />
                 </div>
               </Card>
@@ -277,4 +313,4 @@ const Vault = (props) => {
   )
 };
 
-export default Vault;
+export default YieldParent;

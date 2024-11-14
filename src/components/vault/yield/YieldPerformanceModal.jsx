@@ -44,9 +44,9 @@ const YieldPerformanceModal = ({
   const initialTokenCurrentUSD = positionUser?.returns?.initialTokenCurrentUSD || 0;
   const currentUSD = positionUser?.returns?.currentUSD || 0;
   const hypervisorReturnsUSD = positionUser?.returns?.hypervisorReturnsUSD;
-  const hypervisorReturnsPercentage = positionUser?.returns?.hypervisorReturnsPercentage;
-  const netMarketReturnsUSD = positionUser?.returns?.netMarketReturnsUSD;
-  const netMarketReturnsPercentage = positionUser?.returns?.netMarketReturnsPercentage;
+  const hypervisorReturnsPercentage = positionUser?.returns?.hypervisorReturnsPercentage || 0;
+  const netMarketReturnsUSD = positionUser?.returns?.netMarketReturnsUSD || 0;
+  const netMarketReturnsPercentage = positionUser?.returns?.netMarketReturnsPercentage || 0;
   const tvlUSD = Number(positionStats?.tvlUSD) || 0;
 
   let showApy = '0';
@@ -55,7 +55,7 @@ const YieldPerformanceModal = ({
   }
 
   const getMarketContext = () => {
-    const marketReturn = parseFloat(netMarketReturnsPercentage);
+    const marketReturn = parseFloat(netMarketReturnsPercentage) || 0;
     if (marketReturn > 0) {
       return {
         description: `Market movement has generated ${formatUSD(netMarketReturnsUSD)}`,
@@ -190,7 +190,7 @@ const YieldPerformanceModal = ({
                   Current Value
                 </Typography>
                 <Typography variant="h1" className="font-bold flex items-center">
-                  <span className="text-sm inline-block font-normal">~</span>${currentUSD?.toFixed(2) || ''}
+                  <span className="text-sm inline-block font-normal">≈</span>${currentUSD?.toFixed(2) || ''}
                 </Typography>
               </div>
             </div>
@@ -249,7 +249,7 @@ const YieldPerformanceModal = ({
               variant="outline"
               onClick={handleCloseModal}
             >
-              Return to Vault
+              Back
             </Button>
             <Button
               className="w-full lg:w-64"

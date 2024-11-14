@@ -4,6 +4,7 @@ import erc20Abi from "../abis/erc20";
 import chainlinkAbi from "../abis/priceFeeds/chainlink";
 import smartVaultABI from "../abis/smartVault";
 import smartVaultV4ABI from "../abis/smartVaultV4";
+import merklABI from "../abis/merkl";
 import stakingAbi from "../abis/staking";
 import liquidationPoolAbi from "../abis/liquidationPool";
 import stakingPoolv2Abi from "../abis/stakingPoolV2";
@@ -130,6 +131,20 @@ export const useSmartVaultABIStore = create() (
 export const useSmartVaultV4ABIStore = create() (
   () => ({
     smartVaultV4ABI,
+  })
+);
+
+export const useMerklABIStore = create() (
+  () => ({
+    merklABI,
+  })
+);
+
+export const useMerklAddressStore = create() (
+  (set) => ({
+    merklDistributorAddress: "0x3Ef3D8bA38EBe18DB133cEc108f4D14CE00Dd9Ae",
+    setContractAddress: (merklDistributorAddress) =>
+      set(() => ({ merklDistributorAddress: merklDistributorAddress })),
   })
 );
 
@@ -277,5 +292,12 @@ export const useLocalThemeModePrefStore = create(
   (set) => ({
     localThemeModePrefStore: 'device',
     setLocalThemeModePrefStore: (localThemeModePrefStore) => set(() => ({ localThemeModePrefStore: localThemeModePrefStore })),
+  })
+);
+
+export const useMerklRewardsUSD = create(
+  (set) => ({
+    merklRewardsUSD: 0,
+    setMerklRewardsUSD: (merklRewardsUSD) => set(() => ({ merklRewardsUSD: merklRewardsUSD })),
   })
 );

@@ -42,20 +42,20 @@ const VaultHistory = () => {
     return (
       <div className="flex flex-wrap mb-4 gap-4">
         <Button
-          onClick={() => navigate('/')}
+          onClick={() => navigate(`../vault/${vaultType.toString()}/${vaultId}`)}
           variant="outline"
-          disabled={vaultsLoading}
+          // disabled={vaultsLoading}
           className="pl-2"
         >
           <ChevronLeftIcon className="h-6 w-6 inline-block"/>
-          All Vaults
+          Back To Vault
         </Button>
         <Button
-          onClick={() => navigate(`../vault/${vaultId}`)}
+          onClick={() => navigate('/')}
           variant="outline"
-          disabled={vaultsLoading}
+          // disabled={vaultsLoading}
         >
-          Manage Vault
+          All Vaults
         </Button>
       </div>
     )
