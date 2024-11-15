@@ -137,13 +137,14 @@ const formatNumber = (number, decimals = 2) => {
 }
 
 const formatUSD = (value) => {
+  let USDollar = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 8
+  });
   if (value >= 0) {
-    return new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'USD',
-      minimumFractionDigits: 2,
-      maximumFractionDigits: 2
-    }).format(Math.abs(value));  
+    return USDollar.format(Math.abs(value));  
   }
 };
 
@@ -248,11 +249,15 @@ const StakingSummary = ({
   const totalRateUSD = rewardsWithPrices.reduce((sum, reward) => sum + reward.usdRate, 0) || 0;
 
   const daysStaked = getDaysStaked() || 0;
-  let dailyEarnings = (totalRateUSD / daysStaked) || 0;
-  if (!(daysStaked >= 1)) {
-    dailyEarnings = 0;
+  let dailyEarnings = 0;
+  if (daysStaked >= 1) {
+    dailyEarnings = (totalRateUSD / daysStaked) || 0;
   }
+
   const monthlyProjection = (dailyEarnings * 30) || 0;
+
+  console.log(123123, {dailyEarnings}, {daysStaked})
+
 
   const currentTier = getCurrentTier(stakedAmount);
   const nextTier = getNextTier(stakedAmount);
@@ -446,7 +451,7 @@ const StakingSummary = ({
                   Your Daily Earnings
                 </Typography>
                 <Typography variant="p" className={`text-end text-green-500`}>
-                  {formatUSD(dailyEarnings)}
+                  {formatUSD(dailyEarnings, true)}
                 </Typography>
               </div>
               <Typography variant="p">

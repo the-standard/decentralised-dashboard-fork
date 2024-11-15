@@ -192,11 +192,14 @@ const VaultMerkl = () => {
         <div className="card-body">
           {vaultNav()}
 
-          <RewardList
-            merklRewards={merklRewards}
-            merklRewardsLoading={merklRewardsLoading}
-          />
-
+          {merklRewardsLoading ? (
+            <CenterLoader />
+          ) : (
+            <RewardList
+              merklRewards={merklRewards}
+              merklRewardsLoading={merklRewardsLoading}
+            />
+          )}
         </div>
       </Card>
 
