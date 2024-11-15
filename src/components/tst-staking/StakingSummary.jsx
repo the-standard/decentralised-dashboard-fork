@@ -451,7 +451,7 @@ const StakingSummary = ({
                   Your Daily Earnings
                 </Typography>
                 <Typography variant="p" className={`text-end text-green-500`}>
-                  {formatUSD(dailyEarnings, true)}
+                  {formatUSD(dailyEarnings)}
                 </Typography>
               </div>
               <Typography variant="p">
