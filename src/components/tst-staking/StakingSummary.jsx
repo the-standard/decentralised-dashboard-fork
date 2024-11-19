@@ -256,9 +256,6 @@ const StakingSummary = ({
 
   const monthlyProjection = (dailyEarnings * 30) || 0;
 
-  console.log(123123, {dailyEarnings}, {daysStaked})
-
-
   const currentTier = getCurrentTier(stakedAmount);
   const nextTier = getNextTier(stakedAmount);
 
