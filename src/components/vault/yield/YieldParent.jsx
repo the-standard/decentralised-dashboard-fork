@@ -145,7 +145,7 @@ const YieldParent = (props) => {
 
       setGammaReturns(hypervisorReturns);
       setGammaReturnsLoading(false);
-      setGammaReturnsErr(true);
+      setGammaReturnsErr(false);
     } catch (error) {
       setGammaReturnsLoading(false);
       setGammaReturnsErr(true);
