@@ -318,6 +318,7 @@ const Vault = () => {
           currentVault={currentVault}
           vaultId={vaultId}
           address={address}
+          vaultType={vaultType}
         />
       </div>
     </main>
