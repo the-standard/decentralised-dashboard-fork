@@ -32,6 +32,9 @@ const YieldSummary = ({
   userSummary,
   merklRewards,
   merklRewardsLoading,
+  gammaUserErr,
+  merklRewardsErr,
+  gammaUnavailableMsg,
 }) => {
   const { merklRewardsUSD } = useMerklRewardsUSD();
 
@@ -144,6 +147,8 @@ const YieldSummary = ({
 
   const metrics = calculateMetrics(positions);
 
+  const hasAPIErr = gammaUserErr || merklRewardsErr;
+
   return (
     <>
 
@@ -159,6 +164,9 @@ const YieldSummary = ({
             {getPerformanceMessage(metrics.totalYieldEarned, metrics.totalMarketYield)}
           </Typography>
         </div>
+        {hasAPIErr ? (
+          gammaUnavailableMsg()
+        ) : null}
         <div className="bg-base-300/40 p-4 rounded-lg w-full flex items-center">
           <div className="w-full">
             <Typography variant="p">

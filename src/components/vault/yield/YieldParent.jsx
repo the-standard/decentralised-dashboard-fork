@@ -28,12 +28,16 @@ const YieldParent = (props) => {
   const { smartVaultABI } = useSmartVaultABIStore();
   const [ gammaUser, setGammaUser ] = useState({});
   const [ gammaUserLoading, setGammaUserLoading ] = useState(false);
+  const [ gammaUserErr, setGammaUserErr ] = useState(false);
   const [ gammaReturns, setGammaReturns ] = useState([]);
   const [ gammaReturnsLoading, setGammaReturnsLoading ] = useState(false);
+  const [ gammaReturnsErr, setGammaReturnsErr ] = useState(false);
   const [ gammaStats, setGammaStats ] = useState([]);
   const [ gammaStatsLoading, setGammaStatsLoading ] = useState(false);
+  const [ gammaStatsErr, setGammaStatsErr ] = useState(false);
   const [ merklRewards, setMerklRewards ] = useState([]);
   const [ merklRewardsLoading, setMerklRewardsLoading ] = useState(true);
+  const [ merklRewardsErr, setMerklRewardsErr ] = useState(false);
 
   const [ userSummary, setUserSummary ] = useState([]);
 
@@ -93,8 +97,10 @@ const YieldParent = (props) => {
 
       setMerklRewards(rewardsArray);
       setMerklRewardsLoading(false);
+      setMerklRewardsErr(false);
     } catch (error) {
       setMerklRewardsLoading(false);
+      setMerklRewardsErr(true);
       console.log(error);
     }
   };
@@ -110,8 +116,10 @@ const YieldParent = (props) => {
 
       setGammaUser(useData);
       setGammaUserLoading(false);
+      setGammaUserErr(false);
     } catch (error) {
       setGammaUserLoading(false);
+      setGammaUserErr(true);
       console.log(error);
     }
   };
@@ -137,8 +145,10 @@ const YieldParent = (props) => {
 
       setGammaReturns(hypervisorReturns);
       setGammaReturnsLoading(false);
+      setGammaReturnsErr(true);
     } catch (error) {
       setGammaReturnsLoading(false);
+      setGammaReturnsErr(true);
       console.log(error);
     }
   };
@@ -164,8 +174,10 @@ const YieldParent = (props) => {
 
       setGammaStats(hypervisorStats);
       setGammaStatsLoading(false);
+      setGammaStatsErr(false);
     } catch (error) {
       setGammaStatsLoading(false);
+      setGammaStatsErr(true);
       console.log(error);
     }
   };
@@ -223,6 +235,21 @@ const YieldParent = (props) => {
     })
   };
 
+  const gammaUnavailableMsg = () => {
+    return (
+      <>
+        <div className="bg-amber-600/40 p-4 rounded-lg w-full flex flex-col">
+          <Typography variant="p">
+            <b>3rd Party API Not Responding</b>
+          </Typography>
+          <Typography variant="p">
+            This may prevent us from displaying some blockchain data.
+          </Typography>
+        </div>
+      </>
+    )
+  }
+
   return (
     <div className="flex-1 grow-[3]">
       {yieldEnabled ? (
@@ -240,6 +267,10 @@ const YieldParent = (props) => {
                     gammaUserLoading={gammaUserLoading}
                     gammaReturnsLoading={gammaReturnsLoading}
                     gammaStatsLoading={gammaStatsLoading}
+                    gammaUserErr={gammaUserErr}
+                    gammaReturnsErr={gammaReturnsErr}
+                    gammaStatsErr={gammaStatsErr}
+                    gammaUnavailableMsg={gammaUnavailableMsg}
                   />
                 </div>
               </Card>
@@ -251,6 +282,9 @@ const YieldParent = (props) => {
                     userSummary={userSummary}
                     merklRewards={merklRewards}
                     merklRewardsLoading={merklRewardsLoading}
+                    gammaUserErr={gammaUserErr}
+                    merklRewardsErr={merklRewardsErr}
+                    gammaUnavailableMsg={gammaUnavailableMsg}
                   />
                 </div>
               </Card>
