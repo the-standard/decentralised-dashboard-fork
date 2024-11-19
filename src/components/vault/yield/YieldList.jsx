@@ -31,6 +31,10 @@ const YieldList = (props) => {
     gammaUserLoading,
     gammaReturnsLoading,
     gammaStatsLoading,
+    gammaUserErr,
+    gammaReturnsErr,
+    gammaStatsErr,
+    gammaUnavailableMsg,
   } = props;
 
   const [ open, setOpen ] = useState('');
@@ -57,6 +61,8 @@ const YieldList = (props) => {
   ? SepoliaVaults
   : ArbitrumVaults;
 
+  const hasAPIErr = gammaUserErr || gammaReturnsErr || gammaStatsErr;
+
   return (
     <div className="">
       <Typography variant="h2" className="card-title flex gap-0">
@@ -65,6 +71,9 @@ const YieldList = (props) => {
         />
         Yield Pools
       </Typography>
+      {hasAPIErr ? (
+        gammaUnavailableMsg()
+      ) : null}
       <table className="table">
         <thead>
           <tr>
@@ -208,6 +217,8 @@ const YieldList = (props) => {
         gammaUserLoading={gammaUserLoading}
         gammaReturnsLoading={gammaReturnsLoading}
         gammaStatsLoading={gammaStatsLoading}
+        hasAPIErr={hasAPIErr}
+        gammaUnavailableMsg={gammaUnavailableMsg}
       />
     </div>
   );
