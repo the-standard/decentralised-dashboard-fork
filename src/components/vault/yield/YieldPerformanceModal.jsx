@@ -34,6 +34,8 @@ const YieldPerformanceModal = ({
   gammaUserLoading,
   gammaReturnsLoading,
   gammaStatsLoading,
+  hasAPIErr,
+  gammaUnavailableMsg,
 }) => {
 
   const positionUser = gammaUser?.[yieldHypervisor.toLowerCase()] || {};
@@ -143,7 +145,11 @@ const YieldPerformanceModal = ({
             </Typography>
           </div>
           <div>
-
+            {hasAPIErr ? (
+              <div className="mb-4">
+                {gammaUnavailableMsg()}
+              </div>
+            ) : null}
             <div className="grid grid-cols-2 gap-4 mb-4">
               <div className="bg-base-300/40 p-4 rounded-lg w-full">
                 <Typography variant="p">

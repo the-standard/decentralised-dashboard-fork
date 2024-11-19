@@ -132,6 +132,8 @@ const VaultMerkl = () => {
 
       const rewardsArray = [];
 
+      console.log(123123, {useData}, vaultAddress)
+
       Object.keys(useData).forEach(key => {
         const value = useData[key];
         const rewardItem = {
