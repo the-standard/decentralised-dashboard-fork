@@ -14,6 +14,7 @@ import {
 import {
   useContractAddressStore,
   useVaultManagerAbiStore,
+  usesUSDContractAddressStore,
 } from "../../store/Store";
 
 import SendModal from "./SendModal";
@@ -24,9 +25,18 @@ import Button from "../ui/Button";
 const VaultSend = ({
   currentVault,
   vaultId,
-  address
+  address,
+  vaultType,
 }) => {
-  const { arbitrumSepoliaContractAddress, arbitrumContractAddress } = useContractAddressStore();
+  const {
+    arbitrumSepoliaContractAddress,
+    arbitrumContractAddress
+  } = useContractAddressStore();
+  const {
+    arbitrumsUSDSepoliaContractAddress,
+    arbitrumsUSDContractAddress,
+  } = usesUSDContractAddressStore();
+
   const { vaultManagerAbi } = useVaultManagerAbiStore();
   const navigate = useNavigate();
 
@@ -39,6 +49,11 @@ const VaultSend = ({
     ? arbitrumSepoliaContractAddress
     : arbitrumContractAddress;
 
+  const sUSDVaultManagerAddress =
+  chainId === arbitrumSepolia.id
+    ? arbitrumsUSDSepoliaContractAddress
+    : arbitrumsUSDContractAddress;
+
   const [sendTo, setSendTo] = useState('');
 
   const [sendType, setSendType] = useState(undefined);
@@ -46,6 +61,12 @@ const VaultSend = ({
   const handleCloseSendModal = () => {
     setSendType(undefined);
   };
+
+  let useVaultManagerAddress = vaultManagerAddress;
+
+  if (vaultType === 'USDs') {
+    useVaultManagerAddress = sUSDVaultManagerAddress;
+  }
 
   const handleSendVault = async () => {
     const burnAddress = `0x000000000000000000000000000000000000dEaD`;
@@ -60,7 +81,7 @@ const VaultSend = ({
     try {
       writeContract({
         abi: vaultManagerAbi,
-        address: vaultManagerAddress,
+        address: useVaultManagerAddress,
         functionName: "transferFrom",
         args: [
           address, // from
