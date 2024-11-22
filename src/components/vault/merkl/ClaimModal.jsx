@@ -53,7 +53,7 @@ const ClaimModal = (props) => {
   });
 
   const handleClaimToken = async () => {
-    if (vaultId <= 49) {
+    if (vaultId <= 39) {
       // LEGACY CODE FOR OLD VAULTS
       try {
         writeContract({
