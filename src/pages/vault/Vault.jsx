@@ -31,6 +31,7 @@ import VaultStats from "../../components/vault/VaultStats";
 import TokenList from "../../components/vault/TokenList";
 import VaultSend from "../../components/vault/VaultSend";
 import TokenTotalPie from "../../components/vault/TokenTotalPie";
+import VaultNFT from "../../components/vault/VaultNFT";
 
 import YieldParent from "../../components/vault/yield/YieldParent";
 
@@ -85,8 +86,8 @@ const Vault = () => {
   const sUSDVaultManagerAddress =
     chainId === arbitrumSepolia.id
       ? arbitrumsUSDSepoliaContractAddress
-      : arbitrumsUSDContractAddress;          
-
+      : arbitrumsUSDContractAddress;      
+    
   const { data: vaultDatasEUR, refetch: refetchsEUR, isLoading: isLoadingsEUR } = useReadContract({
     abi: vaultManagerAbi,
     address: vaultManagerAddress,
@@ -306,11 +307,21 @@ const Vault = () => {
           </Card>
 
         </div>
+        <div className="flex-1 grow-[3]">
+          <YieldParent
+            yieldEnabled={yieldEnabled}
+            vaultType={vaultType}
+          />
 
-        <YieldParent
-          yieldEnabled={yieldEnabled}
-          vaultType={vaultType}
-        />
+          <div className="mt-4">
+            <VaultNFT
+              currentVault={currentVault}
+              vaultId={vaultId}
+              vaultType={vaultType}
+            />
+          </div>
+
+        </div>
       </div>
       
       <div className="mt-4">

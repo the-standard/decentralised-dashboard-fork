@@ -741,3 +741,10 @@ button.btn.btn-outline:disabled {
     opacity: 0;
   }
 }
+
+.nft-wrap > svg {
+  border-radius: var(--card-border-radius);
+  width: 100%;
+  height: auto;
+  flex: 1;
+}

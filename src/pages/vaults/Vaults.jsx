@@ -48,9 +48,9 @@ const Vaults = () => {
       : arbitrumContractAddress;
 
   const sUSDVaultManagerAddress =
-  chainId === arbitrumSepolia.id
-    ? arbitrumsUSDSepoliaContractAddress
-    : arbitrumsUSDContractAddress;      
+    chainId === arbitrumSepolia.id
+      ? arbitrumsUSDSepoliaContractAddress
+      : arbitrumsUSDContractAddress;      
 
   const { data: sEURvaultIDs, refetch: refetchsEURVaultIDs } = useReadContract({
     abi: vaultManagerAbi,
