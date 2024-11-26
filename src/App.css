@@ -742,9 +742,15 @@ button.btn.btn-outline:disabled {
   }
 }
 
-.nft-wrap > svg {
+.nft-wrap {
   border-radius: var(--card-border-radius);
+  overflow: hidden;
+}
+
+.nft-wrap > svg {
   width: 100%;
   height: auto;
   flex: 1;
+  margin-top: -40px;
+  margin-bottom: -60px;
 }
