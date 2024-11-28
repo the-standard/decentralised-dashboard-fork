@@ -757,3 +757,10 @@ button.btn.btn-outline:disabled {
   margin-top: -60px;
   margin-bottom: -80px;
 }
+
+.nft-wrap > svg > g > rect:first-of-type {
+  display: none;
+}
+.nft-wrap > svg > g > circle:first-of-type {
+  display: none;
+}
