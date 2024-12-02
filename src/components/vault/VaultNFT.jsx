@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { toast } from 'react-toastify';
 import {
   useReadContract,
   useChainId
@@ -16,6 +17,7 @@ import {
 } from '@heroicons/react/24/outline';
 
 import Card from "../ui/Card";
+import Button from "../ui/Button";
 import Typography from "../ui/Typography";
 
 const VaultNFT = ({
@@ -23,6 +25,7 @@ const VaultNFT = ({
   vaultType,
 }) => {
   const { vaultManagerAbi } = useVaultManagerAbiStore();
+  const [ isLoading, setIsLoading ] = useState(false);
 
   const {
     arbitrumSepoliaContractAddress,
@@ -75,6 +78,43 @@ const VaultNFT = ({
     nftContent = parsed.image_data;
   }
 
+  const checkEthereum = () => {
+    if (!window.ethereum) {
+      toast.error('MetaMask not detected');
+      return false;
+    }
+    return true;
+  };
+
+  const addNFT = async (tokenAddress, tokenId, tokenURI) => {
+    if (!checkEthereum()) return;
+    setIsLoading(true);
+    try {
+      setIsLoading(true);
+      const wasAdded = await window.ethereum.request({
+        method: 'wallet_watchAsset',
+        params: {
+          type: 'ERC721',
+          options: {
+            address: tokenAddress,
+            tokenId: tokenId,
+            tokenURI: tokenURI
+          },
+        },
+      });
+      if (wasAdded) {
+        setIsLoading(false);
+        toast.success('NFT added successfully to MetaMask');
+      } else {
+        setIsLoading(false);
+        toast.error('Failed to add NFT');
+      }
+    } catch (error) {
+      setIsLoading(false);
+      toast.error('Error adding NFT');
+    }
+  };
+
   return (
     <Card className="card-compact mb-4">
       <div className="card-body">
@@ -88,6 +128,19 @@ const VaultNFT = ({
           className="nft-wrap"
           dangerouslySetInnerHTML={{ __html: nftContent }}
         />
+        <Button
+          onClick={() => addNFT(
+            useVaultManagerAddress,
+            vaultId,
+            nftData
+          )}
+          variant="outline"
+          className="pl-2"
+          loading={isLoading}
+          disabled={isLoading}
+        >
+          Add NFT to MetaMask
+        </Button>
       </div>
     </Card>
   )
