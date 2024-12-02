@@ -251,7 +251,7 @@ const YieldParent = (props) => {
   }
 
   return (
-    <div className="flex-1 grow-[3]">
+    <>
       {yieldEnabled ? (
         <>
           {yieldData && yieldData.length ? (
@@ -343,7 +343,7 @@ const YieldParent = (props) => {
           </div>
         </Card>
       )}
-    </div>
+    </>
   )
 };
 
