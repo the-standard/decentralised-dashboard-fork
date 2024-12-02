@@ -50,7 +50,7 @@ const Modal = (props) => {
               >
                 <XMarkIcon className="h-6 w-6 inline-block "/>
               </Button>
-              <div className="card-body overflow-scroll">
+              <div className="card-body overflow-y-auto overflow-x-auto">
                 {props.children}
               </div>
             </Card>
