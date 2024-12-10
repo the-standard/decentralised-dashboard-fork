@@ -34,6 +34,7 @@ import TokenTotalPie from "../../components/vault/TokenTotalPie";
 import VaultNFT from "../../components/vault/VaultNFT";
 
 import YieldParent from "../../components/vault/yield/YieldParent";
+import YieldParentNew from "../../components/vault/yield/YieldParentNew";
 
 import Card from "../../components/ui/Card";
 import Typography from "../../components/ui/Typography";
@@ -308,10 +309,15 @@ const Vault = () => {
 
         </div>
         <div className="flex-1 grow-[3]">
-          <YieldParent
+          <YieldParentNew
             yieldEnabled={yieldEnabled}
             vaultType={vaultType}
           />
+
+          {/* <YieldParent
+            yieldEnabled={yieldEnabled}
+            vaultType={vaultType}
+          /> */}
 
           <div className="mt-4">
             <VaultNFT
