@@ -10,7 +10,6 @@ import {
 } from '@heroicons/react/24/outline';
 
 import YieldClaimModal from "./YieldClaimModal";
-import YieldViewModal from "./YieldViewModal";
 import YieldPerformanceModal from "./YieldPerformanceModal";
 import {
   ArbitrumVaults,
