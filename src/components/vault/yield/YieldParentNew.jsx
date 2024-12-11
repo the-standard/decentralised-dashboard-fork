@@ -15,13 +15,10 @@ import {
   useSmartVaultABIStore,
 } from "../../../store/Store";
 
-import YieldList from "./YieldList";
-import YieldSummary from "./YieldSummary";
 import YieldItem from "./YieldItem";
 
 import Card from "../../ui/Card";
 import Typography from "../../ui/Typography";
-import Button from "../../ui/Button";
 
 const YieldParent = (props) => {
   const { yieldEnabled } = props;
@@ -185,8 +182,8 @@ const YieldParent = (props) => {
           <div className="grid grid-cols-1 gap-4">
             {gammaUserPositionsLoading ? (
               <>
-                <div className="bg-base-300/40 p-4 rounded-lg w-full flex items-center">
-                  <span className="loading loading-bars loading-xl"></span>
+                <div className="bg-base-300/40 p-4 rounded-lg w-full flex items-center justify-center min-h-[200px]">
+                  <span className="loading loading-spinner loading-lg"></span>
                 </div>
               </>
             ) : (
