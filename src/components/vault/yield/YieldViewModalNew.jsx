@@ -11,6 +11,8 @@ import Modal from "../../ui/Modal";
 import Typography from "../../ui/Typography";
 import TokenIcon from "../../ui/TokenIcon";
 
+import YieldPoolChart from "./PoolChart";
+
 import PlaceholderChart from "../../../assets/placeholder-chart.png";
 
 const YieldViewModal = ({
@@ -112,7 +114,19 @@ const YieldViewModal = ({
             </div>
 
             <div className="bg-base-300/40 p-2 rounded-lg w-full mb-2">
-              <img src={PlaceholderChart} className="w-full inline-block"/>
+              {hypervisorDataLoading ? (
+                <>
+                  <span className="loading loading-spinner loading-md"></span>
+                </>
+              ) : (
+                <>
+                  <YieldPoolChart
+                    hypervisorData={hypervisorData}
+                    yieldPair={yieldPair}
+                  />
+                </>
+              )}
+              {/* <img src={PlaceholderChart} className="w-full inline-block"/> */}
             </div>
 
             <div className="grid grid-cols-3 gap-2">

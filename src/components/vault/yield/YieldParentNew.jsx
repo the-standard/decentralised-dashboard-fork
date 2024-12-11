@@ -15,13 +15,10 @@ import {
   useSmartVaultABIStore,
 } from "../../../store/Store";
 
-import YieldList from "./YieldList";
-import YieldSummary from "./YieldSummary";
 import YieldItem from "./YieldItem";
 
 import Card from "../../ui/Card";
 import Typography from "../../ui/Typography";
-import Button from "../../ui/Button";
 
 const YieldParent = (props) => {
   const { yieldEnabled } = props;
@@ -43,6 +40,10 @@ const YieldParent = (props) => {
   const [ gammaReturns, setGammaReturns ] = useState([]);
   const [ gammaReturnsLoading, setGammaReturnsLoading ] = useState(false);
   const [ gammaReturnsErr, setGammaReturnsErr ] = useState(false);
+
+  const [ merklPools, setMerklPools ] = useState({});
+  const [ merklPoolsLoading, setMerklPoolsLoading ] = useState(true);
+  const [ merklPoolsErr, setMerklPoolsErr ] = useState(false);
 
   const [ userPositions, setUserPositions ] = useState([])
   const [ userReturns, setUserReturns ] = useState([])
@@ -74,6 +75,7 @@ const YieldParent = (props) => {
       getGammaUserData();
       getGammaUserPositionsData();
       getGammaHypervisorsData();
+      getMerklPools();
     }
   }, [yieldData, isPending]);
 
@@ -140,6 +142,25 @@ const YieldParent = (props) => {
     }
   };
 
+  const getMerklPools = async () => {  
+    try {
+      setMerklPoolsLoading(true);
+      const response = await axios.get(
+        `https://api.angle.money/v2/merkl?chainIds[]=42161`
+      );
+
+      const useData = response?.data?.['42161'];
+
+      setMerklPools(useData);
+      setMerklPoolsLoading(false);
+      setMerklPoolsErr(false);
+    } catch (error) {
+      setMerklPoolsLoading(false);
+      setMerklPoolsErr(true);
+      console.log(error);
+    }
+  };
+
   const getUserPositions = async () => {  
     const userAdd = gammaUserPositions?.map(item => item.hypervisor);
     const userHyper = gammaHypervisors.filter(item => 
@@ -161,8 +182,8 @@ const YieldParent = (props) => {
           <div className="grid grid-cols-1 gap-4">
             {gammaUserPositionsLoading ? (
               <>
-                <div className="bg-base-300/40 p-4 rounded-lg w-full flex items-center">
-                  <span className="loading loading-bars loading-xl"></span>
+                <div className="bg-base-300/40 p-4 rounded-lg w-full flex items-center justify-center min-h-[200px]">
+                  <span className="loading loading-spinner loading-lg"></span>
                 </div>
               </>
             ) : (
@@ -174,6 +195,8 @@ const YieldParent = (props) => {
                       yieldData={yieldData}
                       hypervisor={item}
                       gammaUser={gammaUser}
+                      merklPools={merklPools}
+                      merklPoolsLoading={merklPoolsLoading}
                     />
                   )
                 })}

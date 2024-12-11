@@ -135,45 +135,55 @@ export const SepoliaVaults = [
 export const ArbitrumGammaVaults = [
   {
     pair: ['USDs', 'USDC'],
-    address: '0x547a116a2622876ce1c8d19d41c683c8f7bec5c0',
+    address: '0x547A116a2622876cE1C8d19d41c683C8f7BeC5c0',
+    pool: '0x8DEF4Db6697F4885bA4a3f75e9AdB3cEFCca6D6E',
   },
   {
     pair: ['WETH', 'WBTC'],
     address: '0x52ee1FFBA696c5E9b0Bc177A9f8a3098420EA691',
+    pool: '0x149e36E72726e0BceA5c59d40df2c43F60f5A22D',
   },
   {
-    pair: ['ARB', 'WETH'],
+    pair: ['WETH', 'ARB'],
     address: '0x330DFC5Bc1a63A1dCf1cD5bc9aD3D5e5E61Bcb6C',
+    pool: '0xC6F780497A95e246EB9449f5e4770916DCd6396A',
   },
   {
     pair: ['LINK', 'WETH'],
     address: '0xfA392dbefd2d5ec891eF5aEB87397A89843a8260',
+    pool: '0x468b88941e7Cc0B88c1869d68ab6b570bCEF62Ff',
   },
   {
     pair: ['GMX', 'WETH'],
-    address: '0xf08bdbc590c59cb7b27a8d224e419ef058952b5f',
+    address: '0xF08BDBC590C59cb7B27A8D224E419ef058952b5f',
+    pool: '0x1aEEdD3727A6431b8F070C0aFaA81Cc74f273882',
   },
   {
     pair: ['RDNT', 'WETH'],
-    address: '0x2bcbdd577616357464cfe307bc67f9e820a66e80',
+    address: '0x2BCBDD577616357464CFe307Bc67F9e820A66e80',
+    pool: '0x446BF9748B4eA044dd759d9B9311C70491dF8F29',
   },
 ];
 
 export const SepoliaGammaVaults = [
   {
     pair: ['USDs', 'USDC'],
-    address: '0xc5B84d2f09094f72B79FE906d21c933c2DF27448'
+    address: '0xc5B84d2f09094f72B79FE906d21c933c2DF27448',
+    pool: '',
   },
   {
     pair: ['WETH', 'WBTC'],
     address: '0x5983C0811239ab91fB8dc72D7414257Dd8a27699',
+    pool: '',
   },
   {
     pair: ['USDs6', 'WETH'],
     address: '0xc82B4793564719b55AA645c45AD9ee0Fa574E07D',
+    pool: '',
   },
   {
     pair: ['USDs18', 'WETH'],
     address: '0x0881d58b146208230D720656320624c386661795',
+    pool: '',
   },
 ]

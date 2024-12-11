@@ -21,6 +21,8 @@ import {
 import {
   ArbitrumVaults,
   SepoliaVaults,
+  ArbitrumGammaVaults,
+  SepoliaGammaVaults,
 } from "./YieldGammaVaults";
 
 import YieldViewModal from "./YieldViewModalNew";
@@ -31,7 +33,13 @@ import TokenIcon from "../../ui/TokenIcon";
 import Button from "../../ui/Button";
 
 const YieldItem = (props) => {
-  const { hypervisor, gammaUser, yieldData } = props;
+  const {
+    hypervisor,
+    gammaUser,
+    yieldData,
+    merklPools,
+    merklPoolsLoading,
+  } = props;
 
   const [ open, setOpen ] = useState('');
   const [ yieldPair, setYieldPair ] = useState([]);
@@ -49,6 +57,10 @@ const YieldItem = (props) => {
   ? SepoliaVaults
   : ArbitrumVaults;
 
+  const gammaVaultsInfo = chainId === arbitrumSepolia.id
+  ? SepoliaGammaVaults
+  : ArbitrumGammaVaults;
+
   const handleCloseModal = () => {
     // setYieldPair([]);
     // setYieldQuantities([]);
@@ -65,11 +77,21 @@ const YieldItem = (props) => {
 
   const dataPeriod = 14;
 
-  const useYieldData = yieldData.find(item => item?.hypervisor.toLowerCase() === hypervisor?.address.toLowerCase());
+  const hypervisorAddress = hypervisor?.address.toLowerCase();
 
-  const userData = gammaUser?.[hypervisor?.address.toLowerCase()];
+  const gammaVaultInfo = gammaVaultsInfo.find(item => item?.address.toLowerCase() === hypervisorAddress);
+
+  const useYieldData = yieldData.find(item => item?.hypervisor.toLowerCase() === hypervisorAddress);
+
+  const userData = gammaUser?.[hypervisorAddress];
 
   const balanceUSD = userData?.balanceUSD;
+
+  const merklPoolData = merklPools?.pools?.[gammaVaultInfo?.pool];
+
+  const merklAprSelector = `Gamma ${gammaVaultInfo?.address}`;
+
+  const merklPoolReward = merklPoolData?.aprs?.[merklAprSelector] || 0;
 
   useEffect(() => {
     if (hypervisor) {
@@ -138,7 +160,8 @@ const YieldItem = (props) => {
   ];
 
   const apyBase = hypervisor?.feeApr * 100;
-  const apyReward = hypervisor?.rewardApr * 100;
+  // const apyReward = hypervisor?.rewardApr * 100;
+  const apyReward = Number(merklPoolReward);
   const apyTotal = Number(apyBase) + Number(apyReward);
 
   const showBalance = '$'+balanceUSD?.toFixed(2) || '';
@@ -170,105 +193,111 @@ const YieldItem = (props) => {
           </div>
         </div>
         <div className="grid grid-cols-3 gap-2">
-          <div>
-            <Typography variant="p" className="opacity-40 text-sm">
-              Fee APR
-            </Typography>
-            <Typography variant="p" className="text-sm">
-              {apyBase.toFixed(2)}%
-            </Typography>
-          </div>
-          <div>
-            <Typography variant="p" className="opacity-40 text-sm">
-              Reward APR
-            </Typography>
-            <Typography variant="p" className="text-sm">
-              {apyReward.toFixed(2)}%
-            </Typography>
-          </div>
-          <div>
-            <Typography variant="p" className="opacity-40 text-sm">
-              Total APR (24h)
-            </Typography>
-            <Typography variant="p" className="text-sm">
-              {apyTotal.toFixed(2)}%
-            </Typography>
-          </div>
+          <>
+            <div>
+              <Typography variant="p" className="opacity-40 text-sm">
+                Fee APR
+              </Typography>
+              <Typography variant="p" className="text-sm">
+                {apyBase.toFixed(2)}%
+              </Typography>
+            </div>
+            <div>
+              <Typography variant="p" className="opacity-40 text-sm">
+                Reward APR
+              </Typography>
+              <Typography variant="p" className="text-sm">
+                {apyReward.toFixed(2)}%
+              </Typography>
+            </div>
+            <div>
+              <Typography variant="p" className="opacity-40 text-sm">
+                Total APR (24h)
+              </Typography>
+              <Typography variant="p" className="text-sm">
+                {apyTotal.toFixed(2)}%
+              </Typography>
+            </div>
+          </>
 
-          <div>
-            <Tooltip
-              className="flex-col justify-center items-center cursor-pointer before:w-[12rem]"
-              position="top"
-              message={`USD return of total fees + liquidity mining rewards accrued for ${dataPeriod}d`}
-            >
-              <Typography variant="p" className="opacity-40 text-sm">
-                Position
-                <QuestionMarkCircleIcon
-                  className="mb-0.5 ml-0.5 h-3 w-3 inline-block"
-                />
+          <>
+            <div>
+              <Tooltip
+                className="flex-col justify-center items-center cursor-pointer before:w-[12rem]"
+                position="top"
+                message={`USD return of total fees + liquidity mining rewards accrued for ${dataPeriod}d`}
+              >
+                <Typography variant="p" className="opacity-40 text-sm">
+                  Position
+                  <QuestionMarkCircleIcon
+                    className="mb-0.5 ml-0.5 h-3 w-3 inline-block"
+                  />
+                </Typography>
+              </Tooltip>
+              <Typography variant="p" className={`text-sm ${getYieldColor(gammaPosition)}`}>
+                {isPositive(gammaPosition) ? ('+') : null}
+                {Math.abs(gammaPosition) >= 0 ? (`${gammaPosition.toFixed(3)}%`) : ('')}
               </Typography>
-            </Tooltip>
-            <Typography variant="p" className={`text-sm ${getYieldColor(gammaPosition)}`}>
-              {isPositive(gammaPosition) ? ('+') : null}
-              {Math.abs(gammaPosition) >= 0 ? (`${gammaPosition.toFixed(3)}%`) : ('')}
-            </Typography>
-          </div>
-          <div>
-            <Tooltip
-              className="flex-col justify-center items-center cursor-pointer before:w-[12rem]"
-              position="top"
-              message={`USD return of holding 100% of ${tokenA} ${dataPeriod}d ago`}
-            >
-              <Typography variant="p" className="opacity-40 text-sm">
-              If Held {tokenA}
-                <QuestionMarkCircleIcon
-                  className="mb-0.5 ml-0.5 h-3 w-3 inline-block"
-                />
+            </div>
+            <div>
+              <Tooltip
+                className="flex-col justify-center items-center cursor-pointer before:w-[12rem]"
+                position="top"
+                message={`USD return of holding 100% of ${tokenA} ${dataPeriod}d ago`}
+              >
+                <Typography variant="p" className="opacity-40 text-sm">
+                If Held {tokenA}
+                  <QuestionMarkCircleIcon
+                    className="mb-0.5 ml-0.5 h-3 w-3 inline-block"
+                  />
+                </Typography>
+              </Tooltip>
+              <Typography variant="p" className={`text-sm ${getYieldColor(holdA)}`}>
+                {isPositive(holdA) ? ('+') : null}
+                {Math.abs(holdA) >= 0 ? (`${holdA.toFixed(3)}%`) : ('')}
               </Typography>
-            </Tooltip>
-            <Typography variant="p" className={`text-sm ${getYieldColor(holdA)}`}>
-              {isPositive(holdA) ? ('+') : null}
-              {Math.abs(holdA) >= 0 ? (`${holdA.toFixed(3)}%`) : ('')}
-            </Typography>
-          </div>
-          <div>
-            <Tooltip
-              className="flex-col justify-center items-center cursor-pointer before:w-[12rem]"
-              position="top"
-              message={`USD return of holding 100% of ${tokenB} ${dataPeriod}d ago`}
-            >
-              <Typography variant="p" className="opacity-40 text-sm">
-              If Held {tokenB}
-                <QuestionMarkCircleIcon
-                  className="mb-0.5 ml-0.5 h-3 w-3 inline-block"
-                />
+            </div>
+            <div>
+              <Tooltip
+                className="flex-col justify-center items-center cursor-pointer before:w-[12rem]"
+                position="top"
+                message={`USD return of holding 100% of ${tokenB} ${dataPeriod}d ago`}
+              >
+                <Typography variant="p" className="opacity-40 text-sm">
+                If Held {tokenB}
+                  <QuestionMarkCircleIcon
+                    className="mb-0.5 ml-0.5 h-3 w-3 inline-block"
+                  />
+                </Typography>
+              </Tooltip>
+              <Typography variant="p" className={`text-sm ${getYieldColor(holdB)}`}>
+                {isPositive(holdB) ? ('+') : null}
+                {Math.abs(holdB) >= 0 ? (`${holdB.toFixed(3)}%`) : ('')}
               </Typography>
-            </Tooltip>
-            <Typography variant="p" className={`text-sm ${getYieldColor(holdB)}`}>
-              {isPositive(holdB) ? ('+') : null}
-              {Math.abs(holdB) >= 0 ? (`${holdB.toFixed(3)}%`) : ('')}
-            </Typography>
-          </div>
+            </div>
+          </>
 
-          <div>
-            <Typography variant="p" className="opacity-40">
-              Your Balance
-            </Typography>
-            <Typography variant="p" className="">
-              {showBalance}
-            </Typography>
-          </div>
-          <div>
-          </div>
-          <div className="flex justify-end items-end">
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => handleOpenModal('VIEW')}
-            >
-              View
-            </Button>
-          </div>
+          <>
+            <div>
+              <Typography variant="p" className="opacity-40">
+                Your Balance
+              </Typography>
+              <Typography variant="p" className="">
+                {showBalance}
+              </Typography>
+            </div>
+            <div>
+            </div>
+            <div className="flex justify-end items-end">
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => handleOpenModal('VIEW')}
+              >
+                View
+              </Button>
+            </div>
+          </>
         </div>
       </div>
 

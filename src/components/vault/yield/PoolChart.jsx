@@ -1,184 +1,126 @@
 import { useState, useEffect } from "react";
 import ReactApexChart from "react-apexcharts";
+import moment from 'moment';
 
-const YieldPoolChart = ({ data, symbol }) => {
+import {
+  useLocalThemeModeStore,
+} from "../../../store/Store";
+
+const YieldPoolChart = ({ hypervisorData, yieldPair }) => {
+  const { localThemeModeStore } = useLocalThemeModeStore();
+  const isLight = localThemeModeStore && localThemeModeStore.includes('light');
+
   const [chartWidth, setChartWidth] = useState(200);
   const [chartHeight, setChartHeight] = useState(60);
   const [lineColor, setLineColor] = useState("green");
 
-  let convertedData = [];
-  if (data && data.length) {
-    convertedData = data.map(({ ts, price }) => [ts * 1000, price]);
-  }
-
   const series = [
     {
-      name: symbol,
-      data: convertedData,
+      name: 'Position',
+      data: hypervisorData?.map(item => item.period_gamma_netApr)
+    },
+    {
+      name: `If Held ${yieldPair[0] || ''}`,
+      data: hypervisorData?.map(item => item.period_hodl_token0)
+    },
+    {
+      name: `If Held ${yieldPair[1] || ''}`,
+      data: hypervisorData?.map(item => item.period_hodl_token1)
     },
   ];
 
-  function formatNumber(value) {
-    const formattedValue = (value / 100).toString();
-    const indexOfDot = formattedValue.length - 2;
-    const finalValue =
-      formattedValue.slice(0, indexOfDot) + formattedValue.slice(indexOfDot);
+  const xAxis = hypervisorData?.map((item) => {
+    // const formattedDate = moment.unix(Number(item.timestamp)).format('MMM DD');
+    return item.timestamp;
+  });
 
-    return finalValue;
-  }
-
-  const renderColor = () => {
-    if (convertedData && convertedData.length) {
-      if (
-        Number(convertedData[convertedData.length - 1][1]) >
-        Number(convertedData[0][1])
-      ) {
-        setLineColor("green");
-      } else if (
-        Number(convertedData[convertedData.length - 1][1]) <
-        Number(convertedData[0][1])
-      ) {
-        setLineColor("red");
-      }  
-    }
-  };
-
-  useEffect(() => {
-    renderColor();
-  }, [convertedData]);
-
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.matchMedia("(max-width: 900px)").matches) {
-        setChartWidth(120);
-        // setChartHeight(60);
-      } else if (window.matchMedia("(max-width: 1400px)").matches) {
-        setChartWidth(120);
-        // setChartHeight(80);
-      } else {
-        setChartWidth(150);
-        // setChartHeight(80);
-      }
-    };
-    handleResize();
-    window.addEventListener("resize", handleResize); 
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
-  }, []);
-
-  if (!data || data.length === 0) {
-    return null;
-  }
+  const dataColors = [
+    '#facc15',
+    '#22d3ee',
+    '#a855f7',
+  ];
 
   return (
     <div id="chart">
       <ReactApexChart
         options={{
           chart: {
-            type: "area",
-            stacked: false,
-            sparkline: {
-              enabled: true,
-            },    
-            toolbar: {
-              show: false,
-            },
+            type: "line",
             zoom: {
               enabled: false,
             },
-          },
-          noData: {
-            text: 'No Data',
-            align: 'center',
-            verticalAlign: 'middle',
-            offsetX: 0,
-            offsetY: -20,
-            style: {
-              color: 'white',
-              fontSize: '14px',
-            }
+            foreColor: isLight ? ('#000') : ('#fff'),
+            toolbar: {
+              show: false
+            },
           },
           dataLabels: {
             enabled: false,
           },
-          colors: [lineColor],
+          colors: dataColors,
           fill: {
-            type: "gradient",
-            opacity: 1,
-            gradient: {
-              shadeIntensity: 1,
-              type: "vertical",
-              colorStops: [
-                {
-                  offset: 0,
-                  color: lineColor,
-                  opacity: 0.3,
-                },
-                {
-                  offset: 100,
-                  color: lineColor,
-                  opacity: 0,
-                },
-              ],
-            },
+            type: "none",
+            opacity: 0,
+          },
+          stroke: {
+            curve: "straight",
+            width: 2,
           },
           grid: {
             show: false,
           },
           yaxis: {
             show: true,
-            // forceNiceScale: true,
+            forceNiceScale: true,
             labels: {
-              show: false,
+              show: true,
+              formatter: function (value) {
+                const useVal = value.toFixed(2);
+                return useVal + '%'
+              },  
             },
-          },
-          stroke: {
-            show: true,
-            curve: "smooth",
-            lineCap: "butt",
-            colors: undefined,
-            width: 2,
-            dashArray: 0,
           },
           xaxis: {
-            type: "datetime",
-            labels: {
-              show: false,
-            },
-            axisBorder: {
-              show: false,
+            categories: xAxis,
+            tooltip: {
+              enabled: false,
             },
             axisTicks: {
               show: false,
             },
+            tickAmount: 4,
+            labels: {
+              formatter: function (value) {
+                const useDate = moment.unix(value).format('MMM DD');
+                return useDate
+              },
+            }
           },
           tooltip: {
             enabled: true,
-            shared: false,
-            theme: 'dark',
+            followCursor: true,
+            shared: true,
+            theme: isLight ? ('light') : ('dark'),
             x: {
-              show: false,
-              formatter: (value) => {
-                const lang = navigator?.language || 'en-US';
-                return new Date(value).toLocaleString(lang, {dateStyle: 'short', timeStyle: 'short'});
-              }
+              show: true,
+              formatter: function (value, { w }) {
+                const useDate = moment.unix(xAxis[value - 1]).format('Do MMM YYYY');
+                return useDate
+              },
             },
             y: {
               formatter: function (val) {
-                const dollarSign = new Intl.NumberFormat("en-US", {
-                  style: "currency",
-                  currency: "USD",
-                }).format(0)[0];
-                return dollarSign + formatNumber((val / 1000000).toFixed(0));
+                if (val >= 0) {
+                  return ('+' + val.toFixed(3) + '%');
+                } else {
+                  return (val.toFixed(3) + '%');
+                }
               },
             },
           },
         }}
         series={series}
         type="area"
-        height={chartHeight}
-        width={chartWidth}
       />
     </div>
   );
