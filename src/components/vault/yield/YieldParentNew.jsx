@@ -44,6 +44,10 @@ const YieldParent = (props) => {
   const [ gammaReturnsLoading, setGammaReturnsLoading ] = useState(false);
   const [ gammaReturnsErr, setGammaReturnsErr ] = useState(false);
 
+  const [ merklPools, setMerklPools ] = useState({});
+  const [ merklPoolsLoading, setMerklPoolsLoading ] = useState(true);
+  const [ merklPoolsErr, setMerklPoolsErr ] = useState(false);
+
   const [ userPositions, setUserPositions ] = useState([])
   const [ userReturns, setUserReturns ] = useState([])
 
@@ -74,6 +78,7 @@ const YieldParent = (props) => {
       getGammaUserData();
       getGammaUserPositionsData();
       getGammaHypervisorsData();
+      getMerklPools();
     }
   }, [yieldData, isPending]);
 
@@ -140,6 +145,25 @@ const YieldParent = (props) => {
     }
   };
 
+  const getMerklPools = async () => {  
+    try {
+      setMerklPoolsLoading(true);
+      const response = await axios.get(
+        `https://api.angle.money/v2/merkl?chainIds[]=42161`
+      );
+
+      const useData = response?.data?.['42161'];
+
+      setMerklPools(useData);
+      setMerklPoolsLoading(false);
+      setMerklPoolsErr(false);
+    } catch (error) {
+      setMerklPoolsLoading(false);
+      setMerklPoolsErr(true);
+      console.log(error);
+    }
+  };
+
   const getUserPositions = async () => {  
     const userAdd = gammaUserPositions?.map(item => item.hypervisor);
     const userHyper = gammaHypervisors.filter(item => 
@@ -174,6 +198,8 @@ const YieldParent = (props) => {
                       yieldData={yieldData}
                       hypervisor={item}
                       gammaUser={gammaUser}
+                      merklPools={merklPools}
+                      merklPoolsLoading={merklPoolsLoading}
                     />
                   )
                 })}
