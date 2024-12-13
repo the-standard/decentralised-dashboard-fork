@@ -21,6 +21,7 @@ import YieldClaimModal from "./YieldClaimModalNew";
 
 import Card from "../../ui/Card";
 import Typography from "../../ui/Typography";
+import Button from "../../ui/Button";
 
 const YieldParent = (props) => {
   const { yieldEnabled } = props;
@@ -183,79 +184,134 @@ const YieldParent = (props) => {
 
   return (
     <>
-      <Card className="card-compact mb-4">
-        <div className="card-body">
-          <Typography variant="h2" className="card-title flex gap-0">
-            <AdjustmentsHorizontalIcon
-              className="mr-2 h-6 w-6 inline-block"
-            />
-            Yield Pools
-          </Typography>
-          <div className="grid grid-cols-1 gap-4">
-            {gammaUserPositionsLoading ? (
-              <>
-                <div className="bg-base-300/40 p-4 rounded-lg w-full flex items-center justify-center min-h-[200px]">
-                  <span className="loading loading-spinner loading-lg"></span>
-                </div>
-              </>
-            ) : (
-              <>
-                {userPositions?.length && userPositions.map(function(item, index) {
-                  return (
-                    <YieldItem
-                      key={index}
-                      yieldData={yieldData}
-                      hypervisor={item}
-                      gammaUser={gammaUser}
-                      merklPools={merklPools}
-                      merklPoolsLoading={merklPoolsLoading}
-                      modalDataObj={modalDataObj}
-                      setModalDataObj={setModalDataObj}
-                      handleCloseModal={handleCloseModal}
-                      handleOpenModal={handleOpenModal}
-                      getYieldColor={getYieldColor}
-                      isPositive={isPositive}              
-                    />
-                  )
-                })}
-              </>
-            )}
-          </div>
-        </div>
-      </Card>
+      {yieldEnabled ? (
+        <>
+          <Card className="card-compact mb-4">
+            <div className="card-body">
+              <Typography variant="h2" className="card-title flex gap-0">
+                <AdjustmentsHorizontalIcon
+                  className="mr-2 h-6 w-6 inline-block"
+                />
+                Yield Pools
+              </Typography>
+              <div className="grid grid-cols-1 gap-4">
+                {gammaUserPositionsLoading ? (
+                  <>
+                    <div className="bg-base-300/40 p-4 rounded-lg w-full flex items-center justify-center min-h-[200px]">
+                      <span className="loading loading-spinner loading-lg"></span>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    {userPositions && userPositions.length ? (
+                      <>
+                        {userPositions?.length && userPositions.map(function(item, index) {
+                          return (
+                            <YieldItem
+                              key={index}
+                              yieldData={yieldData}
+                              hypervisor={item}
+                              gammaUser={gammaUser}
+                              merklPools={merklPools}
+                              merklPoolsLoading={merklPoolsLoading}
+                              modalDataObj={modalDataObj}
+                              setModalDataObj={setModalDataObj}
+                              handleCloseModal={handleCloseModal}
+                              handleOpenModal={handleOpenModal}
+                              getYieldColor={getYieldColor}
+                              isPositive={isPositive}              
+                            />
+                          )
+                        })}
+                      </>
+                    ) : (
+                      <>
+                        <div className="bg-base-300/40 p-4 rounded-lg w-full flex flex-col items-center justify-center">
+                          <Typography
+                            variant="p"
+                            className="mb-2"
+                          >
+                            Start earning tokens through a mix of volatile collateral and correlated stable asset yield strategies.
+                          </Typography>
+                          <Typography
+                            variant="p"
+                            className="mb-2"
+                          >
+                            Get started by placing some of your Collateral tokens into a yield pool now!
+                          </Typography>
+                        </div>
+                      </>
+                    )}
+                  </>
+                )}
+              </div>
+            </div>
+          </Card>
 
-      <YieldClaimModal
-        handleCloseModal={() => handleCloseModal()}
-        isOpen={open === 'CLAIM'}
-        modalDataObj={modalDataObj}
-        yieldPair={modalDataObj?.yieldPair}
-        yieldQuantities={modalDataObj?.yieldQuantities}
-        positionUser={modalDataObj?.positionUser}
-      />
+          <YieldClaimModal
+            handleCloseModal={() => handleCloseModal()}
+            isOpen={open === 'CLAIM'}
+            modalDataObj={modalDataObj}
+            yieldPair={modalDataObj?.yieldPair}
+            yieldQuantities={modalDataObj?.yieldQuantities}
+            positionUser={modalDataObj?.positionUser}
+          />
 
-      <YieldViewModal
-        handleCloseModal={() => handleCloseModal()}
-        isOpen={open === 'VIEW'}
-        openClaim={handleOpenModal}
-        getYieldColor={getYieldColor}
-        isPositive={isPositive}
+          <YieldViewModal
+            handleCloseModal={() => handleCloseModal()}
+            isOpen={open === 'VIEW'}
+            openClaim={handleOpenModal}
+            getYieldColor={getYieldColor}
+            isPositive={isPositive}
 
-        modalDataObj={modalDataObj}
-        yieldPair={modalDataObj?.yieldPair}
-        hypervisor={modalDataObj?.hypervisor}
-        gammaUser={modalDataObj?.gammaUser}
-        hypervisorData={modalDataObj?.hypervisorData}
-        hypervisorDataLoading={modalDataObj?.hypervisorDataLoading}
+            modalDataObj={modalDataObj}
+            yieldPair={modalDataObj?.yieldPair}
+            hypervisor={modalDataObj?.hypervisor}
+            gammaUser={modalDataObj?.gammaUser}
+            hypervisorData={modalDataObj?.hypervisorData}
+            hypervisorDataLoading={modalDataObj?.hypervisorDataLoading}
 
-        gammaPosition={modalDataObj?.gammaPosition}
-        holdA={modalDataObj?.holdA}
-        holdB={modalDataObj?.holdB}
-        dataPeriod={modalDataObj?.dataPeriod}
-        apyBase={modalDataObj?.apyBase}
-        apyReward={modalDataObj?.apyReward}
-        apyTotal={modalDataObj?.apyTotal}
-        showBalance={modalDataObj?.showBalance}
-      />
+            gammaPosition={modalDataObj?.gammaPosition}
+            holdA={modalDataObj?.holdA}
+            holdB={modalDataObj?.holdB}
+            dataPeriod={modalDataObj?.dataPeriod}
+            apyBase={modalDataObj?.apyBase}
+            apyReward={modalDataObj?.apyReward}
+            apyTotal={modalDataObj?.apyTotal}
+            showBalance={modalDataObj?.showBalance}
+          />
+        </>
+      ) : (
+        <>
+          <Card className="card-compact">
+            <div className="card-body">
+              <Typography variant="h2" className="card-title flex gap-0">
+                <AdjustmentsHorizontalIcon className="mr-2 h-6 w-6 inline-block"/>
+                Yield Pools
+              </Typography>
+              <Typography
+                variant="p"
+                className="mb-2"
+              >
+                Start earning token yields through a mix of volatile collateral and correlated stable asset yield strategies.
+              </Typography>
+              <Typography
+                variant="p"
+                className="mb-2"
+              >
+                Currently only available on V4 USDs vaults.
+              </Typography>
+              <Button
+                onClick={() => navigate('/')}
+                variant="outline"
+                className="pl-2"
+              >
+                View My Vaults
+              </Button>
+            </div>
+          </Card>
+        </>
+      )}
     </>
   )
 };
