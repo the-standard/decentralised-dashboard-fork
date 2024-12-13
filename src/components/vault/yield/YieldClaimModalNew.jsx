@@ -19,8 +19,6 @@ import {
 import {
   ArbitrumVaults,
   SepoliaVaults,
-  ArbitrumGammaVaults,
-  SepoliaGammaVaults,
 } from "./YieldGammaVaults";
 
 import Button from "../../ui/Button";
@@ -36,7 +34,7 @@ const YieldClaimModal = ({
   yieldPair,
   yieldQuantities,
   yieldHypervisor,
-  gammaUser,
+  positionUser,
 }) => {
   const { vaultAddress } = useVaultAddressStore();
   const { smartVaultABI } = useSmartVaultABIStore();
@@ -54,12 +52,12 @@ const YieldClaimModal = ({
 
   let allReturnTokens = [];
 
-  const isStablePair = yieldPair.includes('USDs') && yieldPair.includes('USDC');
+  const isStablePair = yieldPair?.includes('USDs') && yieldPair?.includes('USDC');
 
   if (isStablePair) {
     allReturnTokens = yieldVaultsInfo.filter(item => item.collateral === true);
   } else {
-    allReturnTokens = yieldVaultsInfo.filter(item => item.pair.every(i => yieldPair.includes(i)));
+    allReturnTokens = yieldVaultsInfo.filter(item => item.pair.every(i => yieldPair?.includes(i)));
   }
 
   const handleSetClaimAsset = (e) => {
@@ -70,7 +68,8 @@ const YieldClaimModal = ({
     const yieldAsset = ethers.encodeBytes32String(claimAsset);
     const formattedMinCollateral = Number(minCollateral * 1000).toString();
     const now = Math.floor(Date.now() / 1000);
-    const deadline = now + 60;    
+    const deadline = now + 60;
+    const yieldHypervisorAddress = yieldHypervisor?.address;
 
     try {
       writeContract({
@@ -78,7 +77,7 @@ const YieldClaimModal = ({
         address: vaultAddress,
         functionName: "withdrawYield",
         args: [
-          yieldHypervisor,
+          yieldHypervisorAddress,
           yieldAsset,
           formattedMinCollateral,
           deadline
@@ -101,6 +100,7 @@ const YieldClaimModal = ({
       handleCloseModal();
     } else if (isError) {
       //
+      console.error(error)
       toast.error('There was a problem');
     }
   }, [
@@ -109,8 +109,7 @@ const YieldClaimModal = ({
     isError,
   ]);
 
-  const positionUser = gammaUser?.[yieldHypervisor.toLowerCase()] || {};
-  const currentUSD = positionUser.returns?.currentUSD || 0;
+  const currentUSD = positionUser?.returns?.currentUSD || 0;
   const hypervisorReturnsUSD = positionUser?.returns?.hypervisorReturnsUSD;
 
   if (isPending) {
@@ -119,6 +118,9 @@ const YieldClaimModal = ({
         <Modal
           open={isOpen}
           onClose={() => {
+            handleCloseModal();
+          }}
+          closeModal={() => {
             handleCloseModal();
           }}
           wide={false}
@@ -160,6 +162,9 @@ const YieldClaimModal = ({
           onClose={() => {
             handleCloseModal();
           }}
+          closeModal={() => {
+            handleCloseModal();
+          }}
           wide={false}
         >
           <div>
@@ -192,24 +197,24 @@ const YieldClaimModal = ({
                       <div className="h-full w-full flex flex-col">
                         <div className="flex items-center">
                           <TokenIcon
-                            symbol={yieldPair[0]}
+                            symbol={yieldPair?.[0]}
                             className="h-8 w-8 p-1 rounded-full bg-base-300/50"
                           />
                           <TokenIcon
-                            symbol={yieldPair[1]}
+                            symbol={yieldPair?.[1]}
                             className="h-8 w-8 p-1 rounded-full bg-base-300/50 -ml-[8px]"
                           />
                         </div>
                         <div className="pt-2 hidden md:table-cell">
-                          {yieldPair[0]}/{yieldPair[1]}
+                          {yieldPair?.[0]}/{yieldPair?.[1]}
                         </div>
                       </div>
                     </td>
                     <td>
-                      <b>{yieldPair[0]}:<br/></b>
-                      {yieldQuantities[0]}<br/>
-                      <b>{yieldPair[1]}:<br/></b>
-                      {yieldQuantities[1]}
+                      <b>{yieldPair?.[0]}:<br/></b>
+                      {yieldQuantities?.[0]}<br/>
+                      <b>{yieldPair?.[1]}:<br/></b>
+                      {yieldQuantities?.[1]}
                     </td>
                   </tr>
                 </tbody>
@@ -360,24 +365,24 @@ const YieldClaimModal = ({
                         <div className="h-full w-full flex flex-col">
                           <div className="flex items-center">
                             <TokenIcon
-                              symbol={yieldPair[0]}
+                              symbol={yieldPair?.[0]}
                               className="h-8 w-8 p-1 rounded-full bg-base-300/50"
                             />
                             <TokenIcon
-                              symbol={yieldPair[1]}
+                              symbol={yieldPair?.[1]}
                               className="h-8 w-8 p-1 rounded-full bg-base-300/50 -ml-[8px]"
                             />
                           </div>
                           <div className="pt-2 hidden md:table-cell">
-                            {yieldPair[0]}/{yieldPair[1]}
+                            {yieldPair?.[0]}/{yieldPair?.[1]}
                           </div>
                         </div>
                       </td>
                       <td>
-                        <b>{yieldPair[0]}:<br/></b>
-                        {yieldQuantities[0]}<br/>
-                        <b>{yieldPair[1]}:<br/></b>
-                        {yieldQuantities[1]}
+                        <b>{yieldPair?.[0]}:<br/></b>
+                        {yieldQuantities?.[0]}<br/>
+                        <b>{yieldPair?.[1]}:<br/></b>
+                        {yieldQuantities?.[1]}
                       </td>
                     </tr>
                   </tbody>
