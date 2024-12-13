@@ -186,8 +186,6 @@ const YieldItem = (props) => {
     positionUser: userData,
   };
 
-  console.log(123123, balanceUSD)
-
   return (
     <>
       <div className="bg-base-300/40 p-4 rounded-lg w-full flex flex-col">
