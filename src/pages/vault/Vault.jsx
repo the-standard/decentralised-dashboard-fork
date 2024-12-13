@@ -33,7 +33,6 @@ import VaultSend from "../../components/vault/VaultSend";
 import TokenTotalPie from "../../components/vault/TokenTotalPie";
 import VaultNFT from "../../components/vault/VaultNFT";
 
-import YieldParent from "../../components/vault/yield/YieldParent";
 import YieldParentNew from "../../components/vault/yield/YieldParentNew";
 
 import Card from "../../components/ui/Card";
@@ -313,11 +312,6 @@ const Vault = () => {
             yieldEnabled={yieldEnabled}
             vaultType={vaultType}
           />
-
-          {/* <YieldParent
-            yieldEnabled={yieldEnabled}
-            vaultType={vaultType}
-          /> */}
 
           <div className="mt-4">
             <VaultNFT

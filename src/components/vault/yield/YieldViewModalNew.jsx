@@ -13,29 +13,23 @@ import TokenIcon from "../../ui/TokenIcon";
 
 import YieldPoolChart from "./PoolChart";
 
-import PlaceholderChart from "../../../assets/placeholder-chart.png";
-
 const YieldViewModal = ({
   isOpen,
   handleCloseModal,
   openClaim,
-
+  modalDataObj,
   dataPeriod,
-
   gammaPosition,
   holdA,
   holdB,
   getYieldColor,
   isPositive,
   yieldPair,
-  apyBase,
-  apyReward,
   apyTotal,
   showBalance,
 
   hypervisor,
   hypervisorDataLoading,
-  gammaUser,
   hypervisorData,
 }) => {
 
@@ -65,16 +59,16 @@ const YieldViewModal = ({
             <Typography variant="h2" className="card-title">
               <div className="flex items-center">
                 <TokenIcon
-                  symbol={yieldPair[0] || ''}
+                  symbol={yieldPair?.[0] || ''}
                   className="h-8 w-8 p-1 rounded-full bg-base-300/50"
                 />
                 <TokenIcon
-                  symbol={yieldPair[1] || ''}
+                  symbol={yieldPair?.[1] || ''}
                   className="h-8 w-8 p-1 rounded-full bg-base-300/50 -ml-[8px]"
                 />
               </div>
 
-              {yieldPair[0] || ''}/{yieldPair[1] || ''} Yield Pool
+              {yieldPair?.[0] || ''}/{yieldPair?.[1] || ''} Yield Pool
             </Typography>
           </div>
           <div>
@@ -100,7 +94,7 @@ const YieldViewModal = ({
                 Total APR (24h)
                 </Typography>
                 <Typography variant="h1" className="font-bold">
-                  {apyTotal.toFixed(2)}%
+                  {apyTotal?.toFixed(2)}%
                 </Typography>
               </div>
               <div className="bg-base-300/40 p-2 rounded-lg w-full">
@@ -126,7 +120,6 @@ const YieldViewModal = ({
                   />
                 </>
               )}
-              {/* <img src={PlaceholderChart} className="w-full inline-block"/> */}
             </div>
 
             <div className="grid grid-cols-3 gap-2">
@@ -145,17 +138,17 @@ const YieldViewModal = ({
                 </Tooltip>
                 <Typography variant="p" className={`text-sm ${getYieldColor(gammaPosition)}`}>
                   {isPositive(gammaPosition) ? ('+') : null}
-                  {Math.abs(gammaPosition) >= 0 ? (`${gammaPosition.toFixed(3)}%`) : ('')}
+                  {Math.abs(gammaPosition) >= 0 ? (`${gammaPosition?.toFixed(3)}%`) : ('')}
                 </Typography>
               </div>
               <div className="bg-base-300/40 p-2 rounded-lg">
                 <Tooltip
                   className="flex-col justify-center items-center cursor-pointer before:w-[12rem]"
                   position="top"
-                  message={`USD return of holding 100% of ${yieldPair[0]} ${dataPeriod}d ago`}
+                  message={`USD return of holding 100% of ${yieldPair?.[0]} ${dataPeriod}d ago`}
                 >
                   <Typography variant="p" className="opacity-40 text-sm">
-                  If Held {yieldPair[0]}
+                  If Held {yieldPair?.[0]}
                     <QuestionMarkCircleIcon
                       className="mb-0.5 ml-0.5 h-3 w-3 inline-block"
                     />
@@ -163,17 +156,17 @@ const YieldViewModal = ({
                 </Tooltip>
                 <Typography variant="p" className={`text-sm ${getYieldColor(holdA)}`}>
                   {isPositive(holdA) ? ('+') : null}
-                  {Math.abs(holdA) >= 0 ? (`${holdA.toFixed(3)}%`) : ('')}
+                  {Math.abs(holdA) >= 0 ? (`${holdA?.toFixed(3)}%`) : ('')}
                 </Typography>
               </div>
               <div className="bg-base-300/40 p-2 rounded-lg">
                 <Tooltip
                   className="flex-col justify-center items-center cursor-pointer before:w-[12rem]"
                   position="top"
-                  message={`USD return of holding 100% of ${yieldPair[1]} ${dataPeriod}d ago`}
+                  message={`USD return of holding 100% of ${yieldPair?.[1]} ${dataPeriod}d ago`}
                 >
                   <Typography variant="p" className="opacity-40 text-sm">
-                  If Held {yieldPair[1]}
+                  If Held {yieldPair?.[1]}
                     <QuestionMarkCircleIcon
                       className="mb-0.5 ml-0.5 h-3 w-3 inline-block"
                     />
@@ -181,7 +174,7 @@ const YieldViewModal = ({
                 </Tooltip>
                 <Typography variant="p" className={`text-sm ${getYieldColor(holdB)}`}>
                   {isPositive(holdB) ? ('+') : null}
-                  {Math.abs(holdB) >= 0 ? (`${holdB.toFixed(3)}%`) : ('')}
+                  {Math.abs(holdB) >= 0 ? (`${holdB?.toFixed(3)}%`) : ('')}
                 </Typography>
               </div>
             </div>
@@ -199,7 +192,7 @@ const YieldViewModal = ({
             <Button
               className="w-full lg:w-64"
               variant="outline"
-              onClick={() => openClaim()}
+              onClick={() => openClaim(modalDataObj, 'CLAIM')}
             >
               Stop Earning Yield
             </Button>
