@@ -17,7 +17,7 @@ export const ArbitrumVaults = [
   },
   {
     asset: 'ETH',
-    pair: ['WETH', 'WBTC'],
+    pair: ['WBTC', 'WETH'],
     symbol: '0x4554480000000000000000000000000000000000000000000000000000000000',
     address: '0x0000000000000000000000000000000000000000',
     dec: '18',
@@ -25,7 +25,7 @@ export const ArbitrumVaults = [
   },
   {
     asset: 'WETH',
-    pair: ['WETH', 'WBTC'],
+    pair: ['WBTC', 'WETH'],
     symbol: '0x5745544800000000000000000000000000000000000000000000000000000000',
     address: '0x82aF49447D8a07e3bd95BD0d56f35241523fBab1',
     dec: '18',
@@ -33,7 +33,7 @@ export const ArbitrumVaults = [
   },
   {
     asset: 'WBTC',
-    pair: ['WETH', 'WBTC'],
+    pair: ['WBTC', 'WETH'],
     symbol: '0x5742544300000000000000000000000000000000000000000000000000000000',
     address: '0x2f2a2543B76A4166549F7aaB2e75Bef0aefC5B0f',
     dec: '8',
@@ -92,7 +92,7 @@ export const SepoliaVaults = [
   },
   {
     asset: 'ETH',
-    pair: ['WETH', 'WBTC'],
+    pair: ['WBTC', 'WETH'],
     symbol: '0x4554480000000000000000000000000000000000000000000000000000000000',
     address: '0x0000000000000000000000000000000000000000',
     dec: '18',
@@ -100,7 +100,7 @@ export const SepoliaVaults = [
   },
   {
     asset: 'WETH',
-    pair: ['WETH', 'WBTC'],
+    pair: ['WBTC', 'WETH'],
     symbol: '0x5745544800000000000000000000000000000000000000000000000000000000',
     address: '0x081eE2A9FE23b69036C5136437Fa2426fD2d7650',
     dec: '18',
@@ -108,7 +108,7 @@ export const SepoliaVaults = [
   },
   {
     asset: 'WBTC',
-    pair: ['WETH', 'WBTC'],
+    pair: ['WBTC', 'WETH'],
     symbol: '0x5742544300000000000000000000000000000000000000000000000000000000',
     address: '0x36C85224ac27AccEffC8458c1E1e336C667e3bba',
     dec: '8',
@@ -139,7 +139,7 @@ export const ArbitrumGammaVaults = [
     pool: '0x8DEF4Db6697F4885bA4a3f75e9AdB3cEFCca6D6E',
   },
   {
-    pair: ['WETH', 'WBTC'],
+    pair: ['WBTC', 'WETH'],
     address: '0x52ee1FFBA696c5E9b0Bc177A9f8a3098420EA691',
     pool: '0x149e36E72726e0BceA5c59d40df2c43F60f5A22D',
   },
@@ -172,7 +172,7 @@ export const SepoliaGammaVaults = [
     pool: '',
   },
   {
-    pair: ['WETH', 'WBTC'],
+    pair: ['WBTC', 'WETH'],
     address: '0x5983C0811239ab91fB8dc72D7414257Dd8a27699',
     pool: '',
   },

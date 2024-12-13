@@ -132,10 +132,9 @@ const YieldItem = (props) => {
   let tokenA;
   let tokenB;
 
-  if (latestData?.symbol) {
-    [tokenA, tokenB] = latestData?.symbol.split("-").map((token, i) => 
-      i === 0 ? token.slice(1) : token.slice(0, -1)
-    );
+  if (gammaVaultInfo?.pair) {
+    tokenA = gammaVaultInfo.pair[0];
+    tokenB = gammaVaultInfo.pair[1];
   }
 
   let amountA = 0n;
