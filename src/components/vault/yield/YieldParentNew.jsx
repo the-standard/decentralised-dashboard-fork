@@ -253,6 +253,7 @@ const YieldParent = (props) => {
             isOpen={open === 'CLAIM'}
             modalDataObj={modalDataObj}
             yieldPair={modalDataObj?.yieldPair}
+            yieldHypervisor={modalDataObj?.hypervisor}
             yieldQuantities={modalDataObj?.yieldQuantities}
             positionUser={modalDataObj?.positionUser}
           />

@@ -88,7 +88,7 @@ const YieldItem = (props) => {
 
   const userData = gammaUser?.[hypervisorAddress];
 
-  const balanceUSD = userData?.balanceUSD;
+  const balanceUSD = userData?.balanceUSD || 0;
 
   const merklPoolData = merklPools?.pools?.[gammaVaultInfo?.pool];
 
@@ -183,8 +183,10 @@ const YieldItem = (props) => {
     apyTotal: apyTotal,
     showBalance: showBalance,
     yieldQuantities: quantities,
-    positonUser: userData,
+    positionUser: userData,
   };
+
+  console.log(123123, balanceUSD)
 
   return (
     <>
@@ -299,7 +301,7 @@ const YieldItem = (props) => {
                 Your Balance
               </Typography>
               <Typography variant="p" className="">
-                {showBalance}
+                {showBalance || 0}
               </Typography>
             </div>
             <div>
@@ -309,6 +311,7 @@ const YieldItem = (props) => {
                 variant="outline"
                 size="sm"
                 onClick={() => handleOpenModal(modalData, 'VIEW')}
+                disabled={!balanceUSD}
               >
                 View
               </Button>

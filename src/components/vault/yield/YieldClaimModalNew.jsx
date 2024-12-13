@@ -68,7 +68,8 @@ const YieldClaimModal = ({
     const yieldAsset = ethers.encodeBytes32String(claimAsset);
     const formattedMinCollateral = Number(minCollateral * 1000).toString();
     const now = Math.floor(Date.now() / 1000);
-    const deadline = now + 60;    
+    const deadline = now + 60;
+    const yieldHypervisorAddress = yieldHypervisor?.address;
 
     try {
       writeContract({
@@ -76,7 +77,7 @@ const YieldClaimModal = ({
         address: vaultAddress,
         functionName: "withdrawYield",
         args: [
-          yieldHypervisor,
+          yieldHypervisorAddress,
           yieldAsset,
           formattedMinCollateral,
           deadline
@@ -99,6 +100,7 @@ const YieldClaimModal = ({
       handleCloseModal();
     } else if (isError) {
       //
+      console.error(error)
       toast.error('There was a problem');
     }
   }, [
@@ -120,7 +122,7 @@ const YieldClaimModal = ({
           }}
           closeModal={() => {
             handleCloseModal();
-          }}  
+          }}
           wide={false}
         >
           <Typography variant="h2" className="card-title">
@@ -158,6 +160,9 @@ const YieldClaimModal = ({
         <Modal
           open={isOpen}
           onClose={() => {
+            handleCloseModal();
+          }}
+          closeModal={() => {
             handleCloseModal();
           }}
           wide={false}
