@@ -38,20 +38,21 @@ const YieldItem = (props) => {
     gammaUser,
     yieldData,
     merklPools,
-    merklPoolsLoading,
+
+    modalDataObj,
+    setModalDataObj,
+    handleCloseModal,
+    handleOpenModal,
+    isPositive,
+    getYieldColor,
   } = props;
 
   const [ open, setOpen ] = useState('');
-  const [ yieldPair, setYieldPair ] = useState([]);
-  const [ yieldQuantities, setYieldQuantities ] = useState([]);
-  const [ yieldHypervisor, setYieldHypervisor ] = useState('');
   const chainId = useChainId();
 
   const [ hypervisorData, setHypervisorData ] = useState({});
   const [ hypervisorDataLoading, setHypervisorDataLoading ] = useState(false);
   const [ hypervisorDataErr, setHypervisorDataErr ] = useState(false);
-
-  const { vaultAddress } = useVaultAddressStore();
 
   const yieldVaultsInfo = chainId === arbitrumSepolia.id
   ? SepoliaVaults
@@ -61,19 +62,21 @@ const YieldItem = (props) => {
   ? SepoliaGammaVaults
   : ArbitrumGammaVaults;
 
-  const handleCloseModal = () => {
-    // setYieldPair([]);
-    // setYieldQuantities([]);
-    // setYieldHypervisor('');
-    setOpen('');
-  };
+  // const handleCloseModal = () => {
+  //   // setYieldPair([]);
+  //   // setYieldQuantities([]);
+  //   // setYieldHypervisor('');
+  //   setOpen('');
+  //   setModalDataObj({})
+  // };
 
-  const handleOpenModal = (type) => {
-    // setYieldPair(pair);
-    // setYieldQuantities(quantities);
-    // setYieldHypervisor(hypervisor);
-    setOpen(type);
-  }
+  // const handleOpenModal = (useData, type) => {
+  //   setModalDataObj(useData)
+  //   // setYieldPair(pair);
+  //   // setYieldQuantities(quantities);
+  //   // setYieldHypervisor(hypervisor);
+  //   setOpen(type);
+  // }
 
   const dataPeriod = 14;
 
@@ -166,9 +169,23 @@ const YieldItem = (props) => {
 
   const showBalance = '$'+balanceUSD?.toFixed(2) || '';
 
-  const isPositive = (value) => value >= 0;
-
-  const getYieldColor = (value) => isPositive(value) ? 'text-green-500' : 'text-amber-500';
+  const modalData = {
+    yieldPair: [tokenA, tokenB],
+    hypervisor: hypervisor,
+    gammaUser: gammaUser,
+    hypervisorData: hypervisorData,
+    hypervisorDataLoading: hypervisorDataLoading,
+    gammaPosition: gammaPosition,
+    holdA: holdA,
+    holdB: holdB,
+    dataPeriod: dataPeriod,
+    apyBase: apyBase,
+    apyReward: apyReward,
+    apyTotal: apyTotal,
+    showBalance: showBalance,
+    yieldQuantities: quantities,
+    positonUser: userData,
+  };
 
   return (
     <>
@@ -292,7 +309,7 @@ const YieldItem = (props) => {
               <Button
                 variant="outline"
                 size="sm"
-                onClick={() => handleOpenModal('VIEW')}
+                onClick={() => handleOpenModal(modalData, 'VIEW')}
               >
                 View
               </Button>
@@ -300,37 +317,6 @@ const YieldItem = (props) => {
           </>
         </div>
       </div>
-
-      <YieldClaimModal
-        handleCloseModal={() => handleCloseModal()}
-        isOpen={open === 'CLAIM'}
-        yieldPair={[tokenA, tokenB]}
-        yieldQuantities={quantities}
-        positionUser={userData}
-      />
-
-      <YieldViewModal
-        handleCloseModal={() => handleCloseModal()}
-        isOpen={open === 'VIEW'}
-        openClaim={() => handleOpenModal('CLAIM')}
-
-        yieldPair={[tokenA, tokenB]}
-        hypervisor={hypervisor}
-        gammaUser={gammaUser}
-        hypervisorData={hypervisorData}
-        hypervisorDataLoading={hypervisorDataLoading}
-
-        getYieldColor={getYieldColor}
-        isPositive={isPositive}
-        gammaPosition={gammaPosition}
-        holdA={holdA}
-        holdB={holdB}
-        dataPeriod={dataPeriod}
-        apyBase={apyBase}
-        apyReward={apyReward}
-        apyTotal={apyTotal}
-        showBalance={showBalance}
-      />
     </>
   )
 };

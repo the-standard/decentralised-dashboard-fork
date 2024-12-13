@@ -16,6 +16,8 @@ import {
 } from "../../../store/Store";
 
 import YieldItem from "./YieldItem";
+import YieldViewModal from "./YieldViewModalNew";
+import YieldClaimModal from "./YieldClaimModalNew";
 
 import Card from "../../ui/Card";
 import Typography from "../../ui/Typography";
@@ -37,18 +39,24 @@ const YieldParent = (props) => {
   const [ gammaHypervisorsLoading, setGammaHypervisorsLoading ] = useState(false);
   const [ gammaHypervisorsErr, setGammaHypervisorsErr ] = useState(false);
 
-  const [ gammaReturns, setGammaReturns ] = useState([]);
-  const [ gammaReturnsLoading, setGammaReturnsLoading ] = useState(false);
-  const [ gammaReturnsErr, setGammaReturnsErr ] = useState(false);
-
   const [ merklPools, setMerklPools ] = useState({});
   const [ merklPoolsLoading, setMerklPoolsLoading ] = useState(true);
   const [ merklPoolsErr, setMerklPoolsErr ] = useState(false);
 
   const [ userPositions, setUserPositions ] = useState([])
-  const [ userReturns, setUserReturns ] = useState([])
 
-  const navigate = useNavigate();
+  const [ open, setOpen ] = useState('');
+  const [ modalDataObj, setModalDataObj ] = useState({});
+
+  const handleCloseModal = () => {
+    setOpen('');
+    setModalDataObj({})
+  };
+
+  const handleOpenModal = (useData, type) => {
+    setModalDataObj(useData)
+    setOpen(type);
+  }
 
   const { data: yieldData, refetch: refetchYield, isPending } = useReadContract({
     abi: smartVaultABI,
@@ -169,6 +177,10 @@ const YieldParent = (props) => {
     setUserPositions(userHyper);
   };
 
+  const isPositive = (value) => value >= 0;
+
+  const getYieldColor = (value) => isPositive(value) ? 'text-green-500' : 'text-amber-500';
+
   return (
     <>
       <Card className="card-compact mb-4">
@@ -197,6 +209,12 @@ const YieldParent = (props) => {
                       gammaUser={gammaUser}
                       merklPools={merklPools}
                       merklPoolsLoading={merklPoolsLoading}
+                      modalDataObj={modalDataObj}
+                      setModalDataObj={setModalDataObj}
+                      handleCloseModal={handleCloseModal}
+                      handleOpenModal={handleOpenModal}
+                      getYieldColor={getYieldColor}
+                      isPositive={isPositive}              
                     />
                   )
                 })}
@@ -205,6 +223,39 @@ const YieldParent = (props) => {
           </div>
         </div>
       </Card>
+
+      <YieldClaimModal
+        handleCloseModal={() => handleCloseModal()}
+        isOpen={open === 'CLAIM'}
+        modalDataObj={modalDataObj}
+        yieldPair={modalDataObj?.yieldPair}
+        yieldQuantities={modalDataObj?.yieldQuantities}
+        positionUser={modalDataObj?.positionUser}
+      />
+
+      <YieldViewModal
+        handleCloseModal={() => handleCloseModal()}
+        isOpen={open === 'VIEW'}
+        openClaim={handleOpenModal}
+        getYieldColor={getYieldColor}
+        isPositive={isPositive}
+
+        modalDataObj={modalDataObj}
+        yieldPair={modalDataObj?.yieldPair}
+        hypervisor={modalDataObj?.hypervisor}
+        gammaUser={modalDataObj?.gammaUser}
+        hypervisorData={modalDataObj?.hypervisorData}
+        hypervisorDataLoading={modalDataObj?.hypervisorDataLoading}
+
+        gammaPosition={modalDataObj?.gammaPosition}
+        holdA={modalDataObj?.holdA}
+        holdB={modalDataObj?.holdB}
+        dataPeriod={modalDataObj?.dataPeriod}
+        apyBase={modalDataObj?.apyBase}
+        apyReward={modalDataObj?.apyReward}
+        apyTotal={modalDataObj?.apyTotal}
+        showBalance={modalDataObj?.showBalance}
+      />
     </>
   )
 };

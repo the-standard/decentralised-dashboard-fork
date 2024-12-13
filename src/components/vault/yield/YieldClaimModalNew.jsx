@@ -19,8 +19,6 @@ import {
 import {
   ArbitrumVaults,
   SepoliaVaults,
-  ArbitrumGammaVaults,
-  SepoliaGammaVaults,
 } from "./YieldGammaVaults";
 
 import Button from "../../ui/Button";
@@ -36,9 +34,7 @@ const YieldClaimModal = ({
   yieldPair,
   yieldQuantities,
   yieldHypervisor,
-  gammaUser,
   positionUser,
-  yieldData,
 }) => {
   const { vaultAddress } = useVaultAddressStore();
   const { smartVaultABI } = useSmartVaultABIStore();
@@ -56,12 +52,12 @@ const YieldClaimModal = ({
 
   let allReturnTokens = [];
 
-  const isStablePair = yieldPair.includes('USDs') && yieldPair.includes('USDC');
+  const isStablePair = yieldPair?.includes('USDs') && yieldPair?.includes('USDC');
 
   if (isStablePair) {
     allReturnTokens = yieldVaultsInfo.filter(item => item.collateral === true);
   } else {
-    allReturnTokens = yieldVaultsInfo.filter(item => item.pair.every(i => yieldPair.includes(i)));
+    allReturnTokens = yieldVaultsInfo.filter(item => item.pair.every(i => yieldPair?.includes(i)));
   }
 
   const handleSetClaimAsset = (e) => {
@@ -122,6 +118,9 @@ const YieldClaimModal = ({
           onClose={() => {
             handleCloseModal();
           }}
+          closeModal={() => {
+            handleCloseModal();
+          }}  
           wide={false}
         >
           <Typography variant="h2" className="card-title">
@@ -193,24 +192,24 @@ const YieldClaimModal = ({
                       <div className="h-full w-full flex flex-col">
                         <div className="flex items-center">
                           <TokenIcon
-                            symbol={yieldPair[0]}
+                            symbol={yieldPair?.[0]}
                             className="h-8 w-8 p-1 rounded-full bg-base-300/50"
                           />
                           <TokenIcon
-                            symbol={yieldPair[1]}
+                            symbol={yieldPair?.[1]}
                             className="h-8 w-8 p-1 rounded-full bg-base-300/50 -ml-[8px]"
                           />
                         </div>
                         <div className="pt-2 hidden md:table-cell">
-                          {yieldPair[0]}/{yieldPair[1]}
+                          {yieldPair?.[0]}/{yieldPair?.[1]}
                         </div>
                       </div>
                     </td>
                     <td>
-                      <b>{yieldPair[0]}:<br/></b>
-                      {yieldQuantities[0]}<br/>
-                      <b>{yieldPair[1]}:<br/></b>
-                      {yieldQuantities[1]}
+                      <b>{yieldPair?.[0]}:<br/></b>
+                      {yieldQuantities?.[0]}<br/>
+                      <b>{yieldPair?.[1]}:<br/></b>
+                      {yieldQuantities?.[1]}
                     </td>
                   </tr>
                 </tbody>
@@ -361,24 +360,24 @@ const YieldClaimModal = ({
                         <div className="h-full w-full flex flex-col">
                           <div className="flex items-center">
                             <TokenIcon
-                              symbol={yieldPair[0]}
+                              symbol={yieldPair?.[0]}
                               className="h-8 w-8 p-1 rounded-full bg-base-300/50"
                             />
                             <TokenIcon
-                              symbol={yieldPair[1]}
+                              symbol={yieldPair?.[1]}
                               className="h-8 w-8 p-1 rounded-full bg-base-300/50 -ml-[8px]"
                             />
                           </div>
                           <div className="pt-2 hidden md:table-cell">
-                            {yieldPair[0]}/{yieldPair[1]}
+                            {yieldPair?.[0]}/{yieldPair?.[1]}
                           </div>
                         </div>
                       </td>
                       <td>
-                        <b>{yieldPair[0]}:<br/></b>
-                        {yieldQuantities[0]}<br/>
-                        <b>{yieldPair[1]}:<br/></b>
-                        {yieldQuantities[1]}
+                        <b>{yieldPair?.[0]}:<br/></b>
+                        {yieldQuantities?.[0]}<br/>
+                        <b>{yieldPair?.[1]}:<br/></b>
+                        {yieldQuantities?.[1]}
                       </td>
                     </tr>
                   </tbody>
