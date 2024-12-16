@@ -119,7 +119,6 @@ const YieldParent = (props) => {
       const response = await axios.get(
         `https://wire3.gamma.xyz/frontend/user/positions?address=${vaultAddress}&chain=arbitrum`
       );
-
       const useData = response?.data;
 
       setGammaUserPositions(useData);

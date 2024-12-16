@@ -145,7 +145,7 @@ export const ArbitrumGammaVaults = [
   },
   {
     pair: ['WETH', 'ARB'],
-    address: '0x330DFC5Bc1a63A1dCf1cD5bc9aD3D5e5E61Bcb6C',
+    address: '0x6B7635b7d2E85188dB41C3c05B1efa87B143fcE8',
     pool: '0xC6F780497A95e246EB9449f5e4770916DCd6396A',
   },
   {
