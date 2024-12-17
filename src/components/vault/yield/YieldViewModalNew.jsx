@@ -6,6 +6,10 @@ import {
   QuestionMarkCircleIcon
 } from '@heroicons/react/24/outline';
 
+import {
+  useSelectedYieldPoolStore,
+} from "../../../store/Store";
+
 import Button from "../../ui/Button";
 import Modal from "../../ui/Modal";
 import Typography from "../../ui/Typography";
@@ -17,21 +21,31 @@ const YieldViewModal = ({
   isOpen,
   handleCloseModal,
   openClaim,
-  modalDataObj,
-  dataPeriod,
-  gammaPosition,
-  holdA,
-  holdB,
   getYieldColor,
   isPositive,
-  yieldPair,
-  apyTotal,
-  showBalance,
-
-  hypervisor,
-  hypervisorDataLoading,
-  hypervisorData,
+  yieldRange,
+  setYieldRange,
+  allYieldRanges,
+  modalDataObj,
 }) => {
+
+  const {
+    selectedYieldPool,
+    selectedYieldPoolDataLoading,
+  } = useSelectedYieldPoolStore();
+
+  const {
+    yieldPair,
+    hypervisor,
+    hypervisorData,
+    hypervisorDataLoading,
+    gammaPosition,
+    holdA,
+    holdB,
+    dataPeriod,
+    apyTotal,
+    showBalance,
+  } = modalDataObj;
 
   const formatTVL = (num) => {
     if (num) {
@@ -41,8 +55,8 @@ const YieldViewModal = ({
       return '';
     }
    }
-
-  return (
+ 
+   return (
     <>
       <Modal
         open={isOpen}
@@ -108,18 +122,28 @@ const YieldViewModal = ({
             </div>
 
             <div className="bg-base-300/40 p-2 rounded-lg w-full mb-2">
-              {hypervisorDataLoading ? (
-                <>
-                  <span className="loading loading-spinner loading-md"></span>
-                </>
-              ) : (
-                <>
+            <>
+                  <div className="flex justify-end w-full -mb-4 relative z-10">
+                    <div className="join">
+                      {allYieldRanges.map((item, index) => (
+                        <Button
+                          key={index}
+                          size="sm"
+                          className={yieldRange === item.value ? 'join-item btn-primary' : 'join-item'}
+                          variant={yieldRange === item.value? '' : 'outline'}
+                          active={yieldRange === item.value}
+                          onClick={() => setYieldRange(item.value)}
+                        >
+                          {item.short || ''}
+                        </Button>
+                      ))}
+                    </div>
+                  </div>
                   <YieldPoolChart
                     hypervisorData={hypervisorData}
                     yieldPair={yieldPair}
                   />
                 </>
-              )}
             </div>
 
             <div className="grid grid-cols-3 gap-2">
@@ -136,10 +160,18 @@ const YieldViewModal = ({
                     />
                   </Typography>
                 </Tooltip>
-                <Typography variant="p" className={`text-sm ${getYieldColor(gammaPosition)}`}>
-                  {isPositive(gammaPosition) ? ('+') : null}
-                  {Math.abs(gammaPosition) >= 0 ? (`${gammaPosition?.toFixed(3)}%`) : ('')}
-                </Typography>
+                {selectedYieldPoolDataLoading ? (
+                  <>
+                    <span className="block loading loading-bars loading-xs"></span>
+                  </>
+                ) : (
+                  <>
+                    <Typography variant="p" className={`text-sm ${getYieldColor(gammaPosition)}`}>
+                      {isPositive(gammaPosition) ? ('+') : null}
+                      {Math.abs(gammaPosition) >= 0 ? (`${gammaPosition?.toFixed(3)}%`) : ('')}
+                    </Typography>
+                  </>
+                )}
               </div>
               <div className="bg-base-300/40 p-2 rounded-lg">
                 <Tooltip
@@ -154,10 +186,18 @@ const YieldViewModal = ({
                     />
                   </Typography>
                 </Tooltip>
-                <Typography variant="p" className={`text-sm ${getYieldColor(holdA)}`}>
-                  {isPositive(holdA) ? ('+') : null}
-                  {Math.abs(holdA) >= 0 ? (`${holdA?.toFixed(3)}%`) : ('')}
-                </Typography>
+                {selectedYieldPoolDataLoading ? (
+                  <>
+                    <span className="block loading loading-bars loading-xs"></span>
+                  </>
+                ) : (
+                  <>
+                    <Typography variant="p" className={`text-sm ${getYieldColor(holdA)}`}>
+                      {isPositive(holdA) ? ('+') : null}
+                      {Math.abs(holdA) >= 0 ? (`${holdA?.toFixed(3)}%`) : ('')}
+                    </Typography>
+                  </>
+                )}
               </div>
               <div className="bg-base-300/40 p-2 rounded-lg">
                 <Tooltip
@@ -172,10 +212,18 @@ const YieldViewModal = ({
                     />
                   </Typography>
                 </Tooltip>
-                <Typography variant="p" className={`text-sm ${getYieldColor(holdB)}`}>
-                  {isPositive(holdB) ? ('+') : null}
-                  {Math.abs(holdB) >= 0 ? (`${holdB?.toFixed(3)}%`) : ('')}
-                </Typography>
+                {selectedYieldPoolDataLoading ? (
+                  <>
+                    <span className="block loading loading-bars loading-xs"></span>
+                  </>
+                ) : (
+                  <>
+                    <Typography variant="p" className={`text-sm ${getYieldColor(holdB)}`}>
+                      {isPositive(holdB) ? ('+') : null}
+                      {Math.abs(holdB) >= 0 ? (`${holdB?.toFixed(3)}%`) : ('')}
+                    </Typography>
+                  </>
+                )}
               </div>
             </div>
 
@@ -192,7 +240,7 @@ const YieldViewModal = ({
             <Button
               className="w-full lg:w-64"
               variant="outline"
-              onClick={() => openClaim(modalDataObj, 'CLAIM')}
+              onClick={() => openClaim(selectedYieldPool, modalDataObj, 'CLAIM')}
             >
               Stop Earning Yield
             </Button>
