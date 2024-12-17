@@ -40,7 +40,7 @@ const YieldDepositModal = (props) => {
   const { localThemeModeStore } = useLocalThemeModeStore();
   const chainId = useChainId();
   const [ yieldStage, setYieldStage ] = useState('');
-  const [ stableRatio, setStableRatio ] = useState(10);
+  const [ stableRatio, setStableRatio ] = useState(20);
   const [ minCollateral, setMinCollateral ] = useState(50);
 
   const formattedSymbol = ethers.encodeBytes32String(symbol);

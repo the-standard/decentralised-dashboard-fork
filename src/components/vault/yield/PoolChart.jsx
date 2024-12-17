@@ -6,33 +6,34 @@ import {
   useLocalThemeModeStore,
 } from "../../../store/Store";
 
+// const YieldPoolChart = ({ hypervisorData, yieldPair }) => {
 const YieldPoolChart = ({ hypervisorData, yieldPair }) => {
   const { localThemeModeStore } = useLocalThemeModeStore();
   const isLight = localThemeModeStore && localThemeModeStore.includes('light');
 
-  const [chartWidth, setChartWidth] = useState(200);
-  const [chartHeight, setChartHeight] = useState(60);
-  const [lineColor, setLineColor] = useState("green");
+  let series = [];
+  let xAxis = [];
+  if (hypervisorData && hypervisorData.length) {
+    series = [
+      {
+        name: 'Position',
+        data: hypervisorData?.map(item => item.period_gamma_netApr)
+      },
+      {
+        name: `If Held ${yieldPair[0] || ''}`,
+        data: hypervisorData?.map(item => item.period_hodl_token0)
+      },
+      {
+        name: `If Held ${yieldPair[1] || ''}`,
+        data: hypervisorData?.map(item => item.period_hodl_token1)
+      },
+    ];
 
-  const series = [
-    {
-      name: 'Position',
-      data: hypervisorData?.map(item => item.period_gamma_netApr)
-    },
-    {
-      name: `If Held ${yieldPair[0] || ''}`,
-      data: hypervisorData?.map(item => item.period_hodl_token0)
-    },
-    {
-      name: `If Held ${yieldPair[1] || ''}`,
-      data: hypervisorData?.map(item => item.period_hodl_token1)
-    },
-  ];
-
-  const xAxis = hypervisorData?.map((item) => {
-    // const formattedDate = moment.unix(Number(item.timestamp)).format('MMM DD');
-    return item.timestamp;
-  });
+    xAxis = hypervisorData?.map((item) => {
+      // const formattedDate = moment.unix(Number(item.timestamp)).format('MMM DD');
+      return item.timestamp;
+    });
+  }
 
   const dataColors = [
     '#facc15',

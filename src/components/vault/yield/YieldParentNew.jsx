@@ -13,6 +13,7 @@ import {
 import {
   useVaultAddressStore,
   useSmartVaultABIStore,
+  useSelectedYieldPoolStore,
 } from "../../../store/Store";
 
 import YieldItem from "./YieldItem";
@@ -22,11 +23,57 @@ import YieldClaimModal from "./YieldClaimModalNew";
 import Card from "../../ui/Card";
 import Typography from "../../ui/Typography";
 import Button from "../../ui/Button";
+import Select from "../../ui/Select";
+
+const allYieldRanges = [
+  {
+    name: '1 Day',
+    short: '1d',
+    value: '1',
+  },
+  {
+    name: '7 Days',
+    short: '7d',
+    value: '7',
+  },
+  {
+    name: '14 Days',
+    short: '14d',
+    value: '14',
+  },
+  {
+    name: '30 Days',
+    short: '30d',
+    value: '30',
+  },
+  {
+    name: '90 Days',
+    short: '90d',
+    value: '90',
+  },
+  {
+    name: '180 Days',
+    short: '180d',
+    value: '180',
+  },
+  {
+    name: '365 Days',
+    short: '1y',
+    value: '365',
+  },
+];
 
 const YieldParent = (props) => {
   const { yieldEnabled } = props;
   const { vaultAddress } = useVaultAddressStore();
   const { smartVaultABI } = useSmartVaultABIStore();
+
+  const {
+    selectedYieldPool,
+    setSelectedYieldPool,
+    selectedYieldPoolData,
+    setSelectedYieldPoolData,
+  } = useSelectedYieldPoolStore();
 
   const [ gammaUser, setGammaUser ] = useState({});
   const [ gammaUserLoading, setGammaUserLoading ] = useState(false);
@@ -47,15 +94,21 @@ const YieldParent = (props) => {
   const [ userPositions, setUserPositions ] = useState([])
 
   const [ open, setOpen ] = useState('');
+  
   const [ modalDataObj, setModalDataObj ] = useState({});
+
+  const [ yieldRange, setYieldRange ] = useState('14');
 
   const handleCloseModal = () => {
     setOpen('');
-    setModalDataObj({})
+    // setModalDataObj({})
+    setSelectedYieldPool('');
+    setSelectedYieldPoolData({});
   };
 
-  const handleOpenModal = (useData, type) => {
-    setModalDataObj(useData)
+  const handleOpenModal = (selectedPool, poolData, type) => {
+    setSelectedYieldPool(selectedPool);
+    setSelectedYieldPoolData(poolData);
     setOpen(type);
   }
 
@@ -187,12 +240,27 @@ const YieldParent = (props) => {
         <>
           <Card className="card-compact mb-4">
             <div className="card-body">
-              <Typography variant="h2" className="card-title flex gap-0">
-                <AdjustmentsHorizontalIcon
-                  className="mr-2 h-6 w-6 inline-block"
-                />
-                Yield Pools
-              </Typography>
+              <div className="flex justify-between items-center">
+                <Typography variant="h2" className="flex items-center gap-0 mb-0">
+                  <AdjustmentsHorizontalIcon
+                    className="mr-2 h-6 w-6 inline-block"
+                  />
+                  Yield Pools
+                </Typography>
+
+                <Select
+                  id="yield-range-select"
+                  value={yieldRange}
+                  label="Asset"
+                  handleChange={(e) => setYieldRange(e.target.value)}
+                  optName="name"
+                  optValue="value"
+                  options={allYieldRanges || []}
+                  className="select-sm"
+                  disabled={gammaUserPositionsLoading}
+                >
+                </Select>
+              </div>
               <div className="grid grid-cols-1 gap-4">
                 {gammaUserPositionsLoading ? (
                   <>
@@ -213,12 +281,13 @@ const YieldParent = (props) => {
                               gammaUser={gammaUser}
                               merklPools={merklPools}
                               merklPoolsLoading={merklPoolsLoading}
-                              modalDataObj={modalDataObj}
-                              setModalDataObj={setModalDataObj}
+                              modalDataObj={selectedYieldPoolData}
+                              // setModalDataObj={setModalDataObj}
                               handleCloseModal={handleCloseModal}
                               handleOpenModal={handleOpenModal}
                               getYieldColor={getYieldColor}
-                              isPositive={isPositive}              
+                              isPositive={isPositive}
+                              yieldRange={yieldRange}            
                             />
                           )
                         })}
@@ -250,35 +319,23 @@ const YieldParent = (props) => {
           <YieldClaimModal
             handleCloseModal={() => handleCloseModal()}
             isOpen={open === 'CLAIM'}
-            modalDataObj={modalDataObj}
-            yieldPair={modalDataObj?.yieldPair}
-            yieldHypervisor={modalDataObj?.hypervisor}
-            yieldQuantities={modalDataObj?.yieldQuantities}
-            positionUser={modalDataObj?.positionUser}
+            modalDataObj={selectedYieldPoolData}
+            yieldPair={selectedYieldPoolData?.yieldPair}
+            yieldHypervisor={selectedYieldPoolData?.hypervisor}
+            yieldQuantities={selectedYieldPoolData?.yieldQuantities}
+            positionUser={selectedYieldPoolData?.positionUser}
           />
 
           <YieldViewModal
-            handleCloseModal={() => handleCloseModal()}
             isOpen={open === 'VIEW'}
+            handleCloseModal={() => handleCloseModal()}
             openClaim={handleOpenModal}
             getYieldColor={getYieldColor}
             isPositive={isPositive}
-
-            modalDataObj={modalDataObj}
-            yieldPair={modalDataObj?.yieldPair}
-            hypervisor={modalDataObj?.hypervisor}
-            gammaUser={modalDataObj?.gammaUser}
-            hypervisorData={modalDataObj?.hypervisorData}
-            hypervisorDataLoading={modalDataObj?.hypervisorDataLoading}
-
-            gammaPosition={modalDataObj?.gammaPosition}
-            holdA={modalDataObj?.holdA}
-            holdB={modalDataObj?.holdB}
-            dataPeriod={modalDataObj?.dataPeriod}
-            apyBase={modalDataObj?.apyBase}
-            apyReward={modalDataObj?.apyReward}
-            apyTotal={modalDataObj?.apyTotal}
-            showBalance={modalDataObj?.showBalance}
+            yieldRange={yieldRange}
+            setYieldRange={setYieldRange}
+            allYieldRanges={allYieldRanges}
+            modalDataObj={selectedYieldPoolData}
           />
         </>
       ) : (

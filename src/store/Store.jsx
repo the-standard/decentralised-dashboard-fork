@@ -301,3 +301,14 @@ export const useMerklRewardsUSD = create(
     setMerklRewardsUSD: (merklRewardsUSD) => set(() => ({ merklRewardsUSD: merklRewardsUSD })),
   })
 );
+
+export const useSelectedYieldPoolStore = create(
+  (set) => ({
+    selectedYieldPool: '',
+    setSelectedYieldPool: (selectedYieldPool) => set(() => ({ selectedYieldPool: selectedYieldPool })),
+    selectedYieldPoolData: {},
+    setSelectedYieldPoolData: (selectedYieldPoolData) => set(() => ({ selectedYieldPoolData: selectedYieldPoolData })),
+    selectedYieldPoolDataLoading: false,
+    setSelectedYieldPoolDataLoading: (selectedYieldPoolDataLoading) => set(() => ({ selectedYieldPoolDataLoading: selectedYieldPoolDataLoading })),
+  })
+);
