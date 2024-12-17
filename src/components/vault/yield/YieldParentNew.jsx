@@ -97,7 +97,7 @@ const YieldParent = (props) => {
   
   const [ modalDataObj, setModalDataObj ] = useState({});
 
-  const [ yieldRange, setYieldRange ] = useState('14');
+  const [ yieldRange, setYieldRange ] = useState('90');
 
   const handleCloseModal = () => {
     setOpen('');
