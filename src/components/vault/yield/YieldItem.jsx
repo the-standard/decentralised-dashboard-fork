@@ -15,7 +15,7 @@ import {
 } from '@heroicons/react/24/outline';
 
 import {
-  useVaultAddressStore,
+  useSelectedYieldPoolStore,
 } from "../../../store/Store";
 
 import {
@@ -45,7 +45,17 @@ const YieldItem = (props) => {
     handleOpenModal,
     isPositive,
     getYieldColor,
+    yieldRange
   } = props;
+
+  const {
+    selectedYieldPool,
+    setSelectedYieldPool,
+    selectedYieldPoolData,
+    setSelectedYieldPoolData,
+    selectedYieldPoolDataLoading,
+    setSelectedYieldPoolDataLoading,
+  } = useSelectedYieldPoolStore();
 
   const [ open, setOpen ] = useState('');
   const chainId = useChainId();
@@ -53,6 +63,8 @@ const YieldItem = (props) => {
   const [ hypervisorData, setHypervisorData ] = useState({});
   const [ hypervisorDataLoading, setHypervisorDataLoading ] = useState(false);
   const [ hypervisorDataErr, setHypervisorDataErr ] = useState(false);
+
+  const [ modalData, setModalData ] = useState({});
 
   const yieldVaultsInfo = chainId === arbitrumSepolia.id
   ? SepoliaVaults
@@ -62,23 +74,7 @@ const YieldItem = (props) => {
   ? SepoliaGammaVaults
   : ArbitrumGammaVaults;
 
-  // const handleCloseModal = () => {
-  //   // setYieldPair([]);
-  //   // setYieldQuantities([]);
-  //   // setYieldHypervisor('');
-  //   setOpen('');
-  //   setModalDataObj({})
-  // };
-
-  // const handleOpenModal = (useData, type) => {
-  //   setModalDataObj(useData)
-  //   // setYieldPair(pair);
-  //   // setYieldQuantities(quantities);
-  //   // setYieldHypervisor(hypervisor);
-  //   setOpen(type);
-  // }
-
-  const dataPeriod = 14;
+  const dataPeriod = yieldRange;
 
   const hypervisorAddress = hypervisor?.address.toLowerCase();
 
@@ -100,13 +96,42 @@ const YieldItem = (props) => {
     if (hypervisor) {
       getHypervisorData();
     }
-  }, [hypervisor]);
+  }, [hypervisor, dataPeriod]);
+
+  useEffect(() => {
+    if (hypervisorData) {
+      const dataObj = {
+        yieldPair: [tokenA, tokenB],
+        hypervisor: hypervisor,
+        gammaUser: gammaUser,
+        hypervisorData: hypervisorData,
+        hypervisorDataLoading: hypervisorDataLoading,
+        gammaPosition: gammaPosition,
+        holdA: holdA,
+        holdB: holdB,
+        dataPeriod: dataPeriod,
+        apyBase: apyBase,
+        apyReward: apyReward,
+        apyTotal: apyTotal,
+        showBalance: showBalance,
+        yieldQuantities: quantities,
+        positionUser: userData,
+      };
+
+      setModalData(dataObj);
+
+      if (selectedYieldPool === usePair) {
+        setSelectedYieldPoolData(dataObj)
+      }
+    }
+  }, [hypervisorData, dataPeriod]);
 
   const getHypervisorData = async () => {  
     const hyperAddress = hypervisor?.address;
 
     try {
       setHypervisorDataLoading(true);
+      setSelectedYieldPoolDataLoading(true);
       const response = await axios.get(
         `https://wire3.gamma.xyz/frontend/analytics/returns/chart?hypervisor_address=${hyperAddress}&chain=arbitrum&period=${dataPeriod}`
       );
@@ -115,9 +140,11 @@ const YieldItem = (props) => {
 
       setHypervisorData(useData);
       setHypervisorDataLoading(false);
+      setSelectedYieldPoolDataLoading(false);
       setHypervisorDataErr(false);
     } catch (error) {
       setHypervisorDataLoading(false);
+      setSelectedYieldPoolDataLoading(false);
       setHypervisorDataErr(true);
       console.log(error);
     }
@@ -168,23 +195,7 @@ const YieldItem = (props) => {
 
   const showBalance = '$'+balanceUSD?.toFixed(2) || '';
 
-  const modalData = {
-    yieldPair: [tokenA, tokenB],
-    hypervisor: hypervisor,
-    gammaUser: gammaUser,
-    hypervisorData: hypervisorData,
-    hypervisorDataLoading: hypervisorDataLoading,
-    gammaPosition: gammaPosition,
-    holdA: holdA,
-    holdB: holdB,
-    dataPeriod: dataPeriod,
-    apyBase: apyBase,
-    apyReward: apyReward,
-    apyTotal: apyTotal,
-    showBalance: showBalance,
-    yieldQuantities: quantities,
-    positionUser: userData,
-  };
+  const usePair = tokenA + tokenB;
 
   return (
     <>
@@ -250,10 +261,18 @@ const YieldItem = (props) => {
                   />
                 </Typography>
               </Tooltip>
-              <Typography variant="p" className={`text-sm ${getYieldColor(gammaPosition)}`}>
-                {isPositive(gammaPosition) ? ('+') : null}
-                {Math.abs(gammaPosition) >= 0 ? (`${gammaPosition.toFixed(3)}%`) : ('')}
-              </Typography>
+              {hypervisorDataLoading ? (
+                <>
+                  <span className="block loading loading-bars loading-xs"></span>
+                </>
+              ) : (
+                <>
+                  <Typography variant="p" className={`text-sm ${getYieldColor(gammaPosition)}`}>
+                    {isPositive(gammaPosition) ? ('+') : null}
+                    {Math.abs(gammaPosition) >= 0 ? (`${gammaPosition.toFixed(3)}%`) : ('')}
+                  </Typography>
+                </>
+              )}
             </div>
             <div>
               <Tooltip
@@ -268,10 +287,18 @@ const YieldItem = (props) => {
                   />
                 </Typography>
               </Tooltip>
-              <Typography variant="p" className={`text-sm ${getYieldColor(holdA)}`}>
-                {isPositive(holdA) ? ('+') : null}
-                {Math.abs(holdA) >= 0 ? (`${holdA.toFixed(3)}%`) : ('')}
-              </Typography>
+              {hypervisorDataLoading ? (
+                <>
+                  <span className="block loading loading-bars loading-xs"></span>
+                </>
+              ) : (
+                <>
+                  <Typography variant="p" className={`text-sm ${getYieldColor(holdA)}`}>
+                    {isPositive(holdA) ? ('+') : null}
+                    {Math.abs(holdA) >= 0 ? (`${holdA.toFixed(3)}%`) : ('')}
+                  </Typography>
+                </>
+              )}
             </div>
             <div>
               <Tooltip
@@ -286,10 +313,18 @@ const YieldItem = (props) => {
                   />
                 </Typography>
               </Tooltip>
-              <Typography variant="p" className={`text-sm ${getYieldColor(holdB)}`}>
-                {isPositive(holdB) ? ('+') : null}
-                {Math.abs(holdB) >= 0 ? (`${holdB.toFixed(3)}%`) : ('')}
-              </Typography>
+              {hypervisorDataLoading ? (
+                <>
+                  <span className="block loading loading-bars loading-xs"></span>
+                </>
+              ) : (
+                <>
+                  <Typography variant="p" className={`text-sm ${getYieldColor(holdB)}`}>
+                    {isPositive(holdB) ? ('+') : null}
+                    {Math.abs(holdB) >= 0 ? (`${holdB.toFixed(3)}%`) : ('')}
+                  </Typography>
+                </>
+              )}
             </div>
           </>
 
@@ -308,7 +343,7 @@ const YieldItem = (props) => {
               <Button
                 variant="outline"
                 size="sm"
-                onClick={() => handleOpenModal(modalData, 'VIEW')}
+                onClick={() => handleOpenModal(usePair, modalData, 'VIEW')}
                 disabled={!balanceUSD}
               >
                 View
