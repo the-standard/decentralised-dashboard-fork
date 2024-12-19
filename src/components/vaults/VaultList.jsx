@@ -125,7 +125,7 @@ const VaultList = ({ vaults, vaultsLoading, listType }) => {
                       }
                     })
                     .map(function(vault, index) {
-                      if (!vault.status) {
+                      if (!vault || !vault.status) {
                         return(
                           <tr
                             key={index}
