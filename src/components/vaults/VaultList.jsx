@@ -87,8 +87,6 @@ const VaultList = ({ vaults, vaultsLoading, listType }) => {
     return withTwoDecimals ? withTwoDecimals[0] : num;
   }
 
-  const test = [{apple: 'pairs'}, {pears: 'apple'}] 
-
   return (
     <>
       <Card className="card-compact mb-4">
@@ -98,7 +96,7 @@ const VaultList = ({ vaults, vaultsLoading, listType }) => {
           </Typography>
 
           <div className="overflow-x-auto">
-            <table className="table ">
+            <table className="table">
               <thead>
                 <tr>
                   <th className="hidden md:table-cell">Type</th>
@@ -134,22 +132,22 @@ const VaultList = ({ vaults, vaultsLoading, listType }) => {
                             className="active animate-pulse"
                           >
                             <td className="hidden md:table-cell">
-                              <div className="rounded-full bg-primary-content h-[42px] w-[42px] opacity-50"></div>
+                              <div className="rounded-full bg-base-content h-[42px] w-[42px] opacity-30"></div>
                             </td>
                             <td>
-                              <div className="rounded-lg bg-primary-content h-[12px] w-[38px] opacity-50"></div>
+                              <div className="rounded-lg bg-base-content h-[12px] w-[38px] opacity-30"></div>
                             </td>
                             <td className="hidden md:table-cell">
-                              <div className="rounded-lg bg-primary-content h-[12px] w-[72px] opacity-50"></div>
+                              <div className="rounded-lg bg-base-content h-[12px] w-[72px] opacity-30"></div>
                             </td>
                             <td>
-                              <div className="rounded-lg bg-primary-content h-[12px] w-[92px] opacity-50"></div>
+                              <div className="rounded-lg bg-base-content h-[12px] w-[92px] opacity-30"></div>
                             </td>
                             <td className="hidden md:table-cell">
-                              <div className="rounded-lg bg-primary-content h-[12px] w-[120px] opacity-50"></div>
+                              <div className="rounded-lg bg-base-content h-[12px] w-[120px] opacity-30"></div>
                             </td>
                             <td className="text-right">
-                              <div className="rounded-lg bg-primary-content h-[38px] w-[64px] opacity-50"></div>
+                              <div className="rounded-lg bg-base-content h-[38px] w-[64px] opacity-30"></div>
                             </td>
                           </tr> 
                         )
