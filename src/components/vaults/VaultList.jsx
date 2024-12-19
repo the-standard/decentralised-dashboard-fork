@@ -96,7 +96,7 @@ const VaultList = ({ vaults, vaultsLoading, listType }) => {
           </Typography>
 
           <div className="overflow-x-auto">
-            <table className="table ">
+            <table className="table">
               <thead>
                 <tr>
                   <th className="hidden md:table-cell">Type</th>
@@ -108,7 +108,7 @@ const VaultList = ({ vaults, vaultsLoading, listType }) => {
               </thead>
               {vaultsLoading ? (null) : (
                 <tbody>
-                  {sortedVaults
+                  {sortedVaults?.length && sortedVaults
                     .slice(
                       (currentPage - 1) * itemsPerPage,
                       currentPage * itemsPerPage
@@ -125,11 +125,44 @@ const VaultList = ({ vaults, vaultsLoading, listType }) => {
                       }
                     })
                     .map(function(vault, index) {
-                      const vaultType = ethers.decodeBytes32String(vault.status.vaultType);
-                      const vaultHealth = computeProgressBar(
-                        vault.status.minted,
-                        vault.status.totalCollateralValue
-                      );
+                      if (!vault.status) {
+                        return(
+                          <tr
+                            key={index}
+                            className="active animate-pulse"
+                          >
+                            <td className="hidden md:table-cell">
+                              <div className="rounded-full bg-base-content h-[42px] w-[42px] opacity-30"></div>
+                            </td>
+                            <td>
+                              <div className="rounded-lg bg-base-content h-[12px] w-[38px] opacity-30"></div>
+                            </td>
+                            <td className="hidden md:table-cell">
+                              <div className="rounded-lg bg-base-content h-[12px] w-[72px] opacity-30"></div>
+                            </td>
+                            <td>
+                              <div className="rounded-lg bg-base-content h-[12px] w-[92px] opacity-30"></div>
+                            </td>
+                            <td className="hidden md:table-cell">
+                              <div className="rounded-lg bg-base-content h-[12px] w-[120px] opacity-30"></div>
+                            </td>
+                            <td className="text-right">
+                              <div className="rounded-lg bg-base-content h-[38px] w-[64px] opacity-30"></div>
+                            </td>
+                          </tr> 
+                        )
+                      }
+                      let vaultType = '';
+                      if (vault?.status?.vaultType) {
+                        vaultType = ethers.decodeBytes32String(vault?.status?.vaultType);
+                      }
+                      let vaultHealth = 100;
+                      if (vault?.status) {
+                        vaultHealth = computeProgressBar(
+                          vault?.status?.minted,
+                          vault?.status?.totalCollateralValue
+                        );
+                      }
                       let healthColour = 'success';
                       if (vaultHealth >= 30) {
                         healthColour = 'neutral';
@@ -140,6 +173,7 @@ const VaultList = ({ vaults, vaultsLoading, listType }) => {
                       if (vaultHealth >= 75) {
                         healthColour = 'error';
                       }
+
                       return(
                         <tr
                           key={index}
@@ -181,10 +215,10 @@ const VaultList = ({ vaults, vaultsLoading, listType }) => {
                             </Tooltip>
                           </td>
                           <td>
-                            {vault.status.version ? (
-                              `V${vault.status.version}-`
+                            {vault?.status?.version ? (
+                              `V${vault?.status?.version}-`
                             ) : ('')}
-                            {BigInt(vault.tokenId).toString()}
+                            {BigInt(vault?.tokenId).toString()}
                           </td>
                           <td className="hidden md:table-cell">
                             {currencySymbol}
@@ -225,11 +259,18 @@ const VaultList = ({ vaults, vaultsLoading, listType }) => {
                           <td className="text-right">
                             <Link
                               className="btn btn-outline"
-                              to={`/vault/${
-                                BigInt(
-                                  vault.tokenId
-                                ).toString()
-                              }`}
+                              disabled={!vault.tokenId}
+                              to={
+                                vault?.tokenId ? (
+                                  `/vault/${
+                                    BigInt(
+                                      vault?.tokenId
+                                    ).toString()
+                                  }`
+                                ) : (
+                                  `/`
+                                )
+                              }
                             >
                               Manage
                             </Link>
