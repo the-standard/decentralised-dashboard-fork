@@ -10,6 +10,7 @@ import {
   usesUSDContractAddressStore,
   useContractAddressStore,
   useVaultManagerAbiStore,
+  useGuestShowcaseStore,
 } from "../../store/Store";
 
 import {
@@ -24,6 +25,9 @@ const VaultNFT = ({
   vaultId,
   vaultType,
 }) => {
+  const {
+    useShowcase,
+  } = useGuestShowcaseStore();
   const { vaultManagerAbi } = useVaultManagerAbiStore();
   const [ isLoading, setIsLoading ] = useState(false);
 
@@ -137,7 +141,7 @@ const VaultNFT = ({
           variant="outline"
           className="pl-2"
           loading={isLoading}
-          disabled={isLoading}
+          disabled={useShowcase || isLoading}
         >
           Add NFT to MetaMask
         </Button>

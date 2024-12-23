@@ -1,6 +1,10 @@
 import { useState } from "react";
 import { ethers } from "ethers";
 
+import {
+  useGuestShowcaseStore,
+} from "../../store/Store";
+
 import Button from "../ui/Button";
 import Card from "../ui/Card";
 import Typography from "../ui/Typography";
@@ -14,6 +18,9 @@ const StakingRewardsList = ({
   rewardData,
   latestPrices,
 }) => {
+  const {
+    useShowcase,
+  } = useGuestShowcaseStore();
   const [open, setOpen] = useState(false);
 
   if (poolRewardsLoading) {
@@ -123,7 +130,7 @@ const StakingRewardsList = ({
           <Button
             color="primary"
             onClick={() => setOpen(true)}
-            disabled={noRewards}
+            disabled={useShowcase || noRewards}
             className="w-full lg:w-1/2"
           >
             Claim

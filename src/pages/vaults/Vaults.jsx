@@ -36,8 +36,6 @@ const Vaults = () => {
 
   const accountAddress = useWallet;
 
-  // console.log(4040404, {useWallet}, {wagmiWallet})
-
   const { vaultManagerAbi } = useVaultManagerAbiStore();
 
   const navigate = useNavigate();

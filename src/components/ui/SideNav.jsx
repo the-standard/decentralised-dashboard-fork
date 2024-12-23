@@ -14,6 +14,7 @@ import {
 
 import {
   useLocalThemeModeStore,
+  useGuestShowcaseStore,
 } from "../../store/Store";
 
 import StandardioLogoWhite from "../../assets/standardiologo-white.svg";
@@ -26,7 +27,11 @@ const SideNav = (props) => {
   const { toggleVisible } = props;
   const location = useLocation();
   const navigate = useNavigate();
+  const {
+    useShowcase,
+  } = useGuestShowcaseStore();
   const { localThemeModeStore } = useLocalThemeModeStore();
+  
 
   const isLight = localThemeModeStore && localThemeModeStore.includes('light');
 
@@ -93,21 +98,23 @@ const SideNav = (props) => {
             Cross-Chain Dex
           </NavLink>
         </Menu.Item>
-        <Menu.Item>
-          <NavLink
-            to="/legacy-pools"
-            className={({ isActive }) => 
-              isActive ||
-              location.pathname.includes('/legacy-pools') ?
-              'navbar-item active' : 'navbar-item'
-            }
-          >
-            <ArchiveBoxIcon className="h-6 w-6 inline-block"/>
-            <span className="md:hidden">
-              Legacy Pools
-            </span>
-          </NavLink>
-        </Menu.Item>
+        {useShowcase ? (null) : (
+          <Menu.Item>
+            <NavLink
+              to="/legacy-pools"
+              className={({ isActive }) => 
+                isActive ||
+                location.pathname.includes('/legacy-pools') ?
+                'navbar-item active' : 'navbar-item'
+              }
+            >
+              <ArchiveBoxIcon className="h-6 w-6 inline-block"/>
+              <span className="md:hidden">
+                Legacy Pools
+              </span>
+            </NavLink>
+          </Menu.Item>
+        )}
       </div>
       {/* Med + */}
       <div className="p-2 flex-col gap-2 w-full hidden md:flex">
@@ -172,26 +179,28 @@ const SideNav = (props) => {
             </NavLink>
           </Menu.Item>
         </Tooltip>
-        <Tooltip
-          position="right"
-          message="Legacy Pools"
-        >
-          <Menu.Item>
-            <NavLink
-              to="/legacy-pools"
-              className={({ isActive }) => 
-                isActive ||
-                location.pathname.includes('/legacy-pools') ?
-                'navbar-item active' : 'navbar-item'
-              }
-            >
-              <ArchiveBoxIcon className="h-6 w-6 inline-block"/>
-              <span className="md:hidden">
-                Legacy Pools
-              </span>
-            </NavLink>
-          </Menu.Item>
-        </Tooltip>
+        {useShowcase ? (null) : (
+          <Tooltip
+            position="right"
+            message="Legacy Pools"
+          >
+            <Menu.Item>
+              <NavLink
+                to="/legacy-pools"
+                className={({ isActive }) => 
+                  isActive ||
+                  location.pathname.includes('/legacy-pools') ?
+                  'navbar-item active' : 'navbar-item'
+                }
+              >
+                <ArchiveBoxIcon className="h-6 w-6 inline-block"/>
+                <span className="md:hidden">
+                  Legacy Pools
+                </span>
+              </NavLink>
+            </Menu.Item>
+          </Tooltip>
+        )}
       </div>
       <div className="block md:hidden self-center mt-auto pb-4">
         <ThemeButton />

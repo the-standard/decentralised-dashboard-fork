@@ -16,7 +16,8 @@ import {
   useErc20AbiStore,
   useStakingPoolv3AbiStore,
   useStakingPoolv3AddressStore,
-} from "../../store/Store.jsx";
+  useGuestShowcaseStore,
+} from "../../store/Store";
 
 import Card from "../ui/Card";
 import Typography from "../ui/Typography";
@@ -33,7 +34,13 @@ const StakingIncrease = () => {
     arbitrumSepoliaStakingPoolv3Address,
     arbitrumStakingPoolv3Address,
   } = useStakingPoolv3AddressStore();
-  const { address } = useAccount();
+  // const { address } = useAccount();
+  const {
+    useWallet,
+    useShowcase,
+  } = useGuestShowcaseStore();
+  const accountAddress = useWallet;
+
   const { erc20Abi } = useErc20AbiStore();
   const { stakingPoolv3Abi } = useStakingPoolv3AbiStore();
   const [tstStakeAmount, setTstStakeAmount] = useState(0);
@@ -57,11 +64,11 @@ const StakingIncrease = () => {
     contracts: [{
       ... tstContract,
       functionName: "allowance",
-      args: [address, stakingPoolv3Address]
+      args: [accountAddress, stakingPoolv3Address]
     },{
       ... tstContract,
       functionName: "balanceOf",
-      args: [address]
+      args: [accountAddress]
     }],
   });
 
@@ -227,7 +234,7 @@ const StakingIncrease = () => {
               <Button
                 color="primary"
                 loading={isPending}
-                disabled={isPending || tstStakeAmount <= 0 }
+                disabled={useShowcase || isPending || tstStakeAmount <= 0 }
                 onClick={handleLetsStake}
                 className="w-full lg:w-1/2"
               >

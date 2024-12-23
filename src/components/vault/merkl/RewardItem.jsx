@@ -9,6 +9,10 @@ import {
   ChevronUpIcon,
 } from '@heroicons/react/24/outline';
 
+import {
+  useGuestShowcaseStore,
+} from "../../../store/Store";
+
 import Button from "../../ui/Button";
 import TokenIcon from "../../ui/TokenIcon";
 
@@ -20,6 +24,9 @@ const RewardItem = ({
   toggleSubRow,
   subRow,
 }) => {
+  const {
+    useShowcase,
+  } = useGuestShowcaseStore();
 
   let currencySymbol = '';
   if (vaultType === 'EUROs') {
@@ -97,7 +104,7 @@ const RewardItem = ({
               <Button
                 variant="outline"
                 onClick={() => handleClick('WITHDRAW', asset)}
-                disabled={balance <= 0}
+                disabled={useShowcase || balance <= 0}
                 className="grow"
               >
                 Withdraw
@@ -105,7 +112,7 @@ const RewardItem = ({
               <Button
                 variant="outline"
                 onClick={() => handleClick('CLAIM', asset)}
-                disabled={unclaimed <= 0}
+                disabled={useShowcase || unclaimed <= 0}
                 className="grow"
               >
                 Claim Rewards
