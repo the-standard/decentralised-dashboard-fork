@@ -16,6 +16,10 @@ import {
   BookOpenIcon,
 } from '@heroicons/react/24/outline';
 
+import {
+  useGuestShowcaseStore,
+} from "../../store/Store";
+
 import Button from "../ui/Button";
 import Card from "../ui/Card";
 import Typography from "../ui/Typography";
@@ -157,6 +161,9 @@ const StakingSummary = ({
   tstGlobalBalance,
   tstGlobalBalanceLoading,
 }) => {
+  const {
+    useShowcase,
+  } = useGuestShowcaseStore();
   const [open, setOpen] = useState(false);
   const [shareOpen, setShareOpen] = useState(false);
 
@@ -536,7 +543,7 @@ const StakingSummary = ({
           <Button
             color="success"
             onClick={() => setShareOpen(true)}
-            disabled={noStaked}
+            disabled={useShowcase || noStaked}
             className="w-full flex-1"
           >
             <ShareIcon className="-ml-4 h-4 w-4 inline-block"/>
@@ -545,7 +552,7 @@ const StakingSummary = ({
           <Button
             variant="outline"
             onClick={() => setOpen(true)}
-            disabled={noStaked}
+            disabled={useShowcase || noStaked}
             className="w-full flex-1"
           >
             Stop Staking TST

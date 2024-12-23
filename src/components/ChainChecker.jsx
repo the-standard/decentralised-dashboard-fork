@@ -10,6 +10,9 @@ import {
   arbitrumSepolia
 } from "wagmi/chains";
 
+import {
+  useGuestShowcaseStore,
+} from "../store/Store";
 
 import CenterLoader from "./ui/CenterLoader";
 import Card from "./ui/Card";
@@ -20,10 +23,13 @@ const ChainChecker = (props) => {
   const { status } = useAccount();
   const chainId = useChainId();
   const location = useLocation();
+  const {
+    useShowcase,
+  } = useGuestShowcaseStore();
 
   const notArb = chainId !== arbitrum?.id && chainId !== arbitrumSepolia?.id;
 
-  if (status !== 'connected') {
+  if (status !== 'connected' && !useShowcase) {
     return (
       <main>
         <Card className="card-compact min-w-[50%]">

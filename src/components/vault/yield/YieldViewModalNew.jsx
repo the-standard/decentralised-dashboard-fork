@@ -8,6 +8,7 @@ import {
 
 import {
   useSelectedYieldPoolStore,
+  useGuestShowcaseStore,
 } from "../../../store/Store";
 
 import Button from "../../ui/Button";
@@ -28,6 +29,9 @@ const YieldViewModal = ({
   allYieldRanges,
   modalDataObj,
 }) => {
+  const {
+    useShowcase,
+  } = useGuestShowcaseStore();
 
   const {
     selectedYieldPool,
@@ -241,6 +245,7 @@ const YieldViewModal = ({
               className="w-full lg:w-64"
               variant="outline"
               onClick={() => openClaim(selectedYieldPool, modalDataObj, 'CLAIM')}
+              disabled={useShowcase}
             >
               Stop Earning Yield
             </Button>

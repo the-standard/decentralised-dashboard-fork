@@ -19,6 +19,7 @@ import {
 import {
   useErc20AbiStore,
   useVaultAddressStore,
+  useGuestShowcaseStore,
 } from "../../../store/Store";
 
 import Button from "../../ui/Button";
@@ -33,6 +34,9 @@ const RewardList = ({
   merklRewardsLoading,
   vaultType,
 }) => {
+  const {
+    useShowcase,
+  } = useGuestShowcaseStore();
   const { erc20Abi } = useErc20AbiStore();
   const { vaultAddress } = useVaultAddressStore();
 
@@ -191,7 +195,7 @@ const RewardList = ({
           <Button
             className="w-full lg:w-64"
             variant="outline"
-            disabled={!hasClaims || merklRewardsLoading || merklBalancesLoading}
+            disabled={useShowcase || !hasClaims || merklRewardsLoading || merklBalancesLoading}
             onClick={() => setClaimAllOpen(true)}
             loading={merklRewardsLoading || merklBalancesLoading}
             wide

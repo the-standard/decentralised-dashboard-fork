@@ -10,6 +10,16 @@ import liquidationPoolAbi from "../abis/liquidationPool";
 import stakingPoolv2Abi from "../abis/stakingPoolV2";
 import stakingPoolv3Abi from "../abis/stakingPoolV3";
 
+export const useGuestShowcaseStore = create(
+  (set) => ({
+    useShowcase: false,
+    useWallet: '',
+    showcaseWallet: '0xA409A235Cc15A5126Dd2a101b5460E713B90A7aF',
+    setUseShowcase: (useShowcase) => set(() => ({ useShowcase: useShowcase })),
+    setUseWallet: (useWallet) => set(() => ({ useWallet: useWallet })),
+  })
+);
+
 export const useCurrentWagmiConfig = create(
   (set) => ({
     wagmiConfig: null,
