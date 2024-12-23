@@ -192,6 +192,10 @@ const YieldDepositModal = (props) => {
           >
             By choosing your mix, you&apos;re setting up for both the potential rewards of volatility and the steady benefits of stability.
           </Typography>
+
+          <Typography variant="p" className="mb-2">
+            When withdrawing from your yield pool, any USDs will be converted to a collateral token of your choice.
+          </Typography>
   
           <div className="flex flex-col">
             <div className="flex flex-row justify-between">
@@ -288,6 +292,13 @@ const YieldDepositModal = (props) => {
           className="mb-2"
         >
           The price of yield generation is 1%. This will get distributed to TST stakers.
+        </Typography>
+
+        <Typography
+          variant="p"
+          className="mb-2"
+        >
+          <b>Please Note: USDs cannot be used as collateral to back any loans.</b>
         </Typography>
 
         <Typography
