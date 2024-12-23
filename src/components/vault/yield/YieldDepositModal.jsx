@@ -298,6 +298,13 @@ const YieldDepositModal = (props) => {
           variant="p"
           className="mb-2"
         >
+          <b>Please Note: USDs cannot be used as collateral to back any loans.</b>
+        </Typography>
+
+        <Typography
+          variant="p"
+          className="mb-2"
+        >
           Confirm that you are happy to continue with this selected Yield Pool.
         </Typography>
 
