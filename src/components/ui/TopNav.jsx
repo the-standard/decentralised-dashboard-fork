@@ -4,6 +4,8 @@ import { Bars3Icon } from '@heroicons/react/24/outline';
 
 import {
   useLocalThemeModeStore,
+
+  useGuestShowcaseStore,
 } from "../../store/Store";
 
 import StandardioLogoWhite from "../../assets/standardiologo-white.svg";
@@ -17,13 +19,20 @@ import RainbowConnect from "../RainbowConnectButton";
 
 const TopNav = (props) => {
   const { toggleVisible } = props;
-  const { address } = useAccount();
+  // const { address: wagmiWallet } = useAccount();
+
+  const {
+    useWallet,
+  } = useGuestShowcaseStore();
+
+  const accountAddress = useWallet;
+
   const navigate = useNavigate();
   const { localThemeModeStore } = useLocalThemeModeStore();
 
   const isLight = localThemeModeStore && localThemeModeStore.includes('light');
 
-  if (address) {
+  if (accountAddress) {
     return (
       <div className="navbar sticky shadow-md tst-topnav">
         <div className="navbar-start">
