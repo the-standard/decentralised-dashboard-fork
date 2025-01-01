@@ -21,6 +21,7 @@ import {
   useContractAddressStore,
   useVaultManagerAbiStore,
   usesUSDContractAddressStore,
+  useGuestShowcaseStore,
 } from "../../store/Store";
 
 import CenterLoader from "../../components/ui/CenterLoader";
@@ -68,7 +69,12 @@ const Vault = () => {
   const chainId = useChainId();
   const query = useQuery();
 
-  const { isConnected, address } = useAccount();
+  // const { isConnected, address } = useAccount();
+  const {
+    useWallet,
+    useShowcase,
+  } = useGuestShowcaseStore();
+  const accountAddress = useWallet;
 
   useEffect(() => {
     setVaultID(vaultId);
@@ -189,7 +195,7 @@ const Vault = () => {
     )
   }
 
-  if (!currentVault || !isConnected || !isValidVaultType) {
+  if (!currentVault || !isValidVaultType) {
     return (
       <main>
         <Card className="card-compact">
@@ -325,12 +331,14 @@ const Vault = () => {
       </div>
       
       <div className="mt-4">
-        <VaultSend
-          currentVault={currentVault}
-          vaultId={vaultId}
-          address={address}
-          vaultType={vaultType}
-        />
+        {useShowcase ? (null) : (
+          <VaultSend
+            currentVault={currentVault}
+            vaultId={vaultId}
+            address={accountAddress}
+            vaultType={vaultType}
+          />
+        )}
       </div>
     </main>
   )

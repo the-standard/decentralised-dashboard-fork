@@ -11,7 +11,8 @@ import { arbitrum, arbitrumSepolia } from "wagmi/chains";
 import {
   useContractAddressStore,
   usesUSDContractAddressStore,
-  useVaultManagerAbiStore
+  useVaultManagerAbiStore,
+  useGuestShowcaseStore
 } from "../../store/Store";
 
 import Card from "../ui/Card";
@@ -41,6 +42,9 @@ const vaultTypes = [
 ];
 
 const VaultCreate = ({ tokenId, vaultType }) => {
+  const {
+    useShowcase,
+  } = useGuestShowcaseStore();
   const { vaultManagerAbi } = useVaultManagerAbiStore();
   const {
     arbitrumSepoliaContractAddress,
@@ -147,7 +151,7 @@ const VaultCreate = ({ tokenId, vaultType }) => {
                     className="w-full"
                     color="primary"
                     onClick={() => handleMintVault(item.type)}
-                    disabled={isPendingUsd || isPendingEur || !item.isActive}
+                    disabled={useShowcase || isPendingUsd || isPendingEur || !item.isActive}
                     loading={isPendingUsd && item.isActive}  
                   >
                     {item.isActive ? `Create ${item.type} Vault` : "Coming Soon"}
@@ -157,7 +161,7 @@ const VaultCreate = ({ tokenId, vaultType }) => {
                     className="w-full"
                     color="primary"
                     onClick={() => handleMintVault(item.type)}
-                    disabled={isPendingUsd || isPendingEur || !item.isActive}
+                    disabled={useShowcase || isPendingUsd || isPendingEur || !item.isActive}
                     loading={isPendingEur && item.isActive}  
                   >
                     {item.isActive ? `Create ${item.type} Vault` : "Coming Soon"}

@@ -18,6 +18,7 @@ import {
   useErc20AbiStore,
   useStakingPoolv3AbiStore,
   useStakingPoolv3AddressStore,
+  useGuestShowcaseStore,
 } from "../../store/Store";
 
 import StakingIncrease from "../../components/tst-staking/StakingIncrease";
@@ -42,7 +43,13 @@ const TstStaking = (props) => {
   } = useTstAddressStore();
 
   const navigate = useNavigate();
-  const { address } = useAccount();
+  // const { address } = useAccount();
+  const {
+    useWallet,
+    useShowcase,
+  } = useGuestShowcaseStore();
+  const accountAddress = useWallet;
+
   const chainId = useChainId();
 
   const tstAddress = chainId === arbitrumSepolia.id ?
@@ -58,14 +65,14 @@ const TstStaking = (props) => {
     address: stakingPoolv3Address,
     abi: stakingPoolv3Abi,
     functionName: "positions",
-    args: [address],
+    args: [accountAddress],
   });
 
   const { data: poolRewards, isLoading: poolRewardsLoading, refetch: refetchRewards } = useReadContract({
     address: stakingPoolv3Address,
     abi: stakingPoolv3Abi,
     functionName: "projectedEarnings",
-    args: [address],
+    args: [accountAddress],
   });
 
   const { data: dailyYield, isLoading, dailyYieldLoading, refetch: refetchDailyReward } = useReadContract({
@@ -157,9 +164,11 @@ const TstStaking = (props) => {
                 Stake TST to earn USDs & more tokens daily.
               </Typography>
 
-              <Typography variant="p">
-                If you're looking for our previous staking pools, <span className="underline cursor-pointer" onClick={() => navigate("/legacy-pools")}>they can be found here</span>.
-              </Typography>
+              {useShowcase ? (null) : (
+                <Typography variant="p">
+                  If you're looking for our previous staking pools, <span className="underline cursor-pointer" onClick={() => navigate("/legacy-pools")}>they can be found here</span>.
+                </Typography>
+              )}
 
             </div>
           </Card>

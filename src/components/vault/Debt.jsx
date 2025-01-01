@@ -20,6 +20,7 @@ import {
   usesUSDAddressStore,
   useErc20AbiStore,
   useVaultHealthUpdate,
+  useGuestShowcaseStore,
 } from "../../store/Store";
 
 import smartVaultAbi from "../../abis/smartVault";
@@ -34,6 +35,10 @@ const Debt = ({
   vaultType
 }) => {
   const { address } = useAccount();
+  const {
+    useShowcase,
+  } = useGuestShowcaseStore();
+
   const { vaultAddress } = useVaultAddressStore();
   const {
     arbitrumsEuroAddress,
@@ -414,7 +419,7 @@ const Debt = ({
         <Button
           className="w-full lg:w-auto flex-1"
           color="primary"
-          disabled={!borrowEnabled}
+          disabled={useShowcase || !borrowEnabled}
           onClick={() => setBorrowOpen(!borrowOpen)}
         >
           <ArrowDownCircleIcon className="h-6 w-6 inline-block"/>
@@ -423,6 +428,7 @@ const Debt = ({
         <Button
           className="w-full lg:w-auto flex-1"
           color="primary"
+          disabled={useShowcase}
           onClick={() => setRepayOpen(!repayOpen)}
         >
           <ArrowUpCircleIcon className="h-6 w-6 inline-block"/>
