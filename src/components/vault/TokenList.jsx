@@ -170,7 +170,7 @@ const TokenList = ({
                               <div className="p-4 hidden md:table-cell">{symbol}</div>
                             </div>
                           </td>
-                          <td>
+                          <td className="truncate max-w-[150px] md:max-w-[200px]">
                             {ethers.formatUnits(amount, token.dec)}
                             <br/>
                             {currencySymbol}{formattedCollateralValue}
@@ -181,7 +181,6 @@ const TokenList = ({
                               symbol={symbol}
                             />
                           </td>
-                          <td className="table-cell md:hidden"></td>
                           <td className="text-right">
                             <Button
                               shape="circle"

@@ -27,20 +27,20 @@ function App() {
       <ThemeHandler>
         <WalletProvider>
           <GuestHandler>
-          <DisconnectHandler>
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="vaults" element={<DashLayout><Vaults /></DashLayout>} />
-              <Route path="vault/:vaultType/:vaultId" element={<DashLayout><Vault /></DashLayout>} />
-              <Route path="vault/:vaultType/:vaultId/history" element={<DashLayout><VaultHistory /></DashLayout>} />
-              <Route path="vault/:vaultType/:vaultId/merkl" element={<DashLayout><VaultMerkl /></DashLayout>} />
-              <Route path="legacy-pools" element={<DashLayout><LegacyPools /></DashLayout>} />
-              <Route path="staking-pool" element={<DashLayout><TstStaking /></DashLayout>} />
-              <Route path="dex/*" element={<DashLayout><Dex /></DashLayout>} />
-              <Route path="termsofuse" element={<DashLayout><TermsOfUse /></DashLayout>} />
-              <Route path="*" element={<Home/>} />
-            </Routes>
-          </DisconnectHandler>
+            <DisconnectHandler>
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="vaults" element={<DashLayout><Vaults /></DashLayout>} />
+                <Route path="vault/:vaultType/:vaultId" element={<DashLayout><Vault /></DashLayout>} />
+                <Route path="vault/:vaultType/:vaultId/history" element={<DashLayout><VaultHistory /></DashLayout>} />
+                <Route path="vault/:vaultType/:vaultId/merkl" element={<DashLayout><VaultMerkl /></DashLayout>} />
+                <Route path="legacy-pools" element={<DashLayout><LegacyPools /></DashLayout>} />
+                <Route path="staking-pool" element={<DashLayout><TstStaking /></DashLayout>} />
+                <Route path="dex/*" element={<DashLayout><Dex /></DashLayout>} />
+                <Route path="termsofuse" element={<DashLayout><TermsOfUse /></DashLayout>} />
+                <Route path="*" element={<Home/>} />
+              </Routes>
+            </DisconnectHandler>
           </GuestHandler>
         </WalletProvider>
       </ThemeHandler>
