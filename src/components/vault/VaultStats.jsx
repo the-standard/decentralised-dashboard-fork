@@ -195,19 +195,19 @@ const VaultStats = ({
 
   return (
     <>
-      <div className="-mx-1 flex flex-wrap">
+      {/* <div className="flex flex-wrap"> */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-2">
         {statsItems.map((item, index) => {
           if (item.show) {
             return (
               <div
-                className="w-1/2 px-1 my-2 sm:my-2 sm:w-1/2 lg:my-0 lg:w-1/4 pb-2"
                 key={index}
               >
                 <Typography
                   variant="p"
                 >
                   {item.title}
-                  {item.tooltip ? (
+                  {/* {item.tooltip ? (
                     <Tooltip
                       className="flex-col justify-center items-center cursor-pointer before:w-[12rem]"
                       position="top"
@@ -217,7 +217,7 @@ const VaultStats = ({
                         className="mb-1 ml-1 h-5 w-5 inline-block opacity-60"
                       />
                     </Tooltip>
-                  ) : (null)}
+                  ) : (null)} */}
                 </Typography>
                 <div>
                   <Typography
@@ -235,15 +235,15 @@ const VaultStats = ({
             )
           }
         })}
-        <div className="w-full px-1 mt-4">
-          {currentVault.status.liquidated ? (
-            <Typography variant="h1" className="text-error">
-              Vault Liquidated
-            </Typography>
-          ) : (
-            <VaultHealth currentVault={currentVault}/>
-          )}
-        </div>
+      </div>
+      <div className="w-full px-1 mt-4">
+        {currentVault.status.liquidated ? (
+          <Typography variant="h1" className="text-error">
+            Vault Liquidated
+          </Typography>
+        ) : (
+          <VaultHealth currentVault={currentVault}/>
+        )}
       </div>
     </>
   )
