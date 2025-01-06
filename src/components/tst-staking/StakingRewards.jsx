@@ -79,12 +79,14 @@ const StakingRewards = ({
 
   const handleDailyPrices = () => {
     const prices = {};
-    for (const [token, tokenData] of Object.entries(priceData)) {
-      if (tokenData.prices && tokenData.prices.length > 0) {
-        const latestPrice = tokenData.prices[tokenData.prices.length - 1].price;
-        // convert to dollar value
-        prices[token] = parseFloat(latestPrice) / 100000000;
-      }
+    if (priceData) {
+      for (const [token, tokenData] of Object.entries(priceData)) {
+        if (tokenData.prices && tokenData.prices.length > 0) {
+          const latestPrice = tokenData.prices[tokenData.prices.length - 1].price;
+          // convert to dollar value
+          prices[token] = parseFloat(latestPrice) / 100000000;
+        }
+      }  
     }
     return prices;
   }
