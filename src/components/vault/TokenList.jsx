@@ -17,6 +17,7 @@ import {
 
 import {
   useVaultStore,
+  useGuestShowcaseStore,
 } from "../../store/Store";
 
 import {
@@ -38,6 +39,10 @@ const TokenList = ({
   vaultType,
   yieldEnabled,
 }) => {
+  const {
+    useShowcase,
+  } = useGuestShowcaseStore();
+
   let currencySymbol = '';
   if (vaultType === 'EUROs') {
     currencySymbol = '€';
@@ -205,12 +210,13 @@ const TokenList = ({
                                     variant="outline"
                                     onClick={() => handleClick('DEPOSIT', asset)}
                                     className="grow"
+                                    disabled={useShowcase}
                                   >
                                     Deposit
                                   </Button>
                                   <Button
                                     variant="outline"
-                                    disabled={amount <= 0}
+                                    disabled={useShowcase || amount <= 0}
                                     onClick={() => handleClick('WITHDRAW', asset)}
                                     className="grow"
                                   >
@@ -218,7 +224,7 @@ const TokenList = ({
                                   </Button>
                                   <Button
                                     variant="outline"
-                                    disabled={amount <= 0}
+                                    disabled={useShowcase || amount <= 0}
                                     onClick={
                                       useSwapV4 ? (
                                         () => handleClick('SWAPV4', asset)
@@ -234,7 +240,7 @@ const TokenList = ({
                                     <Button
                                       // variant="outline"
                                       color="success"
-                                      disabled={amount <= 0 || !yieldEnabled || !tokenYield}
+                                      disabled={useShowcase || amount <= 0 || !yieldEnabled || !tokenYield}
                                       onClick={() => handleClick('YIELD', asset)}
                                       className="grow"
                                     >

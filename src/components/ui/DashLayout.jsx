@@ -6,11 +6,16 @@ import {
 
 import {
   useLocalThemeModeStore,
+  useGuestShowcaseStore,
 } from "../../store/Store";
 
 import {
+  UserIcon,
   BellAlertIcon,
 } from '@heroicons/react/24/outline';
+
+import ChainChecker from "../ChainChecker";
+import RainbowConnect from "../RainbowConnectButton";
 
 import TopNav from './TopNav';
 import SideNav from './SideNav';
@@ -20,12 +25,10 @@ import Card from "./Card";
 import Button from "./Button";
 import Typography from "./Typography";
 
-import discordlogo from "../../assets/discordlogo.svg";
-import telegramlogo from "../../assets/telegramlogo.svg";
-
-import ChainChecker from "../ChainChecker";
-
 const DashLayout = ({children}) => {
+  const {
+    useShowcase,
+  } = useGuestShowcaseStore();
   const [showSideNav, setShowSideNav] = useState(false);
 
   const toggleVisible = useCallback(() => {
@@ -62,69 +65,31 @@ const DashLayout = ({children}) => {
         <TopNav toggleVisible={toggleVisible} />
           <div className="tst-inner">
             <ChainChecker>
-              {/* <Card className="card-compact mb-4">
-                <div className="card-body">
-                  <Typography variant="h2" className="card-title flex justify-between">
-                    <span>
-                      <BellAlertIcon className="w-6 h-6 inline-block mr-2"/>
-                      Important Update: Smart Vaults
-                    </span>
-                    <span className="text-sm font-normal opacity-50">
-                      &nbsp; 22/July/2024
-                    </span>
-                  </Typography>
-                  <div className="overflow-x-auto">
-                    <Typography variant="p" className="mb-2">
-                      Dear Users,
+              {useShowcase ? (
+                <Card className="card-compact mb-4">
+                  <div className="card-body">
+                    <Typography variant="h2" className="card-title flex justify-between">
+                      <span>
+                        <UserIcon className="w-6 h-6 inline-block mr-2"/>
+                        Guest Showcase
+                      </span>
                     </Typography>
-
-                    <Typography variant="p" className="mb-2">
-                      We are pausing the creation of new vaults until the V4 Vaults launch with yield generation (ETA: 1 month). You can still manage, pay back debt, and trade collateral in your existing vaults. Take advantage of the slight de-peg to settle debts at a discount!
-                    </Typography>
-
-                    <Typography variant="p" className="flex items-center mb-2">
-                      Join the Community & Connect with us for updates and support:
-                    </Typography>
-                    <div className="flex align-center">
-                      <Button
-                        size="sm"
-                        color="ghost"
-                        onClick={() => window.open('https://discord.gg/THWyBQ4RzQ', "_blank")}
+                    <div className="overflow-x-auto">
+                      <Typography variant="p" className="mb-2">
+                        Welcome to The Standard.io dashboard! You are currenlty viewing a showcase as a guest, so not all functions will be available to you.
+                      </Typography>
+                      <Typography variant="p" className="mb-2">
+                        To start staking and earning with TST connect your wallet below or in the navigation header above.
+                      </Typography>
+                      <div
+                        className="card-actions"
                       >
-                        <img
-                          className={
-                            isLight ? (
-                              'h-4 w-4 inline-block invert'
-                            ) : (
-                              'h-4 w-4 inline-block'
-                            )
-                          }
-                          src={discordlogo} alt={`Discord logo`}
-                        />
-                        Discord
-                      </Button>
-                      <Button
-                        size="sm"
-                        color="ghost"
-                        onClick={() => window.open('https://t.me/TheStandard_io', "_blank")}
-                      >
-                        <img
-                          className={
-                            isLight ? (
-                              'h-4 w-4 inline-block'
-                            ) : (
-                              'h-4 w-4 inline-block invert'
-                            )
-                          }
-                          src={telegramlogo} alt={`Telegram logo`}
-                        />
-                        Telegram
-                      </Button>
+                        <RainbowConnect />
+                      </div>
                     </div>
-
                   </div>
-                </div>
-              </Card> */}
+                </Card>
+              ) : null}
 
               {children}
             </ChainChecker>

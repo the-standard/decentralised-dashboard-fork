@@ -345,6 +345,12 @@ const YieldClaimModal = ({
                 This will withdraw <b>all</b> of the assets in this pair.
               </Typography>
 
+              {isStablePair ? (
+                <Typography variant="p" className="mb-2">
+                  USDs cannot be withdrawn as a collateral, but will be converted to the asset you select below.
+                </Typography>
+              ) : (null)}
+
               <Typography
                 variant="p"
                 className="mb-2"

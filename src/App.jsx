@@ -4,6 +4,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import WalletProvider from './components/WalletProvider';
 import ThemeHandler from './components/ThemeHandler';
 import DisconnectHandler from './components/DisconnectHandler';
+import GuestHandler from './components/GuestHandler';
 import DashLayout from "./components/ui/DashLayout";
 import Home from './pages/Home';
 import Vaults from './pages/vaults/Vaults';
@@ -25,6 +26,7 @@ function App() {
     <QueryClientProvider client={queryClient}>
       <ThemeHandler>
         <WalletProvider>
+          <GuestHandler>
           <DisconnectHandler>
             <Routes>
               <Route path="/" element={<Home />} />
@@ -39,6 +41,7 @@ function App() {
               <Route path="*" element={<Home/>} />
             </Routes>
           </DisconnectHandler>
+          </GuestHandler>
         </WalletProvider>
       </ThemeHandler>
     </QueryClientProvider>

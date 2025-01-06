@@ -16,6 +16,8 @@ import {
   useVaultManagerAbiStore,
   usesUSDContractAddressStore,
   useContractAddressStore,
+
+  useGuestShowcaseStore,
 } from "../../store/Store";
 
 import VaultCreate from "../../components/vaults/VaultCreate";
@@ -25,7 +27,15 @@ import Typography from "../../components/ui/Typography";
 import Button from "../../components/ui/Button";
 
 const Vaults = () => {
-  const { address: accountAddress } = useAccount();
+  // const { address: accountAddress } = useAccount();
+  // const { address: wagmiWallet } = useAccount();
+
+  const {
+    useWallet,
+  } = useGuestShowcaseStore();
+
+  const accountAddress = useWallet;
+
   const { vaultManagerAbi } = useVaultManagerAbiStore();
 
   const navigate = useNavigate();
