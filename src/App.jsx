@@ -11,7 +11,6 @@ import Vaults from './pages/vaults/Vaults';
 import Vault from './pages/vault/Vault';
 import VaultHistory from './pages/vault/VaultHistory';
 import VaultMerkl from './pages/vault/VaultMerkl';
-import LiquidationPools from './pages/liquidation-pools/LiquidationPools';
 import TstStaking from './pages/tst-staking/TstStaking';
 import LegacyPools from './pages/legacy-pools/LegacyPools';
 import TermsOfUse from './pages/TermsOfUse';
@@ -36,7 +35,6 @@ function App() {
                 <Route path="vault/:vaultType/:vaultId/history" element={<DashLayout><VaultHistory /></DashLayout>} />
                 <Route path="vault/:vaultType/:vaultId/merkl" element={<DashLayout><VaultMerkl /></DashLayout>} />
                 <Route path="legacy-pools" element={<DashLayout><LegacyPools /></DashLayout>} />
-                <Route path="liquidation-pools" element={<DashLayout><LiquidationPools /></DashLayout>} />
                 <Route path="staking-pool" element={<DashLayout><TstStaking /></DashLayout>} />
                 <Route path="dex/*" element={<DashLayout><Dex /></DashLayout>} />
                 <Route path="termsofuse" element={<DashLayout><TermsOfUse /></DashLayout>} />
