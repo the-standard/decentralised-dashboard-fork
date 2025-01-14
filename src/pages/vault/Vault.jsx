@@ -33,7 +33,7 @@ import TokenList from "../../components/vault/TokenList";
 import VaultSend from "../../components/vault/VaultSend";
 import TokenTotalPie from "../../components/vault/TokenTotalPie";
 import VaultNFT from "../../components/vault/VaultNFT";
-import VaultSavings from "../../components/vault/VaultSavings";
+import VaultSavingsSummary from "../../components/vault/VaultSavingsSummary";
 
 import YieldParentNew from "../../components/vault/yield/YieldParentNew";
 
@@ -276,7 +276,7 @@ const Vault = () => {
       </Card>
       <div className="flex flex-col md:flex-row mt-4 gap-4 flex-wrap">
         <div className="flex-1 grow-[4]">
-          <VaultSavings/>
+          <VaultSavingsSummary />
           <TokenList
             vaultType={vaultType}
             assets={assets}

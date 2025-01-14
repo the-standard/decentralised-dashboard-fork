@@ -10,6 +10,7 @@ import Home from './pages/Home';
 import Vaults from './pages/vaults/Vaults';
 import Vault from './pages/vault/Vault';
 import VaultHistory from './pages/vault/VaultHistory';
+import VaultSavings from './pages/vault/VaultSavings';
 import VaultMerkl from './pages/vault/VaultMerkl';
 import TstStaking from './pages/tst-staking/TstStaking';
 import LegacyPools from './pages/legacy-pools/LegacyPools';
@@ -33,6 +34,7 @@ function App() {
                 <Route path="vaults" element={<DashLayout><Vaults /></DashLayout>} />
                 <Route path="vault/:vaultType/:vaultId" element={<DashLayout><Vault /></DashLayout>} />
                 <Route path="vault/:vaultType/:vaultId/history" element={<DashLayout><VaultHistory /></DashLayout>} />
+                <Route path="vault/:vaultType/:vaultId/savings" element={<DashLayout><VaultSavings /></DashLayout>} />
                 <Route path="vault/:vaultType/:vaultId/merkl" element={<DashLayout><VaultMerkl /></DashLayout>} />
                 <Route path="legacy-pools" element={<DashLayout><LegacyPools /></DashLayout>} />
                 <Route path="staking-pool" element={<DashLayout><TstStaking /></DashLayout>} />
