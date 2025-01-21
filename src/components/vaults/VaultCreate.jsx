@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from 'react-toastify';
 import {
@@ -22,6 +22,8 @@ import Typography from "../ui/Typography";
 import seurologo from "../../assets/EUROs.svg";
 import susdlogo from "../../assets/USDs.svg";
 
+import QuestionsModal from "./QuestionsModal";
+
 const vaultTypes = [
   {
     title: "USDs (Standard Dollar)",
@@ -42,6 +44,8 @@ const vaultTypes = [
 ];
 
 const VaultCreate = ({ tokenId, vaultType }) => {
+  const [open, setOpen] = useState(false);
+  const [createType, setCreateType] = useState('');
   const {
     useShowcase,
   } = useGuestShowcaseStore();
@@ -71,6 +75,11 @@ const VaultCreate = ({ tokenId, vaultType }) => {
 
   const { writeContract: mintVaultEur, isError: isErrorEur, isPending: isPendingEur, isSuccess: isSuccessEur } = useWriteContract();
   const { writeContract: mintVaultUsd, isError: isErrorUsd, isPending: isPendingUsd, isSuccess: isSuccessUsd } = useWriteContract();
+
+  const handleCloseModal = () => {
+    setOpen(false);
+    setCreateType('');
+  };
 
   const handleMintVault = async (type) => {
     if (chainId !== arbitrumSepolia.id && chainId !== arbitrum.id) {
@@ -115,64 +124,82 @@ const VaultCreate = ({ tokenId, vaultType }) => {
   ]);
 
   return (
-    <div className="flex flex-col md:flex-row gap-4 mb-4">
-      {vaultTypes.map((item) => {        
-        return (
-          <Card className="flex-1 card-compact">
-            <div className="card-body">
-              <div
-                className="flex flex-col md:flex-row"
-              >
-                <div className="mb-4 md:mb-0 flex justify-center">
-                  <img
-                    className="w-[60px] mr-4"
-                    src={item.image}
-                  />
+    <>
+      <div className="flex flex-col md:flex-row gap-4 mb-4">
+        {vaultTypes.map((item) => {        
+          return (
+            <Card className="flex-1 card-compact">
+              <div className="card-body">
+                <div
+                  className="flex flex-col md:flex-row"
+                >
+                  <div className="mb-4 md:mb-0 flex justify-center">
+                    <img
+                      className="w-[60px] mr-4"
+                      src={item.image}
+                    />
+                  </div>
+                  <div className="flex flex-col my-auto mx-0">
+                    <Typography
+                      variant="h2"
+                    >
+                      {item.title}
+                    </Typography>
+                    <Typography
+                      variant="p"
+                    >
+                      {item.para}
+                    </Typography>
+                  </div>
                 </div>
-                <div className="flex flex-col my-auto mx-0">
-                  <Typography
-                    variant="h2"
-                  >
-                    {item.title}
-                  </Typography>
-                  <Typography
-                    variant="p"
-                  >
-                    {item.para}
-                  </Typography>
-                </div>
-              </div>
 
-              <div
-                className="card-actions pt-4"
-              >
-                { item.type === 'USDs' ? (
-                  <Button
-                    className="w-full"
-                    color="primary"
-                    onClick={() => handleMintVault(item.type)}
-                    disabled={useShowcase || isPendingUsd || isPendingEur || !item.isActive}
-                    loading={isPendingUsd && item.isActive}  
-                  >
-                    {item.isActive ? `Create ${item.type} Vault` : "Coming Soon"}
-                  </Button>
-                ) : (
-                  <Button
-                    className="w-full"
-                    color="primary"
-                    onClick={() => handleMintVault(item.type)}
-                    disabled={useShowcase || isPendingUsd || isPendingEur || !item.isActive}
-                    loading={isPendingEur && item.isActive}  
-                  >
-                    {item.isActive ? `Create ${item.type} Vault` : "Coming Soon"}
-                  </Button>
-                )}
+                <div
+                  className="card-actions pt-4"
+                >
+                  { item.type === 'USDs' ? (
+                    <Button
+                      className="w-full"
+                      color="primary"
+                      // onClick={() => handleMintVault(item.type)}
+                      onClick={() => {
+                        setCreateType(item.type);
+                        setOpen(true);
+                      }}
+                      disabled={useShowcase || isPendingUsd || isPendingEur || !item.isActive}
+                      loading={isPendingUsd && item.isActive}  
+                    >
+                      {item.isActive ? `Create ${item.type} Vault` : "Coming Soon"}
+                    </Button>
+                  ) : (
+                    <Button
+                      className="w-full"
+                      color="primary"
+                      // onClick={() => handleMintVault(item.type)}
+                      onClick={() => {
+                        setCreateType(item.type);
+                        setOpen(true);
+                      }}
+                      disabled={useShowcase || isPendingUsd || isPendingEur || !item.isActive}
+                      loading={isPendingEur && item.isActive}  
+                    >
+                      {item.isActive ? `Create ${item.type} Vault` : "Coming Soon"}
+                    </Button>
+                  )}
+                </div>
               </div>
-            </div>
-          </Card>
+            </Card>
+          )}
         )}
-      )}
-    </div>
+      </div>
+      <QuestionsModal
+        handleCloseModal={handleCloseModal}
+        isOpen={open}
+        handleMintVault={handleMintVault}
+        createType={createType}
+        isPendingUsd={isPendingUsd}
+        isPendingEur={isPendingEur}
+      />
+    </>
   );
 };
 
