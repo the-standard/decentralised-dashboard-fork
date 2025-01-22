@@ -9,7 +9,7 @@ const LiFiDex = () => {
     <Card className="card-compact w-full">
       <div className="card-body">
         <Typography variant="h2" className="card-title justify-between">
-          Need TST or EUROs?
+          Need TST or USDs?
         </Typography>
         <Typography variant="p" className="mb-2">
           You can easily buy it here with the cross chain DEX below.
