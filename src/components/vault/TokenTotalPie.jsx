@@ -8,9 +8,17 @@ import Typography from "../../components/ui/Typography";
 
 const TokenTotalPie = (props) => {
 
-  const { chartData, vaultId, vaultVersion } = props;
+  const { chartData, vaultId, vaultVersion, vaultType } = props;
 
   // const series = [44, 55, 41, 17, 15];
+
+  let currencySymbol = '';
+  if (vaultType === 'EUROs') {
+    currencySymbol = '€';
+  }
+  if (vaultType === 'USDs') {
+    currencySymbol = '$';
+  }
   
   const totals = chartData.map(function(item) {
     return Number(item['total']);
@@ -97,7 +105,7 @@ const TokenTotalPie = (props) => {
               Quantity: <b>{totals[seriesIndex] || ''}</b>
             </p>
             <p>
-              Value: <b>€{prices[seriesIndex] || ''}</b>
+              Value: <b>{currencySymbol}{prices[seriesIndex] || ''}</b>
             </p>
           </div>
         )

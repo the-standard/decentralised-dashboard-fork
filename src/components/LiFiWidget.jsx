@@ -37,14 +37,6 @@ const LiFiWidget = () => {
           logoURI: 'https://s2.coinmarketcap.com/static/img/coins/64x64/22108.png',
         },
         {
-          address: '0xb399511642FE1666c6a07f83483e6E4feAed9A00',
-          symbol: 'EUROs',
-          decimals: 18,
-          chainId: 1,
-          name: 'The Standard EURO',
-          logoURI: 'https://s2.coinmarketcap.com/static/img/coins/64x64/22588.png',
-        },
-        {
           address: '0xe342ebb6a56cd3dbf0fe01a447fe367b9290ecf8',
           symbol: 'TST',
           decimals: 18,
@@ -59,6 +51,14 @@ const LiFiWidget = () => {
           chainId: 42161,
           name: 'The Standard Token',
           logoURI: 'https://s2.coinmarketcap.com/static/img/coins/64x64/22108.png',
+        },
+        {
+          address: '0x2Ea0bE86990E8Dac0D09e4316Bb92086F304622d',
+          symbol: 'USDs',
+          decimals: 18,
+          chainId: 42161,
+          name: 'The Standard USD',
+          logoURI: 'https://s2.coinmarketcap.com/static/img/coins/64x64/33452.png',
         },
         {
           address: '0x643b34980e635719c15a2d4ce69571a258f940e9',
