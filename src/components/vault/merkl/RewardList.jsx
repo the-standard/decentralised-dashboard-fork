@@ -95,6 +95,31 @@ const RewardList = ({
 
   const hasClaims = merklData.find(item => item?.unclaimed > 0);
 
+  const tempObj = {
+    "tokenAddress": "0xf5A27E55C748bCDdBfeA5477CB9Ae924f0f7fd2e",
+    "accumulated": "2154829100000000000",
+    "balanceOf": 7546640168005693611n,
+    "decimals": 18,
+    "symbol": "TST",
+    "unclaimed": "1263002840000000000",
+    "pending": "1165930000000000",
+    "proof": [],
+    "reasons": {
+        "Gamma_0x547a116a2622876ce1c8d19d41c683c8f7bec5c0": {
+            "accumulated": "2154829100000000000",
+            "unclaimed": "1263002840000000000",
+            "pending": "1165930000000000"
+        }
+    }
+  }
+
+  const testData = [
+    ...merklData,
+    tempObj
+  ]
+
+  console.log(123123, testData)
+
   return (
     <>
       <div>
@@ -152,9 +177,13 @@ const RewardList = ({
           </thead>
           {merklRewardsLoading || merklBalancesLoading ? (null) : (
             <tbody>
-              {merklData && merklData.length ? (
+              {/* TEMP TODO */}
+              {testData && testData.length ? (
+              // {merklData && merklData.length ? (
                 <>
-                  {merklData.map(function(asset, index) {
+                  {/* TEMP TODO */}
+                  {testData.map(function(asset, index) {
+                  // {merklData.map(function(asset, index) {
                     const handleClick = (type, asset) => {
                       setActionType(type);
                       setUseAsset(asset);
