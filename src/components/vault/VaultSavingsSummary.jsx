@@ -20,7 +20,7 @@ const VaultSavingsSummary = ({
 }) => {
   const navigate = useNavigate();
   const [savingsLoading, setSavingsLoading] = useState(true);
-  const [savingsData, setSavingsData] = useState(undefined);
+  const [savingsData, setSavingsData] = useState([]);
 
   const { vaultAddress } = useVaultAddressStore();
 
@@ -42,15 +42,15 @@ const VaultSavingsSummary = ({
     }
   };
 
-  if (savingsLoading) {
-    return (
-      <Card className="card-compact mb-4 success-card">
-        <div className="card-body">
-          <CenterLoader />
-        </div>
-      </Card>
-    )
-  }
+  // if (savingsLoading) {
+  //   return (
+  //     <Card className="card-compact mb-4 success-card">
+  //       <div className="card-body">
+  //         <CenterLoader />
+  //       </div>
+  //     </Card>
+  //   )
+  // }
 
   const totalSaved = savingsData.reduce((sum, item) => {
     const itemSaved = Number(item.debtRepaid) - Number(item.amountUSD);
@@ -59,32 +59,36 @@ const VaultSavingsSummary = ({
 
   const numberOfSavings = savingsData.length;
 
-  return (
-    <>
-      <Card className="card-compact mb-4 success-card">
-        <div className="card-body">
-          <Typography variant="h2" className="card-title flex gap-0">
-            <BanknotesIcon
-              className="mr-2 h-6 w-6 inline-block"
-            />
-            Your Smart Vault Has Saved You ${totalSaved} Total!
-          </Typography>
-          <Typography variant="p" className="sm:mr-[100px]">
-            {numberOfSavings} automatic savings events have been captured
-          </Typography>
-          <div className="card-actions flex-1 flex-col-reverse lg:flex-row justify-end items-end">
-            <Button
-              onClick={() => navigate('./savings')}
-              variant="outline"
-              className="w-full sm:w-auto sm:btn-sm mt-[4px] sm:-mt-[2rem]"
-            >
-              More Info
-            </Button>
+  if (numberOfSavings > 0) {
+    return (
+      <>
+        <Card className="card-compact mb-4 success-card">
+          <div className="card-body">
+            <Typography variant="h2" className="card-title flex gap-0">
+              <BanknotesIcon
+                className="mr-2 h-6 w-6 inline-block"
+              />
+              Your Smart Vault Has Saved You ${totalSaved} Total!
+            </Typography>
+            <Typography variant="p" className="sm:mr-[100px]">
+              {numberOfSavings} automatic savings events have been captured
+            </Typography>
+            <div className="card-actions flex-1 flex-col-reverse lg:flex-row justify-end items-end">
+              <Button
+                onClick={() => navigate('./savings')}
+                variant="outline"
+                className="w-full sm:w-auto sm:btn-sm mt-[4px] sm:-mt-[2rem]"
+              >
+                More Info
+              </Button>
+            </div>
           </div>
-        </div>
-      </Card>
-    </>
-  )
+        </Card>
+      </>
+    )
+  }
+
+  return (<></>)
 };
 
 export default VaultSavingsSummary;
