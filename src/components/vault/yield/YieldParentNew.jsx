@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import {
   useReadContract,
-  useWatchBlockNumber
+  useWatchBlockNumber,
+  useChainId
 } from "wagmi";
+import { arbitrumSepolia } from "wagmi/chains";
 import axios from "axios";
 
 import {
@@ -14,7 +15,13 @@ import {
   useVaultAddressStore,
   useSmartVaultABIStore,
   useSelectedYieldPoolStore,
+  useYieldBalancesStore,
 } from "../../../store/Store";
+
+import {
+  ArbitrumGammaVaults,
+  SepoliaGammaVaults,
+} from "./YieldGammaVaults";
 
 import YieldItem from "./YieldItem";
 import YieldViewModal from "./YieldViewModalNew";
@@ -67,6 +74,7 @@ const YieldParent = (props) => {
   const { yieldEnabled } = props;
   const { vaultAddress } = useVaultAddressStore();
   const { smartVaultABI } = useSmartVaultABIStore();
+  const chainId = useChainId();
 
   const {
     selectedYieldPool,
@@ -74,6 +82,11 @@ const YieldParent = (props) => {
     selectedYieldPoolData,
     setSelectedYieldPoolData,
   } = useSelectedYieldPoolStore();
+
+  const {
+    yieldBalances,
+    setYieldBalances,
+  } = useYieldBalancesStore();
 
   const [ gammaUser, setGammaUser ] = useState({});
   const [ gammaUserLoading, setGammaUserLoading ] = useState(false);
@@ -98,6 +111,10 @@ const YieldParent = (props) => {
   const [ modalDataObj, setModalDataObj ] = useState({});
 
   const [ yieldRange, setYieldRange ] = useState('90');
+
+  const gammaVaultsInfo = chainId === arbitrumSepolia.id
+  ? SepoliaGammaVaults
+  : ArbitrumGammaVaults;
 
   const handleCloseModal = () => {
     setOpen('');
@@ -233,6 +250,37 @@ const YieldParent = (props) => {
   const isPositive = (value) => value >= 0;
 
   const getYieldColor = (value) => isPositive(value) ? 'text-green-500' : 'text-amber-500';
+
+  let useBalances = [];
+  if (userPositions && userPositions.length && gammaUser) {
+    userPositions?.length && userPositions.map(function(hypervisor, index) {    
+      const hypervisorAddress = hypervisor?.address.toLowerCase();
+      const userData = gammaUser?.[hypervisorAddress];
+      const balanceUSD = userData?.balanceUSD || 0;
+      const showBalance = Number(balanceUSD).toFixed(2);
+
+      const gammaVaultInfo = gammaVaultsInfo.find(item => item?.address.toLowerCase() === hypervisorAddress);
+
+      let tokenA;
+      let tokenB;
+    
+      if (gammaVaultInfo?.pair) {
+        tokenA = gammaVaultInfo.pair[0];
+        tokenB = gammaVaultInfo.pair[1];
+      }
+
+      useBalances.push({
+        pair: `${tokenA}/${tokenB}`,
+        balance: showBalance,
+      });
+    })
+  }
+
+  useEffect(() => {
+    if (useBalances) {
+      setYieldBalances(useBalances);
+    }
+  }, [userPositions, gammaUser]);
 
   return (
     <>

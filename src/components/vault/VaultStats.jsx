@@ -11,6 +11,7 @@ import { arbitrumSepolia } from "wagmi/chains";
 import {
   useSmartVaultV4ABIStore,
   usesUSDAddressStore,
+  useYieldBalancesStore,
 } from "../../store/Store";
 
 import {
@@ -34,6 +35,7 @@ const VaultStats = ({
     arbitrumsUSDAddress,
     arbitrumSepoliasUSDAddress
   } = usesUSDAddressStore();
+  const { yieldBalances } = useYieldBalancesStore();
   const chainId = useChainId();
   const { data: blockNumber } = useBlockNumber();
   const [renderedBlock, setRenderedBlock] = useState(blockNumber);
@@ -128,6 +130,18 @@ const VaultStats = ({
     maxBorrow = availableSupply;
   }
 
+  const collateralBalance = Number(
+    ethers.formatEther(totalCollateralValue)
+  ).toFixed(2);
+  let yieldBalance = 0;
+  if (yieldBalances && yieldBalances.length) {
+    yieldBalance = yieldBalances.reduce((total, item) => {
+      const value = parseFloat(item.balance);
+      return total + (isNaN(value) ? 0 : value);
+    }, 0);
+  }
+  const useTotalBalance = Number(collateralBalance) + Number(yieldBalance);
+
   const statsItems = [
     {
       title: "Debt",
@@ -149,7 +163,7 @@ const VaultStats = ({
           <span className="loading loading-bars loading-xs"></span>
         ) : (
           currencySymbol + Number(
-            ethers.formatEther(totalCollateralValue)
+            useTotalBalance
           ).toFixed(2)    
         )
       ),
