@@ -322,3 +322,10 @@ export const useSelectedYieldPoolStore = create(
     setSelectedYieldPoolDataLoading: (selectedYieldPoolDataLoading) => set(() => ({ selectedYieldPoolDataLoading: selectedYieldPoolDataLoading })),
   })
 );
+
+export const useYieldBalancesStore = create(
+  (set) => ({
+    yieldBalances: 0,
+    setYieldBalances: (yieldBalances) => set(() => ({ yieldBalances: yieldBalances })),
+  })
+);

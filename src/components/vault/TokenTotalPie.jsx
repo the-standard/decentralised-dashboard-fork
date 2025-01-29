@@ -4,11 +4,17 @@ import { renderToString } from 'react-dom/server'
 
 import ReactApexChart from "react-apexcharts";
 
+import {
+  useYieldBalancesStore,
+} from "../../store/Store";
+
 import Typography from "../../components/ui/Typography";
 
 const TokenTotalPie = (props) => {
 
   const { chartData, vaultId, vaultVersion, vaultType } = props;
+
+  const { yieldBalances } = useYieldBalancesStore();
 
   // const series = [44, 55, 41, 17, 15];
 
@@ -30,7 +36,26 @@ const TokenTotalPie = (props) => {
     return Number(item['prices']);
   });
 
-  let useSeries = prices;
+  let yieldTotals = [];
+  let yieldNames = [];
+  let yieldPrices = [];
+  if (yieldBalances && yieldBalances.length) {
+    yieldTotals = yieldBalances.map(function(item) {
+      return Number(0);
+    });
+    yieldNames = yieldBalances.map(function(item) {
+      return item['pair'];
+    });
+    yieldPrices = yieldBalances.map(function(item) {
+      return Number(item['balance']);
+    });  
+  }
+
+  const useTotals = [...totals, ...yieldTotals];
+  const useNames = [...names, ...yieldNames];
+  const usePrices = [...prices, ...yieldPrices];
+
+  let useSeries = usePrices;
 
   let chartEmpty = false;
 
@@ -68,12 +93,12 @@ const TokenTotalPie = (props) => {
       width: 1,
       dashArray: 0, 
     },
-    labels: names,
+    labels: useNames,
     dataLabels: {
       enabled: chartEmpty ? (false) : (true),
       formatter: (val, opt) => {
         if (opt.seriesIndex >= 0) {
-          return names[opt.seriesIndex]
+          return useNames[opt.seriesIndex]
         }
       },
     },
@@ -99,13 +124,13 @@ const TokenTotalPie = (props) => {
         return renderToString(
           <div className="py-2 px-4">
             <p>
-              Token: <b>{names[seriesIndex] || ''}</b>
+              Token: <b>{useNames[seriesIndex] || ''}</b>
             </p>
             <p>
-              Quantity: <b>{totals[seriesIndex] || ''}</b>
+              Quantity: <b>{useTotals[seriesIndex] || ''}</b>
             </p>
             <p>
-              Value: <b>{currencySymbol}{prices[seriesIndex] || ''}</b>
+              Value: <b>{currencySymbol}{usePrices[seriesIndex] || ''}</b>
             </p>
           </div>
         )
