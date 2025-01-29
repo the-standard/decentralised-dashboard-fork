@@ -126,9 +126,9 @@ const TokenTotalPie = (props) => {
             <p>
               Token: <b>{useNames[seriesIndex] || ''}</b>
             </p>
-            <p>
+            {/* <p>
               Quantity: <b>{useTotals[seriesIndex] || ''}</b>
-            </p>
+            </p> */}
             <p>
               Value: <b>{currencySymbol}{usePrices[seriesIndex] || ''}</b>
             </p>
