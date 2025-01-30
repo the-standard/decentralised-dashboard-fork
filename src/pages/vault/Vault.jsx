@@ -248,6 +248,7 @@ const Vault = () => {
                 currentVault={currentVault}
                 vaultType={vaultType}
                 isLoading={isLoading}
+                yieldEnabled={yieldEnabled}
               />
               <div className="pt-4 hidden md:block">
                 <Debt

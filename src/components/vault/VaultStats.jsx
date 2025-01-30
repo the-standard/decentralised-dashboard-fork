@@ -29,13 +29,18 @@ const VaultStats = ({
   currentVault,
   currentVaultLoading,
   vaultType,
+  yieldEnabled,
 }) => {
   const { smartVaultV4ABI } = useSmartVaultV4ABIStore();
   const {
     arbitrumsUSDAddress,
     arbitrumSepoliasUSDAddress
   } = usesUSDAddressStore();
-  const { yieldBalances } = useYieldBalancesStore();
+  const {
+    yieldBalances,
+    yieldBalancesLoading,
+  } = useYieldBalancesStore();
+
   const chainId = useChainId();
   const { data: blockNumber } = useBlockNumber();
   const [renderedBlock, setRenderedBlock] = useState(blockNumber);
@@ -142,22 +147,9 @@ const VaultStats = ({
   }
   const useTotalBalance = Number(collateralBalance) + Number(yieldBalance);
 
-  const statsItems = [
+  const statsItemsBalances = [
     {
-      title: "Debt",
-      value: (
-        currentVaultLoading ? (
-          <span className="loading loading-bars loading-xs"></span>
-        ) : (
-          Number(ethers.formatEther(minted)).toFixed(2)
-        )
-      ),
-      currency: vaultType,
-      tooltip: false,
-      show: true,
-    },
-    {
-      title: "Balance",
+      title: "Total Balance",
       value: (
         currentVaultLoading ? (
           <span className="loading loading-bars loading-xs"></span>
@@ -168,6 +160,52 @@ const VaultStats = ({
         )
       ),
       currency: "",
+      tooltip: false,
+      show: true,
+    },
+    {
+      title: "Collateral Balance",
+      value: (
+        currentVaultLoading ? (
+          <span className="loading loading-bars loading-xs"></span>
+        ) : (
+          currencySymbol + Number(
+            collateralBalance
+          ).toFixed(2)    
+        )
+      ),
+      currency: "",
+      tooltip: false,
+      show: yieldEnabled,
+    },
+    {
+      title: "Yield Pool Balance",
+      value: (
+        currentVaultLoading || yieldBalancesLoading ? (
+          <span className="loading loading-bars loading-xs"></span>
+        ) : (
+          currencySymbol + Number(
+            yieldBalance
+          ).toFixed(2)    
+        )
+      ),
+      currency: "",
+      tooltip: false,
+      show: yieldEnabled,
+    },
+  ];
+
+  const statsItemsDebt = [
+    {
+      title: "Debt",
+      value: (
+        currentVaultLoading ? (
+          <span className="loading loading-bars loading-xs"></span>
+        ) : (
+          Number(ethers.formatEther(minted)).toFixed(2)
+        )
+      ),
+      currency: vaultType,
       tooltip: false,
       show: true,
     },
@@ -207,49 +245,137 @@ const VaultStats = ({
     },
   ];
 
+
   return (
     <>
       {/* <div className="flex flex-wrap"> */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-2">
-        {statsItems.map((item, index) => {
-          if (item.show) {
-            return (
-              <div
-                key={index}
-              >
-                <Typography
-                  variant="p"
-                >
-                  {item.title}
-                  {/* {item.tooltip ? (
-                    <Tooltip
-                      className="flex-col justify-center items-center cursor-pointer before:w-[12rem]"
-                      position="top"
-                      message={item.tooltip}
+      {yieldEnabled ? (
+        <>
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-2">
+            {statsItemsBalances.map((item, index) => {
+              if (item.show) {
+                return (
+                  <div
+                    key={index}
+                  >
+                    <Typography
+                      variant="p"
                     >
-                      <QuestionMarkCircleIcon
-                        className="mb-1 ml-1 h-5 w-5 inline-block opacity-60"
-                      />
-                    </Tooltip>
-                  ) : (null)} */}
-                </Typography>
-                <div>
-                  <Typography
-                    variant="h2"
+                      {item.title}
+                      {/* {item.tooltip ? (
+                        <Tooltip
+                          className="flex-col justify-center items-center cursor-pointer before:w-[12rem]"
+                          position="top"
+                          message={item.tooltip}
+                        >
+                          <QuestionMarkCircleIcon
+                            className="mb-1 ml-1 h-5 w-5 inline-block opacity-60"
+                          />
+                        </Tooltip>
+                      ) : (null)} */}
+                    </Typography>
+                    <div>
+                      <Typography
+                        variant="h2"
+                      >
+                        {item.value}&nbsp;
+                      </Typography>
+                      <Typography
+                        variant="p"
+                      >
+                        {item.currency}
+                      </Typography>
+                    </div>
+                  </div>  
+                )
+              }
+            })}
+          </div>
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 mt-2">
+            {statsItemsDebt.map((item, index) => {
+              if (item.show) {
+                return (
+                  <div
+                    key={index}
                   >
-                    {item.value}&nbsp;
-                  </Typography>
-                  <Typography
-                    variant="p"
+                    <Typography
+                      variant="p"
+                    >
+                      {item.title}
+                      {/* {item.tooltip ? (
+                        <Tooltip
+                          className="flex-col justify-center items-center cursor-pointer before:w-[12rem]"
+                          position="top"
+                          message={item.tooltip}
+                        >
+                          <QuestionMarkCircleIcon
+                            className="mb-1 ml-1 h-5 w-5 inline-block opacity-60"
+                          />
+                        </Tooltip>
+                      ) : (null)} */}
+                    </Typography>
+                    <div>
+                      <Typography
+                        variant="h2"
+                      >
+                        {item.value}&nbsp;
+                      </Typography>
+                      <Typography
+                        variant="p"
+                      >
+                        {item.currency}
+                      </Typography>
+                    </div>
+                  </div>  
+                )
+              }
+            })}
+          </div>
+        </>
+      ) : (
+        <>
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-2">
+            {[...statsItemsBalances, ...statsItemsDebt].map((item, index) => {
+              if (item.show) {
+                return (
+                  <div
+                    key={index}
                   >
-                    {item.currency}
-                  </Typography>
-                </div>
-              </div>  
-            )
-          }
-        })}
-      </div>
+                    <Typography
+                      variant="p"
+                    >
+                      {item.title}
+                      {/* {item.tooltip ? (
+                        <Tooltip
+                          className="flex-col justify-center items-center cursor-pointer before:w-[12rem]"
+                          position="top"
+                          message={item.tooltip}
+                        >
+                          <QuestionMarkCircleIcon
+                            className="mb-1 ml-1 h-5 w-5 inline-block opacity-60"
+                          />
+                        </Tooltip>
+                      ) : (null)} */}
+                    </Typography>
+                    <div>
+                      <Typography
+                        variant="h2"
+                      >
+                        {item.value}&nbsp;
+                      </Typography>
+                      <Typography
+                        variant="p"
+                      >
+                        {item.currency}
+                      </Typography>
+                    </div>
+                  </div>  
+                )
+              }
+            })}
+          </div>
+        </>
+      )}
       <div className="w-full px-1 mt-4">
         {currentVault.status.liquidated ? (
           <Typography variant="h1" className="text-error">
