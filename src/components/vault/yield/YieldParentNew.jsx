@@ -282,10 +282,13 @@ const YieldParent = (props) => {
     if (useBalances) {
       setYieldBalances(useBalances);
     }
-    if (userPositions && userPositions.length && gammaUser) {
+  }, [userPositions, gammaUser]);
+
+  useEffect(() => {
+    if (!gammaUserPositionsLoading && !gammaUserLoading) {
       setYieldBalancesLoading(false);
     }
-  }, [userPositions, gammaUser]);
+  }, [gammaUserPositionsLoading, gammaUserLoading]);
 
   return (
     <>

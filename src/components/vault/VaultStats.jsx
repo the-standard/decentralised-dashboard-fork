@@ -249,86 +249,133 @@ const VaultStats = ({
   return (
     <>
       {/* <div className="flex flex-wrap"> */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-2">
-        {statsItemsBalances.map((item, index) => {
-          if (item.show) {
-            return (
-              <div
-                key={index}
-              >
-                <Typography
-                  variant="p"
-                >
-                  {item.title}
-                  {/* {item.tooltip ? (
-                    <Tooltip
-                      className="flex-col justify-center items-center cursor-pointer before:w-[12rem]"
-                      position="top"
-                      message={item.tooltip}
+      {yieldEnabled ? (
+        <>
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-2">
+            {statsItemsBalances.map((item, index) => {
+              if (item.show) {
+                return (
+                  <div
+                    key={index}
+                  >
+                    <Typography
+                      variant="p"
                     >
-                      <QuestionMarkCircleIcon
-                        className="mb-1 ml-1 h-5 w-5 inline-block opacity-60"
-                      />
-                    </Tooltip>
-                  ) : (null)} */}
-                </Typography>
-                <div>
-                  <Typography
-                    variant="h2"
+                      {item.title}
+                      {/* {item.tooltip ? (
+                        <Tooltip
+                          className="flex-col justify-center items-center cursor-pointer before:w-[12rem]"
+                          position="top"
+                          message={item.tooltip}
+                        >
+                          <QuestionMarkCircleIcon
+                            className="mb-1 ml-1 h-5 w-5 inline-block opacity-60"
+                          />
+                        </Tooltip>
+                      ) : (null)} */}
+                    </Typography>
+                    <div>
+                      <Typography
+                        variant="h2"
+                      >
+                        {item.value}&nbsp;
+                      </Typography>
+                      <Typography
+                        variant="p"
+                      >
+                        {item.currency}
+                      </Typography>
+                    </div>
+                  </div>  
+                )
+              }
+            })}
+          </div>
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 mt-2">
+            {statsItemsDebt.map((item, index) => {
+              if (item.show) {
+                return (
+                  <div
+                    key={index}
                   >
-                    {item.value}&nbsp;
-                  </Typography>
-                  <Typography
-                    variant="p"
-                  >
-                    {item.currency}
-                  </Typography>
-                </div>
-              </div>  
-            )
-          }
-        })}
-      </div>
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 mt-2">
-        {statsItemsDebt.map((item, index) => {
-          if (item.show) {
-            return (
-              <div
-                key={index}
-              >
-                <Typography
-                  variant="p"
-                >
-                  {item.title}
-                  {/* {item.tooltip ? (
-                    <Tooltip
-                      className="flex-col justify-center items-center cursor-pointer before:w-[12rem]"
-                      position="top"
-                      message={item.tooltip}
+                    <Typography
+                      variant="p"
                     >
-                      <QuestionMarkCircleIcon
-                        className="mb-1 ml-1 h-5 w-5 inline-block opacity-60"
-                      />
-                    </Tooltip>
-                  ) : (null)} */}
-                </Typography>
-                <div>
-                  <Typography
-                    variant="h2"
+                      {item.title}
+                      {/* {item.tooltip ? (
+                        <Tooltip
+                          className="flex-col justify-center items-center cursor-pointer before:w-[12rem]"
+                          position="top"
+                          message={item.tooltip}
+                        >
+                          <QuestionMarkCircleIcon
+                            className="mb-1 ml-1 h-5 w-5 inline-block opacity-60"
+                          />
+                        </Tooltip>
+                      ) : (null)} */}
+                    </Typography>
+                    <div>
+                      <Typography
+                        variant="h2"
+                      >
+                        {item.value}&nbsp;
+                      </Typography>
+                      <Typography
+                        variant="p"
+                      >
+                        {item.currency}
+                      </Typography>
+                    </div>
+                  </div>  
+                )
+              }
+            })}
+          </div>
+        </>
+      ) : (
+        <>
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-2">
+            {[...statsItemsBalances, ...statsItemsDebt].map((item, index) => {
+              if (item.show) {
+                return (
+                  <div
+                    key={index}
                   >
-                    {item.value}&nbsp;
-                  </Typography>
-                  <Typography
-                    variant="p"
-                  >
-                    {item.currency}
-                  </Typography>
-                </div>
-              </div>  
-            )
-          }
-        })}
-      </div>
+                    <Typography
+                      variant="p"
+                    >
+                      {item.title}
+                      {/* {item.tooltip ? (
+                        <Tooltip
+                          className="flex-col justify-center items-center cursor-pointer before:w-[12rem]"
+                          position="top"
+                          message={item.tooltip}
+                        >
+                          <QuestionMarkCircleIcon
+                            className="mb-1 ml-1 h-5 w-5 inline-block opacity-60"
+                          />
+                        </Tooltip>
+                      ) : (null)} */}
+                    </Typography>
+                    <div>
+                      <Typography
+                        variant="h2"
+                      >
+                        {item.value}&nbsp;
+                      </Typography>
+                      <Typography
+                        variant="p"
+                      >
+                        {item.currency}
+                      </Typography>
+                    </div>
+                  </div>  
+                )
+              }
+            })}
+          </div>
+        </>
+      )}
       <div className="w-full px-1 mt-4">
         {currentVault.status.liquidated ? (
           <Typography variant="h1" className="text-error">
