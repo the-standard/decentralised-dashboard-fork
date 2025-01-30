@@ -139,13 +139,23 @@ const VaultStats = ({
     ethers.formatEther(totalCollateralValue)
   ).toFixed(2);
   let yieldBalance = 0;
+  let usdsYieldBalance = 0;
+  let pureCollateralBalance = 0;
+
   if (yieldBalances && yieldBalances.length) {
     yieldBalance = yieldBalances.reduce((total, item) => {
       const value = parseFloat(item.balance);
       return total + (isNaN(value) ? 0 : value);
     }, 0);
+    const usdsYield = yieldBalances.find(item => item.pair === 'USDs/USDC');
+    usdsYieldBalance = usdsYield?.balance;
+    const collateralYieldBalance = Number(yieldBalance) - Number(usdsYieldBalance);
+    pureCollateralBalance = Number(collateralBalance) - Number(collateralYieldBalance);
   }
-  const useTotalBalance = Number(collateralBalance) + Number(yieldBalance);
+
+  // collateralBalance endpoint already includes yield values for tokens
+  // that are supported as collateral
+  const useTotalBalance = Number(collateralBalance) + Number(usdsYieldBalance);
 
   const statsItemsBalances = [
     {
@@ -170,7 +180,7 @@ const VaultStats = ({
           <span className="loading loading-bars loading-xs"></span>
         ) : (
           currencySymbol + Number(
-            collateralBalance
+            pureCollateralBalance
           ).toFixed(2)    
         )
       ),
