@@ -186,19 +186,21 @@ const TokenList = ({
 
                     if (hideUnCol === 'HIDE') {
                       if ((Number(balance) > 0)) {
-                        if (subRow === '0sub') {
-                          setSubRow(assets.indexOf(firstPositive) + 'sub')
+                        if (firstPositive) {
+                          if (subRow === '0sub') {
+                            setSubRow(assets.indexOf(firstPositive) + 'sub')
+                          }  
+                        }
+                        if (!firstPositive && subRow !== '0sub') {
+                          setSubRow('0sub')
                         }
                       }
-  
                       if (hideUnCol === 'HIDE' && !(Number(balance) > 0)) {
-                        if (subRow === index + 'sub') {
+                        if (firstPositive && subRow === index + 'sub') {
                           setSubRow(assets.indexOf(firstPositive) + 'sub')
                         }
                         return (null);
-                      }  
-                    } else if (subRow !== '0sub') {
-                      setSubRow('0sub')
+                      }
                     }
 
                     return (
