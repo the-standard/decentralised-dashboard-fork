@@ -106,12 +106,12 @@ const TokenList = ({
   const [hideUnCol, setHideUnCol] = useState('SHOW');
 
   const handleUnColToggle = () => {
-    if (hideUnCol === 'SHOW') {
-      setHideUnCol('HIDE');
-      localStorage.setItem("hideUnCol", 'HIDE');
-    } else {
+    if (hideUnCol === 'HIDE') {
       setHideUnCol('SHOW');
       localStorage.setItem("hideUnCol", 'SHOW');
+    } else {
+      setHideUnCol('HIDE');
+      localStorage.setItem("hideUnCol", 'HIDE');
     }
   }
 
@@ -141,10 +141,10 @@ const TokenList = ({
                   size="sm"
                   onClick={() => handleUnColToggle()}
                 >
-                  {hideUnCol === 'SHOW' ? (
-                    'Hide Unused Tokens'
-                  ) : (
+                  {hideUnCol === 'HIDE' ? (
                     'Show Unused Tokens'
+                  ) : (
+                    'Hide Unused Tokens'
                   )}
                 </Button>
               </div>
