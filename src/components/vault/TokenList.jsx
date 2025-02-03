@@ -197,6 +197,8 @@ const TokenList = ({
                         }
                         return (null);
                       }  
+                    } else if (subRow !== '0sub') {
+                      setSubRow('0sub')
                     }
 
                     return (
@@ -317,6 +319,21 @@ const TokenList = ({
             {assetsLoading ? (
               <CenterLoader />
             ) : (null)}
+            {
+              !assetsLoading &&
+              (assets && assets.length) &&
+              (hideUnCol === 'HIDE') &&
+              !firstPositive ? (
+                <div className="p-2 glass-alt-bg">
+                  <Typography variant="h2">
+                    No Collateral In Use
+                  </Typography>
+                  <Typography variant="p">
+                    Click the button above to reveal unused collateral tokens
+                  </Typography>
+                </div>
+              ) : (null)
+            }
           </div>
           <TokenActions
             actionType={actionType}
