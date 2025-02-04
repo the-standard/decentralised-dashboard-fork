@@ -99,8 +99,10 @@ const VaultStats = ({
   }
 
   if (Number(availableSupply) < 0) {
-    availableSupply = 0;
+    availableSupply = 0n;
   }
+
+  const availableSupplyFormatted = Number(ethers.formatEther(availableSupply));
 
   let maxBorrow = 0;
   let maxMintable = 0n;
@@ -131,8 +133,8 @@ const VaultStats = ({
     )
   ) / 100000;
 
-  if ( vaultType === 'USDs' && (maxBorrow >= availableSupply) ) {
-    maxBorrow = availableSupply;
+  if ( vaultType === 'USDs' && (maxBorrow >= availableSupplyFormatted) ) {
+    maxBorrow = availableSupplyFormatted;
   }
 
   const collateralBalance = Number(
@@ -141,7 +143,7 @@ const VaultStats = ({
   let yieldBalance = 0;
   let usdsYieldBalance = 0;
   let pureCollateralBalance = 0;
-
+  let collateralYieldBalance = 0;
   if (yieldBalances && yieldBalances.length) {
     yieldBalance = yieldBalances.reduce((total, item) => {
       const value = parseFloat(item.balance);
@@ -149,9 +151,9 @@ const VaultStats = ({
     }, 0);
     const usdsYield = yieldBalances.find(item => item.pair === 'USDs/USDC');
     usdsYieldBalance = usdsYield?.balance;
-    const collateralYieldBalance = Number(yieldBalance) - Number(usdsYieldBalance);
-    pureCollateralBalance = Number(collateralBalance) - Number(collateralYieldBalance);
   }
+  collateralYieldBalance = Number(yieldBalance) - Number(usdsYieldBalance);
+  pureCollateralBalance = Number(collateralBalance) - Number(collateralYieldBalance);
 
   // collateralBalance endpoint already includes yield values for tokens
   // that are supported as collateral
@@ -188,21 +190,21 @@ const VaultStats = ({
       tooltip: false,
       show: yieldEnabled,
     },
-    {
-      title: "Yield Pool Balance",
-      value: (
-        currentVaultLoading || yieldBalancesLoading ? (
-          <span className="loading loading-bars loading-xs"></span>
-        ) : (
-          currencySymbol + Number(
-            yieldBalance
-          ).toFixed(2)    
-        )
-      ),
-      currency: "",
-      tooltip: false,
-      show: yieldEnabled,
-    },
+    // {
+    //   title: "Yield Pool Balance",
+    //   value: (
+    //     currentVaultLoading || yieldBalancesLoading ? (
+    //       <span className="loading loading-bars loading-xs"></span>
+    //     ) : (
+    //       currencySymbol + Number(
+    //         yieldBalance
+    //       ).toFixed(2)    
+    //     )
+    //   ),
+    //   currency: "",
+    //   tooltip: false,
+    //   show: yieldEnabled,
+    // },
   ];
 
   const statsItemsDebt = [
