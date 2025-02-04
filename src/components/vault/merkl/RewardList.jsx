@@ -191,7 +191,7 @@ const RewardList = ({
           <CenterLoader />
         ) : (null)}
 
-        <div className="pt-4 flex flex-row justify-end">
+        {/* <div className="pt-4 flex flex-row justify-end">
           <Button
             className="w-full lg:w-64"
             variant="outline"
@@ -206,7 +206,7 @@ const RewardList = ({
               'No Rewards to Claim'
             )}
           </Button>
-        </div>
+        </div> */}
       </div>
       <TokenActions
         actionType={actionType}
