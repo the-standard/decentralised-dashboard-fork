@@ -185,17 +185,17 @@ const TokenList = ({
                     const balance = ethers.formatUnits(amount, token.dec);
 
                     if (hideUnCol === 'HIDE') {
-                      if ((Number(balance) > 0)) {
-                        if (firstPositive) {
-                          if (subRow === '0sub') {
-                            setSubRow(assets.indexOf(firstPositive) + 'sub')
-                          }  
-                        }
-                        if (!firstPositive && subRow !== '0sub') {
-                          setSubRow('0sub')
-                        }
-                      }
-                      if (hideUnCol === 'HIDE' && !(Number(balance) > 0)) {
+                      // if ((Number(balance) > 0)) {
+                      //   if (firstPositive) {
+                      //     if (subRow === '0sub') {
+                      //       setSubRow(assets.indexOf(firstPositive) + 'sub')
+                      //     }  
+                      //   }
+                      //   if (!firstPositive && subRow !== '0sub') {
+                      //     setSubRow('0sub')
+                      //   }
+                      // }
+                      if (!(Number(balance) > 0)) {
                         if (firstPositive && subRow === index + 'sub') {
                           setSubRow(assets.indexOf(firstPositive) + 'sub')
                         }
