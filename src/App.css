@@ -529,6 +529,15 @@
   box-shadow: inset 1px 1px 1px 0px rgba(74, 222, 128, 0.2), 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)
 }
 
+.tst-card.warn-card::before {
+  background: linear-gradient(
+    110.28deg,
+    rgba(255, 190, 0, 0.3) 0.2%,
+    rgba(255, 190, 0, 0.2) 101.11%
+  );
+  box-shadow: inset 1px 1px 1px 0px rgba(255, 190, 0, 0.2), 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)
+}
+
 /* INPUTS */
 
 input.input {
