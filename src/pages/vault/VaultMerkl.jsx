@@ -100,18 +100,18 @@ const VaultMerkl = () => {
       ? arbitrumsUSDSepoliaContractAddress
       : arbitrumsUSDContractAddress;          
 
-  const { data: vaultData, refetch } = useReadContract({
+  const { data: vaultData } = useReadContract({
     abi: vaultManagerAbi,
     address: sUSDVaultManagerAddress,
     functionName: "vaultData",
     args: [vaultId],
   });
 
-  useWatchBlockNumber({
-    onBlockNumber() {
-      refetch();
-    },
-  })
+  // useWatchBlockNumber({
+  //   onBlockNumber() {
+  //     refetch();
+  //   },
+  // })
 
   const currentVault = vaultData;
 
