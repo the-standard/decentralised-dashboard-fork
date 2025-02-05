@@ -28,6 +28,7 @@ import Typography from "../../ui/Typography";
 import TokenActions from "./TokenActions";
 import RewardItem from "./RewardItem";
 import ClaimModal from "./ClaimModal";
+import TSTClaimModal from "./TSTClaimModal";
 
 const RewardList = ({
   merklRewards,
@@ -41,6 +42,7 @@ const RewardList = ({
   const { vaultAddress } = useVaultAddressStore();
 
   const [claimAllOpen, setClaimAllOpen] = useState(false);
+  const [stakeTSTOpen, setStakeTSTOpen] = useState(false);
   const [actionType, setActionType] = useState();
   const [useAsset, setUseAsset] = useState();
   const [subRow, setSubRow] = useState('0sub');
@@ -118,8 +120,6 @@ const RewardList = ({
     tempObj
   ]
 
-  console.log(123123, testData)
-
   return (
     <>
       <div>
@@ -185,8 +185,13 @@ const RewardList = ({
                   {testData.map(function(asset, index) {
                   // {merklData.map(function(asset, index) {
                     const handleClick = (type, asset) => {
-                      setActionType(type);
                       setUseAsset(asset);
+                      if (asset && (asset.symbol === 'TST')) {
+                        console.log(40404, asset.symbol)
+                        setStakeTSTOpen(true);
+                      } else {
+                        setActionType(type);
+                      }
                     };
 
                     return (
@@ -250,7 +255,13 @@ const RewardList = ({
         vaultType={vaultType}
         parentLoading={merklRewardsLoading || merklBalancesLoading}  
       />
-
+      <TSTClaimModal
+        open={stakeTSTOpen}
+        closeModal={() => setStakeTSTOpen(false)}          
+        useAssets={useAsset ? [useAsset] : []}
+        vaultType={vaultType}
+        parentLoading={merklRewardsLoading || merklBalancesLoading}  
+      />
     </>
   );
 };
