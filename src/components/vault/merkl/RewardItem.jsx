@@ -101,22 +101,37 @@ const RewardItem = ({
         <td colSpan="5">
           <>
             <div className="flex flex-col sm:flex-row flex-wrap gap-4">
-              <Button
-                variant="outline"
-                onClick={() => handleClick('WITHDRAW', asset)}
-                disabled={useShowcase || balance <= 0 || symbol === 'TST'}
-                className="grow"
-              >
-                Withdraw
-              </Button>
-              <Button
-                variant="outline"
-                onClick={() => handleClick('CLAIM', asset)}
-                disabled={useShowcase || unclaimed <= 0 || symbol === 'TST'}
-                className="grow"
-              >
-                Claim Rewards
-              </Button>
+              {symbol === 'TST' ? (
+                <>
+                  <Button
+                    variant="outline"
+                    onClick={() => handleClick('CLAIM', asset)}
+                    disabled={useShowcase || unclaimed <= 0}
+                    className="grow"
+                  >
+                    Stake Rewards
+                  </Button>
+                </>
+              ) : (
+                <>
+                  <Button
+                    variant="outline"
+                    onClick={() => handleClick('WITHDRAW', asset)}
+                    disabled={useShowcase || balance <= 0}
+                    className="grow"
+                  >
+                    Withdraw
+                  </Button>
+                  <Button
+                    variant="outline"
+                    onClick={() => handleClick('CLAIM', asset)}
+                    disabled={useShowcase || unclaimed <= 0}
+                    className="grow"
+                  >
+                    Claim Rewards
+                  </Button>
+                </>
+              )}
             </div>
           </>
         </td>
