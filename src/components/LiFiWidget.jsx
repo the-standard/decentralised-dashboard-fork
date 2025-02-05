@@ -6,11 +6,14 @@ import {
 
 const projectId = import.meta.env.VITE_WALLETCONNECT_ID;
 
-const LiFiWidget = () => {
+const LiFiWidget = (props) => {
+  const { buyUSDs } = props;
+
   const { localThemeModeStore } = useLocalThemeModeStore();
   const isLight = localThemeModeStore && localThemeModeStore.includes('light');
 
   const widgetConfig = {
+    buildUrl: true,
     // fromChain,
     // toChain,
     // toToken,
