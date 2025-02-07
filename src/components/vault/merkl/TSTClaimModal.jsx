@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { ethers } from "ethers";
 import { toast } from 'react-toastify';
@@ -15,6 +15,8 @@ import {
   useMerklABIStore,
   useSmartVaultV4ABIStore,
 } from "../../../store/Store";
+
+import TSTStakeModal from "./TSTStakeModal";
 
 import Modal from "../../ui/Modal";
 import Button from "../../ui/Button";
@@ -207,16 +209,16 @@ const TSTClaimModal = (props) => {
               className="w-full lg:w-auto"
               color="ghost"
               onClick={closeModal}
-              disabled={isPending}
+              disabled={isPendingClaim}
             >
               Close
             </Button>
             <Button
               className="w-full lg:w-64"
               color="success"
-              disabled={isPending}
+              disabled={isPendingClaim}
               onClick={handleClaimToken}
-              loading={isPending}
+              loading={isPendingClaim}
               wide
             >
               Confirm
