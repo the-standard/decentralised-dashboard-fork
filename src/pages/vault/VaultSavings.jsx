@@ -222,6 +222,7 @@ const VaultSavings = () => {
                 const debtRepaid = item.debtRepaid;
                 const amountSaved = Number(debtRepaid) - Number(amountSoldUSD);
                 const showSaved = Number(amountSaved).toFixed(2);
+                const discountRate = ((Number(debtRepaid) - Number(amountSoldUSD)) / Number(debtRepaid)) * 100;
                 return (
                   <Fragment key={index}>
                     <div className="mt-4 rounded-lg w-full flex flex-col overflow-hidden">
@@ -274,7 +275,7 @@ const VaultSavings = () => {
                           <div className="bg-emerald-400/20 p-4 rounded-lg w-full flex items-center order-1">
                             <div className="overflow-x-hidden text-wrap">
                               <p className="text-sm opacity-80">Money Saved</p>
-                              <p className="text-lg font-semibold truncate text-ellipsis text-wrap">{debtRepaid || ''} USDs</p>
+                              <p className="text-lg font-semibold truncate text-ellipsis text-wrap">${amountSaved ? (totalSaved.toFixed(2)) : ('')}</p>
                             </div>
                           </div>
                           <div className="bg-base-300/40 p-4 rounded-lg w-full flex items-center order-3 sm:order-2 col-span-2 sm:col-span-1">
@@ -286,7 +287,7 @@ const VaultSavings = () => {
                           <div className="bg-emerald-400/20 p-4 rounded-lg w-full flex items-center order-2 sm:order-3">
                             <div className="overflow-x-hidden text-wrap">
                               <p className="text-sm opacity-80">Discount Rate</p>
-                              <p className="text-lg font-semibold truncate text-ellipsis text-wrap">{debtRepaid || ''} USDs</p>
+                              <p className="text-lg font-semibold truncate text-ellipsis text-wrap">{discountRate? (discountRate.toFixed(2)) : ''}%</p>
                             </div>
                           </div>
                         </div>
