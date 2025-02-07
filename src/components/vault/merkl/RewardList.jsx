@@ -97,6 +97,7 @@ const RewardList = ({
 
   const hasClaims = merklData.find(item => item?.unclaimed > 0);
 
+  // TODOTEMP
   const tempObj = {
     "tokenAddress": "0xf5A27E55C748bCDdBfeA5477CB9Ae924f0f7fd2e",
     "accumulated": "2154829100000000000",
@@ -119,6 +120,7 @@ const RewardList = ({
     ...merklData,
     tempObj
   ]
+  // TODO TEMP
 
   return (
     <>
@@ -178,20 +180,21 @@ const RewardList = ({
           {merklRewardsLoading || merklBalancesLoading ? (null) : (
             <tbody>
               {/* TEMP TODO */}
-              {testData && testData.length ? (
-              // {merklData && merklData.length ? (
+              {/* {testData && testData.length ? ( */}
+              {merklData && merklData.length ? (
                 <>
                   {/* TEMP TODO */}
-                  {testData.map(function(asset, index) {
-                  // {merklData.map(function(asset, index) {
+                  {/* {testData.map(function(asset, index) { */}
+                  {merklData.map(function(asset, index) {
                     const handleClick = (type, asset) => {
                       setUseAsset(asset);
-                      if (asset && (asset.symbol === 'TST')) {
-                        console.log(40404, asset.symbol)
-                        setStakeTSTOpen(true);
-                      } else {
-                        setActionType(type);
-                      }
+                      // if (asset && (asset.symbol === 'TST')) {
+                      //   console.log(40404, asset.symbol)
+                      //   setStakeTSTOpen(true);
+                      // } else {
+                      //   setActionType(type);
+                      // }
+                      setActionType(type);
                     };
 
                     return (
