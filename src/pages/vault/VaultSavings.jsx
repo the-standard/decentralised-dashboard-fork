@@ -19,7 +19,7 @@ import {
 } from '@heroicons/react/24/outline';
 
 import {
-  useContractAddressStore,
+  usesUSDContractAddressStore,
   useVaultManagerAbiStore,
 } from "../../store/Store";
 
@@ -30,7 +30,11 @@ import Typography from "../../components/ui/Typography";
 
 const VaultSavings = () => {
   const chainId = useChainId();
-  const { arbitrumSepoliaContractAddress, arbitrumContractAddress } = useContractAddressStore();
+  const {
+    arbitrumsUSDSepoliaContractAddress,
+    arbitrumsUSDContractAddress,
+  } = usesUSDContractAddressStore();
+
   const { vaultManagerAbi } = useVaultManagerAbiStore();
   const { vaultType, vaultId } = useParams();
   const navigate = useNavigate();
@@ -89,8 +93,8 @@ const VaultSavings = () => {
   })
 
   const vaultManagerAddress = chainId === arbitrumSepolia.id ?
-  arbitrumSepoliaContractAddress :
-  arbitrumContractAddress;
+  arbitrumsUSDSepoliaContractAddress :
+  arbitrumsUSDContractAddress;
 
   const { data: vaultData, refetch } = useReadContract({
     address: vaultManagerAddress,
@@ -193,7 +197,7 @@ const VaultSavings = () => {
               <BanknotesIcon
                 className="mr-2 h-6 w-6 inline-block"
               />
-              Your Smart Vault Has Saved You ${totalSaved} Total!
+              Your Smart Vault Has Saved You ${totalSaved ? (totalSaved.toFixed(2)) : ('')} Total!
             </Typography>
             <Typography variant="p" className="sm:mr-[100px]">
               {numberOfSavings} automatic savings events have been captured
