@@ -17,12 +17,12 @@ import {
   useStakingPoolv3AbiStore,
   useStakingPoolv3AddressStore,
   useGuestShowcaseStore,
-} from "../../store/Store";
+} from "../../../store/Store";
 
-import Typography from "../ui/Typography";
-import Button from "../ui/Button";
-import Input from "../ui/Input";
-import CenterLoader from "../ui/CenterLoader";
+import Typography from "../../ui/Typography";
+import Button from "../../ui/Button";
+import Input from "../../ui/Input";
+import CenterLoader from "../../ui/CenterLoader";
 
 const StakingIncrease = () => {
   const chainId = useChainId();
@@ -60,7 +60,7 @@ const StakingIncrease = () => {
     abi: erc20Abi,
   }
 
-  const { data: tstData, refetch: refetchTst } = useReadContracts({
+  const { data: tstData, refetch: refetchTst, isPending: tstIsPending, isSuccess: tstIsSuccess } = useReadContracts({
     contracts: [{
       ... tstContract,
       functionName: "allowance",
@@ -81,7 +81,7 @@ const StakingIncrease = () => {
   const existingTstAllowance = tstData && tstData[0].result;
   const tstBalance = tstData && tstData[1].result;
 
-  const { writeContract, isError, isPending, isSuccess, error } = useWriteContract();
+  const { writeContract, isError: approveIsError, isPending: approveIsPending, isSuccess: approveIsSuccess, error: approveError } = useWriteContract();
 
   const handleApproveTst = async () => {
     setStage('APPROVE_TST');
@@ -133,26 +133,26 @@ const StakingIncrease = () => {
 
   useEffect(() => {
     if (stage === 'APPROVE_TST') {
-      if (isPending) {
+      if (approveIsPending) {
         // 
-      } else if (isSuccess) {
+      } else if (approveIsSuccess) {
         setStage('');
         toast.success('TST Approved');
         handleDepositToken();
-      } else if (isError) {
+      } else if (approveIsError) {
         setStage('');
         toast.error('There was a problem');
       }  
     }
     if (stage === 'DEPOSIT_TOKEN') {
-      if (isPending) {
+      if (approveIsPending) {
         // 
-      } else if (isSuccess) {
+      } else if (approveIsSuccess) {
         setStage('');
         toast.success('Deposited Successfully!');
         tstInputRef.current.value = "";
         setTstStakeAmount(0);
-      } else if (isError) {
+      } else if (approveIsError) {
         setStage('');
         toast.error('There was a problem');
         tstInputRef.current.value = "";
@@ -160,10 +160,10 @@ const StakingIncrease = () => {
       }  
     }
   }, [
-    isPending,
-    isSuccess,
-    isError,
-    error
+    approveIsPending,
+    approveIsSuccess,
+    approveIsError,
+    approveError
   ]);
 
   const handleTstAmount = (e) => {
@@ -184,7 +184,18 @@ const StakingIncrease = () => {
     maxTst = ethers.formatEther(tstBalance.toString());
   }
 
-  if (isError) {
+  console.log(123123, maxTst)
+
+  if (tstIsPending) {
+    <>
+      <Typography variant="h2" className="card-title justify-between">
+        tstIsLoading
+      </Typography>
+      <CenterLoader />
+    </>
+  }
+
+  if (approveIsError) {
     <>
       <Typography variant="p" className="mb-2">
         Unfortunately there was an error.
@@ -240,8 +251,8 @@ const StakingIncrease = () => {
         <div className="card-actions flex flex-row justify-end">
           <Button
             color="primary"
-            loading={isPending}
-            disabled={useShowcase || isPending || tstStakeAmount <= 0 }
+            loading={approveIsPending}
+            disabled={useShowcase || approveIsPending || tstStakeAmount <= 0 }
             onClick={handleLetsStake}
             className="w-full lg:w-1/2"
           >

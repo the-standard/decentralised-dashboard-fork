@@ -101,7 +101,7 @@ const RewardItem = ({
         <td colSpan="5">
           <>
             <div className="flex flex-col sm:flex-row flex-wrap gap-4">
-              {symbol === 'TST' ? (
+              {/* {symbol === 'TST' ? (
                 <>
                   <Button
                     variant="outline"
@@ -112,7 +112,7 @@ const RewardItem = ({
                     Stake Rewards
                   </Button>
                 </>
-              ) : (
+              ) : ( */}
                 <>
                   <Button
                     variant="outline"
@@ -131,7 +131,7 @@ const RewardItem = ({
                     Claim Rewards
                   </Button>
                 </>
-              )}
+              {/* )} */}
             </div>
           </>
         </td>
