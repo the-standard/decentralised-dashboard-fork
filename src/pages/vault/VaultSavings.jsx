@@ -19,7 +19,7 @@ import {
 } from '@heroicons/react/24/outline';
 
 import {
-  useContractAddressStore,
+  usesUSDContractAddressStore,
   useVaultManagerAbiStore,
 } from "../../store/Store";
 
@@ -30,7 +30,11 @@ import Typography from "../../components/ui/Typography";
 
 const VaultSavings = () => {
   const chainId = useChainId();
-  const { arbitrumSepoliaContractAddress, arbitrumContractAddress } = useContractAddressStore();
+  const {
+    arbitrumsUSDSepoliaContractAddress,
+    arbitrumsUSDContractAddress,
+  } = usesUSDContractAddressStore();
+
   const { vaultManagerAbi } = useVaultManagerAbiStore();
   const { vaultType, vaultId } = useParams();
   const navigate = useNavigate();
@@ -89,8 +93,8 @@ const VaultSavings = () => {
   })
 
   const vaultManagerAddress = chainId === arbitrumSepolia.id ?
-  arbitrumSepoliaContractAddress :
-  arbitrumContractAddress;
+  arbitrumsUSDSepoliaContractAddress :
+  arbitrumsUSDContractAddress;
 
   const { data: vaultData, refetch } = useReadContract({
     address: vaultManagerAddress,
@@ -193,7 +197,7 @@ const VaultSavings = () => {
               <BanknotesIcon
                 className="mr-2 h-6 w-6 inline-block"
               />
-              Your Smart Vault Has Saved You ${totalSaved} Total!
+              Your Smart Vault Has Saved You ${totalSaved ? (totalSaved.toFixed(2)) : ('')} Total!
             </Typography>
             <Typography variant="p" className="sm:mr-[100px]">
               {numberOfSavings} automatic savings events have been captured
@@ -218,6 +222,7 @@ const VaultSavings = () => {
                 const debtRepaid = item.debtRepaid;
                 const amountSaved = Number(debtRepaid) - Number(amountSoldUSD);
                 const showSaved = Number(amountSaved).toFixed(2);
+                const discountRate = ((Number(debtRepaid) - Number(amountSoldUSD)) / Number(debtRepaid)) * 100;
                 return (
                   <Fragment key={index}>
                     <div className="mt-4 rounded-lg w-full flex flex-col overflow-hidden">
@@ -270,7 +275,7 @@ const VaultSavings = () => {
                           <div className="bg-emerald-400/20 p-4 rounded-lg w-full flex items-center order-1">
                             <div className="overflow-x-hidden text-wrap">
                               <p className="text-sm opacity-80">Money Saved</p>
-                              <p className="text-lg font-semibold truncate text-ellipsis text-wrap">{debtRepaid || ''} USDs</p>
+                              <p className="text-lg font-semibold truncate text-ellipsis text-wrap">${amountSaved ? (totalSaved.toFixed(2)) : ('')}</p>
                             </div>
                           </div>
                           <div className="bg-base-300/40 p-4 rounded-lg w-full flex items-center order-3 sm:order-2 col-span-2 sm:col-span-1">
@@ -282,7 +287,7 @@ const VaultSavings = () => {
                           <div className="bg-emerald-400/20 p-4 rounded-lg w-full flex items-center order-2 sm:order-3">
                             <div className="overflow-x-hidden text-wrap">
                               <p className="text-sm opacity-80">Discount Rate</p>
-                              <p className="text-lg font-semibold truncate text-ellipsis text-wrap">{debtRepaid || ''} USDs</p>
+                              <p className="text-lg font-semibold truncate text-ellipsis text-wrap">{discountRate? (discountRate.toFixed(2)) : ''}%</p>
                             </div>
                           </div>
                         </div>

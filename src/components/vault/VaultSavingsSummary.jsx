@@ -68,7 +68,7 @@ const VaultSavingsSummary = ({
               <BanknotesIcon
                 className="mr-2 h-6 w-6 inline-block"
               />
-              Your Smart Vault Has Saved You ${totalSaved} Total!
+              Your Smart Vault Has Saved You ${totalSaved ? (totalSaved.toFixed(2)) : ('')} Total!
             </Typography>
             <Typography variant="p" className="sm:mr-[100px]">
               {numberOfSavings} automatic savings events have been captured
