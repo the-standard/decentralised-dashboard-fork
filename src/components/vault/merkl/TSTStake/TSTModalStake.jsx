@@ -30,7 +30,8 @@ import Button from "../../../ui/Button";
 import CenterLoader from "../../../ui/CenterLoader";
 import Input from "../../../ui/Input";
 
-const TSTModalStake = () => {
+const TSTModalStake = (props) => {
+  const { balanceRaw } = props;
   const isFirstMount = useRef(true);
   const chainId = useChainId();
   const {
@@ -100,8 +101,11 @@ const TSTModalStake = () => {
   if (tstData && tstData[0] && tstData[0].result) {
     existingTstAllowance = tstData[0].result;
   }
-  if (tstData && tstData[1] && tstData[1].result) {
-    tstBalance = tstData[1].result;
+  // if (tstData && tstData[1] && tstData[1].result) {
+  //   tstBalance = tstData[1].result;
+  // }
+  if (balanceRaw) {
+    tstBalance = balanceRaw;
   }
 
   const {
