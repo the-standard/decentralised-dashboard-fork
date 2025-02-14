@@ -184,8 +184,6 @@ const StakingIncrease = () => {
     maxTst = ethers.formatEther(tstBalance.toString());
   }
 
-  console.log(123123, maxTst)
-
   if (tstIsPending) {
     <>
       <Typography variant="h2" className="card-title justify-between">
