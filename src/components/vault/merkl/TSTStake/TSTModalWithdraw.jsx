@@ -81,10 +81,10 @@ const TSTModalWithdraw = (props) => {
   };
 
   useEffect(() => {
-    if (isFirstMount.current) {
-      isFirstMount.current = false;
-      return;
-    }
+    // if (isFirstMount.current) {
+    //   isFirstMount.current = false;
+    //   return;
+    // }
     handleWithdrawToken();
   }, []);
 
