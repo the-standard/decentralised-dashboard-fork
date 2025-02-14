@@ -20,6 +20,7 @@ import {
   useErc20AbiStore,
   useVaultAddressStore,
   useGuestShowcaseStore,
+  useMerklTSTStakeStage,
 } from "../../../store/Store";
 
 import Button from "../../ui/Button";
@@ -29,6 +30,8 @@ import TokenActions from "./TokenActions";
 import RewardItem from "./RewardItem";
 import ClaimModal from "./ClaimModal";
 import TSTClaimModal from "./TSTClaimModal";
+
+import TSTModal from "./TSTStake/TSTModal";
 
 const RewardList = ({
   merklRewards,
@@ -40,6 +43,7 @@ const RewardList = ({
   } = useGuestShowcaseStore();
   const { erc20Abi } = useErc20AbiStore();
   const { vaultAddress } = useVaultAddressStore();
+  const { setMerklTSTStakeStage } = useMerklTSTStakeStage();
 
   const [claimAllOpen, setClaimAllOpen] = useState(false);
   const [stakeTSTOpen, setStakeTSTOpen] = useState(false);
@@ -53,6 +57,11 @@ const RewardList = ({
   }
   if (vaultType === 'USDs') {
     currencySymbol = '$';
+  }
+
+  const handleCloseTSTStake = () => {
+    setStakeTSTOpen(false);
+    setMerklTSTStakeStage('CLAIM');
   }
 
   const closeAction = () => {
@@ -69,58 +78,39 @@ const RewardList = ({
     }
   }
 
-  const { data: merklBalances, isLoading: merklBalancesLoading } = useReadContracts({
-    contracts:merklRewards.map((item) =>({
+  let balanceOfContracts = [];
+  if (merklRewards && merklRewards.length) {
+    balanceOfContracts = merklRewards.map((item) =>({
       address: item?.tokenAddress,
       abi: erc20Abi,
       functionName: "balanceOf",
       args: [vaultAddress],
     }))
-  })
-
-  const merklData = merklRewards.map((item, index) => {
-    let useBalance = 0n;
-    if (merklBalances) {
-      if (merklBalances[index]) {
-        if (merklBalances[index].result) {
-          useBalance = merklBalances[index].result;
-        }
-        return {
-          ...merklRewards[index],
-          balanceOf: useBalance
-        }    
-      } else {
-        return {};
-      }
-    }
-  });
-
-  const hasClaims = merklData.find(item => item?.unclaimed > 0);
-
-  // TODOTEMP
-  const tempObj = {
-    "tokenAddress": "0xf5A27E55C748bCDdBfeA5477CB9Ae924f0f7fd2e",
-    "accumulated": "2154829100000000000",
-    "balanceOf": 7546640168005693611n,
-    "decimals": 18,
-    "symbol": "TST",
-    "unclaimed": "1263002840000000000",
-    "pending": "1165930000000000",
-    "proof": [],
-    "reasons": {
-        "Gamma_0x547a116a2622876ce1c8d19d41c683c8f7bec5c0": {
-            "accumulated": "2154829100000000000",
-            "unclaimed": "1263002840000000000",
-            "pending": "1165930000000000"
-        }
-    }
   }
 
-  const testData = [
-    ...merklData,
-    tempObj
-  ]
-  // TODO TEMP
+  const { data: merklBalances, isLoading: merklBalancesLoading } = useReadContracts({
+    contracts: balanceOfContracts
+  })
+
+  let merklData = [];
+  if (merklRewards && merklRewards.length) {
+    merklData = merklRewards.map((item, index) => {
+      let useBalance = 0n;
+      if (merklBalances) {
+        if (merklBalances[index]) {
+          if (merklBalances[index].result) {
+            useBalance = merklBalances[index].result;
+          }
+          return {
+            ...merklRewards[index],
+            balanceOf: useBalance
+          }    
+        } else {
+          return {};
+        }
+      }
+    });
+  }
 
   return (
     <>
@@ -179,22 +169,16 @@ const RewardList = ({
           </thead>
           {merklRewardsLoading || merklBalancesLoading ? (null) : (
             <tbody>
-              {/* TEMP TODO */}
-              {/* {testData && testData.length ? ( */}
               {merklData && merklData.length ? (
                 <>
-                  {/* TEMP TODO */}
-                  {/* {testData.map(function(asset, index) { */}
                   {merklData.map(function(asset, index) {
                     const handleClick = (type, asset) => {
                       setUseAsset(asset);
-                      // if (asset && (asset.symbol === 'TST')) {
-                      //   console.log(40404, asset.symbol)
-                      //   setStakeTSTOpen(true);
-                      // } else {
-                      //   setActionType(type);
-                      // }
-                      setActionType(type);
+                      if (asset && (asset.symbol === 'TST')) {
+                        setStakeTSTOpen(true);
+                      } else {
+                        setActionType(type);
+                      }
                     };
 
                     return (
@@ -258,13 +242,22 @@ const RewardList = ({
         vaultType={vaultType}
         parentLoading={merklRewardsLoading || merklBalancesLoading}  
       />
-      <TSTClaimModal
+      <TSTModal
+        open={stakeTSTOpen}
+        closeModal={() => handleCloseTSTStake()}       
+        useAsset={useAsset}   
+        useAssets={useAsset ? [useAsset] : []}
+        vaultType={vaultType}
+        parentLoading={merklRewardsLoading || merklBalancesLoading}
+        merklData={merklData} 
+      />
+      {/* <TSTClaimModal
         open={stakeTSTOpen}
         closeModal={() => setStakeTSTOpen(false)}          
         useAssets={useAsset ? [useAsset] : []}
         vaultType={vaultType}
         parentLoading={merklRewardsLoading || merklBalancesLoading}  
-      />
+      /> */}
     </>
   );
 };
