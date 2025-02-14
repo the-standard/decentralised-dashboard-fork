@@ -201,10 +201,10 @@ const TSTModalStake = (props) => {
   // }, []);
 
   useEffect(() => {
-    if (isFirstMount.current) {
-      isFirstMount.current = false;
-      return;
-    }
+    // if (isFirstMount.current) {
+    //   isFirstMount.current = false;
+    //   return;
+    // }
     if (tstIsSuccess) {
       handleLetsStake();
     }
