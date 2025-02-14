@@ -53,8 +53,6 @@ const TSTModal = (props) => {
     merklTST = merklData.find(item => item?.symbol === 'TST');
   }
 
-  console.log(123123, {merklTST})
-
   if (merklTST) {
     symbol = merklTST?.symbol;
     decimals = merklTST?.decimals;
@@ -99,6 +97,7 @@ const TSTModal = (props) => {
         >
           <TSTModalStake
             closeModal={closeModal}
+            balanceRaw={balanceRaw}
           />
         </Modal>
       );
