@@ -101,18 +101,19 @@ const RewardItem = ({
         <td colSpan="5">
           <>
             <div className="flex flex-col sm:flex-row flex-wrap gap-4">
-              {/* {symbol === 'TST' ? (
+              {symbol === 'TST' ? (
                 <>
                   <Button
                     variant="outline"
                     onClick={() => handleClick('CLAIM', asset)}
-                    disabled={useShowcase || unclaimed <= 0}
-                    className="grow"
+                    // TEMP TODO
+                    disabled={useShowcase || (unclaimed <= 0 && balance <= 0)}
+                    className="w-full sm:w-[50%] sm:ml-auto"
                   >
                     Stake Rewards
                   </Button>
                 </>
-              ) : ( */}
+              ) : (
                 <>
                   <Button
                     variant="outline"
@@ -131,7 +132,7 @@ const RewardItem = ({
                     Claim Rewards
                   </Button>
                 </>
-              {/* )} */}
+              )}
             </div>
           </>
         </td>
