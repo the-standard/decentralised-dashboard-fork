@@ -59,6 +59,7 @@ const TSTModalWithdraw = (props) => {
   });
 
   const handleWithdrawToken = async () => {
+    console.log('handle')
     try {
       writeContract({
         abi: smartVaultABI,
@@ -123,6 +124,8 @@ const TSTModalWithdraw = (props) => {
   if (isConfirming) {
     withdrawStage = 'Confirming withdrawal transaction';
   }
+
+  console.log({isPending}, {isConfirming}, {isSuccess}, {isError}, {error}, {isFirstMount})
 
   return (
     <>
