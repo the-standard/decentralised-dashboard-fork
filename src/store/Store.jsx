@@ -331,3 +331,10 @@ export const useYieldBalancesStore = create(
     setYieldBalancesLoading: (yieldBalancesLoading) => set(() => ({ yieldBalancesLoading: yieldBalancesLoading })),
   })
 );
+
+export const useMerklTSTStakeStage = create(
+  (set) => ({
+    merklTSTStakeStage: 'CLAIM',
+    setMerklTSTStakeStage: (merklTSTStakeStage) => set(() => ({ merklTSTStakeStage: merklTSTStakeStage })),
+  })
+);
