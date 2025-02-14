@@ -167,49 +167,20 @@ const YieldDepositModal = (props) => {
             <AdjustmentsHorizontalIcon className="mr-2 h-6 w-6 inline-block"/>
             Choose Your Allocation
           </Typography>
-
-          <Typography variant="h3">
-            Balancing Stability & Growth Potential
-          </Typography>
-
-          <Typography
-            variant="p"
-            className="mb-2"
-          >
-            Volatile pools (like {assetYield.pair[0]}/{assetYield.pair[1]}) can unlock high returns from UNISWAP trading fees, though short-term price shifts may temporarily impact returns. Over time, fees often outpace impermanent loss (IL) fluctuations, leading to positive yields.
-          </Typography>
-
-          <Typography
-            variant="p"
-            className="mb-2"
-          >
-            We require at least 10% of your collateral in the correlated stable pool (USDs/USDC). Stable pools provide consistent, lower-risk yields, shielding a portion of your assets from the effects of impermanent loss. You can increase this allocation for even more stability.
-          </Typography>
-
-          <Typography
-            variant="p"
-            className="mb-2"
-          >
-            By choosing your mix, you&apos;re setting up for both the potential rewards of volatility and the steady benefits of stability.
-          </Typography>
-
-          <Typography variant="p" className="mb-2">
-            When withdrawing from your yield pool, any USDs will be converted to a collateral token of your choice.
-          </Typography>
   
-          <div className="flex flex-col">
+          <div className="flex flex-col bg-base-300/40 p-4 rounded-lg">
             <div className="flex flex-row justify-between">
               <Typography
                 variant="p"
                 className="mb-2"
               >
-                Volatile
+                {100 - stableRatio}% Risky Volatile Pool
               </Typography>
               <Typography
                 variant="p"
                 className="mb-2 text-right"
               >
-                Stable
+                {stableRatio}% Low Risk Stable Pool
               </Typography>
             </div>
             <div>
@@ -225,24 +196,69 @@ const YieldDepositModal = (props) => {
                 onChange={(e) => handleStableRatio(e.target.value)}
               />
             </div>
-            <div className="flex flex-row justify-between">
+            <div className="flex flex-row justify-between text-warning">
               <div className="flex flex-col">
                 <Typography
                   variant="p"
-                  className="mt-2"
+                  className="mt-0 opacity-80"
                 >
-                  {100 - stableRatio}% {assetYield.pair[0]}/{assetYield.pair[1]}
+                  {assetYield.pair[0]}/{assetYield.pair[1]}
+                </Typography>
+                <Typography
+                  variant="h2"
+                  className="mt-1"
+                >
+                  ≈{0}% APY
+                </Typography>
+                <Typography
+                  variant="p"
+                  className="mt-1 opacity-80"
+                >
+                  At risk when markets move
                 </Typography>
               </div>
-              <div className="flex flex-col">
+              <div className="flex flex-col text-end text-success">
                 <Typography
                   variant="p"
-                  className="mt-2"
+                  className="mt-0 opacity-80"
                 >
-                  {stableRatio}% USDs/USDC
+                  USDs/USDC
+                </Typography>
+                <Typography
+                  variant="h2"
+                  className="mt-1"
+                >
+                  ≈{0}% APY
+                </Typography>
+                <Typography
+                  variant="p"
+                  className="mt-1 opacity-80"
+                >
+                  Stable compound growth  
                 </Typography>
               </div>
             </div>
+          </div>
+
+          <div>
+            <Typography
+              variant="p"
+              className="mt-1"
+            >
+              📈 Volatile pools offer higher returns but come with impermanent loss 
+            </Typography>
+            <Typography
+              variant="p"
+              className="mt-1"
+            >
+              🛡️ Stable pools provide steady, lower-risk earnings 
+            </Typography>
+            <Typography
+              variant="p"
+              className="mt-1"
+            >
+              ✅ Minimum 10% stable allocation is required
+            </Typography>
           </div>
   
           <div className="card-actions pt-4 flex-col-reverse lg:flex-row justify-end">
@@ -277,84 +293,69 @@ const YieldDepositModal = (props) => {
       >
         <Typography variant="h2" className="card-title">
           <QueueListIcon className="mr-2 h-6 w-6 inline-block"/>
-          Yield Pool
+          Yield Pool Fees
         </Typography>
 
         <Typography
-          variant="p"
+          variant="h2"
           className="mb-2"
         >
-          This will place <b>all</b> of your <b>{symbol}</b> into the Yield Pool shown below. You will get to choose the stable/volatile ratio next.
+          Estimated Yield Based on Current APY
         </Typography>
 
-        <Typography
-          variant="p"
-          className="mb-2"
-        >
-          The price of yield generation is 1%. This will get distributed to TST stakers.
-        </Typography>
+        <div className="bg-base-300/40 p-4 rounded-lg">
+          <Typography
+            variant="p"
+            className="mb-0 flex items-center"
+          >
+            <div className="inline-flex items-center mr-2">
+              <TokenIcon
+                symbol={'USDs'}
+                className="h-8 w-8 p-1 rounded-full bg-base-300/50"
+              />
+              <TokenIcon
+                symbol={'USDC'}
+                className="h-8 w-8 p-1 rounded-full bg-base-300/50 -ml-[8px]"
+              />
+            </div>
+            Stable Pool
+            (USDs/USDC):
+            <b>&nbsp;≈{0}% APY</b>
+          </Typography>
 
-        <Typography
-          variant="p"
-          className="mb-2"
-        >
-          <b>Please Note: USDs cannot be used as collateral to back any loans.</b>
-        </Typography>
+          <div className="divider my-1" />
 
-        <Typography
-          variant="p"
-          className="mb-2"
-        >
-          Confirm that you are happy to continue with this selected Yield Pool.
-        </Typography>
-
-        <div className="flex flex-col">
-          <table className="table">
-            <thead>
-              <tr>
-                <th>Stable Pair</th>
-                <th>Volatile Pair</th>
-              </tr>
-            </thead>
-            <tbody>
-                <tr>
-                  <td>
-                    <div className="h-full w-full flex flex-col">
-                      <div className="flex items-center">
-                        <TokenIcon
-                          symbol={'USDs'}
-                          className="h-8 w-8 p-1 rounded-full bg-base-300/50"
-                        />
-                        <TokenIcon
-                          symbol={'USDC'}
-                          className="h-8 w-8 p-1 rounded-full bg-base-300/50 -ml-[8px]"
-                        />
-                      </div>
-                      <div className="pt-2 hidden md:table-cell">
-                        USDs/USDC
-                      </div>
-                    </div>
-                  </td>
-                  <td>
-                    <div className="h-full w-full flex flex-col">
-                      <div className="flex items-center">
-                        <TokenIcon
-                          symbol={assetYield.pair[0]}
-                          className="h-8 w-8 p-1 rounded-full bg-base-300/50"
-                        />
-                        <TokenIcon
-                          symbol={assetYield.pair[1]}
-                          className="h-8 w-8 p-1 rounded-full bg-base-300/50 -ml-[8px]"
-                        />
-                      </div>
-                      <div className="pt-2 hidden md:table-cell">
-                        {assetYield.pair[0]}/{assetYield.pair[1]}
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-          </table>
+          <Typography
+            variant="p"
+            className="mb-0 flex items-center"
+          >
+            <div className="inline-flex items-center mr-2">
+              <TokenIcon
+                symbol={assetYield.pair[0]}
+                className="h-8 w-8 p-1 rounded-full bg-base-300/50"
+              />
+              <TokenIcon
+                symbol={assetYield.pair[1]}
+                className="h-8 w-8 p-1 rounded-full bg-base-300/50 -ml-[8px]"
+              />
+            </div>
+            Volatile Pool
+            ({assetYield.pair[0]}/{assetYield.pair[1]}):
+            <b>&nbsp;≈{0}% APY</b>
+          </Typography>
+        </div>
+        <div className="mt-2">
+          <Typography
+            variant="h2"
+            className="mb-1"
+          >
+            Yield Pool Fees: 1% of collateral
+          </Typography>
+          <Typography
+            className="mb-2 opacity-80 text-sm"
+          >
+            (Paid on withdrawal from yield pool and airdropped onto TST stakers)
+          </Typography>
         </div>
 
         <div className="card-actions pt-4 flex-col-reverse lg:flex-row justify-end">
