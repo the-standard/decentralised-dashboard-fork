@@ -182,7 +182,7 @@ const VaultStats = ({
           <span className="loading loading-bars loading-xs"></span>
         ) : (
           currencySymbol + Number(
-            pureCollateralBalance
+            collateralYieldBalance
           ).toFixed(2)    
         )
       ),
