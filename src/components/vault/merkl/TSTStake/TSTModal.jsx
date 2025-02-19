@@ -25,8 +25,8 @@ const TSTModal = (props) => {
     open,
     closeModal,
     useAssets,
-    useAsset,
     merklData,
+    merklBalancesLoading,
   } = props;
 
   const navigate = useNavigate();
@@ -71,8 +71,9 @@ const TSTModal = (props) => {
         >
           <TSTModalClaim
             closeModal={closeModal}
-            useAssets={useAssets}
+            useAssets={merklTST ? [merklTST] : []}
             unclaimed={unclaimed}
+            merklBalancesLoading={merklBalancesLoading}
           />
         </Modal>
       );
