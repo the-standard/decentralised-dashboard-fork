@@ -219,7 +219,7 @@ const TSTModalStake = (props) => {
         // toast.success('TST Approved');
         // handleDepositToken();
       } else if (approveIsError) {
-        console.log(approveIsError)
+        console.log('approve', approveIsError)
         setStage('');
         toast.error('There was a problem');
         setMerklTSTStakeStage('STAKE_ERROR');
@@ -233,7 +233,7 @@ const TSTModalStake = (props) => {
         // toast.success('TST Staked Successfully');
         // setMerklTSTStakeStage('SUCCESS');
       } else if (depositIsError) {
-        console.log(depositError)
+        console.log('deposit', depositError)
         setStage('');
         toast.error('There was a problem');
         setMerklTSTStakeStage('STAKE_ERROR');

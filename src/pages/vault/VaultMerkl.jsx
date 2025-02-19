@@ -149,19 +149,6 @@ const VaultMerkl = () => {
     }
   };
 
-  // if (vaultsLoading) {
-  //   return (
-  //     <div>
-  //       <Card className="card-compact">
-  //         <div className="card-body">
-  //           {vaultNav()}
-  //           <CenterLoader />
-  //         </div>
-  //       </Card>
-  //     </div>
-  //   )
-  // }
-
   if (!currentVault) {
     return (
       <div>
@@ -194,6 +181,7 @@ const VaultMerkl = () => {
           <RewardList
             merklRewards={merklRewards}
             merklRewardsLoading={merklRewardsLoading}
+            getMerklRewardsData={getMerklRewardsData}
           />
         </div>
       </Card>
