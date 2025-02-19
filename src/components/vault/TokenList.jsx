@@ -18,7 +18,7 @@ import {
 import {
   useVaultStore,
   useGuestShowcaseStore,
-  useGammaHypervisorsAllData,
+  useGammaHypervisorsAllDataStore,
 } from "../../store/Store";
 
 import {
@@ -48,7 +48,7 @@ const TokenList = ({
   const {
     gammaHypervisorsAllData,
     gammaHypervisorsAllDataLoading,
-  } = useGammaHypervisorsAllData();
+  } = useGammaHypervisorsAllDataStore();
 
   let currencySymbol = '';
   if (vaultType === 'EUROs') {
@@ -272,7 +272,7 @@ const TokenList = ({
                                   }}
                                 />
                               </Tooltip>
-                              <div className="p-4 hidden md:table-cell">{symbol}</div>
+                              <div className="pl-4 hidden md:table-cell">{symbol}</div>
                             </div>
                           </td>
                           <td className="truncate max-w-[150px] md:max-w-[200px]">

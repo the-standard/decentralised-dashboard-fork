@@ -332,11 +332,20 @@ export const useYieldBalancesStore = create(
   })
 );
 
-export const useGammaHypervisorsAllData = create(
+export const useGammaHypervisorsAllDataStore = create(
   (set) => ({
     gammaHypervisorsAllData: [],
     gammaHypervisorsAllDataLoading: true,
     setGammaHypervisorsAllData: (gammaHypervisorsAllData) => set(() => ({ gammaHypervisorsAllData: gammaHypervisorsAllData })),
     setGammaHypervisorsAllDataLoading: (gammaHypervisorsAllDataLoading) => set(() => ({ gammaHypervisorsAllDataLoading: gammaHypervisorsAllDataLoading })),
+  })
+);
+
+export const useMerklPoolsDataStore = create(
+  (set) => ({
+    merklPoolsData: [],
+    merklPoolsDataLoading: true,
+    setMerklPoolsData: (merklPoolsData) => set(() => ({ merklPoolsData: merklPoolsData })),
+    setMerklPoolsDataLoading: (merklPoolsDataLoading) => set(() => ({ merklPoolsDataLoading: merklPoolsDataLoading })),
   })
 );

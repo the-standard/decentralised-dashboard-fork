@@ -15,11 +15,15 @@ import {
 import {
   useVaultAddressStore,
   useLocalThemeModeStore,
+  useGammaHypervisorsAllDataStore,
+  useMerklPoolsDataStore,
 } from "../../../store/Store";
 
 import {
   ArbitrumVaults,
   SepoliaVaults,
+  SepoliaGammaVaults,
+  ArbitrumGammaVaults,
 } from "./YieldGammaVaults";
 
 import smartVaultAbi from "../../../abis/smartVault";
@@ -38,9 +42,18 @@ const YieldDepositModal = (props) => {
   } = props;
   const { vaultAddress } = useVaultAddressStore();
   const { localThemeModeStore } = useLocalThemeModeStore();
+  const {
+    gammaHypervisorsAllData,
+    gammaHypervisorsAllDataLoading,
+  } = useGammaHypervisorsAllDataStore();
+  const {
+    merklPoolsData,
+    merklPoolsDataLoading,
+  } = useMerklPoolsDataStore();
+
   const chainId = useChainId();
   const [ yieldStage, setYieldStage ] = useState('');
-  const [ stableRatio, setStableRatio ] = useState(20);
+  const [ stableRatio, setStableRatio ] = useState(50);
   const [ minCollateral, setMinCollateral ] = useState(50);
 
   const formattedSymbol = ethers.encodeBytes32String(symbol);
@@ -116,7 +129,85 @@ const YieldDepositModal = (props) => {
   ? SepoliaVaults
   : ArbitrumVaults;
 
-  const assetYield = yieldVaultsInfo.find(item => item.asset === symbol);
+  const gammaVaults = chainId === arbitrumSepolia.id
+  ? SepoliaGammaVaults
+  : ArbitrumGammaVaults;
+
+  // Volatile Pair
+
+  let tokenYield = yieldVaultsInfo.find(item => item.asset === symbol);
+  let yieldPair;
+  if (tokenYield && tokenYield.pair) {
+    yieldPair = tokenYield.pair;
+  }
+
+  let gammaVault = {};
+  let gammaAddress;
+  if (yieldPair) {
+    gammaVault = gammaVaults.find(vault => (
+      vault.pair.length === yieldPair.length && 
+      yieldPair.every(token => vault.pair.includes(token))
+    ))
+  }
+  if (gammaVault && gammaVault.address) {
+    gammaAddress = gammaVault.address;
+  }
+
+  let gammaData;
+  if (gammaAddress) {
+    gammaData = gammaHypervisorsAllData.find(hypervisor => (
+      hypervisor.address.toLowerCase() === gammaAddress.toLowerCase()
+    ))
+  }
+
+  let gammaYield = 0;
+  if (gammaData && gammaData.feeApr) {
+    gammaYield = Number(gammaData.feeApr * 100).toFixed(2);
+  }
+
+  // USDs Stable Pair
+
+  const usdsTokenYield = yieldVaultsInfo.find(item => item.asset === 'USDs');
+  let usdsYieldPair;
+  if (usdsTokenYield && usdsTokenYield.pair) {
+    usdsYieldPair = usdsTokenYield.pair;
+  }
+
+  let usdsGammaVault = {};
+  let usdsGammaAddress;
+  if (usdsYieldPair) {
+    usdsGammaVault = gammaVaults.find(vault => (
+      vault.pair.length === usdsYieldPair.length && 
+      usdsYieldPair.every(token => vault.pair.includes(token))
+    ))
+  }
+  if (usdsGammaVault && usdsGammaVault.address) {
+    usdsGammaAddress = usdsGammaVault.address;
+  }
+
+  let usdsGammaData;
+  if (usdsGammaAddress) {
+    usdsGammaData = gammaHypervisorsAllData.find(hypervisor => (
+      hypervisor.address.toLowerCase() === usdsGammaAddress.toLowerCase()
+    ))
+  }
+
+  let usdsGammaYield = 0;
+  if (usdsGammaData && usdsGammaData.feeApr) {
+    usdsGammaYield = Number(usdsGammaData.feeApr * 100).toFixed(2);
+  }
+
+  // USDs Merkl Rewards
+
+  const usdsGammaVaultInfo = gammaVaults.find(item => item?.pair.every(token => ['USDs', 'USDC'].includes(token)));
+
+  const merklPoolData = merklPoolsData?.pools?.[usdsGammaVaultInfo?.pool];
+
+  const merklAprSelector = `Gamma ${usdsGammaVaultInfo?.address}`;
+
+  const merklPoolReward = merklPoolData?.aprs?.[merklAprSelector] || 0;
+
+  const stableYieldTotal = Number(Number(usdsGammaYield) + Number(merklPoolReward)).toFixed(2);
 
   if (isPending) {
     return (
@@ -202,13 +293,19 @@ const YieldDepositModal = (props) => {
                   variant="p"
                   className="mt-0 opacity-80"
                 >
-                  {assetYield.pair[0]}/{assetYield.pair[1]}
+                  {tokenYield.pair[0]}/{tokenYield.pair[1]}
                 </Typography>
                 <Typography
                   variant="h2"
                   className="mt-1"
                 >
-                  ≈{0}% APY
+                  {gammaHypervisorsAllDataLoading ? (
+                    <span className="loading loading-bars loading-xs"></span>
+                  ) : (
+                    <>
+                      ≈ {gammaYield}% APY
+                    </>
+                  )}
                 </Typography>
                 <Typography
                   variant="p"
@@ -228,7 +325,13 @@ const YieldDepositModal = (props) => {
                   variant="h2"
                   className="mt-1"
                 >
-                  ≈{0}% APY
+                  {gammaHypervisorsAllDataLoading || merklPoolsDataLoading ? (
+                    <span className="loading loading-bars loading-xs"></span>
+                  ) : (
+                    <>
+                      ≈ {stableYieldTotal}% APY
+                    </>
+                  )}
                 </Typography>
                 <Typography
                   variant="p"
@@ -320,7 +423,13 @@ const YieldDepositModal = (props) => {
             </div>
             Stable Pool
             (USDs/USDC):
-            <b>&nbsp;≈{0}% APY</b>
+            {gammaHypervisorsAllDataLoading || merklPoolsDataLoading ? (
+              <span className="loading loading-bars loading-xs"></span>
+            ) : (
+              <>
+                <b>&nbsp;≈ {stableYieldTotal}% APY</b>
+              </>
+            )}
           </Typography>
 
           <div className="divider my-1" />
@@ -331,17 +440,23 @@ const YieldDepositModal = (props) => {
           >
             <div className="inline-flex items-center mr-2">
               <TokenIcon
-                symbol={assetYield.pair[0]}
+                symbol={tokenYield.pair[0]}
                 className="h-8 w-8 p-1 rounded-full bg-base-300/50"
               />
               <TokenIcon
-                symbol={assetYield.pair[1]}
+                symbol={tokenYield.pair[1]}
                 className="h-8 w-8 p-1 rounded-full bg-base-300/50 -ml-[8px]"
               />
             </div>
             Volatile Pool
-            ({assetYield.pair[0]}/{assetYield.pair[1]}):
-            <b>&nbsp;≈{0}% APY</b>
+            ({tokenYield.pair[0]}/{tokenYield.pair[1]}):
+            {gammaHypervisorsAllDataLoading ? (
+              <span className="loading loading-bars loading-xs"></span>
+            ) : (
+              <>
+                <b>&nbsp;≈ {gammaYield}% APY</b>
+              </>
+            )}
           </Typography>
         </div>
         <div className="mt-2">
