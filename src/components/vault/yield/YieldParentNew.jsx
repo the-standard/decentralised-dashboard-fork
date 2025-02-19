@@ -394,8 +394,7 @@ const YieldParent = (props) => {
                 </Select>
               </div>
               <div className="grid grid-cols-1 gap-4">
-                {/* {gammaUserPositionsLoading ? ( */}
-                { false ? (
+                {gammaUserPositionsLoading ? (
                   <>
                     <div className="bg-base-300/40 p-4 rounded-lg w-full flex items-center justify-center min-h-[200px]">
                       <span className="loading loading-spinner loading-lg"></span>
@@ -403,8 +402,7 @@ const YieldParent = (props) => {
                   </>
                 ) : (
                   <>
-                    {/* {userPositions && userPositions.length ? ( */}
-                    { false ? (
+                    {userPositions && userPositions.length ? (
                       <>
                         {userPositions?.length && userPositions.map(function(item, index) {
                           return (
