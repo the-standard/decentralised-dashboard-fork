@@ -295,17 +295,21 @@ const TokenList = ({
                             <span className="loading loading-bars loading-xs"></span>
                           ) : (
                             <>
-                              {subRow === index + 'sub' ? (
-                                <>
-                                  Earn
-                                  <br/>
-                                  ≈ {gammaYield.toFixed(2)}% APY
-                                </>
-                              ) : (
-                                <>
-                                  {gammaYield.toFixed(2)}% APY
-                                </>
-                              )}
+                              <span className={
+                                gammaYield > 0 ? ('') : ('opacity-50')
+                              }>
+                                {subRow === index + 'sub' ? (
+                                  <>
+                                    Earn
+                                    <br/>
+                                    ≈ {gammaYield.toFixed(2)}% APY
+                                  </>
+                                ) : (
+                                  <>
+                                    {gammaYield.toFixed(2)}% APY
+                                  </>
+                                )}
+                              </span>
                             </>
                           )}
                           </td>
