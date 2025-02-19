@@ -16,6 +16,7 @@ import {
   useSmartVaultABIStore,
   useSelectedYieldPoolStore,
   useYieldBalancesStore,
+  useGammaHypervisorsAllData,
 } from "../../../store/Store";
 
 import {
@@ -74,6 +75,10 @@ const YieldParent = (props) => {
   const { yieldEnabled } = props;
   const { vaultAddress } = useVaultAddressStore();
   const { smartVaultABI } = useSmartVaultABIStore();
+  const {
+    setGammaHypervisorsAllData,
+    setGammaHypervisorsAllDataLoading,
+  } = useGammaHypervisorsAllData();
   const chainId = useChainId();
 
   const {
@@ -205,6 +210,7 @@ const YieldParent = (props) => {
 
   const getGammaHypervisorsData = async () => {
     setGammaHypervisorsLoading(true);
+    setGammaHypervisorsAllDataLoading(true);
     try {
       const response = await axios.get(
         `https://wire3.gamma.xyz/frontend/hypervisors/allDataSummary?chain=arbitrum&protocol=uniswapv3`
@@ -213,10 +219,13 @@ const YieldParent = (props) => {
       const useData = response?.data;
 
       setGammaHypervisors(useData);
+      setGammaHypervisorsAllData(useData);
       setGammaHypervisorsLoading(false);
+      setGammaHypervisorsAllDataLoading(false);
       setGammaHypervisorsErr(false);
     } catch (error) {
       setGammaHypervisorsLoading(false);
+      setGammaHypervisorsAllDataLoading(false);
       setGammaHypervisorsErr(true);
       console.log(error);
     }

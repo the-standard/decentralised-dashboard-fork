@@ -331,3 +331,12 @@ export const useYieldBalancesStore = create(
     setYieldBalancesLoading: (yieldBalancesLoading) => set(() => ({ yieldBalancesLoading: yieldBalancesLoading })),
   })
 );
+
+export const useGammaHypervisorsAllData = create(
+  (set) => ({
+    gammaHypervisorsAllData: [],
+    gammaHypervisorsAllDataLoading: true,
+    setGammaHypervisorsAllData: (gammaHypervisorsAllData) => set(() => ({ gammaHypervisorsAllData: gammaHypervisorsAllData })),
+    setGammaHypervisorsAllDataLoading: (gammaHypervisorsAllDataLoading) => set(() => ({ gammaHypervisorsAllDataLoading: gammaHypervisorsAllDataLoading })),
+  })
+);
