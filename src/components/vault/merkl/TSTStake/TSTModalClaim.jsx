@@ -31,6 +31,7 @@ const TSTModalClaim = (props) => {
     useAssets,
     parentLoading,
     unclaimed,
+    merklBalancesLoading,
   } = props;
 
   const { merklDistributorAddress } = useMerklAddressStore();
@@ -132,6 +133,7 @@ const TSTModalClaim = (props) => {
     } else if (isSuccess) {
       // toast.success("Tokens Claimed Successfully");
       // setMerklTSTStakeStage('WITHDRAW')
+      // getMerklRewardsData();
     } else if (isError) {
       console.error(error)
       toast.error('There was a problem');
@@ -145,13 +147,14 @@ const TSTModalClaim = (props) => {
   ]);
 
   useEffect(() => {
-    if (isConfirmed) {
+    if (isConfirmed && !merklBalancesLoading) {
       toast.success("Tokens Claimed Successfully");
       setMerklTSTStakeStage('WITHDRAW')
     }
   }, [
     isConfirming,
     isConfirmed,
+    merklBalancesLoading,
   ]);
 
   let claimStage = '';

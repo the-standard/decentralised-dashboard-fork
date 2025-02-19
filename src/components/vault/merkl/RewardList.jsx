@@ -2,6 +2,7 @@ import { useState } from "react";
 
 import {
   useReadContracts,
+  useWatchBlockNumber,
 } from "wagmi";
 
 import {
@@ -29,7 +30,6 @@ import Typography from "../../ui/Typography";
 import TokenActions from "./TokenActions";
 import RewardItem from "./RewardItem";
 import ClaimModal from "./ClaimModal";
-import TSTClaimModal from "./TSTClaimModal";
 
 import TSTModal from "./TSTStake/TSTModal";
 
@@ -40,6 +40,7 @@ const RewardList = ({
 }) => {
   const {
     useShowcase,
+    getMerklRewardsData,
   } = useGuestShowcaseStore();
   const { erc20Abi } = useErc20AbiStore();
   const { vaultAddress } = useVaultAddressStore();
@@ -88,9 +89,21 @@ const RewardList = ({
     }))
   }
 
-  const { data: merklBalances, isLoading: merklBalancesLoading } = useReadContracts({
+  const {
+    data: merklBalances,
+    isLoading: merklBalancesLoading,
+    refetch: refetchBalances,
+  } = useReadContracts({
     contracts: balanceOfContracts
   })
+
+  useWatchBlockNumber({
+    onBlockNumber() {
+      refetchBalances();
+    },
+  })
+
+  console.log(123123, merklBalances)
 
   let merklData = [];
   if (merklRewards && merklRewards.length) {
@@ -245,19 +258,12 @@ const RewardList = ({
       <TSTModal
         open={stakeTSTOpen}
         closeModal={() => handleCloseTSTStake()}       
-        useAsset={useAsset}   
-        useAssets={useAsset ? [useAsset] : []}
+        useAssets={merklData}
         vaultType={vaultType}
         parentLoading={merklRewardsLoading || merklBalancesLoading}
         merklData={merklData} 
+        getMerklRewardsData={getMerklRewardsData}
       />
-      {/* <TSTClaimModal
-        open={stakeTSTOpen}
-        closeModal={() => setStakeTSTOpen(false)}          
-        useAssets={useAsset ? [useAsset] : []}
-        vaultType={vaultType}
-        parentLoading={merklRewardsLoading || merklBalancesLoading}  
-      /> */}
     </>
   );
 };
