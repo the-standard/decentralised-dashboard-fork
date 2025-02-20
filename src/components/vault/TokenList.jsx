@@ -226,6 +226,8 @@ const TokenList = ({
 
                     const balance = ethers.formatUnits(amount, token.dec);
 
+                    const depositDisabled = symbol === 'RDNT' || symbol === 'SUSHI';
+
                     if (hideUnCol === 'HIDE') {
                       // if ((Number(balance) > 0)) {
                       //   if (firstPositive) {
@@ -342,7 +344,7 @@ const TokenList = ({
                                     variant="outline"
                                     onClick={() => handleClick('DEPOSIT', asset)}
                                     className="grow"
-                                    disabled={useShowcase}
+                                    disabled={useShowcase || depositDisabled}
                                   >
                                     Deposit
                                   </Button>
