@@ -223,7 +223,7 @@ const YieldItem = (props) => {
           <>
             <div>
               <Typography variant="p" className="opacity-40 text-sm">
-                Fee APR
+                Fee APY
               </Typography>
               <Typography variant="p" className="text-sm">
                 {apyBase.toFixed(2)}%
@@ -231,7 +231,7 @@ const YieldItem = (props) => {
             </div>
             <div>
               <Typography variant="p" className="opacity-40 text-sm">
-                Reward APR
+                Reward APY
               </Typography>
               <Typography variant="p" className="text-sm">
                 {apyReward.toFixed(2)}%
@@ -239,7 +239,7 @@ const YieldItem = (props) => {
             </div>
             <div>
               <Typography variant="p" className="opacity-40 text-sm">
-                Total APR (24h)
+                Total APY (24h)
               </Typography>
               <Typography variant="p" className="text-sm">
                 {apyTotal.toFixed(2)}%

@@ -325,9 +325,27 @@ export const useSelectedYieldPoolStore = create(
 
 export const useYieldBalancesStore = create(
   (set) => ({
-    yieldBalances: 0,
+    yieldBalances: [],
     yieldBalancesLoading: true,
     setYieldBalances: (yieldBalances) => set(() => ({ yieldBalances: yieldBalances })),
     setYieldBalancesLoading: (yieldBalancesLoading) => set(() => ({ yieldBalancesLoading: yieldBalancesLoading })),
+  })
+);
+
+export const useGammaHypervisorsAllDataStore = create(
+  (set) => ({
+    gammaHypervisorsAllData: [],
+    gammaHypervisorsAllDataLoading: true,
+    setGammaHypervisorsAllData: (gammaHypervisorsAllData) => set(() => ({ gammaHypervisorsAllData: gammaHypervisorsAllData })),
+    setGammaHypervisorsAllDataLoading: (gammaHypervisorsAllDataLoading) => set(() => ({ gammaHypervisorsAllDataLoading: gammaHypervisorsAllDataLoading })),
+  })
+);
+
+export const useMerklPoolsDataStore = create(
+  (set) => ({
+    merklPoolsData: [],
+    merklPoolsDataLoading: true,
+    setMerklPoolsData: (merklPoolsData) => set(() => ({ merklPoolsData: merklPoolsData })),
+    setMerklPoolsDataLoading: (merklPoolsDataLoading) => set(() => ({ merklPoolsDataLoading: merklPoolsDataLoading })),
   })
 );
