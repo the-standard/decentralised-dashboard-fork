@@ -109,7 +109,7 @@ const YieldViewModal = ({
               </div>
               <div className="bg-base-300/40 p-2 rounded-lg w-full">
                 <Typography variant="p" className="opacity-40">
-                Total APR (24h)
+                Total APY (24h)
                 </Typography>
                 <Typography variant="h1" className="font-bold">
                   {apyTotal?.toFixed(2)}%
