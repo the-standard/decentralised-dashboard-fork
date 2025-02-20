@@ -16,11 +16,15 @@ import {
   useSmartVaultABIStore,
   useSelectedYieldPoolStore,
   useYieldBalancesStore,
+  useGammaHypervisorsAllDataStore,
+  useMerklPoolsDataStore,
 } from "../../../store/Store";
 
 import {
   ArbitrumGammaVaults,
   SepoliaGammaVaults,
+  SepoliaVaults,
+  ArbitrumVaults,
 } from "./YieldGammaVaults";
 
 import YieldItem from "./YieldItem";
@@ -29,6 +33,7 @@ import YieldClaimModal from "./YieldClaimModalNew";
 
 import Card from "../../ui/Card";
 import Typography from "../../ui/Typography";
+import TokenIcon from "../../ui/TokenIcon";
 import Button from "../../ui/Button";
 import Select from "../../ui/Select";
 
@@ -74,7 +79,20 @@ const YieldParent = (props) => {
   const { yieldEnabled } = props;
   const { vaultAddress } = useVaultAddressStore();
   const { smartVaultABI } = useSmartVaultABIStore();
-  const chainId = useChainId();
+
+  const {
+    gammaHypervisorsAllData,
+    gammaHypervisorsAllDataLoading,
+    setGammaHypervisorsAllData,
+    setGammaHypervisorsAllDataLoading,
+  } = useGammaHypervisorsAllDataStore();
+
+  const {
+    merklPoolsData,
+    merklPoolsDataLoading,
+    setMerklPoolsData,
+    setMerklPoolsDataLoading,
+  } = useMerklPoolsDataStore();
 
   const {
     selectedYieldPool,
@@ -89,6 +107,8 @@ const YieldParent = (props) => {
     yieldBalancesLoading,
     setYieldBalancesLoading,
   } = useYieldBalancesStore();
+
+  const chainId = useChainId();
 
   const [ gammaUser, setGammaUser ] = useState({});
   const [ gammaUserLoading, setGammaUserLoading ] = useState(false);
@@ -113,6 +133,10 @@ const YieldParent = (props) => {
   const [ modalDataObj, setModalDataObj ] = useState({});
 
   const [ yieldRange, setYieldRange ] = useState('90');
+
+  const yieldVaultsInfo = chainId === arbitrumSepolia.id
+  ? SepoliaVaults
+  : ArbitrumVaults;
 
   const gammaVaultsInfo = chainId === arbitrumSepolia.id
   ? SepoliaGammaVaults
@@ -205,6 +229,7 @@ const YieldParent = (props) => {
 
   const getGammaHypervisorsData = async () => {
     setGammaHypervisorsLoading(true);
+    setGammaHypervisorsAllDataLoading(true);
     try {
       const response = await axios.get(
         `https://wire3.gamma.xyz/frontend/hypervisors/allDataSummary?chain=arbitrum&protocol=uniswapv3`
@@ -213,10 +238,13 @@ const YieldParent = (props) => {
       const useData = response?.data;
 
       setGammaHypervisors(useData);
+      setGammaHypervisorsAllData(useData);
       setGammaHypervisorsLoading(false);
+      setGammaHypervisorsAllDataLoading(false);
       setGammaHypervisorsErr(false);
     } catch (error) {
       setGammaHypervisorsLoading(false);
+      setGammaHypervisorsAllDataLoading(false);
       setGammaHypervisorsErr(true);
       console.log(error);
     }
@@ -225,6 +253,7 @@ const YieldParent = (props) => {
   const getMerklPools = async () => {  
     try {
       setMerklPoolsLoading(true);
+      setMerklPoolsDataLoading(true);
       const response = await axios.get(
         `https://api.angle.money/v2/merkl?chainIds[]=42161`
       );
@@ -232,10 +261,13 @@ const YieldParent = (props) => {
       const useData = response?.data?.['42161'];
 
       setMerklPools(useData);
+      setMerklPoolsData(useData);
       setMerklPoolsLoading(false);
+      setMerklPoolsDataLoading(false);
       setMerklPoolsErr(false);
     } catch (error) {
       setMerklPoolsLoading(false);
+      setMerklPoolsDataLoading(false);
       setMerklPoolsErr(true);
       console.log(error);
     }
@@ -289,6 +321,50 @@ const YieldParent = (props) => {
       setYieldBalancesLoading(false);
     }
   }, [gammaUserPositionsLoading, gammaUserLoading]);
+
+  // USDs Stable Yield
+
+  const usdsTokenYield = yieldVaultsInfo.find(item => item.asset === 'USDs');
+  let usdsYieldPair;
+  if (usdsTokenYield && usdsTokenYield.pair) {
+    usdsYieldPair = usdsTokenYield.pair;
+  }
+
+  let usdsGammaVault = {};
+  let usdsGammaAddress;
+  if (usdsYieldPair) {
+    usdsGammaVault = gammaVaultsInfo.find(vault => (
+      vault.pair.length === usdsYieldPair.length && 
+      usdsYieldPair.every(token => vault.pair.includes(token))
+    ))
+  }
+  if (usdsGammaVault && usdsGammaVault.address) {
+    usdsGammaAddress = usdsGammaVault.address;
+  }
+
+  let usdsGammaData;
+  if (usdsGammaAddress) {
+    usdsGammaData = gammaHypervisorsAllData.find(hypervisor => (
+      hypervisor.address.toLowerCase() === usdsGammaAddress.toLowerCase()
+    ))
+  }
+
+  let usdsGammaYield = 0;
+  if (usdsGammaData && usdsGammaData.feeApr) {
+    usdsGammaYield = Number(usdsGammaData.feeApr * 100).toFixed(2);
+  }
+
+  // USDs Merkl Rewards
+
+  const usdsGammaVaultInfo = gammaVaultsInfo.find(item => item?.pair.every(token => ['USDs', 'USDC'].includes(token)));
+
+  const merklPoolData = merklPoolsData?.pools?.[usdsGammaVaultInfo?.pool];
+
+  const merklAprSelector = `Gamma ${usdsGammaVaultInfo?.address}`;
+
+  const merklPoolReward = merklPoolData?.aprs?.[merklAprSelector] || 0;
+
+  const stableYieldTotal = Number(Number(usdsGammaYield) + Number(merklPoolReward)).toFixed(2);
 
   return (
     <>
@@ -350,18 +426,46 @@ const YieldParent = (props) => {
                       </>
                     ) : (
                       <>
-                        <div className="bg-base-300/40 p-4 rounded-lg w-full flex flex-col items-center justify-center">
+                        <div className="bg-base-300/40 p-4 rounded-lg w-full flex flex-col">
+
                           <Typography
-                            variant="p"
+                            variant="h1"
                             className="mb-2"
                           >
-                            Start earning tokens through a mix of volatile collateral and correlated stable asset yield strategies.
+                            <div className="inline-flex items-center">
+                              <TokenIcon
+                                symbol={'USDs'}
+                                className="h-8 w-8 p-1 rounded-full bg-base-300/50"
+                              />
+                              <TokenIcon
+                                symbol={'USDC'}
+                                className="h-8 w-8 p-1 rounded-full bg-base-300/50 -ml-[8px]"
+                              />
+                              &nbsp;Earn
+                              {gammaHypervisorsAllDataLoading || merklPoolsDataLoading ? (
+                                <span className="loading loading-bars loading-sm mx-2"></span>
+                              ) : (
+                                <>
+                                  &nbsp;{stableYieldTotal}
+                                </>
+                              )}
+                              % Yield
+                            </div>
                           </Typography>
+
                           <Typography
                             variant="p"
-                            className="mb-2"
+                            className="opacity-90"
                           >
-                            Get started by placing some of your Collateral tokens into a yield pool now!
+                            The USDs/USDC pool offers a stable
+                            {gammaHypervisorsAllDataLoading || merklPoolsDataLoading ? (
+                              <span className="loading loading-bars loading-xs mx-2"></span>
+                            ) : (
+                              <>
+                                &nbsp;{stableYieldTotal}
+                              </>
+                            )}
+                            % APY. Start earning today! Simply choose to split more into the stable pool after clicking the <b>PLACE IN YIELD POOL</b> button on any of your collateral tokens.
                           </Typography>
                         </div>
                       </>

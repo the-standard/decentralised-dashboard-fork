@@ -18,11 +18,14 @@ import {
 import {
   useVaultStore,
   useGuestShowcaseStore,
+  useGammaHypervisorsAllDataStore,
 } from "../../store/Store";
 
 import {
   ArbitrumVaults,
   SepoliaVaults,
+  ArbitrumGammaVaults,
+  SepoliaGammaVaults,
 } from "./yield/YieldGammaVaults";
 
 import Card from "../ui/Card";
@@ -42,6 +45,10 @@ const TokenList = ({
   const {
     useShowcase,
   } = useGuestShowcaseStore();
+  const {
+    gammaHypervisorsAllData,
+    gammaHypervisorsAllDataLoading,
+  } = useGammaHypervisorsAllDataStore();
 
   let currencySymbol = '';
   if (vaultType === 'EUROs') {
@@ -56,6 +63,10 @@ const TokenList = ({
   const yieldVaultsInfo = chainId === arbitrumSepolia.id
   ? SepoliaVaults
   : ArbitrumVaults;
+
+  const gammaVaults = chainId === arbitrumSepolia.id
+  ? SepoliaGammaVaults
+  : ArbitrumGammaVaults;
 
   const { vaultStore } = useVaultStore();
 
@@ -155,6 +166,7 @@ const TokenList = ({
                   <th>Asset</th>
                   <th>Balance</th>
                   <th className="hidden md:table-cell">Price Development</th>
+                  <th className="hidden md:table-cell">If Placed In Yield</th>
                   <th>&nbsp;</th>
                 </tr>
               </thead>
@@ -181,8 +193,40 @@ const TokenList = ({
                     }
                     
                     let tokenYield = yieldVaultsInfo.find(item => item.asset === symbol);
+                    let yieldPair;
+                    if (tokenYield && tokenYield.pair) {
+                      yieldPair = tokenYield.pair;
+                    }
+
+                    let gammaVault = {};
+                    let gammaAddress;
+                    if (yieldPair) {
+                      gammaVault = gammaVaults.find(vault => (
+                        // vault.pair.length === yieldPair.length && 
+                        // vault.pair.every((token, index) => token === yieldPair[index])
+                        vault.pair.length === yieldPair.length && 
+                        yieldPair.every(token => vault.pair.includes(token))
+                      ))
+                    }
+                    if (gammaVault && gammaVault.address) {
+                      gammaAddress = gammaVault.address;
+                    }
+
+                    let gammaData;
+                    if (gammaAddress) {
+                      gammaData = gammaHypervisorsAllData.find(hypervisor => (
+                        hypervisor.address.toLowerCase() === gammaAddress.toLowerCase()
+                      ))
+                    }
+
+                    let gammaYield = 0;
+                    if (gammaData && gammaData.feeApr) {
+                      gammaYield = gammaData.feeApr * 100;
+                    }
 
                     const balance = ethers.formatUnits(amount, token.dec);
+
+                    const depositDisabled = symbol === 'RDNT' || symbol === 'SUSHI';
 
                     if (hideUnCol === 'HIDE') {
                       // if ((Number(balance) > 0)) {
@@ -222,16 +266,25 @@ const TokenList = ({
                               >
                                 <TokenIcon
                                   symbol={symbol}
-                                  style={{ height: "2rem", width: "2rem" }}
+                                  style={{
+                                    height: "2rem",
+                                    width: "2rem",
+                                    minHeight: 24,
+                                    minWidth: 24
+                                  }}
                                 />
                               </Tooltip>
-                              <div className="p-4 hidden md:table-cell">{symbol}</div>
+                              <div className="pl-4 hidden md:table-cell">{symbol}</div>
                             </div>
                           </td>
                           <td className="truncate max-w-[150px] md:max-w-[200px]">
-                            {balance || ''}
-                            <br/>
-                            {currencySymbol}{formattedCollateralValue}
+                            <span className={
+                              balance > 0 ? ('') : ('opacity-50')
+                            }>
+                              {balance || ''}
+                              <br/>
+                              {currencySymbol}{formattedCollateralValue}
+                            </span>
                           </td>
                           <td className="hidden md:table-cell">
                             <TokenValueChart
@@ -239,15 +292,39 @@ const TokenList = ({
                               symbol={symbol}
                             />
                           </td>
+                          <td className="hidden md:table-cell">
+                          {gammaHypervisorsAllDataLoading ? (
+                            <span className="loading loading-bars loading-xs"></span>
+                          ) : (
+                            <>
+                              <span className={
+                                gammaYield > 0 ? ('') : ('opacity-50')
+                              }>
+                                {subRow === index + 'sub' ? (
+                                  <>
+                                    Earn
+                                    <br/>
+                                    ≈ {gammaYield.toFixed(2)}% APY
+                                  </>
+                                ) : (
+                                  <>
+                                    {gammaYield.toFixed(2)}% APY
+                                  </>
+                                )}
+                              </span>
+                            </>
+                          )}
+                          </td>
                           <td className="text-right">
                             <Button
                               shape="circle"
                               color="ghost"
+                              className="btn-sm"
                             >
                               {subRow === index + 'sub' ? (
-                                <ChevronUpIcon className="w-6 h-6"/>
+                                <ChevronUpIcon className="w-5 h-5"/>
                               ) : (
-                                <ChevronDownIcon className="w-6 h-6"/>
+                                <ChevronDownIcon className="w-5 h-5"/>
                               )}
                             </Button>
                           </td>
@@ -259,7 +336,7 @@ const TokenList = ({
                             'glass-alt-bg w-full hidden h-0'
                           )}
                         >
-                          <td colSpan="4">
+                          <td colSpan="5">
                             {vaultStore.status.liquidated ? null : (
                               <>
                                 <div className="flex flex-row flex-wrap gap-4">
@@ -267,7 +344,7 @@ const TokenList = ({
                                     variant="outline"
                                     onClick={() => handleClick('DEPOSIT', asset)}
                                     className="grow"
-                                    disabled={useShowcase}
+                                    disabled={useShowcase || depositDisabled}
                                   >
                                     Deposit
                                   </Button>
