@@ -34,6 +34,7 @@ import VaultSend from "../../components/vault/VaultSend";
 import TokenTotalPie from "../../components/vault/TokenTotalPie";
 import VaultNFT from "../../components/vault/VaultNFT";
 import VaultSavingsSummary from "../../components/vault/VaultSavingsSummary";
+import VaultRedemptionAlert from "../../components/vault/VaultRedemptionAlert";
 
 import YieldParentNew from "../../components/vault/yield/YieldParentNew";
 
@@ -248,6 +249,7 @@ const Vault = () => {
                 currentVault={currentVault}
                 vaultType={vaultType}
                 isLoading={isLoading}
+                yieldEnabled={yieldEnabled}
               />
               <div className="pt-4 hidden md:block">
                 <Debt
@@ -276,6 +278,11 @@ const Vault = () => {
       </Card>
       <div className="flex flex-col md:flex-row mt-4 gap-4 flex-wrap">
         <div className="flex-1 grow-[4]">
+          {vaultType === 'USDs' ? (
+            <VaultRedemptionAlert
+              vaultId={vaultId}
+            />
+          ) : null}
           <VaultSavingsSummary />
           <TokenList
             vaultType={vaultType}

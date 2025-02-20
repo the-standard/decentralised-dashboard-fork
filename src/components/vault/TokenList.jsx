@@ -103,15 +103,52 @@ const TokenList = ({
 
   const useSwapV4 = vaultVersion >= 4;
 
+  const [hideUnCol, setHideUnCol] = useState('SHOW');
+
+  const handleUnColToggle = () => {
+    if (hideUnCol === 'HIDE') {
+      setHideUnCol('SHOW');
+      localStorage.setItem("hideUnCol", 'SHOW');
+    } else {
+      setHideUnCol('HIDE');
+      localStorage.setItem("hideUnCol", 'HIDE');
+    }
+  }
+
+  useEffect(() => {
+    const local = localStorage.getItem("hideUnCol", hideUnCol);
+    setHideUnCol(local)
+  }, []);
+
+  let firstPositive = 0;
+  if (assets && assets.length) {
+    firstPositive = assets.find(item => item.amount > 0);
+  }
+
   return (
     <>
       <Card className="card-compact">
         <div className="card-body">
           <div>
-            <Typography variant="h2" className="card-title flex gap-0">
-              <QueueListIcon className="mr-2 h-6 w-6 inline-block"/>
-              Collateral Tokens
-            </Typography>
+            <div className="flex flex-col sm:flex-row justify-between">
+              <Typography variant="h2" className="card-title flex gap-0">
+                <QueueListIcon className="mr-2 h-6 w-6 inline-block"/>
+                Collateral Tokens
+              </Typography>
+              <div>
+                <Button
+                  color="ghost"
+                  size="sm"
+                  onClick={() => handleUnColToggle()}
+                >
+                  {hideUnCol === 'HIDE' ? (
+                    'Show Unused Tokens'
+                  ) : (
+                    'Hide Unused Tokens'
+                  )}
+                </Button>
+              </div>
+            </div>
             <table className="table">
               <thead>
                 <tr>
@@ -145,6 +182,27 @@ const TokenList = ({
                     
                     let tokenYield = yieldVaultsInfo.find(item => item.asset === symbol);
 
+                    const balance = ethers.formatUnits(amount, token.dec);
+
+                    if (hideUnCol === 'HIDE') {
+                      // if ((Number(balance) > 0)) {
+                      //   if (firstPositive) {
+                      //     if (subRow === '0sub') {
+                      //       setSubRow(assets.indexOf(firstPositive) + 'sub')
+                      //     }  
+                      //   }
+                      //   if (!firstPositive && subRow !== '0sub') {
+                      //     setSubRow('0sub')
+                      //   }
+                      // }
+                      if (!(Number(balance) > 0)) {
+                        if (firstPositive && subRow === index + 'sub') {
+                          setSubRow(assets.indexOf(firstPositive) + 'sub')
+                        }
+                        return (null);
+                      }
+                    }
+
                     return (
                       <Fragment key={index}>
                         <tr
@@ -171,7 +229,7 @@ const TokenList = ({
                             </div>
                           </td>
                           <td className="truncate max-w-[150px] md:max-w-[200px]">
-                            {ethers.formatUnits(amount, token.dec)}
+                            {balance || ''}
                             <br/>
                             {currencySymbol}{formattedCollateralValue}
                           </td>
@@ -263,6 +321,21 @@ const TokenList = ({
             {assetsLoading ? (
               <CenterLoader />
             ) : (null)}
+            {
+              !assetsLoading &&
+              (assets && assets.length) &&
+              (hideUnCol === 'HIDE') &&
+              !firstPositive ? (
+                <div className="p-2 glass-alt-bg">
+                  <Typography variant="h2">
+                    No Collateral In Use
+                  </Typography>
+                  <Typography variant="p">
+                    Click the button above to reveal unused collateral tokens
+                  </Typography>
+                </div>
+              ) : (null)
+            }
           </div>
           <TokenActions
             actionType={actionType}
