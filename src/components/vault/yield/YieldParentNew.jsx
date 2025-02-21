@@ -292,6 +292,8 @@ const YieldParent = (props) => {
       const userData = gammaUser?.[hypervisorAddress];
       const balanceUSD = userData?.balanceUSD || 0;
       const showBalance = Number(balanceUSD).toFixed(2);
+      const total0 = userData?.balance0;
+      const total1 = userData?.balance1;
 
       const gammaVaultInfo = gammaVaultsInfo.find(item => item?.address.toLowerCase() === hypervisorAddress);
 
@@ -306,6 +308,8 @@ const YieldParent = (props) => {
       useBalances.push({
         pair: `${tokenA}/${tokenB}`,
         balance: showBalance,
+        total0,
+        total1,
       });
     })
   }
