@@ -45,6 +45,7 @@ const TSTModalStake = (props) => {
   const {
     merklTSTStakeStage,
     setMerklTSTStakeStage,
+    merklTSTStakeBal,
   } = useMerklTSTStakeStage();
 
   // const { address } = useAccount();
@@ -104,8 +105,8 @@ const TSTModalStake = (props) => {
   // if (tstData && tstData[1] && tstData[1].result) {
   //   tstBalance = tstData[1].result;
   // }
-  if (balanceRaw) {
-    tstBalance = balanceRaw;
+  if (merklTSTStakeBal) {
+    tstBalance = merklTSTStakeBal;
   }
 
   const {
@@ -201,12 +202,12 @@ const TSTModalStake = (props) => {
   // }, []);
 
   useEffect(() => {
-    // if (isFirstMount.current) {
-    //   isFirstMount.current = false;
-    //   return;
-    // }
     if (tstIsSuccess) {
-      handleLetsStake();
+      console.log('START stake timeout')
+      setTimeout(() => {
+        console.log('END stake timeout')
+        handleLetsStake();
+      }, 2000);
     }
   }, [tstIsSuccess]);
 
@@ -291,6 +292,22 @@ const TSTModalStake = (props) => {
   if (depositIsConfirming) {
     stakeStage = 'Confirming deposit transaction';
   }
+
+  console.log('STAKING', {
+    tstData,
+    tstIsPending,
+    tstIsSuccess,
+    existingTstAllowance,
+    tstBalance,    
+    approveIsPending,
+    approveIsSuccess,
+    approveIsConfirming,
+    approveIsConfirmed,
+    depositIsPending,
+    depositIsSuccess,
+    depositIsConfirming,
+    depositIsConfirmed,
+  })
 
   return (
     <>
