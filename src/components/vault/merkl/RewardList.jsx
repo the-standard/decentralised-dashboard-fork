@@ -2,6 +2,7 @@ import { useState } from "react";
 
 import {
   useReadContracts,
+  useWatchBlockNumber,
 } from "wagmi";
 
 import {
@@ -20,6 +21,7 @@ import {
   useErc20AbiStore,
   useVaultAddressStore,
   useGuestShowcaseStore,
+  useMerklTSTStakeStage,
 } from "../../../store/Store";
 
 import Button from "../../ui/Button";
@@ -29,6 +31,8 @@ import TokenActions from "./TokenActions";
 import RewardItem from "./RewardItem";
 import ClaimModal from "./ClaimModal";
 
+import TSTModal from "./TSTStake/TSTModal";
+
 const RewardList = ({
   merklRewards,
   merklRewardsLoading,
@@ -36,11 +40,14 @@ const RewardList = ({
 }) => {
   const {
     useShowcase,
+    getMerklRewardsData,
   } = useGuestShowcaseStore();
   const { erc20Abi } = useErc20AbiStore();
   const { vaultAddress } = useVaultAddressStore();
+  const { setMerklTSTStakeStage } = useMerklTSTStakeStage();
 
   const [claimAllOpen, setClaimAllOpen] = useState(false);
+  const [stakeTSTOpen, setStakeTSTOpen] = useState(false);
   const [actionType, setActionType] = useState();
   const [useAsset, setUseAsset] = useState();
   const [subRow, setSubRow] = useState('0sub');
@@ -51,6 +58,11 @@ const RewardList = ({
   }
   if (vaultType === 'USDs') {
     currencySymbol = '$';
+  }
+
+  const handleCloseTSTStake = () => {
+    setStakeTSTOpen(false);
+    setMerklTSTStakeStage('CLAIM');
   }
 
   const closeAction = () => {
@@ -67,33 +79,49 @@ const RewardList = ({
     }
   }
 
-  const { data: merklBalances, isLoading: merklBalancesLoading } = useReadContracts({
-    contracts:merklRewards.map((item) =>({
+  let balanceOfContracts = [];
+  if (merklRewards && merklRewards.length) {
+    balanceOfContracts = merklRewards.map((item) =>({
       address: item?.tokenAddress,
       abi: erc20Abi,
       functionName: "balanceOf",
       args: [vaultAddress],
     }))
+  }
+
+  const {
+    data: merklBalances,
+    isLoading: merklBalancesLoading,
+    refetch: refetchBalances,
+  } = useReadContracts({
+    contracts: balanceOfContracts
   })
 
-  const merklData = merklRewards.map((item, index) => {
-    let useBalance = 0n;
-    if (merklBalances) {
-      if (merklBalances[index]) {
-        if (merklBalances[index].result) {
-          useBalance = merklBalances[index].result;
-        }
-        return {
-          ...merklRewards[index],
-          balanceOf: useBalance
-        }    
-      } else {
-        return {};
-      }
-    }
-  });
+  useWatchBlockNumber({
+    onBlockNumber() {
+      refetchBalances();
+    },
+  })
 
-  const hasClaims = merklData.find(item => item?.unclaimed > 0);
+  let merklData = [];
+  if (merklRewards && merklRewards.length) {
+    merklData = merklRewards.map((item, index) => {
+      let useBalance = 0n;
+      if (merklBalances) {
+        if (merklBalances[index]) {
+          if (merklBalances[index].result) {
+            useBalance = merklBalances[index].result;
+          }
+          return {
+            ...merklRewards[index],
+            balanceOf: useBalance
+          }    
+        } else {
+          return {};
+        }
+      }
+    });
+  }
 
   return (
     <>
@@ -156,8 +184,12 @@ const RewardList = ({
                 <>
                   {merklData.map(function(asset, index) {
                     const handleClick = (type, asset) => {
-                      setActionType(type);
                       setUseAsset(asset);
+                      if (asset && (asset.symbol === 'TST')) {
+                        setStakeTSTOpen(true);
+                      } else {
+                        setActionType(type);
+                      }
                     };
 
                     return (
@@ -221,7 +253,15 @@ const RewardList = ({
         vaultType={vaultType}
         parentLoading={merklRewardsLoading || merklBalancesLoading}  
       />
-
+      <TSTModal
+        open={stakeTSTOpen}
+        closeModal={() => handleCloseTSTStake()}       
+        useAssets={merklData}
+        vaultType={vaultType}
+        parentLoading={merklRewardsLoading || merklBalancesLoading}
+        merklData={merklData} 
+        getMerklRewardsData={getMerklRewardsData}
+      />
     </>
   );
 };

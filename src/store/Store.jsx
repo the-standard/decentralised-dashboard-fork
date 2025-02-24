@@ -349,3 +349,12 @@ export const useMerklPoolsDataStore = create(
     setMerklPoolsDataLoading: (merklPoolsDataLoading) => set(() => ({ merklPoolsDataLoading: merklPoolsDataLoading })),
   })
 );
+
+export const useMerklTSTStakeStage = create(
+  (set) => ({
+    merklTSTStakeStage: 'CLAIM',
+    merklTSTStakeBal: 0n,
+    setMerklTSTStakeStage: (merklTSTStakeStage) => set(() => ({ merklTSTStakeStage: merklTSTStakeStage })),
+    setMerklTSTStakeBal: (merklTSTStakeBal) => set(() => ({ merklTSTStakeBal: merklTSTStakeBal })),
+  })
+);

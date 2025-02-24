@@ -100,18 +100,18 @@ const VaultMerkl = () => {
       ? arbitrumsUSDSepoliaContractAddress
       : arbitrumsUSDContractAddress;          
 
-  const { data: vaultData, refetch } = useReadContract({
+  const { data: vaultData } = useReadContract({
     abi: vaultManagerAbi,
     address: sUSDVaultManagerAddress,
     functionName: "vaultData",
     args: [vaultId],
   });
 
-  useWatchBlockNumber({
-    onBlockNumber() {
-      refetch();
-    },
-  })
+  // useWatchBlockNumber({
+  //   onBlockNumber() {
+  //     refetch();
+  //   },
+  // })
 
   const currentVault = vaultData;
 
@@ -149,26 +149,13 @@ const VaultMerkl = () => {
     }
   };
 
-  if (vaultsLoading) {
-    return (
-      <div>
-        <Card className="card-compact">
-          <div className="card-body">
-            {vaultNav()}
-            <CenterLoader />
-          </div>
-        </Card>
-      </div>
-    )
-  }
-
   if (!currentVault) {
     return (
       <div>
         <Card className="card-compact">
           <div className="card-body">
             {vaultNav()}
-            Vault Not Found
+            <CenterLoader />
           </div>
         </Card>
       </div>
@@ -191,15 +178,11 @@ const VaultMerkl = () => {
       <Card className="card-compact mb-4">
         <div className="card-body">
           {vaultNav()}
-
-          {merklRewardsLoading ? (
-            <CenterLoader />
-          ) : (
-            <RewardList
-              merklRewards={merklRewards}
-              merklRewardsLoading={merklRewardsLoading}
-            />
-          )}
+          <RewardList
+            merklRewards={merklRewards}
+            merklRewardsLoading={merklRewardsLoading}
+            getMerklRewardsData={getMerklRewardsData}
+          />
         </div>
       </Card>
 
