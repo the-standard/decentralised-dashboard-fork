@@ -103,8 +103,6 @@ const RewardList = ({
     },
   })
 
-  console.log(123123, merklBalances)
-
   let merklData = [];
   if (merklRewards && merklRewards.length) {
     merklData = merklRewards.map((item, index) => {

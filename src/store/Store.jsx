@@ -353,6 +353,8 @@ export const useMerklPoolsDataStore = create(
 export const useMerklTSTStakeStage = create(
   (set) => ({
     merklTSTStakeStage: 'CLAIM',
+    merklTSTStakeBal: 0n,
     setMerklTSTStakeStage: (merklTSTStakeStage) => set(() => ({ merklTSTStakeStage: merklTSTStakeStage })),
+    setMerklTSTStakeBal: (merklTSTStakeBal) => set(() => ({ merklTSTStakeBal: merklTSTStakeBal })),
   })
 );

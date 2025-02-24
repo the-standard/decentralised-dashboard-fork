@@ -37,6 +37,7 @@ const TSTModalWithdraw = (props) => {
   const {
     merklTSTStakeStage,
     setMerklTSTStakeStage,
+    setMerklTSTStakeBal,
   } = useMerklTSTStakeStage();
 
   const { address } = useAccount();
@@ -59,6 +60,7 @@ const TSTModalWithdraw = (props) => {
   });
 
   const handleWithdrawToken = async () => {
+    setMerklTSTStakeBal(balanceRaw);
     try {
       writeContract({
         abi: smartVaultABI,
@@ -80,11 +82,16 @@ const TSTModalWithdraw = (props) => {
   };
 
   useEffect(() => {
+    // Local dev
     // if (isFirstMount.current) {
     //   isFirstMount.current = false;
     //   return;
     // }
-    handleWithdrawToken();
+    console.log('START withdraw timeout')
+    setTimeout(() => {
+      console.log('END withdraw timeout')
+      handleWithdrawToken();
+    }, 2000);
   }, []);
 
   useEffect(() => {
@@ -115,7 +122,7 @@ const TSTModalWithdraw = (props) => {
     isConfirmed,
   ]);
 
-  let withdrawStage = '';
+  let withdrawStage = 'Attempting withdrawal';
 
   if (isPending && !isConfirming) {
     withdrawStage = 'Attempting withdrawal';
