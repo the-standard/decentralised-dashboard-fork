@@ -34,10 +34,12 @@ const TSTModal = (props) => {
   const {
     merklTSTStakeStage,
     setMerklTSTStakeStage,
+    setMerklTSTStakeBal,
   } = useMerklTSTStakeStage();
 
   useEffect(() => {
     setMerklTSTStakeStage('CLAIM');
+    setMerklTSTStakeBal(0n);
   }, []);
 
 
