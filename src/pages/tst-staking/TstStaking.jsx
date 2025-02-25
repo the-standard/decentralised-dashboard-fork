@@ -16,8 +16,8 @@ import {
 import {
   useTstAddressStore,
   useErc20AbiStore,
-  useStakingPoolv3AbiStore,
-  useStakingPoolv3AddressStore,
+  useStakingPoolv4AbiStore,
+  useStakingPoolv4AddressStore,
   useGuestShowcaseStore,
 } from "../../store/Store";
 
@@ -29,13 +29,13 @@ import CenterLoader from "../../components/ui/CenterLoader";
 import Typography from "../../components/ui/Typography";
 
 const TstStaking = (props) => {
-  const { stakingPoolv3Abi } = useStakingPoolv3AbiStore();
+  const { stakingPoolv4Abi } = useStakingPoolv4AbiStore();
   const { erc20Abi } = useErc20AbiStore();
 
   const {
-    arbitrumSepoliaStakingPoolv3Address,
-    arbitrumStakingPoolv3Address,
-  } = useStakingPoolv3AddressStore();
+    arbitrumSepoliaStakingPoolv4Address,
+    arbitrumStakingPoolv4Address,
+  } = useStakingPoolv4AddressStore();
   
   const {
     arbitrumTstAddress,
@@ -56,28 +56,28 @@ const TstStaking = (props) => {
   arbitrumSepoliaTstAddress :
   arbitrumTstAddress;
 
-  const stakingPoolv3Address =
+  const stakingPoolv4Address =
   chainId === arbitrumSepolia.id
-    ? arbitrumSepoliaStakingPoolv3Address
-    : arbitrumStakingPoolv3Address;
+    ? arbitrumSepoliaStakingPoolv4Address
+    : arbitrumStakingPoolv4Address;
 
   const { data: poolPositions, refetch: refetchPositions } = useReadContract({
-    address: stakingPoolv3Address,
-    abi: stakingPoolv3Abi,
+    address: stakingPoolv4Address,
+    abi: stakingPoolv4Abi,
     functionName: "positions",
     args: [accountAddress],
   });
 
   const { data: poolRewards, isLoading: poolRewardsLoading, refetch: refetchRewards } = useReadContract({
-    address: stakingPoolv3Address,
-    abi: stakingPoolv3Abi,
+    address: stakingPoolv4Address,
+    abi: stakingPoolv4Abi,
     functionName: "projectedEarnings",
     args: [accountAddress],
   });
 
   const { data: dailyYield, isLoading, dailyYieldLoading, refetch: refetchDailyReward } = useReadContract({
-    address: stakingPoolv3Address,
-    abi: stakingPoolv3Abi,
+    address: stakingPoolv4Address,
+    abi: stakingPoolv4Abi,
     functionName: "dailyYield",
     args: [],
   });
@@ -86,7 +86,7 @@ const TstStaking = (props) => {
     address: tstAddress,
     abi: erc20Abi,
     functionName: "balanceOf",
-    args: [stakingPoolv3Address],
+    args: [stakingPoolv4Address],
   });
 
   useWatchBlockNumber({
