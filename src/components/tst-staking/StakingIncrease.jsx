@@ -195,6 +195,9 @@ const StakingIncrease = () => {
             Increase your TST position to earn USDs & more rewards. 
           </Typography>
           <Typography variant="p" className="mb-2">
+            All staked TST is locked in for 90 days from the beginning of your staking period. Rewards will start to be earned 24 hours after staking.
+          </Typography>
+          <Typography variant="p" className="mb-2">
             Depositing will automatically claim your existing rewards, ending your current staking period and restarting a new one.
           </Typography>
           <div>
