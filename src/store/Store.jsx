@@ -9,6 +9,7 @@ import stakingAbi from "../abis/staking";
 import liquidationPoolAbi from "../abis/liquidationPool";
 import stakingPoolv2Abi from "../abis/stakingPoolV2";
 import stakingPoolv3Abi from "../abis/stakingPoolV3";
+import stakingPoolv4Abi from "../abis/stakingPoolV4";
 
 export const useGuestShowcaseStore = create(
   (set) => ({
@@ -124,6 +125,15 @@ export const useStakingPoolv3AddressStore = create()(
   })
 );
 
+export const useStakingPoolv4AddressStore = create()(
+  (set) => ({
+    arbitrumStakingPoolv4Address: "0x1b64Fd0D52Fd80a285A5C2B719535F5e0D91227d",
+    arbitrumSepoliaStakingPoolv4Address: "0x1b64Fd0D52Fd80a285A5C2B719535F5e0D91227d",
+    getStakingPoolv4Address: (arbitrumStakingPoolv4Address) =>
+      set(() => ({ stakingPoolv4Address: arbitrumStakingPoolv4Address })),
+  })
+);
+
 export const useChainlinkAbiStore = create() (
   (set) => ({
     chainlinkAbi: chainlinkAbi,
@@ -213,6 +223,14 @@ export const useStakingPoolv3AbiStore = create()(
     stakingPoolv3Abi: stakingPoolv3Abi,
     getLiquidationPoolAbi: (stakingPoolv3Abi) =>
       set(() => ({ stakingPoolv3Abi: stakingPoolv3Abi })),
+  })
+);
+
+export const useStakingPoolv4AbiStore = create()(
+  (set) => ({
+    stakingPoolv4Abi: stakingPoolv4Abi,
+    getLiquidationPoolAbi: (stakingPoolv4Abi) =>
+      set(() => ({ stakingPoolv4Abi: stakingPoolv4Abi })),
   })
 );
 

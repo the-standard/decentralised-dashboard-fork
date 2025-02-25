@@ -64,7 +64,7 @@ const StakedAssets = ({
             <Button
               onClick={() => setOpen(true)}
               color="primary"
-              disabled={tstAmount <= 0 && eurosAmount <= 0}
+              // disabled={tstAmount <= 0 && eurosAmount <= 0}
             >
               Withdraw
             </Button>
