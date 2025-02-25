@@ -36,6 +36,15 @@ import Typography from "../ui/Typography";
 import TokenActions from "./TokenActions";
 import TokenValueChart from "./TokenValueChart";
 
+function formatNumber(value) {
+  const formattedValue = (value / 100).toString();
+  const indexOfDot = formattedValue.length - 2;
+  const finalValue =
+    formattedValue.slice(0, indexOfDot) + formattedValue.slice(indexOfDot);
+
+  return finalValue;
+}
+
 const TokenList = ({
   assets,
   assetsLoading,
@@ -191,7 +200,17 @@ const TokenList = ({
                     if (chartData && chartData[symbol] && chartData[symbol].prices) {
                       useData = chartData[symbol].prices;
                     }
-                    
+
+                    let latestPrice;
+                    if (useData && useData.length) {
+                      latestPrice = useData[useData.length - 1]?.price;
+                    }
+
+                    let showLatestPrice;
+                    if (latestPrice) {
+                      showLatestPrice = '$' + formatNumber((latestPrice / 1000000).toFixed(0))
+                    }
+
                     let tokenYield = yieldVaultsInfo.find(item => item.asset === symbol);
                     let yieldPair;
                     if (tokenYield && tokenYield.pair) {
@@ -267,14 +286,20 @@ const TokenList = ({
                                 <TokenIcon
                                   symbol={symbol}
                                   style={{
-                                    height: "2rem",
-                                    width: "2rem",
+                                    height: "1rem",
+                                    width: "1rem",
                                     minHeight: 24,
                                     minWidth: 24
                                   }}
                                 />
                               </Tooltip>
-                              <div className="pl-4 hidden md:table-cell">{symbol}</div>
+                              <div className="pl-4 hidden md:table-cell">
+                                {symbol}
+                                <br/>
+                                <span className="opacity-50">
+                                  {showLatestPrice}
+                                </span>
+                              </div>                              
                             </div>
                           </td>
                           <td className="truncate max-w-[150px] md:max-w-[200px]">
