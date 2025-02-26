@@ -272,6 +272,7 @@
 
 .tst-topnav > .navbar-start {
   width: auto;
+  /* width: 100%; */
 }
 .tst-topnav > .navbar-end {
   width: 100%;
@@ -447,9 +448,9 @@
     height: 3rem;
   }
   
-  .tst-inner {
+  /* .tst-inner {
     margin-left: 4rem;
-  }
+  } */
 
   .tst-sidenav__content {
     display: flex;

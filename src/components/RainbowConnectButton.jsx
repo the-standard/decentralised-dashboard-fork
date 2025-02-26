@@ -102,12 +102,6 @@ const RainbowConnect = (props) => {
                         className="join-item pr-2"
                         variant="outline"
                       >
-                        <span className="hidden md:inline-block">
-                          {account.displayBalance ?
-                            (account.displayBalance) :
-                            ('')
-                          }
-                        </span>
                         <div
                           className="flex items-center"
                         >

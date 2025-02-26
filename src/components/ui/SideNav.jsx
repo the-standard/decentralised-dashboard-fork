@@ -117,7 +117,7 @@ const SideNav = (props) => {
         )}
       </div>
       {/* Med + */}
-      <div className="p-2 flex-col gap-2 w-full hidden md:flex">
+      {/* <div className="p-2 flex-col gap-2 w-full hidden md:flex">
         <Tooltip
           position="right"
           message="Vaults"
@@ -204,7 +204,7 @@ const SideNav = (props) => {
       </div>
       <div className="block md:hidden self-center mt-auto pb-4">
         <ThemeButton />
-      </div>
+      </div> */}
     </Menu>
   );
 };
