@@ -262,6 +262,7 @@
 
 .tst-topnav {
   z-index: 1;
+  justify-content: space-between;
 }
 
 .tst-topnav,
@@ -275,7 +276,8 @@
   /* width: 100%; */
 }
 .tst-topnav > .navbar-end {
-  width: 100%;
+  /* width: 100%; */
+  width: auto;
   justify-content: end;
 }
 

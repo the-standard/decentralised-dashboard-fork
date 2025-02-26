@@ -32,10 +32,12 @@ const TopNav = (props) => {
 
   const isLight = localThemeModeStore && localThemeModeStore.includes('light');
 
+  const navButtonClass = 'hidden md:flex';
+
   if (accountAddress) {
     return (
       <div className="navbar sticky shadow-md tst-topnav">
-        <div className="navbar-start">
+        <div className="navbar-start gap-[4px]">
           <Button
             className="md:hidden"
             color="ghost"
@@ -55,30 +57,37 @@ const TopNav = (props) => {
             />  
           </Button>
           <Button
-            className="hidden md:flex"
-            color="ghost"
-            onClick={() => navigate("/")}
+            className={location.pathname === '/' || location.pathname.includes('/vaults') ?
+              `${navButtonClass} btn-outline` : `${navButtonClass} btn-ghost`
+            }
+            onClick={() => navigate("/vaults")}
           >
             Vaults
           </Button>
           <Button
-            className="hidden md:flex"
+            className={location.pathname.includes('/staking-pool') ?
+              `${navButtonClass} btn-outline` : `${navButtonClass} btn-ghost`
+            }
             color="ghost"
-            onClick={() => navigate("/")}
+            onClick={() => navigate("/staking-pool")}
           >
             Staking Pool
           </Button>
           <Button
-            className="hidden md:flex"
+            className={location.pathname.includes('/dex') ?
+              `${navButtonClass} btn-outline` : `${navButtonClass} btn-ghost`
+            }
             color="ghost"
-            onClick={() => navigate("/")}
+            onClick={() => navigate("/dex")}
           >
             Cross-Chain Dex
           </Button>
           <Button
-            className="hidden md:flex"
+            className={location.pathname.includes('/legacy-pools') ?
+              `${navButtonClass} btn-outline` : `${navButtonClass} btn-ghost`
+            }
             color="ghost"
-            onClick={() => navigate("/")}
+            onClick={() => navigate("/legacy-pools")}
           >
             Legacy Pools
           </Button>
