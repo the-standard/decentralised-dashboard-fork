@@ -51,8 +51,36 @@ const TopNav = (props) => {
             <img
               src={isLight ? (StandardioLogoBlack) : (StandardioLogoWhite)}
               alt="TheStandard.io Logo"
-              className="h-6"
+              className="h-4"
             />  
+          </Button>
+          <Button
+            className="hidden md:flex"
+            color="ghost"
+            onClick={() => navigate("/")}
+          >
+            Vaults
+          </Button>
+          <Button
+            className="hidden md:flex"
+            color="ghost"
+            onClick={() => navigate("/")}
+          >
+            Staking Pool
+          </Button>
+          <Button
+            className="hidden md:flex"
+            color="ghost"
+            onClick={() => navigate("/")}
+          >
+            Cross-Chain Dex
+          </Button>
+          <Button
+            className="hidden md:flex"
+            color="ghost"
+            onClick={() => navigate("/")}
+          >
+            Legacy Pools
           </Button>
         </div>
         <div className="navbar-end">
