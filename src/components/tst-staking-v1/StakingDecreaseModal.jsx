@@ -96,15 +96,17 @@ const StakingDecreaseModal = ({
     handleTstAmount({target: {value: formatBalance}});
   }
 
+  const closeWithError = () => {
+    setShowError(false);
+    handleCloseModal();
+  }
+
   if (showError) {
     return (
       <>
         <Modal
           open={isOpen}
-          closeModal={() => {
-            setShowError(false);
-            handleCloseModal();
-          }}
+          closeModal={() => closeWithError()}
         >
           <div>
             {claimLoading ? (
@@ -137,10 +139,7 @@ const StakingDecreaseModal = ({
                   </Button>
                   <Button
                     color="ghost"
-                    onClick={() => {
-                      setShowError(false);
-                      handleCloseModal();
-                    }}
+                    onClick={() => closeWithError()}
                   >
                     Cancel
                   </Button>
@@ -157,9 +156,7 @@ const StakingDecreaseModal = ({
     <>
       <Modal
         open={isOpen}
-        onClose={() => {
-          handleCloseModal();
-        }}
+        closeModal={() => closeWithError()}
       >
         <>
           {claimLoading ? (
@@ -224,7 +221,7 @@ const StakingDecreaseModal = ({
                 Withdraw
               </Button>
               <Button
-                onClick={handleCloseModal}
+                onClick={() => closeWithError()}
                 color="ghost"
               >
                 Cancel
