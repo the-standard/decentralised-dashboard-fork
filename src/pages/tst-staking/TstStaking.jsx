@@ -167,7 +167,7 @@ const TstStaking = (props) => {
               </Typography>
 
               <Typography variant="p">
-                The previous Staking Pool is accessable within <span className="underline cursor-pointer" onClick={() => navigate("/legacy-pools")}>Legacy Pools</span>, so you can withdraw your staked assets & claim any outstanding rewards.
+                The previous Staking Pool is accessible within <span className="underline cursor-pointer" onClick={() => navigate("/legacy-pools")}>Legacy Pools</span>, so you can withdraw your staked assets & claim any outstanding rewards.
               </Typography>
             </div>
           </Card>
