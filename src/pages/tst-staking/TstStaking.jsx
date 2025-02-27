@@ -11,6 +11,7 @@ import {
 import { arbitrumSepolia } from "wagmi/chains";
 import {
   Square3Stack3DIcon,
+  BellAlertIcon,
 } from '@heroicons/react/24/outline';
 
 import {
@@ -153,7 +154,25 @@ const TstStaking = (props) => {
     <>
       <main className="grid gap-4 grid-cols-1 md:grid-cols-2">
         <div>
-          <Card className="card-compact mb-4">
+
+          <Card className="warn-card card-compact mb-4">
+            <div className="card-body overflow-x-scroll">
+              <Typography variant="h2" className="card-title flex gap-0">
+                <BellAlertIcon className="mr-2 h-6 w-6 inline-block"/>
+                New Staking Pool
+              </Typography>
+
+              <Typography variant="p">
+                The new TST Staking Pool has been released, and all earnable fees have moved over to it.
+              </Typography>
+
+              <Typography variant="p">
+                The previous Staking Pool is accessable within <span className="underline cursor-pointer" onClick={() => navigate("/legacy-pools")}>Legacy Pools</span>, so you can withdraw your staked assets & claim any outstanding rewards.
+              </Typography>
+            </div>
+          </Card>
+
+          {/* <Card className="card-compact mb-4">
             <div className="card-body overflow-x-scroll">
               <Typography variant="h2" className="card-title flex gap-0">
                 <Square3Stack3DIcon className="mr-2 h-6 w-6 inline-block"/>
@@ -171,7 +190,7 @@ const TstStaking = (props) => {
               )}
 
             </div>
-          </Card>
+          </Card> */}
 
           <StakingIncrease />
         </div>
