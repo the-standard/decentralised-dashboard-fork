@@ -18,8 +18,8 @@ import {
 import {
   useTstAddressStore,
   useErc20AbiStore,
-  useStakingPoolv3AbiStore,
-  useStakingPoolv3AddressStore,
+  useStakingPoolv4AbiStore,
+  useStakingPoolv4AddressStore,
   useGuestShowcaseStore,
   useMerklTSTStakeStage,
 } from "../../../../store/Store";
@@ -39,9 +39,9 @@ const TSTModalStake = (props) => {
     arbitrumSepoliaTstAddress,
   } = useTstAddressStore();
   const {
-    arbitrumSepoliaStakingPoolv3Address,
-    arbitrumStakingPoolv3Address,
-  } = useStakingPoolv3AddressStore();
+    arbitrumSepoliaStakingPoolv4Address,
+    arbitrumStakingPoolv4Address,
+  } = useStakingPoolv4AddressStore();
   const {
     merklTSTStakeStage,
     setMerklTSTStakeStage,
@@ -56,7 +56,7 @@ const TSTModalStake = (props) => {
   const accountAddress = useWallet;
 
   const { erc20Abi } = useErc20AbiStore();
-  const { stakingPoolv3Abi } = useStakingPoolv3AbiStore();
+  const { stakingPoolv4Abi } = useStakingPoolv4AbiStore();
   const [stage, setStage] = useState('');
 
   const tstInputRef = useRef(null);
@@ -65,8 +65,8 @@ const TSTModalStake = (props) => {
   arbitrumSepoliaTstAddress :
   arbitrumTstAddress;
 
-  const stakingPoolv3Address = chainId === arbitrumSepolia.id ? arbitrumSepoliaStakingPoolv3Address :
-  arbitrumStakingPoolv3Address;
+  const stakingPoolv4Address = chainId === arbitrumSepolia.id ? arbitrumSepoliaStakingPoolv4Address :
+  arbitrumStakingPoolv4Address;
 
   const tstContract = {
     address: tstAddress,
@@ -82,7 +82,7 @@ const TSTModalStake = (props) => {
     contracts: [{
       ... tstContract,
       functionName: "allowance",
-      args: [accountAddress, stakingPoolv3Address]
+      args: [accountAddress, stakingPoolv4Address]
     },{
       ... tstContract,
       functionName: "balanceOf",
@@ -150,7 +150,7 @@ const TSTModalStake = (props) => {
         abi: erc20Abi,
         address: tstAddress,
         functionName: "approve",
-        args: [stakingPoolv3Address, tstBalance],
+        args: [stakingPoolv4Address, tstBalance],
       });
     } catch (error) {
       console.error('approve', error)
@@ -167,8 +167,8 @@ const TSTModalStake = (props) => {
     setTimeout(() => {
       try {
         depositWriteContract({
-          abi: stakingPoolv3Abi,
-          address: stakingPoolv3Address,
+          abi: stakingPoolv4Abi,
+          address: stakingPoolv4Address,
           functionName: "increaseStake",
           args: [
             tstBalance,
