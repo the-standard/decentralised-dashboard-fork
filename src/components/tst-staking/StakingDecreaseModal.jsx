@@ -74,6 +74,11 @@ const StakingDecreaseModal = ({
       handleCloseModal();
     } else if (isError) {
       setShowError(true)
+      let errorMessage = 'There was a problem';
+      if (error?.cause?.data?.errorName === 'MinimumStakingPeriodError') {
+        errorMessage = 'Cannot withdraw during staking period';
+      }
+      toast.error(errorMessage);
       setClaimLoading(false);
       setTstWithdrawAmount(0);
     }
@@ -124,7 +129,7 @@ const StakingDecreaseModal = ({
                     There was a problem processing your withdraw request.
                   </Typography>
                   <Typography variant="p" className="mb-2">
-                    It is possible that your withdraw request exceeds the amount of tokens you have staked.
+                    It is possible that your withdraw request exceeds the amount of tokens you have staked, or your tokens are still within the 90 day lock in period.
                   </Typography>
                 </div>
 

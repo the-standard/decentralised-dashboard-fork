@@ -124,6 +124,11 @@ export const abi = [
     ],
     "stateMutability": "view",
     "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "MinimumStakingPeriodError",
+    "type": "error"
   }
 ]
 
