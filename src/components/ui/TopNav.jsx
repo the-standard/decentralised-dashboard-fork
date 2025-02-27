@@ -32,10 +32,12 @@ const TopNav = (props) => {
 
   const isLight = localThemeModeStore && localThemeModeStore.includes('light');
 
+  const navButtonClass = 'hidden md:flex';
+
   if (accountAddress) {
     return (
       <div className="navbar sticky shadow-md tst-topnav">
-        <div className="navbar-start">
+        <div className="navbar-start gap-[4px]">
           <Button
             className="md:hidden"
             color="ghost"
@@ -51,8 +53,43 @@ const TopNav = (props) => {
             <img
               src={isLight ? (StandardioLogoBlack) : (StandardioLogoWhite)}
               alt="TheStandard.io Logo"
-              className="h-6"
+              className="h-4"
             />  
+          </Button>
+          <Button
+            className={location.pathname === '/' || location.pathname.includes('/vaults') ?
+              `${navButtonClass} btn-outline` : `${navButtonClass} btn-ghost`
+            }
+            onClick={() => navigate("/vaults")}
+          >
+            Vaults
+          </Button>
+          <Button
+            className={location.pathname.includes('/staking-pool') ?
+              `${navButtonClass} btn-outline` : `${navButtonClass} btn-ghost`
+            }
+            color="ghost"
+            onClick={() => navigate("/staking-pool")}
+          >
+            Staking Pool
+          </Button>
+          <Button
+            className={location.pathname.includes('/dex') ?
+              `${navButtonClass} btn-outline` : `${navButtonClass} btn-ghost`
+            }
+            color="ghost"
+            onClick={() => navigate("/dex")}
+          >
+            Cross-Chain Dex
+          </Button>
+          <Button
+            className={location.pathname.includes('/legacy-pools') ?
+              `${navButtonClass} btn-outline` : `${navButtonClass} btn-ghost`
+            }
+            color="ghost"
+            onClick={() => navigate("/legacy-pools")}
+          >
+            Legacy Pools
           </Button>
         </div>
         <div className="navbar-end">
