@@ -9,8 +9,8 @@ import { arbitrumSepolia } from "wagmi/chains";
 import { formatEther, parseEther } from "viem";
 
 import {
-  useStakingPoolv4AddressStore,
-  useStakingPoolv4AbiStore
+  useStakingPoolv3AddressStore,
+  useStakingPoolv3AbiStore
 } from "../../store/Store";
 
 import Button from "../ui/Button";
@@ -25,10 +25,10 @@ const StakingDecreaseModal = ({
   handleCloseModal,
 }) => {
   const {
-    arbitrumSepoliaStakingPoolv4Address,
-    arbitrumStakingPoolv4Address,
-  } = useStakingPoolv4AddressStore();
-  const { stakingPoolv4Abi } = useStakingPoolv4AbiStore();
+    arbitrumSepoliaStakingPoolv3Address,
+    arbitrumStakingPoolv3Address,
+  } = useStakingPoolv3AddressStore();
+  const { stakingPoolv3Abi } = useStakingPoolv3AbiStore();
   const [claimLoading, setClaimLoading] = useState(false);
   const [showError, setShowError] = useState(false);
   const [tstWithdrawAmount, setTstWithdrawAmount] = useState(0);
@@ -40,16 +40,16 @@ const StakingDecreaseModal = ({
 
   const useTstStakedAmount = formatEther(tstStakedAmount.toString());
 
-  const stakingPoolv4Address = chainId === arbitrumSepolia.id ? arbitrumSepoliaStakingPoolv4Address :
-  arbitrumStakingPoolv4Address;
+  const stakingPoolv3Address = chainId === arbitrumSepolia.id ? arbitrumSepoliaStakingPoolv3Address :
+  arbitrumStakingPoolv3Address;
 
   const { writeContract, isError, isPending, isSuccess, error } = useWriteContract();
 
   const handleApproveWithdraw = async () => {
     try {
       writeContract({
-        abi: stakingPoolv4Abi,
-        address: stakingPoolv4Address,
+        abi: stakingPoolv3Abi,
+        address: stakingPoolv3Address,
         functionName: "decreaseStake",
         args: [
           tstWithdrawAmount,
@@ -74,11 +74,6 @@ const StakingDecreaseModal = ({
       handleCloseModal();
     } else if (isError) {
       setShowError(true)
-      let errorMessage = 'There was a problem';
-      if (error?.cause?.data?.errorName === 'MinimumStakingPeriodError') {
-        errorMessage = 'Cannot withdraw during staking period';
-      }
-      toast.error(errorMessage);
       setClaimLoading(false);
       setTstWithdrawAmount(0);
     }
@@ -131,7 +126,7 @@ const StakingDecreaseModal = ({
                     There was a problem processing your withdraw request.
                   </Typography>
                   <Typography variant="p" className="mb-2">
-                    It is possible that your withdraw request exceeds the amount of tokens you have staked, or your tokens are still within the 90 day lock in period.
+                    It is possible that your withdraw request exceeds the amount of tokens you have staked.
                   </Typography>
                 </div>
 

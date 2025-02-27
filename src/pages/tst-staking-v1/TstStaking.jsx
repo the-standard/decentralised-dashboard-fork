@@ -11,32 +11,31 @@ import {
 import { arbitrumSepolia } from "wagmi/chains";
 import {
   Square3Stack3DIcon,
-  BellAlertIcon,
 } from '@heroicons/react/24/outline';
 
 import {
   useTstAddressStore,
   useErc20AbiStore,
-  useStakingPoolv4AbiStore,
-  useStakingPoolv4AddressStore,
+  useStakingPoolv3AbiStore,
+  useStakingPoolv3AddressStore,
   useGuestShowcaseStore,
 } from "../../store/Store";
 
-import StakingIncrease from "../../components/tst-staking/StakingIncrease";
-import StakingRewards from "../../components/tst-staking/StakingRewards";
+import StakingIncrease from "../../components/tst-staking-v1/StakingIncrease";
+import StakingRewards from "../../components/tst-staking-v1/StakingRewards";
 
 import Card from "../../components/ui/Card";
 import CenterLoader from "../../components/ui/CenterLoader";
 import Typography from "../../components/ui/Typography";
 
 const TstStaking = (props) => {
-  const { stakingPoolv4Abi } = useStakingPoolv4AbiStore();
+  const { stakingPoolv3Abi } = useStakingPoolv3AbiStore();
   const { erc20Abi } = useErc20AbiStore();
 
   const {
-    arbitrumSepoliaStakingPoolv4Address,
-    arbitrumStakingPoolv4Address,
-  } = useStakingPoolv4AddressStore();
+    arbitrumSepoliaStakingPoolv3Address,
+    arbitrumStakingPoolv3Address,
+  } = useStakingPoolv3AddressStore();
   
   const {
     arbitrumTstAddress,
@@ -57,28 +56,28 @@ const TstStaking = (props) => {
   arbitrumSepoliaTstAddress :
   arbitrumTstAddress;
 
-  const stakingPoolv4Address =
+  const stakingPoolv3Address =
   chainId === arbitrumSepolia.id
-    ? arbitrumSepoliaStakingPoolv4Address
-    : arbitrumStakingPoolv4Address;
+    ? arbitrumSepoliaStakingPoolv3Address
+    : arbitrumStakingPoolv3Address;
 
   const { data: poolPositions, refetch: refetchPositions } = useReadContract({
-    address: stakingPoolv4Address,
-    abi: stakingPoolv4Abi,
+    address: stakingPoolv3Address,
+    abi: stakingPoolv3Abi,
     functionName: "positions",
     args: [accountAddress],
   });
 
   const { data: poolRewards, isLoading: poolRewardsLoading, refetch: refetchRewards } = useReadContract({
-    address: stakingPoolv4Address,
-    abi: stakingPoolv4Abi,
+    address: stakingPoolv3Address,
+    abi: stakingPoolv3Abi,
     functionName: "projectedEarnings",
     args: [accountAddress],
   });
 
   const { data: dailyYield, isLoading, dailyYieldLoading, refetch: refetchDailyReward } = useReadContract({
-    address: stakingPoolv4Address,
-    abi: stakingPoolv4Abi,
+    address: stakingPoolv3Address,
+    abi: stakingPoolv3Abi,
     functionName: "dailyYield",
     args: [],
   });
@@ -87,7 +86,7 @@ const TstStaking = (props) => {
     address: tstAddress,
     abi: erc20Abi,
     functionName: "balanceOf",
-    args: [stakingPoolv4Address],
+    args: [stakingPoolv3Address],
   });
 
   useWatchBlockNumber({
@@ -152,49 +151,7 @@ const TstStaking = (props) => {
 
   return (
     <>
-      <main className="grid gap-4 grid-cols-1 md:grid-cols-2">
-        <div>
-
-          <Card className="warn-card card-compact mb-4">
-            <div className="card-body overflow-x-scroll">
-              <Typography variant="h2" className="card-title flex gap-0">
-                <BellAlertIcon className="mr-2 h-6 w-6 inline-block"/>
-                New Staking Pool
-              </Typography>
-
-              <Typography variant="p">
-                The new TST Staking Pool has been released, and all earnable fees have moved over to it.
-              </Typography>
-
-              <Typography variant="p">
-                The previous Staking Pool is accessible within <span className="underline cursor-pointer" onClick={() => navigate("/legacy-pools")}>Legacy Pools</span>, so you can withdraw your staked assets & claim any outstanding rewards.
-              </Typography>
-            </div>
-          </Card>
-
-          {/* <Card className="card-compact mb-4">
-            <div className="card-body overflow-x-scroll">
-              <Typography variant="h2" className="card-title flex gap-0">
-                <Square3Stack3DIcon className="mr-2 h-6 w-6 inline-block"/>
-                Staking Pool
-              </Typography>
-
-              <Typography variant="p">
-                Stake TST to earn USDs & more tokens daily.
-              </Typography>
-
-              {useShowcase ? (null) : (
-                <Typography variant="p">
-                  If you're looking for our previous staking pools, <span className="underline cursor-pointer" onClick={() => navigate("/legacy-pools")}>they can be found here</span>.
-                </Typography>
-              )}
-
-            </div>
-          </Card> */}
-
-          <StakingIncrease />
-        </div>
-
+      <main className="grid gap-4 grid-cols-1">
         <div>
           {poolRewardsLoading || dailyYieldLoading || priceDataLoading ? (
             <>

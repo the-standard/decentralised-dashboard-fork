@@ -2,13 +2,14 @@ import { useState } from "react";
 
 import LiquidationPools from '../liquidation-pools/LiquidationPools';
 import StakingPool from '../staking-pool/StakingPool';
+import TstStaking from '../tst-staking-v1/TstStaking';
 
 import Card from "../../components/ui/Card";
 import Typography from "../../components/ui/Typography";
 import Button from "../../components/ui/Button";
 
 const LegacyPools = (props) => {
-  const [ showPool, setShowPool ] = useState('STAKE-EUROSTST');
+  const [ showPool, setShowPool ] = useState('STAKE-TST-V1');
 
   return (
     <div>
@@ -28,6 +29,13 @@ const LegacyPools = (props) => {
           </Typography>
 
           <div className="flex flex-wrap mt-4 gap-4">
+            <Button
+              onClick={() => setShowPool('STAKE-TST-V1')}
+              variant="outline"
+              active={showPool === 'STAKE-TST-V1'}
+            >
+              TST Staking V1
+            </Button>
             <Button
               onClick={() => setShowPool('STAKE-EUROSTST')}
               variant="outline"
@@ -49,6 +57,9 @@ const LegacyPools = (props) => {
       </Card>
 
       <div>
+        {showPool === 'STAKE-TST-V1' ? (
+          <TstStaking />
+        ) : (null)}
         {showPool === 'STAKE-EUROSTST' ? (
           <StakingPool />
         ) : (null)}

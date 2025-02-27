@@ -246,11 +246,11 @@
   /* margin: auto; */
 }
 
-@media (min-width: 1440px) {
+/* @media (min-width: 1440px) {
   .tst-inner {
     padding: 1rem 0px 1rem 1rem;
   }
-}
+} */
 
 @media (min-width: 1610px) {
   .tst-inner {

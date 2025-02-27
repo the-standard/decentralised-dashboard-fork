@@ -14,8 +14,8 @@ import { ethers } from "ethers";
 import {
   useTstAddressStore,
   useErc20AbiStore,
-  useStakingPoolv4AbiStore,
-  useStakingPoolv4AddressStore,
+  useStakingPoolv3AbiStore,
+  useStakingPoolv3AddressStore,
   useGuestShowcaseStore,
 } from "../../store/Store";
 
@@ -31,9 +31,9 @@ const StakingIncrease = () => {
     arbitrumSepoliaTstAddress,
   } = useTstAddressStore();
   const {
-    arbitrumSepoliaStakingPoolv4Address,
-    arbitrumStakingPoolv4Address,
-  } = useStakingPoolv4AddressStore();
+    arbitrumSepoliaStakingPoolv3Address,
+    arbitrumStakingPoolv3Address,
+  } = useStakingPoolv3AddressStore();
   // const { address } = useAccount();
   const {
     useWallet,
@@ -42,7 +42,7 @@ const StakingIncrease = () => {
   const accountAddress = useWallet;
 
   const { erc20Abi } = useErc20AbiStore();
-  const { stakingPoolv4Abi } = useStakingPoolv4AbiStore();
+  const { stakingPoolv3Abi } = useStakingPoolv3AbiStore();
   const [tstStakeAmount, setTstStakeAmount] = useState(0);
   const [stage, setStage] = useState('');
 
@@ -52,8 +52,8 @@ const StakingIncrease = () => {
   arbitrumSepoliaTstAddress :
   arbitrumTstAddress;
 
-  const stakingPoolv4Address = chainId === arbitrumSepolia.id ? arbitrumSepoliaStakingPoolv4Address :
-  arbitrumStakingPoolv4Address;
+  const stakingPoolv3Address = chainId === arbitrumSepolia.id ? arbitrumSepoliaStakingPoolv3Address :
+  arbitrumStakingPoolv3Address;
 
   const tstContract = {
     address: tstAddress,
@@ -64,7 +64,7 @@ const StakingIncrease = () => {
     contracts: [{
       ... tstContract,
       functionName: "allowance",
-      args: [accountAddress, stakingPoolv4Address]
+      args: [accountAddress, stakingPoolv3Address]
     },{
       ... tstContract,
       functionName: "balanceOf",
@@ -90,7 +90,7 @@ const StakingIncrease = () => {
         abi: erc20Abi,
         address: tstAddress,
         functionName: "approve",
-        args: [stakingPoolv4Address, tstStakeAmount],
+        args: [stakingPoolv3Address, tstStakeAmount],
       });
     } catch (error) {
       let errorMessage = '';
@@ -106,8 +106,8 @@ const StakingIncrease = () => {
     setTimeout(() => {
       try {
         writeContract({
-          abi: stakingPoolv4Abi,
-          address: stakingPoolv4Address,
+          abi: stakingPoolv3Abi,
+          address: stakingPoolv3Address,
           functionName: "increaseStake",
           args: [
             tstStakeAmount,
@@ -193,9 +193,6 @@ const StakingIncrease = () => {
           </Typography>
           <Typography variant="p" className="mb-2">
             Increase your TST position to earn USDs & more rewards. 
-          </Typography>
-          <Typography variant="p" className="mb-2">
-            All staked TST is locked in for 90 days from the beginning of your staking period. Rewards will start to be earned 24 hours after staking.
           </Typography>
           <Typography variant="p" className="mb-2">
             Depositing will automatically claim your existing rewards, ending your current staking period and restarting a new one.
