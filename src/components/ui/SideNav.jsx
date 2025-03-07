@@ -9,7 +9,8 @@ import {
   XMarkIcon,
   Square3Stack3DIcon,
   ArrowPathRoundedSquareIcon,
-  ArchiveBoxIcon
+  ArchiveBoxIcon,
+  BoltIcon,
 } from '@heroicons/react/24/outline';
 
 import {
@@ -115,6 +116,21 @@ const SideNav = (props) => {
             </NavLink>
           </Menu.Item>
         )}
+        <Menu.Item>
+          <NavLink
+            to="/liquidations"
+            className={({ isActive }) => 
+              isActive ||
+              location.pathname.includes('/liquidations') ?
+              'navbar-item active' : 'navbar-item'
+            }
+          >
+            <BoltIcon className="h-6 w-6 inline-block"/>
+            <span className="md:hidden">
+              Liquidations
+            </span>
+          </NavLink>
+        </Menu.Item>
       </div>
       {/* Med + */}
       {/* <div className="p-2 flex-col gap-2 w-full hidden md:flex">

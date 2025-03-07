@@ -22,6 +22,7 @@ const TopNav = (props) => {
   // const { address: wagmiWallet } = useAccount();
 
   const {
+    useShowcase,
     useWallet,
   } = useGuestShowcaseStore();
 
@@ -82,14 +83,25 @@ const TopNav = (props) => {
           >
             Cross-Chain Dex
           </Button>
+          {useShowcase ? (null) : (
+            <Button
+              className={location.pathname.includes('/legacy-pools') ?
+                `${navButtonClass} btn-outline` : `${navButtonClass} btn-ghost`
+              }
+              color="ghost"
+              onClick={() => navigate("/legacy-pools")}
+            >
+              Legacy Pools
+            </Button>          
+          )}
           <Button
-            className={location.pathname.includes('/legacy-pools') ?
+            className={location.pathname.includes('/liquidations') ?
               `${navButtonClass} btn-outline` : `${navButtonClass} btn-ghost`
             }
             color="ghost"
-            onClick={() => navigate("/legacy-pools")}
+            onClick={() => navigate("/liquidations")}
           >
-            Legacy Pools
+            Liquidations
           </Button>
         </div>
         <div className="navbar-end">
