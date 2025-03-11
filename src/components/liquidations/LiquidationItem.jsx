@@ -161,10 +161,14 @@ const LiquidationItem = ( props ) => {
 
   const claimableValue = totalCollateralValue - minted;
 
+  const isLiquidated = vault?.status?.liquidated;
+
   return (
     <Fragment key={index}>
       <tr className="border-b-0 md:border-b-[1px]">
-        <td className="hidden md:table-cell">
+        <td
+          className="hidden md:table-cell"
+        >
           <Tooltip
             className="h-full"
             position="top"
@@ -178,6 +182,7 @@ const LiquidationItem = ( props ) => {
                 }}
                 src={seurologo}
                 alt="EUROs"
+                className={`${isLiquidated ? 'opacity-50' : ''}`}
               />
             ) : null}
             {vaultType === 'USDs' ? (
@@ -188,17 +193,22 @@ const LiquidationItem = ( props ) => {
                 }}
                 src={susdlogo}
                 alt="USDs"
+                className={`${isLiquidated ? 'opacity-50' : ''}`}
               />
             ) : null}
           </Tooltip>
         </td>
-        <td className="hidden md:table-cell">
+        <td
+          className={`hidden md:table-cell ${isLiquidated ? 'opacity-50' : ''}`}
+        >
           {vault?.status?.version ? (
             `V${vault?.status?.version}-`
           ) : ('')}
           {BigInt(vault?.tokenId).toString()}
         </td>
-        <td>
+        <td
+          className={`${isLiquidated ? 'opacity-50' : ''}`}
+        >
           {/* {currencySymbol} */}
           {truncateToTwoDecimals(
             ethers.formatEther(
@@ -206,7 +216,9 @@ const LiquidationItem = ( props ) => {
             )
           )}
         </td>
-        <td>
+        <td
+          className={`${isLiquidated ? 'opacity-50' : ''}`}
+        >
           {truncateToTwoDecimals(
             ethers.formatEther(
               minted.toString()
@@ -215,7 +227,9 @@ const LiquidationItem = ( props ) => {
           {/* &nbsp;
           {vaultType.toString()} */}
         </td>
-        <td>
+        <td
+          className={`${isLiquidated ? 'opacity-50' : ''}`}
+        >
           ≈&nbsp;
           {/* {currencySymbol} */}
           {truncateToTwoDecimals(

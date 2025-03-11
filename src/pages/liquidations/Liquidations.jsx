@@ -36,25 +36,27 @@ const Liquidations = (props) => {
   }, []);
 
   const testData = [
-    {
-      tokenID: 52
-    },
-    {
-      tokenID: 75
-    },
-    {
-      tokenID: 1
-    },
-    {
-      tokenID: 3
-    },
-    {
-      tokenID: 5
-    },
-    {
-      tokenID: 10
-    },
+    // {
+    //   tokenID: 52
+    // },
+    // {
+    //   tokenID: 75
+    // },
+    // {
+    //   tokenID: 1
+    // },
+    // {
+    //   tokenID: 3
+    // },
+    // {
+    //   tokenID: 5
+    // },
+    // {
+    //   tokenID: 10
+    // },
   ];
+
+  console.log(123123, liquidationsData)
 
   return (
     <main>
@@ -71,7 +73,7 @@ const Liquidations = (props) => {
               Liquidate undercollateralised vaults by paying off their debt in a single transaction to claim their collateral at a discount.
             </Typography>
 
-            <div class="card-actions">
+            <div className="card-actions">
               <Button
                 color="primary"
                 onClick={() => navigate("/dex")}
@@ -103,7 +105,7 @@ const Liquidations = (props) => {
 
       <LiquidationsList
         // items={liquidationsData}
-        items={testData}
+        items={liquidationsData}
         USDsBalance={USDsBalance}
       />
 
