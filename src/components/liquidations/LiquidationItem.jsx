@@ -20,19 +20,15 @@ import {
   useVaultManagerAbiStore,
   usesUSDContractAddressStore,
   useGuestShowcaseStore,
-  useSmartVaultV4ABIStore,
 } from "../../store/Store";
 
-import Card from "../ui/Card";
-import Pagination from "../ui/Pagination";
-import CenterLoader from "../ui/CenterLoader";
 import Typography from "../ui/Typography";
 
 import seurologo from "../../assets/EUROs.svg";
 import susdlogo from "../../assets/USDs.svg";
 
 import LiquidationAction from "./LiquidationAction";
-import BalanceChecker from "./BalanceChecker";
+import ListItemLoader from "./ListItemLoader";
 
 const computeProgressBar = (
   totalDebt,
@@ -64,7 +60,6 @@ const LiquidationItem = ( props ) => {
     arbitrumsUSDSepoliaContractAddress,
     arbitrumsUSDContractAddress,
   } = usesUSDContractAddressStore();
-  const { smartVaultV4ABI } = useSmartVaultV4ABIStore();
 
   const [isDataReady, setIsDataReady] = useState(false);
 
@@ -96,7 +91,8 @@ const LiquidationItem = ( props ) => {
     data: vaultDatasUSD,
     isLoading: isLoadingsUSD,
     isError: isErrorsUSD,
-    error: errorsUSD
+    error: errorsUSD,
+    refetch: refetchsUSD,
   } = useReadContract({
     abi: vaultManagerAbi,
     address: sUSDVaultManagerAddress,
@@ -117,29 +113,7 @@ const LiquidationItem = ( props ) => {
 
   if (isLoadingsUSD && !isDataReady) {
     return (
-      <tr
-        key={index}
-        className="active animate-pulse"
-      >
-        <td className="hidden md:table-cell">
-          <div className="rounded-full bg-base-content h-[42px] w-[42px] opacity-30"></div>
-        </td>
-        <td className="hidden md:table-cell">
-          <div className="rounded-lg bg-base-content h-[12px] w-[38px] opacity-30"></div>
-        </td>
-        <td>
-          <div className="rounded-lg bg-base-content h-[12px] w-[72px] opacity-30"></div>
-        </td>
-        <td>
-          <div className="rounded-lg bg-base-content h-[12px] w-[92px] opacity-30"></div>
-        </td>
-        <td className="hidden md:table-cell">
-          <div className="rounded-lg bg-base-content h-[12px] w-full opacity-30"></div>
-        </td>
-        <td className="text-right flex justify-end">
-          <div className="rounded-lg bg-base-content h-[38px] w-[160px] opacity-30"></div>
-        </td>
-      </tr> 
+      <ListItemLoader index={index} />
     );
   }
   
@@ -282,6 +256,7 @@ const LiquidationItem = ( props ) => {
             vaultData={vault}
             hasFunds={hasFunds}
             className="w-full"
+            refetchsUSD={refetchsUSD}
           />
         </td>
       </tr>

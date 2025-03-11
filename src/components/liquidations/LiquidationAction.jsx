@@ -16,7 +16,7 @@ import {
 import Button from "../ui/Button";
 
 const LiquidationAction = ( props ) => {
-  const { vaultData, hasFunds, className } = props;
+  const { vaultData, hasFunds, className, refetchsUSD } = props;
   const { smartVaultV4ABI } = useSmartVaultV4ABIStore();
   const { vaultManagerAbi } = useVaultManagerAbiStore();
   const {
@@ -28,6 +28,7 @@ const LiquidationAction = ( props ) => {
 
   const vaultAddress = vaultData?.status?.vaultAddress;
   const tokenId = vaultData?.tokenId;
+  const isLiquidated = vaultData?.status?.liquidated;
 
   const sUSDVaultManagerAddress =
   chainId === arbitrumSepolia.id
@@ -75,6 +76,7 @@ const LiquidationAction = ( props ) => {
       // 
     } else if (isSuccessLiquidate) {
       toast.success('Vault liquidated successfully');
+      refetchsUSD();
     } else if (isErrorLiquidate) {
       toast.error('There was a problem');
     }
@@ -92,14 +94,17 @@ const LiquidationAction = ( props ) => {
         isLoading ||
         !undercollateralisedData ||
         !hasFunds ||
-        isPendingLiquidate
+        isPendingLiquidate ||
+        isLiquidated
       }
       className={`min-w-[160px] ${className}`}
       onClick={() => handleLiquidate()}
     >
       {!isLoading ? (
         <>
-          {!undercollateralisedData ? (
+          {isLiquidated ? (
+            'Already Liquidated'
+          ) : !undercollateralisedData ? (
             'Not Yet Liquidatable'
           ) : !hasFunds ? (
             'Not Enough Funds'

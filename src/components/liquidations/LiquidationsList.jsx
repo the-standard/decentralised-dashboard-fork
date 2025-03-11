@@ -22,6 +22,7 @@ import seurologo from "../../assets/EUROs.svg";
 import susdlogo from "../../assets/USDs.svg";
 
 import LiquidationItem from "./LiquidationItem";
+import ListItemLoader from "./ListItemLoader";
 
 const LiquidationsList = (props) => {
   const { items, USDsBalance } = props;
@@ -108,29 +109,7 @@ const LiquidationsList = (props) => {
                   {Array.from(
                     { length: vaultsLoading },
                     (_, i) => (
-                      <tr
-                        key={i}
-                        className="active animate-pulse"
-                      >
-                        <td className="hidden md:table-cell">
-                          <div className="rounded-full bg-base-content h-[42px] w-[42px] opacity-30"></div>
-                        </td>
-                        <td className="hidden md:table-cell">
-                          <div className="rounded-lg bg-base-content h-[12px] w-[38px] opacity-30"></div>
-                        </td>
-                        <td>
-                          <div className="rounded-lg bg-base-content h-[12px] w-[72px] opacity-30"></div>
-                        </td>
-                        <td>
-                          <div className="rounded-lg bg-base-content h-[12px] w-[92px] opacity-30"></div>
-                        </td>
-                        <td className="hidden md:table-cell">
-                          <div className="rounded-lg bg-base-content h-[12px] w-full opacity-30"></div>
-                        </td>
-                        <td className="text-right flex justify-end">
-                          <div className="rounded-lg bg-base-content h-[38px] w-[160px] opacity-30"></div>
-                        </td>
-                      </tr>
+                      <ListItemLoader index={i} />
                     )
                   )}
                 </>
