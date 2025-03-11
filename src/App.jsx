@@ -16,6 +16,7 @@ import TstStaking from './pages/tst-staking/TstStaking';
 import LegacyPools from './pages/legacy-pools/LegacyPools';
 import TermsOfUse from './pages/TermsOfUse';
 import Dex from './pages/dex/Dex';
+import Liquidations from './pages/liquidations/Liquidations';
 
 import './App.css';
 import 'react-toastify/dist/ReactToastify.min.css';
@@ -39,6 +40,7 @@ function App() {
                 <Route path="legacy-pools" element={<DashLayout><LegacyPools /></DashLayout>} />
                 <Route path="staking-pool" element={<DashLayout><TstStaking /></DashLayout>} />
                 <Route path="dex/*" element={<DashLayout><Dex /></DashLayout>} />
+                <Route path="liquidations" element={<DashLayout><Liquidations /></DashLayout>} />
                 <Route path="termsofuse" element={<DashLayout><TermsOfUse /></DashLayout>} />
                 <Route path="*" element={<Home/>} />
               </Routes>

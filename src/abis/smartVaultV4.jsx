@@ -95,6 +95,19 @@ export const abi = [
     ],
     "outputs": [],
     "stateMutability": "nonpayable"
+  },
+  {
+    "type": "function",
+    "name": "undercollateralised",
+    "inputs": [],
+    "outputs": [
+        {
+            "name": "",
+            "type": "bool",
+            "internalType": "bool"
+        }
+    ],
+    "stateMutability": "view"
   }
 ];
 
