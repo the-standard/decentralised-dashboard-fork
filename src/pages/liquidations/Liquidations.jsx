@@ -35,29 +35,6 @@ const Liquidations = (props) => {
     getLiquidationsData();
   }, []);
 
-  const testData = [
-    // {
-    //   tokenID: 52
-    // },
-    // {
-    //   tokenID: 75
-    // },
-    // {
-    //   tokenID: 1
-    // },
-    // {
-    //   tokenID: 3
-    // },
-    // {
-    //   tokenID: 5
-    // },
-    // {
-    //   tokenID: 10
-    // },
-  ];
-
-  console.log(123123, liquidationsData)
-
   return (
     <main>
 
@@ -104,7 +81,6 @@ const Liquidations = (props) => {
       </div>
 
       <LiquidationsList
-        // items={liquidationsData}
         items={liquidationsData}
         USDsBalance={USDsBalance}
       />
