@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 import LiquidationsList from '../../components/liquidations/LiquidationsList';
@@ -12,6 +13,8 @@ const Liquidations = (props) => {
   const [liquidationsData, setLiquidationsData] = useState([]);
   const [liquidationsDataLoading, setLiquidationsDataLoading] = useState(true);
   const [USDsBalance, setUSDsBalance] = useState(0n);
+
+  const navigate = useNavigate();
 
   const getLiquidationsData = async () => {
     try {
@@ -56,22 +59,47 @@ const Liquidations = (props) => {
   return (
     <main>
 
-      <Card className="card-compact mb-4">
-        <div className="card-body overflow-x-scroll">
-          <Typography variant="h2" className="card-title flex gap-0">
-            Liquidations
-          </Typography>
+      <div className="flex gap-4 mb-4 flex-col md:flex-row">
 
-          <Typography variant="p">
-            USDs vaults Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum Lorem ipsum 
-          </Typography>
+        <Card className="card-compact flex-1">
+          <div className="card-body overflow-x-scroll">
+            <Typography variant="h2" className="card-title flex gap-0">
+              Liquidations
+            </Typography>
 
-          <BalanceChecker
-            USDsBalance={USDsBalance}
-            setUSDsBalance={setUSDsBalance}
-          />
-        </div>
-      </Card>
+            <Typography variant="p">
+              Liquidate undercollateralised vaults by paying off their debt in a single transaction, and claim their collateral at a discount.
+            </Typography>
+
+            <div class="card-actions">
+              <Button
+                color="primary"
+                onClick={() => navigate("/dex")}
+              >
+                Need more USDs? Exchange Here
+              </Button>
+            </div>
+          </div>
+        </Card>
+
+        <Card className="card-compact flex-1 max-w-none md:max-w-[400px]">
+          <div className="card-body overflow-x-scroll">
+            <Typography variant="h2" className="card-title flex gap-0">
+              USDs Balance
+            </Typography>
+
+            <Typography variant="p">
+              Your currently connected wallet contains:
+            </Typography>
+
+            <BalanceChecker
+              USDsBalance={USDsBalance}
+              setUSDsBalance={setUSDsBalance}
+            />
+          </div>
+        </Card>
+
+      </div>
 
       <LiquidationsList
         // items={liquidationsData}

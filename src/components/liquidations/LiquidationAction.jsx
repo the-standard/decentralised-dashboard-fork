@@ -1,19 +1,38 @@
 import { useState, useEffect, useRef } from "react";
 import {
   useReadContract,
+  useWriteContract,
+  useChainId,
 } from "wagmi";
+import { arbitrum, arbitrumSepolia } from "wagmi/chains";
+import { toast } from 'react-toastify';
 
 import {
   useSmartVaultV4ABIStore,
+  useVaultManagerAbiStore,
+  usesUSDContractAddressStore
 } from "../../store/Store";
 
 import Button from "../ui/Button";
 
 const LiquidationAction = ( props ) => {
-  const { vaultData, hasFunds } = props;
+  const { vaultData, hasFunds, className } = props;
   const { smartVaultV4ABI } = useSmartVaultV4ABIStore();
+  const { vaultManagerAbi } = useVaultManagerAbiStore();
+  const {
+    arbitrumsUSDSepoliaContractAddress,
+    arbitrumsUSDContractAddress,
+  } = usesUSDContractAddressStore();
+  
+  const chainId = useChainId();
 
   const vaultAddress = vaultData?.status?.vaultAddress;
+  const tokenId = vaultData?.tokenId;
+
+  const sUSDVaultManagerAddress =
+  chainId === arbitrumSepolia.id
+    ? arbitrumsUSDSepoliaContractAddress
+    : arbitrumsUSDContractAddress;
 
   const {
     data: undercollateralisedData,
@@ -26,14 +45,57 @@ const LiquidationAction = ( props ) => {
     functionName: "undercollateralised",
     args: [],
   });
+
+  const {
+    writeContract,
+    isError: isErrorLiquidate,
+    isPending: isPendingLiquidate,
+    isSuccess: isSuccessLiquidate
+  } = useWriteContract();
+
+  const handleLiquidate = async () => {
+    try {
+      writeContract({
+        abi: vaultManagerAbi,
+        address: sUSDVaultManagerAddress,
+        functionName: "liquidateVault",
+        args: [tokenId],
+      });
+    } catch (error) {
+      let errorMessage = '';
+      if (error && error.shortMessage) {
+        errorMessage = error.shortMessage;
+      }
+      toast.error(errorMessage || 'There was a problem');
+    }
+  }
+
+  useEffect(() => {
+    if (isPendingLiquidate) {
+      // 
+    } else if (isSuccessLiquidate) {
+      toast.success('Vault liquidated successfully');
+    } else if (isErrorLiquidate) {
+      toast.error('There was a problem');
+    }
+  }, [
+    isErrorLiquidate,
+    isPendingLiquidate,
+    isSuccessLiquidate,
+  ]);
   
   return (
     <Button
       color="primary"
-      loading={isLoading}
-      disabled={isLoading || !undercollateralisedData || !hasFunds}
-      className="min-w-[160px]"
-      // onClick={handleLetsStake}
+      loading={isLoading || isPendingLiquidate}
+      disabled={
+        isLoading ||
+        !undercollateralisedData ||
+        !hasFunds ||
+        isPendingLiquidate
+      }
+      className={`min-w-[160px] ${className}`}
+      onClick={() => handleLiquidate()}
     >
       {!isLoading ? (
         <>

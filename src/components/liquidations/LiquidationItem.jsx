@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, Fragment } from "react";
 import { ethers } from "ethers";
 import { Link, useNavigate } from "react-router-dom";
 import {
@@ -124,10 +124,10 @@ const LiquidationItem = ( props ) => {
         <td className="hidden md:table-cell">
           <div className="rounded-full bg-base-content h-[42px] w-[42px] opacity-30"></div>
         </td>
-        <td>
+        <td className="hidden md:table-cell">
           <div className="rounded-lg bg-base-content h-[12px] w-[38px] opacity-30"></div>
         </td>
-        <td className="hidden md:table-cell">
+        <td>
           <div className="rounded-lg bg-base-content h-[12px] w-[72px] opacity-30"></div>
         </td>
         <td>
@@ -148,7 +148,15 @@ const LiquidationItem = ( props ) => {
   }
 
   const vault = vaultDatasUSD;
-
+  
+  let totalCollateralValue = 0n;
+  if (vault?.status?.totalCollateralValue) {
+    totalCollateralValue = vault?.status?.totalCollateralValue;
+  }
+  let minted = 0n;
+  if (vault?.status?.minted) {
+    minted = vault?.status?.minted;
+  }
   let vaultType = '';
   if (vault?.status?.vaultType) {
     vaultType = ethers.decodeBytes32String(vault?.status?.vaultType);
@@ -156,8 +164,8 @@ const LiquidationItem = ( props ) => {
   let vaultHealth = 100;
   if (vault?.status) {
     vaultHealth = computeProgressBar(
-      vault?.status?.minted,
-      vault?.status?.totalCollateralValue
+      minted,
+      totalCollateralValue,
     );
   }
   let healthColour = 'success';
@@ -173,89 +181,111 @@ const LiquidationItem = ( props ) => {
 
   let hasFunds = false;
 
-  if (USDsBalance && vault?.status?.totalCollateralValue) {
-    hasFunds = USDsBalance >= vault?.status?.totalCollateralValue;
+  if (USDsBalance && totalCollateralValue) {
+    hasFunds = USDsBalance >= totalCollateralValue;
   }
-  
+
+  const claimableValue = totalCollateralValue - minted;
+
   return (
-    <tr key={index}>
-      <td className="hidden md:table-cell">
-        <Tooltip
-          className="h-full"
-          position="top"
-          message={(vaultType || '' )}
-        >
-          {vaultType === 'EUROs' ? (
-            <img
-              style={{
-                display: "block",
-                width: "42px",
-              }}
-              src={seurologo}
-              alt="EUROs"
-            />
-          ) : null}
-          {vaultType === 'USDs' ? (
-            <img
-              style={{
-                display: "block",
-                width: "42px",
-              }}
-              src={susdlogo}
-              alt="USDs"
-            />
-          ) : null}
-        </Tooltip>
-      </td>
-      <td>
-        {vault?.status?.version ? (
-          `V${vault?.status?.version}-`
-        ) : ('')}
-        {BigInt(vault?.tokenId).toString()}
-      </td>
-      <td className="hidden md:table-cell">
-        {currencySymbol}
-        {truncateToTwoDecimals(
-          ethers.formatEther(
-            BigInt(
-              vault.status.totalCollateralValue
-            ).toString()
-          )
-        )}
-      </td>
-      <td>
-        {truncateToTwoDecimals(
-          ethers.formatEther(vault.status.minted.toString())
-        )}
-        &nbsp;
-        {vaultType.toString()}
-      </td>
-      <td className="hidden md:table-cell">
-        {vault.status.liquidated ? (
-          <Typography variant="p" className="text-error">
-            Vault Liquidated
-          </Typography>
-        ) : (
+    <Fragment key={index}>
+      <tr className="border-b-0 md:border-b-[1px]">
+        <td className="hidden md:table-cell">
           <Tooltip
-            className="w-full h-full"
+            className="h-full"
             position="top"
-            message={(vaultHealth || 0 ) + '%'}
+            message={(vaultType || '' )}
           >
-            <Progress
-              value={vaultHealth || 0}
-              max="100"
-              color={healthColour || 'neutral'}
-            />
+            {vaultType === 'EUROs' ? (
+              <img
+                style={{
+                  display: "block",
+                  width: "42px",
+                }}
+                src={seurologo}
+                alt="EUROs"
+              />
+            ) : null}
+            {vaultType === 'USDs' ? (
+              <img
+                style={{
+                  display: "block",
+                  width: "42px",
+                }}
+                src={susdlogo}
+                alt="USDs"
+              />
+            ) : null}
           </Tooltip>
-        )}
-      </td>
-      <td className="text-right">
-        <LiquidationAction 
-          vaultData={vault}
-          hasFunds={hasFunds}
-        />
-      </td>
-    </tr> 
+        </td>
+        <td className="hidden md:table-cell">
+          {vault?.status?.version ? (
+            `V${vault?.status?.version}-`
+          ) : ('')}
+          {BigInt(vault?.tokenId).toString()}
+        </td>
+        <td>
+          {/* {currencySymbol} */}
+          {truncateToTwoDecimals(
+            ethers.formatEther(
+              totalCollateralValue.toString()
+            )
+          )}
+        </td>
+        <td>
+          {truncateToTwoDecimals(
+            ethers.formatEther(
+              minted.toString()
+            )
+          )}
+          {/* &nbsp;
+          {vaultType.toString()} */}
+        </td>
+        <td>
+          ≈&nbsp;
+          {/* {currencySymbol} */}
+          {truncateToTwoDecimals(
+            ethers.formatEther(
+              claimableValue.toString()
+            )
+          )}
+        </td>
+        <td className="hidden md:table-cell">
+          {vault.status.liquidated ? (
+            <Typography variant="p" className="text-error">
+              Vault Liquidated
+            </Typography>
+          ) : (
+            <Tooltip
+              className="w-full h-full"
+              position="top"
+              message={(vaultHealth || 0 ) + '%'}
+            >
+              <Progress
+                value={vaultHealth || 0}
+                max="100"
+                color={healthColour || 'neutral'}
+              />
+            </Tooltip>
+          )}
+        </td>
+        <td className="text-right hidden md:table-cell">
+          <LiquidationAction 
+            vaultData={vault}
+            hasFunds={hasFunds}
+          />
+        </td>
+      </tr>
+      <tr className="table-row md:hidden">
+        <td colSpan="5">
+          <LiquidationAction 
+            vaultData={vault}
+            hasFunds={hasFunds}
+            className="w-full"
+          />
+        </td>
+      </tr>
+    </Fragment>
   );
 };
 

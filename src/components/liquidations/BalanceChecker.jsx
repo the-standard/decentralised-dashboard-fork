@@ -7,6 +7,10 @@ import {
   usesUSDAddressStore,
 } from "../../store/Store";
 
+import Typography from "../ui/Typography";
+
+import susdlogo from "../../assets/USDs.svg";
+
 const BalanceChecker = (props) => {
   const { setUSDsBalance, USDsBalance } = props;
   const { address, chainId, isConnected } = useAccount();
@@ -56,28 +60,51 @@ const BalanceChecker = (props) => {
   }, [balance, decimals, isLoading, isError]);
 
   if (!isConnected) {
-    return <div>Please connect your wallet to check USDs balance.</div>;
+    return (
+      <div className="bg-base-300/40 p-4 rounded-lg w-full">
+        <Typography variant="p">
+          <b>Wallet Not Connected</b>
+          <br/>
+          Please connect your wallet to check your USDs Balance.
+        </Typography>
+      </div>
+    )
   }
 
   if (isConnected && chainId && !usdsAddress) {
-    return <div>USDs contract not configured for the current chain (ID: {chainId}).</div>;
+    return (
+      <div className="bg-base-300/40 p-4 rounded-lg w-full">
+        <Typography variant="p">
+          <b>Only Available On Arbitrum</b>
+          <br/>
+          Please change your connected chain over to Arbitrum.
+        </Typography>
+      </div>
+    )
   }
 
   return (
-    <div>
-      <h2>USDs Balance</h2>
-      
+    <div className="bg-base-300/40 p-4 rounded-lg w-full">
       {loading ? (
-        <div>Loading balance...</div>
-      ) : error ? (
-        <div className="error">{error}</div>
+        <Typography variant="h2" className="text-center">
+          <span className="loading loading-spinner loading-md"></span>
+        </Typography>
       ) : formattedBalance ? (
-        <div className="balance">
-          <span className="amount">{formattedBalance}</span>
-          <span className="symbol"> USDs</span>
+        <div className="flex items-center">
+          <img
+            src={susdlogo}
+            alt="USDs"
+            className="block w-[42px] mr-4"
+          />
+          <Typography
+            variant="h2"
+            className="overflow-hidden text-ellipsis whitespace-nowrap"
+          >
+            {formattedBalance}
+          </Typography>
         </div>
       ) : (
-        <div>No balance data available</div>
+        <></>
       )}
     </div>
   );

@@ -78,9 +78,18 @@ const LiquidationsList = (props) => {
             <thead>
               <tr>
                 <th className="hidden md:table-cell">Type</th>
-                <th>Vault ID</th>
-                <th className="hidden md:table-cell">Collateral</th>
-                <th>Debt</th>
+                <th className="hidden md:table-cell">Vault ID</th>
+                <th>
+                  Collateral
+                  <span className="hidden md:inline-block">&nbsp;Value</span>
+                  &nbsp;($)
+                </th>
+                <th>Debt (USDs)</th>
+                <th>
+                  Claimable
+                  <span className="hidden md:inline-block">&nbsp;Value</span>
+                  &nbsp;($)
+                </th>
                 <th className="hidden md:table-cell">Ratio</th>
               </tr>
             </thead>
@@ -104,10 +113,10 @@ const LiquidationsList = (props) => {
                     <td className="hidden md:table-cell">
                       <div className="rounded-full bg-base-content h-[42px] w-[42px] opacity-30"></div>
                     </td>
-                    <td>
+                    <td className="hidden md:table-cell">
                       <div className="rounded-lg bg-base-content h-[12px] w-[38px] opacity-30"></div>
                     </td>
-                    <td className="hidden md:table-cell">
+                    <td>
                       <div className="rounded-lg bg-base-content h-[12px] w-[72px] opacity-30"></div>
                     </td>
                     <td>
