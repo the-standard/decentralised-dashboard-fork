@@ -94,42 +94,52 @@ const LiquidationsList = (props) => {
               </tr>
             </thead>
             <tbody>
-              {items.slice(0, currentIndex + 1).map((item, index) => (
-                <LiquidationItem
-                  key={`${item.tokenId}-${index}`}
-                  item={item}
-                  index={index}
-                  onComplete={handleItemComplete}
-                  USDsBalance={USDsBalance}
-                />
-              ))}
-              {Array.from(
-                { length: vaultsLoading },
-                (_, i) => (
-                  <tr
-                    key={i}
-                    className="active animate-pulse"
-                  >
-                    <td className="hidden md:table-cell">
-                      <div className="rounded-full bg-base-content h-[42px] w-[42px] opacity-30"></div>
-                    </td>
-                    <td className="hidden md:table-cell">
-                      <div className="rounded-lg bg-base-content h-[12px] w-[38px] opacity-30"></div>
-                    </td>
-                    <td>
-                      <div className="rounded-lg bg-base-content h-[12px] w-[72px] opacity-30"></div>
-                    </td>
-                    <td>
-                      <div className="rounded-lg bg-base-content h-[12px] w-[92px] opacity-30"></div>
-                    </td>
-                    <td className="hidden md:table-cell">
-                      <div className="rounded-lg bg-base-content h-[12px] w-full opacity-30"></div>
-                    </td>
-                    <td className="text-right flex justify-end">
-                      <div className="rounded-lg bg-base-content h-[38px] w-[160px] opacity-30"></div>
-                    </td>
-                  </tr>
-                )
+              {items.length >= 1 ? (
+                <>
+                  {items.slice(0, currentIndex + 1).map((item, index) => (
+                    <LiquidationItem
+                      key={`${item.tokenId}-${index}`}
+                      item={item}
+                      index={index}
+                      onComplete={handleItemComplete}
+                      USDsBalance={USDsBalance}
+                    />
+                  ))}
+                  {Array.from(
+                    { length: vaultsLoading },
+                    (_, i) => (
+                      <tr
+                        key={i}
+                        className="active animate-pulse"
+                      >
+                        <td className="hidden md:table-cell">
+                          <div className="rounded-full bg-base-content h-[42px] w-[42px] opacity-30"></div>
+                        </td>
+                        <td className="hidden md:table-cell">
+                          <div className="rounded-lg bg-base-content h-[12px] w-[38px] opacity-30"></div>
+                        </td>
+                        <td>
+                          <div className="rounded-lg bg-base-content h-[12px] w-[72px] opacity-30"></div>
+                        </td>
+                        <td>
+                          <div className="rounded-lg bg-base-content h-[12px] w-[92px] opacity-30"></div>
+                        </td>
+                        <td className="hidden md:table-cell">
+                          <div className="rounded-lg bg-base-content h-[12px] w-full opacity-30"></div>
+                        </td>
+                        <td className="text-right flex justify-end">
+                          <div className="rounded-lg bg-base-content h-[38px] w-[160px] opacity-30"></div>
+                        </td>
+                      </tr>
+                    )
+                  )}
+                </>
+              ) : (
+                <tr>
+                  <td colSpan="6" className="text-center">
+                    No vaults currently at risk of liquidation
+                  </td>
+                </tr>
               )}
             </tbody>
           </table>

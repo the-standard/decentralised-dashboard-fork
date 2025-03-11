@@ -181,8 +181,8 @@ const LiquidationItem = ( props ) => {
 
   let hasFunds = false;
 
-  if (USDsBalance && totalCollateralValue) {
-    hasFunds = USDsBalance >= totalCollateralValue;
+  if (USDsBalance && minted) {
+    hasFunds = USDsBalance > minted;
   }
 
   const claimableValue = totalCollateralValue - minted;

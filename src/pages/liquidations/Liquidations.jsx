@@ -68,7 +68,7 @@ const Liquidations = (props) => {
             </Typography>
 
             <Typography variant="p">
-              Liquidate undercollateralised vaults by paying off their debt in a single transaction, and claim their collateral at a discount.
+              Liquidate undercollateralised vaults by paying off their debt in a single transaction to claim their collateral at a discount.
             </Typography>
 
             <div class="card-actions">
