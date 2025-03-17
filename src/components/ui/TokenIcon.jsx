@@ -13,6 +13,7 @@ import susdlogo from "../../assets/usdslogo.svg";
 import usdclogo from "../../assets/usdclogo.svg";
 import wethlogo from "../../assets/wethlogo.svg";
 import merkllogo from "../../assets/merkllogo.webp";
+import usdtlogo from "../../assets/usdtlogo.svg";
 
 import Typography from "./Typography";
 
@@ -150,6 +151,15 @@ const TokenIcon = ({
           className={className ? className : ''}
         />    
       );
+    case 'USDT':
+      return (
+        <img
+          style={style}
+          src={usdtlogo}
+          alt={`${symbol} logo`}
+          className={className ? className : ''}
+        />    
+      );    
     default:
       if (isMerkl) {
         return (
