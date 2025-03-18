@@ -198,7 +198,6 @@ const YieldParent = (props) => {
       );
 
       const useData = response?.data?.[vaultAddress.toLowerCase()];
-
       setGammaUser(useData);
       setGammaUserLoading(false);
       setGammaUserErr(false);
@@ -370,6 +369,21 @@ const YieldParent = (props) => {
 
   const stableYieldTotal = Number(Number(usdsGammaYield) + Number(merklPoolReward)).toFixed(2);
 
+  const GammaStatus = () => {
+    if (gammaUserErr || gammaUserPositionsErr) {
+      return (
+        <div role="alert" className="bg-yellow-400/20 p-2 rounded-lg">
+          <span>
+            <b>Upstream API Issue</b>
+            <br/>
+            An upstream api is currently experiencing issues. Yield balances may not be displaying correctly, but your tokens are still safe on the blockchain.
+          </span>
+        </div>
+      )  
+    };
+    return (<></>);
+  };
+
   return (
     <>
       {yieldEnabled ? (
@@ -398,6 +412,7 @@ const YieldParent = (props) => {
                 </Select>
               </div>
               <div className="grid grid-cols-1 gap-4">
+                {GammaStatus()}
                 {gammaUserPositionsLoading ? (
                   <>
                     <div className="bg-base-300/40 p-4 rounded-lg w-full flex items-center justify-center min-h-[200px]">
