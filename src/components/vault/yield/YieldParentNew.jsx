@@ -376,7 +376,7 @@ const YieldParent = (props) => {
           <span>
             <b>Upstream API Issue</b>
             <br/>
-            An upstream API is currently experiencing issues. Yield balances may not be displaying correctly, but your tokens are still safe on the blockchain.
+            An upstream API is currently experiencing issues. Yield balances may not display correctly, but your tokens are safe on the blockchain.
           </span>
         </div>
       )  
