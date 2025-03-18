@@ -151,7 +151,10 @@ const VaultStats = ({
       return total + (isNaN(value) ? 0 : value);
     }, 0);
     const usdsYield = yieldBalances.find(item => item.pair === 'USDs/USDC');
-    usdsYieldBalance = usdsYield?.total0;
+
+    if (usdsYield?.total0 !== undefined) {
+      usdsYieldBalance = usdsYield?.total0;
+    }
   }
 
   // collateralBalance endpoint already includes yield values for tokens
