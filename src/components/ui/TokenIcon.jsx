@@ -152,11 +152,12 @@ const TokenIcon = ({
         />    
       );
     case 'USDT':
+    case 'USD₮0':
       return (
         <img
           style={style}
           src={usdtlogo}
-          alt={`${symbol} logo`}
+          alt={`USDT logo`}
           className={className ? className : ''}
         />    
       );    

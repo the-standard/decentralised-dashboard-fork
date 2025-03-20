@@ -28,6 +28,7 @@ import {
   SepoliaGammaVaults,
 } from "./yield/YieldGammaVaults";
 
+import TokenNormalise from "../ui/TokenNormalise";
 import Card from "../ui/Card";
 import Button from "../ui/Button";
 import CenterLoader from "../ui/CenterLoader";
@@ -186,6 +187,7 @@ const TokenList = ({
                     const token = asset?.token;
                     const collateralValue = asset?.collateralValue;
                     const symbol = ethers.decodeBytes32String(asset?.token?.symbol);
+
                     const formattedCollateralValue = Number(
                       ethers.formatEther(collateralValue)
                     ).toFixed(2);
@@ -266,6 +268,7 @@ const TokenList = ({
                       }
                     }
 
+
                     return (
                       <Fragment key={index}>
                         <tr
@@ -281,10 +284,10 @@ const TokenList = ({
                               <Tooltip
                                 className="h-full"
                                 position="top"
-                                message={(symbol || '' )}
+                                message={(TokenNormalise(symbol) || '' )}
                               >
                                 <TokenIcon
-                                  symbol={symbol}
+                                  symbol={TokenNormalise(symbol)}
                                   style={{
                                     height: "1rem",
                                     width: "1rem",
@@ -294,7 +297,7 @@ const TokenList = ({
                                 />
                               </Tooltip>
                               <div className="pl-4 hidden md:table-cell">
-                                {symbol}
+                                {TokenNormalise(symbol)}
                                 <br/>
                                 <span className="opacity-50">
                                   {showLatestPrice}
