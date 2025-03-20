@@ -71,6 +71,14 @@ export const ArbitrumVaults = [
     dec: '18',
     collateral: true,
   },
+  {
+    asset: 'USD₮0',
+    pair: ['USD₮0', 'ARB'],
+    symbol: '0x555344e282ae3000000000000000000000000000000000000000000000000000',
+    address: '0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9',
+    dec: '18',
+    collateral: true,
+  },
 ];
 
 export const SepoliaVaults = [
@@ -162,6 +170,11 @@ export const ArbitrumGammaVaults = [
     pair: ['RDNT', 'WETH'],
     address: '0x2BCBDD577616357464CFe307Bc67F9e820A66e80',
     pool: '0x446BF9748B4eA044dd759d9B9311C70491dF8F29',
+  },
+  {
+    pair: ['USD₮0', 'ARB'],
+    address: '0x95375694685e39997828ed5b17f30f0a3ed90537',
+    pool: '0xb791ad21ba45c76629003b4a2f04c0d544406e37',
   },
 ];
 

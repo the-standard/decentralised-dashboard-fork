@@ -22,7 +22,7 @@ import {
   useCurrentWagmiConfig
 } from "../../store/Store";
 
-// import wagmiConfig from "../../WagmiConfig";
+import TokenNormalise from "../ui/TokenNormalise";
 import Modal from "../ui/Modal";
 import Button from "../ui/Button";
 import Typography from "../ui/Typography";
@@ -239,7 +239,7 @@ const DepositModal = (props) => {
       >
         <Typography variant="h2" className="card-title">
           <ArrowUpCircleIcon className="mr-2 h-6 w-6 inline-block"/>
-          Deposit {symbol}
+          Deposit {TokenNormalise(symbol)}
         </Typography>
 
         <div role="alert" className="alert alert-warning bg-yellow-400/20 mb-2">

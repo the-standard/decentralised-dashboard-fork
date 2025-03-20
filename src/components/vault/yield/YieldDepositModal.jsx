@@ -28,6 +28,7 @@ import {
 
 import smartVaultAbi from "../../../abis/smartVault";
 
+import TokenNormalise from "../../ui/TokenNormalise";
 import CenterLoader from "../../ui/CenterLoader";
 import TokenIcon from "../../ui/TokenIcon";
 import Modal from "../../ui/Modal";
@@ -293,7 +294,7 @@ const YieldDepositModal = (props) => {
                   variant="p"
                   className="mt-0 opacity-80"
                 >
-                  {tokenYield.pair[0]}/{tokenYield.pair[1]}
+                  {TokenNormalise(tokenYield.pair[0])}/{TokenNormalise(tokenYield.pair[1])}
                 </Typography>
                 <Typography
                   variant="h2"
@@ -440,16 +441,16 @@ const YieldDepositModal = (props) => {
           >
             <div className="inline-flex items-center mr-2">
               <TokenIcon
-                symbol={tokenYield.pair[0]}
+                symbol={TokenNormalise(tokenYield.pair[0])}
                 className="h-8 w-8 p-1 rounded-full bg-base-300/50"
               />
               <TokenIcon
-                symbol={tokenYield.pair[1]}
+                symbol={TokenNormalise(tokenYield.pair[1])}
                 className="h-8 w-8 p-1 rounded-full bg-base-300/50 -ml-[8px]"
               />
             </div>
             Volatile Pool
-            ({tokenYield.pair[0]}/{tokenYield.pair[1]}):
+            ({TokenNormalise(tokenYield.pair[0])}/{TokenNormalise(tokenYield.pair[1])}):
             {gammaHypervisorsAllDataLoading ? (
               <span className="loading loading-bars loading-xs"></span>
             ) : (

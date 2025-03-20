@@ -28,6 +28,7 @@ import {
 import YieldViewModal from "./YieldViewModalNew";
 import YieldClaimModal from "./YieldClaimModalNew";
 
+import TokenNormalise from "../../ui/TokenNormalise";
 import Typography from "../../ui/Typography";
 import TokenIcon from "../../ui/TokenIcon";
 import Button from "../../ui/Button";
@@ -203,17 +204,17 @@ const YieldItem = (props) => {
         <div className="w-full flex mb-4">
           <div className="flex items-center w-full">
             <TokenIcon
-              symbol={tokenA}
+              symbol={TokenNormalise(tokenA)}
               className="h-8 w-8 p-1 rounded-full bg-base-300/50"
             />
             <TokenIcon
-              symbol={tokenB}
+              symbol={TokenNormalise(tokenB)}
               className="h-8 w-8 p-1 rounded-full bg-base-300/50 -ml-[8px]"
             />
             <div className="ml-2 flex w-full justify-between">
               <div>
                 <Typography variant="p">
-                  {tokenA}/{tokenB}
+                  {TokenNormalise(tokenA)}/{TokenNormalise(tokenB)}
                 </Typography>
               </div>
             </div>
@@ -278,10 +279,10 @@ const YieldItem = (props) => {
               <Tooltip
                 className="flex-col justify-center items-center cursor-pointer before:w-[12rem]"
                 position="top"
-                message={`USD return of holding 100% of ${tokenA} ${dataPeriod}d ago`}
+                message={`USD return of holding 100% of ${TokenNormalise(tokenA)} ${dataPeriod}d ago`}
               >
                 <Typography variant="p" className="opacity-40 text-sm">
-                If Held {tokenA}
+                If Held {TokenNormalise(tokenA)}
                   <QuestionMarkCircleIcon
                     className="mb-0.5 ml-0.5 h-3 w-3 inline-block"
                   />
@@ -304,10 +305,10 @@ const YieldItem = (props) => {
               <Tooltip
                 className="flex-col justify-center items-center cursor-pointer before:w-[12rem]"
                 position="top"
-                message={`USD return of holding 100% of ${tokenB} ${dataPeriod}d ago`}
+                message={`USD return of holding 100% of ${TokenNormalise(tokenB)} ${dataPeriod}d ago`}
               >
                 <Typography variant="p" className="opacity-40 text-sm">
-                If Held {tokenB}
+                If Held {TokenNormalise(tokenB)}
                   <QuestionMarkCircleIcon
                     className="mb-0.5 ml-0.5 h-3 w-3 inline-block"
                   />

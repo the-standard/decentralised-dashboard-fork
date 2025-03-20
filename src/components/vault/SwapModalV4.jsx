@@ -12,6 +12,7 @@ import {
   useSmartVaultV4ABIStore,
 } from "../../store/Store";
 
+import TokenNormalise from "../ui/TokenNormalise";
 import Button from "../ui/Button";
 import Typography from "../ui/Typography";
 import Select from "../ui/Select";
@@ -199,7 +200,7 @@ const SwapModalV4 = ({
           <>
             <Typography variant="h2" className="card-title">
               <ArrowPathIcon className="mr-2 h-6 w-6 inline-block"/>
-              Swap {symbol}
+              Swap {TokenNormalise(symbol)}
             </Typography>
 
             <div>
@@ -238,7 +239,7 @@ const SwapModalV4 = ({
                     type="number"
                     onChange={handleAmount}
                     placeholder={ symbol ? (
-                      `Amount of ${symbol} to Swap`
+                      `Amount of ${TokenNormalise(symbol)} to Swap`
                     ) : (
                       `Amount to Swap`
                     )}

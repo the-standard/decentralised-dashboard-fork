@@ -15,6 +15,7 @@ import {
   useSmartVaultABIStore,
 } from "../../store/Store";
 
+import TokenNormalise from "../ui/TokenNormalise";
 import Modal from "../ui/Modal";
 import Button from "../ui/Button";
 import Typography from "../ui/Typography";
@@ -153,7 +154,7 @@ const WithdrawModal = (props) => {
         <>
           <Typography variant="h2" className="card-title">
             <ArrowDownCircleIcon className="mr-2 h-6 w-6 inline-block"/>
-            Withdraw {symbol}
+            Withdraw {TokenNormalise(symbol)}
           </Typography>
 
           <div className="flex justify-between">
@@ -191,7 +192,7 @@ const WithdrawModal = (props) => {
 
           </div>
           <div>
-            {symbol} to address "{shortenedAddress}"
+            {TokenNormalise(symbol)} to address "{shortenedAddress}"
           </div>
 
           <div className="card-actions pt-4 flex-col-reverse lg:flex-row justify-end">
