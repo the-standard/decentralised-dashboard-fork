@@ -11,6 +11,7 @@ import {
   useGuestShowcaseStore,
 } from "../../../store/Store";
 
+import TokenNormalise from "../../ui/TokenNormalise";
 import Button from "../../ui/Button";
 import Modal from "../../ui/Modal";
 import Typography from "../../ui/Typography";
@@ -77,16 +78,16 @@ const YieldViewModal = ({
             <Typography variant="h2" className="card-title">
               <div className="flex items-center">
                 <TokenIcon
-                  symbol={yieldPair?.[0] || ''}
+                  symbol={TokenNormalise(yieldPair?.[0]) || ''}
                   className="h-8 w-8 p-1 rounded-full bg-base-300/50"
                 />
                 <TokenIcon
-                  symbol={yieldPair?.[1] || ''}
+                  symbol={TokenNormalise(yieldPair?.[1]) || ''}
                   className="h-8 w-8 p-1 rounded-full bg-base-300/50 -ml-[8px]"
                 />
               </div>
 
-              {yieldPair?.[0] || ''}/{yieldPair?.[1] || ''} Yield Pool
+              {TokenNormalise(yieldPair?.[0]) || ''}/{TokenNormalise(yieldPair?.[1]) || ''} Yield Pool
             </Typography>
           </div>
           <div>
@@ -181,10 +182,10 @@ const YieldViewModal = ({
                 <Tooltip
                   className="flex-col justify-center items-center cursor-pointer before:w-[12rem]"
                   position="top"
-                  message={`USD return of holding 100% of ${yieldPair?.[0]} ${dataPeriod}d ago`}
+                  message={`USD return of holding 100% of ${TokenNormalise(yieldPair?.[0])} ${dataPeriod}d ago`}
                 >
                   <Typography variant="p" className="opacity-40 text-sm">
-                  If Held {yieldPair?.[0]}
+                  If Held {TokenNormalise(yieldPair?.[0])}
                     <QuestionMarkCircleIcon
                       className="mb-0.5 ml-0.5 h-3 w-3 inline-block"
                     />
@@ -207,10 +208,10 @@ const YieldViewModal = ({
                 <Tooltip
                   className="flex-col justify-center items-center cursor-pointer before:w-[12rem]"
                   position="top"
-                  message={`USD return of holding 100% of ${yieldPair?.[1]} ${dataPeriod}d ago`}
+                  message={`USD return of holding 100% of ${TokenNormalise(yieldPair?.[1])} ${dataPeriod}d ago`}
                 >
                   <Typography variant="p" className="opacity-40 text-sm">
-                  If Held {yieldPair?.[1]}
+                  If Held {TokenNormalise(yieldPair?.[1])}
                     <QuestionMarkCircleIcon
                       className="mb-0.5 ml-0.5 h-3 w-3 inline-block"
                     />
