@@ -21,6 +21,7 @@ import {
   SepoliaVaults,
 } from "./YieldGammaVaults";
 
+import TokenNormalise from "../../ui/TokenNormalise";
 import Button from "../../ui/Button";
 import Modal from "../../ui/Modal";
 import Typography from "../../ui/Typography";
@@ -197,23 +198,23 @@ const YieldClaimModal = ({
                       <div className="h-full w-full flex flex-col">
                         <div className="flex items-center">
                           <TokenIcon
-                            symbol={yieldPair?.[0]}
+                            symbol={TokenNormalise(yieldPair?.[0])}
                             className="h-8 w-8 p-1 rounded-full bg-base-300/50"
                           />
                           <TokenIcon
-                            symbol={yieldPair?.[1]}
+                            symbol={TokenNormalise(yieldPair?.[1])}
                             className="h-8 w-8 p-1 rounded-full bg-base-300/50 -ml-[8px]"
                           />
                         </div>
                         <div className="pt-2 hidden md:table-cell">
-                          {yieldPair?.[0]}/{yieldPair?.[1]}
+                          {TokenNormalise(yieldPair?.[0])}/{TokenNormalise(yieldPair?.[1])}
                         </div>
                       </div>
                     </td>
                     <td>
-                      <b>{yieldPair?.[0]}:<br/></b>
+                      <b>{TokenNormalise(yieldPair?.[0])}:<br/></b>
                       {yieldQuantities?.[0]}<br/>
-                      <b>{yieldPair?.[1]}:<br/></b>
+                      <b>{TokenNormalise(yieldPair?.[1])}:<br/></b>
                       {yieldQuantities?.[1]}
                     </td>
                   </tr>
@@ -371,23 +372,23 @@ const YieldClaimModal = ({
                         <div className="h-full w-full flex flex-col">
                           <div className="flex items-center">
                             <TokenIcon
-                              symbol={yieldPair?.[0]}
+                              symbol={TokenNormalise(yieldPair?.[0])}
                               className="h-8 w-8 p-1 rounded-full bg-base-300/50"
                             />
                             <TokenIcon
-                              symbol={yieldPair?.[1]}
+                              symbol={TokenNormalise(yieldPair?.[1])}
                               className="h-8 w-8 p-1 rounded-full bg-base-300/50 -ml-[8px]"
                             />
                           </div>
                           <div className="pt-2 hidden md:table-cell">
-                            {yieldPair?.[0]}/{yieldPair?.[1]}
+                            {TokenNormalise(yieldPair?.[0])}/{TokenNormalise(yieldPair?.[1])}
                           </div>
                         </div>
                       </td>
                       <td>
-                        <b>{yieldPair?.[0]}:<br/></b>
+                        <b>{TokenNormalise(yieldPair?.[0])}:<br/></b>
                         {yieldQuantities?.[0]}<br/>
-                        <b>{yieldPair?.[1]}:<br/></b>
+                        <b>{TokenNormalise(yieldPair?.[1])}:<br/></b>
                         {yieldQuantities?.[1]}
                       </td>
                     </tr>
