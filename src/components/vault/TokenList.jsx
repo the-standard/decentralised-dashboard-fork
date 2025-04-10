@@ -235,6 +235,12 @@ const TokenList = ({
 
                     const balance = ethers.formatUnits(amount, token.dec);
 
+                    let formatBalance = formatNumber(balance, token.dec);
+
+                    if (!(Number(balance) > 0)) {
+                      formatBalance = formatNumber(0, 2);
+                    }
+
                     const depositDisabled = symbol === 'RDNT' || symbol === 'SUSHI';
 
                     if (hideUnCol === 'HIDE') {
@@ -297,7 +303,7 @@ const TokenList = ({
                             <span className={
                               balance > 0 ? ('') : ('opacity-50')
                             }>
-                              {balance || ''}
+                              {formatBalance || ''}
                               <br/>
                               {formatCurrency(
                                 currencySymbol,
