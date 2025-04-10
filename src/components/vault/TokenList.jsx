@@ -28,6 +28,7 @@ import {
   SepoliaGammaVaults,
 } from "./yield/YieldGammaVaults";
 
+import { formatNumber, formatCurrency } from '../ui/NumberUtils';
 import TokenNormalise from "../ui/TokenNormalise";
 import Card from "../ui/Card";
 import Button from "../ui/Button";
@@ -36,15 +37,6 @@ import TokenIcon from "../ui/TokenIcon";
 import Typography from "../ui/Typography";
 import TokenActions from "./TokenActions";
 import TokenValueChart from "./TokenValueChart";
-
-function formatNumber(value) {
-  const formattedValue = (value / 100).toString();
-  const indexOfDot = formattedValue.length - 2;
-  const finalValue =
-    formattedValue.slice(0, indexOfDot) + formattedValue.slice(indexOfDot);
-
-  return finalValue;
-}
 
 const TokenList = ({
   assets,
@@ -188,10 +180,6 @@ const TokenList = ({
                     const collateralValue = asset?.collateralValue;
                     const symbol = ethers.decodeBytes32String(asset?.token?.symbol);
 
-                    const formattedCollateralValue = Number(
-                      ethers.formatEther(collateralValue)
-                    ).toFixed(2);
-
                     const handleClick = (type, asset) => {
                       setActionType(type);
                       setUseAsset(asset);
@@ -210,7 +198,7 @@ const TokenList = ({
 
                     let showLatestPrice;
                     if (latestPrice) {
-                      showLatestPrice = '$' + formatNumber((latestPrice / 1000000).toFixed(0))
+                      showLatestPrice = formatCurrency('$', (latestPrice / 100000000), 2)
                     }
 
                     let tokenYield = yieldVaultsInfo.find(item => item.asset === symbol);
@@ -311,7 +299,13 @@ const TokenList = ({
                             }>
                               {balance || ''}
                               <br/>
-                              {currencySymbol}{formattedCollateralValue}
+                              {formatCurrency(
+                                currencySymbol,
+                                Number(
+                                  ethers.formatEther(collateralValue)
+                                ),
+                                2
+                              )}
                             </span>
                           </td>
                           <td className="hidden md:table-cell">
