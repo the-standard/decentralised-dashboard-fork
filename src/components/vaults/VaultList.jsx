@@ -228,12 +228,12 @@ const VaultList = ({ vaults, vaultsLoading, listType }) => {
                                   vault.status.totalCollateralValue
                                 ).toString()
                               )
-                            )}
+                            ).toLocaleString()}
                           </td>
                           <td>
                             {truncateToTwoDecimals(
                               ethers.formatEther(vault.status.minted.toString())
-                            )}
+                            ).toLocaleString()}
                             &nbsp;
                             {vaultType.toString()}
                           </td>
