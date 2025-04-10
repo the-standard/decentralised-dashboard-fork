@@ -170,7 +170,7 @@ const VaultStats = ({
         ) : (
           currencySymbol + Number(
             useTotalBalance
-          ).toFixed(2)    
+          ).toFixed(2).toLocaleString()   
         )
       ),
       currency: "",
@@ -185,7 +185,7 @@ const VaultStats = ({
         ) : (
           currencySymbol + Number(
             collateralBalance
-          ).toFixed(2)    
+          ).toFixed(2).toLocaleString()
         )
       ),
       currency: "",
@@ -216,7 +216,7 @@ const VaultStats = ({
         currentVaultLoading ? (
           <span className="loading loading-bars loading-xs"></span>
         ) : (
-          Number(ethers.formatEther(minted)).toFixed(2)
+          Number(ethers.formatEther(minted)).toFixed(2).toLocaleString()
         )
       ),
       currency: vaultType,
@@ -229,7 +229,7 @@ const VaultStats = ({
         isLoadingSupplyLimit || isLoadingTotalSupply ? (
           <span className="loading loading-bars loading-xs"></span>
         ) : (
-          Number(ethers.formatEther(availableSupply)).toFixed(2)
+          Number(ethers.formatEther(availableSupply)).toFixed(2).toLocaleString()
         )
       ),
       currency: vaultType,
@@ -243,13 +243,13 @@ const VaultStats = ({
           currentVaultLoading || isLoadingSupplyLimit || isLoadingTotalSupply ? (
             <span className="loading loading-bars loading-xs"></span>
           ) : (
-            Number(maxBorrow).toFixed(2)
+            Number(maxBorrow).toFixed(2).toLocaleString()
           )
         ) : (
           currentVaultLoading ? (
             <span className="loading loading-bars loading-xs"></span>
           ) : (
-            Number(maxBorrow).toFixed(2)
+            Number(maxBorrow).toFixed(2).toLocaleString()
           )
         )
       ),
