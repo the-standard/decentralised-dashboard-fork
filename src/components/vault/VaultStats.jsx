@@ -22,6 +22,7 @@ import {
   Tooltip,
 } from 'react-daisyui';
 
+import { formatNumber, formatCurrency } from '../ui/NumberUtils';
 import Typography from "../ui/Typography";
 import VaultHealth from "./VaultHealth";
 
@@ -168,9 +169,13 @@ const VaultStats = ({
         currentVaultLoading || yieldBalancesLoading ? (
           <span className="loading loading-bars loading-xs"></span>
         ) : (
-          currencySymbol + Number(
-            useTotalBalance
-          ).toFixed(2)    
+          formatCurrency(
+            currencySymbol,
+            Number(
+              useTotalBalance
+            ),
+            2
+          )
         )
       ),
       currency: "",
@@ -183,9 +188,13 @@ const VaultStats = ({
         currentVaultLoading ? (
           <span className="loading loading-bars loading-xs"></span>
         ) : (
-          currencySymbol + Number(
-            collateralBalance
-          ).toFixed(2)    
+          formatCurrency(
+            currencySymbol,
+            Number(
+              collateralBalance
+            ),
+            2
+          )
         )
       ),
       currency: "",
@@ -216,7 +225,10 @@ const VaultStats = ({
         currentVaultLoading ? (
           <span className="loading loading-bars loading-xs"></span>
         ) : (
-          Number(ethers.formatEther(minted)).toFixed(2)
+          formatNumber(
+            Number(ethers.formatEther(minted)),
+            2
+          )
         )
       ),
       currency: vaultType,
@@ -229,7 +241,10 @@ const VaultStats = ({
         isLoadingSupplyLimit || isLoadingTotalSupply ? (
           <span className="loading loading-bars loading-xs"></span>
         ) : (
-          Number(ethers.formatEther(availableSupply)).toFixed(2)
+          formatNumber(
+            Number(ethers.formatEther(availableSupply)),
+            2
+          )
         )
       ),
       currency: vaultType,
@@ -243,13 +258,13 @@ const VaultStats = ({
           currentVaultLoading || isLoadingSupplyLimit || isLoadingTotalSupply ? (
             <span className="loading loading-bars loading-xs"></span>
           ) : (
-            Number(maxBorrow).toFixed(2)
+            formatNumber(maxBorrow, 2)
           )
         ) : (
           currentVaultLoading ? (
             <span className="loading loading-bars loading-xs"></span>
           ) : (
-            Number(maxBorrow).toFixed(2)
+            formatNumber(maxBorrow, 2)
           )
         )
       ),

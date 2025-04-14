@@ -20,6 +20,8 @@ import {
   useGuestShowcaseStore,
 } from "../../store/Store";
 
+import { formatNumber, formatCurrency } from '../ui/NumberUtils';
+
 import Button from "../ui/Button";
 import Card from "../ui/Card";
 import Typography from "../ui/Typography";
@@ -131,26 +133,6 @@ const STATUS_TIERS = [
     iconColor: 'text-gray-600'
   }
 ];
-
-const formatNumber = (number, decimals = 2) => {
-  if (typeof number === 'string') number = parseFloat(number);
-  return new Intl.NumberFormat('en-US', {
-      minimumFractionDigits: decimals,
-      maximumFractionDigits: decimals
-  }).format(number);
-}
-
-const formatUSD = (value) => {
-  let USDollar = new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'USD',
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 8
-  });
-  if (value >= 0) {
-    return USDollar.format(Math.abs(value));  
-  }
-};
 
 const StakingSummary = ({
   positions,
@@ -280,7 +262,7 @@ const StakingSummary = ({
 
   const lowestTier = STATUS_TIERS[STATUS_TIERS.length - 1];
 
-  const shareText = `🏆 Yes! I made it to ${currentTier.name} on @TheStandard_io\n\n💫 Staking ${formatNumber(stakedAmount)} TST\n💰 Earning ${formatUSD(dailyEarnings)} daily\n⚡️ Supporting zero-interest borrowing\n\nJoin the future of DeFi!\nthestandard.io`;
+  const shareText = `🏆 Yes! I made it to ${currentTier.name} on @TheStandard_io\n\n💫 Staking ${formatNumber(stakedAmount)} TST\n💰 Earning ${formatCurrency('$',dailyEarnings,8)} daily\n⚡️ Supporting zero-interest borrowing\n\nJoin the future of DeFi!\nthestandard.io`;
 
   if (!rawStakedSince) {
     return (
@@ -333,11 +315,11 @@ const StakingSummary = ({
                   Your Daily Earnings
                 </Typography>
                 <Typography variant="p" className={`text-end text-green-500`}>
-                  {formatUSD(0)}
+                  {formatCurrency('$',0,2)}
                 </Typography>
               </div>
               <Typography variant="p">
-                Earning {formatUSD(0)} monthly at current rates
+                Earning {formatCurrency('$',0,2)} monthly at current rates
               </Typography>
             </div>
           </div>
@@ -362,7 +344,7 @@ const StakingSummary = ({
                   Total Value Accrued
                 </Typography>
                 <Typography variant="h2">
-                  {formatUSD(totalValueUSD)}
+                  {formatCurrency('$',totalValueUSD,8)}
                 </Typography>
               </div>
             </div>
@@ -412,7 +394,7 @@ const StakingSummary = ({
               >
                 <Typography variant="h2">
                   {stakedAmount ? (
-                    Number.parseFloat(Number(stakedAmount).toFixed(4))
+                    formatNumber(Number(stakedAmount), 4)
                   ) : ('0')}
                   &nbsp;TST
                 </Typography>
@@ -438,7 +420,7 @@ const StakingSummary = ({
                     <span className="loading loading-bars loading-xs"></span>
                   ) : (
                     <>
-                      {poolShare || 0}%
+                      {formatNumber(poolShare, 8) || 0}%
                     </>
                   )}
               </Typography>
@@ -455,11 +437,11 @@ const StakingSummary = ({
                   Your Daily Earnings
                 </Typography>
                 <Typography variant="p" className={`text-end text-green-500`}>
-                  {formatUSD(dailyEarnings)}
+                  {formatCurrency('$',dailyEarnings,8)}
                 </Typography>
               </div>
               <Typography variant="p">
-                Earning {formatUSD(monthlyProjection)} monthly at current rates
+                Earning {formatCurrency('$',monthlyProjection,8)} monthly at current rates
               </Typography>
             </div>
           </div>
@@ -471,7 +453,7 @@ const StakingSummary = ({
                   Your Daily Earnings
                 </Typography>
                 <Typography variant="p" className={`text-end text-green-500`}>
-                  {formatUSD(0)}
+                  {formatCurrency('$',0,2)}
                 </Typography>
               </div>
               <Typography variant="p">
@@ -506,7 +488,7 @@ const StakingSummary = ({
                 Total Value Accrued
               </Typography>
               <Typography variant="h2">
-                {formatUSD(totalValueUSD)}
+                {formatCurrency('$',totalValueUSD,8)}
               </Typography>
               <Typography variant="p">
                 Current market prices
