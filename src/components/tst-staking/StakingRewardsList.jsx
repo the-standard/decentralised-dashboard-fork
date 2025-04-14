@@ -5,6 +5,9 @@ import {
   useGuestShowcaseStore,
 } from "../../store/Store";
 
+import { formatNumber, formatCurrency } from '../ui/NumberUtils';
+
+import TokenNormalise from "../ui/TokenNormalise";
 import Button from "../ui/Button";
 import Card from "../ui/Card";
 import Typography from "../ui/Typography";
@@ -101,18 +104,20 @@ const StakingRewardsList = ({
                   return(
                     <tr key={index}>
                       <td>
-                        {symbol}
+                        {TokenNormalise(symbol)}
                       </td>
                       <td>
-                        {ethers.formatUnits(amount, decimals)}<br/>
+                        {formatNumber(ethers.formatUnits(amount, decimals), decimals)}
+                        <br/>
                         <span className="opacity-50">
-                          ${value.toFixed(8)}
+                          {formatCurrency('$', value, 8)}
                         </span>
                       </td>
                       <td>
-                        {ethers.formatUnits(dailyReward, decimals)}<br/>
+                        {formatNumber(ethers.formatUnits(dailyReward, decimals), decimals)}
+                        <br/>
                         <span className="opacity-50">
-                          ${rate.toFixed(8)}
+                          {formatCurrency('$', rate, 8)}
                         </span>
                       </td>
                     </tr>

@@ -44,11 +44,11 @@ const VaultRedemptionAlert = ({
                 Upcoming Auto Redemption
               </Typography>
               <Typography variant="p">
-                Your smart vault currently has the highest debt on the protocol and so may automatically use it's collateral to repay your debt at a slight discount if USDs trades below $0.9899 cents.
+                Your smart vault currently has the lowest collateral-to-debt ratio on the protocol. It may automatically use it's collateral to repay your debt at a slight discount if USDs trades below $0.9899 cents.
                 <br/>
                 This ensures the stability of the protocol.
                 <br/>
-                To avoid an auto redemption, consider repaying some USDs debt asap.
+                To avoid an auto redemption, consider repaying some USDs debt soon.
               </Typography>
               <div className="card-actions flex-1 flex-col lg:flex-row justify-end items-end">
                 <Button
@@ -72,7 +72,7 @@ const VaultRedemptionAlert = ({
       )
     }  
   }
-
+  
   return (<></>)
 };
 

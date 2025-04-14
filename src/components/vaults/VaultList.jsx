@@ -13,6 +13,8 @@ import {
   usesEURVaultListPageStore,
 } from "../../store/Store";
 
+import { formatNumber, formatCurrency } from '../ui/NumberUtils';
+
 import Card from "../ui/Card";
 import Pagination from "../ui/Pagination";
 import CenterLoader from "../ui/CenterLoader";
@@ -221,18 +223,21 @@ const VaultList = ({ vaults, vaultsLoading, listType }) => {
                             {BigInt(vault?.tokenId).toString()}
                           </td>
                           <td className="hidden md:table-cell">
-                            {currencySymbol}
-                            {truncateToTwoDecimals(
+                            {formatCurrency(
+                              currencySymbol,
                               ethers.formatEther(
                                 BigInt(
                                   vault.status.totalCollateralValue
                                 ).toString()
-                              )
+                              ),
+                              2
                             )}
                           </td>
                           <td>
-                            {truncateToTwoDecimals(
-                              ethers.formatEther(vault.status.minted.toString())
+                            {formatNumber(
+                              truncateToTwoDecimals(
+                                ethers.formatEther(vault.status.minted.toString())
+                              )
                             )}
                             &nbsp;
                             {vaultType.toString()}
