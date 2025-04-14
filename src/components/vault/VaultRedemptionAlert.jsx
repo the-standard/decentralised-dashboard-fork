@@ -31,8 +31,8 @@ const VaultRedemptionAlert = ({
     }
   };
 
-  // if (redemption) {
-  //   if (vaultId === redemption?.tokenID) {
+  if (redemption) {
+    if (vaultId === redemption?.tokenID) {
       return (
         <>
           <Card className="card-compact mb-4 warn-card">
@@ -70,10 +70,10 @@ const VaultRedemptionAlert = ({
           </Card>
         </>
       )
-  //   }  
-  // }
-  // 
-  // return (<></>)
+    }  
+  }
+  
+  return (<></>)
 };
 
 export default VaultRedemptionAlert;
