@@ -185,7 +185,6 @@ const StakingSummary = ({
     setShareOpen(false)
   };
 
-
   const getCurrentTier = (stakedAmount) => {
     const currentTier = STATUS_TIERS.filter(function(tier) {
       const currentTier = tier.tier;
@@ -219,6 +218,10 @@ const StakingSummary = ({
     const since = today.diff(start, 'days');
     return since;
   }
+
+  const endDate = moment.unix(Number(rawStakedSince)).add(90, 'days');
+
+  const showEndDate = moment(endDate).format('Do MMM YYYY');
 
   const rewardsWithPrices = rewardsData.map(reward => {
     const useAmount = ethers.formatUnits(reward.amount, reward.decimals);
@@ -518,6 +521,9 @@ const StakingSummary = ({
                 </>
               )}
             </Typography>
+            <Typography variant="p" className="mt-2">
+              90 day locked staking period ends on {showEndDate}
+            </Typography>            
           </div>
         </div>
 
