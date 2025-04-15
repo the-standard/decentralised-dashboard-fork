@@ -521,11 +521,9 @@ const StakingSummary = ({
                 </>
               )}
             </Typography>
-            {daysStaked >= 1 ? (
-              <Typography variant="p" className="mt-2">
-                90 day locked staking period ends on {showEndDate}
-              </Typography>            
-            ) : (null)}
+            <Typography variant="p" className="mt-2">
+              90 day locked staking period ends on {showEndDate}
+            </Typography>            
           </div>
         </div>
 
