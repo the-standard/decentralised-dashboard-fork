@@ -77,10 +77,12 @@ const GraphHistoryModal = ({
   const graphAmount = graphData?.amount;
   const graphFee = graphData?.fee;
   const graphSymbol = graphData?.symbol;
+  const graphTokenAddress = graphData?.token;
 
   const graphVaultAddress = graphData?.vaultAddress;
   const graphOwner = graphData?.owner;
   const graphTokenId = graphData?.tokenId;
+
 
   let useTo = '';
   if (graphTo) {
@@ -102,7 +104,10 @@ const GraphHistoryModal = ({
   if (graphSymbol) {
     useSymbol = ethers.decodeBytes32String(graphSymbol);
   }
-
+  let useTokenAddress = '';
+  if (graphTokenAddress) {
+    useTokenAddress = graphTokenAddress;
+  }
   let useVaultAddress = '';
   if (graphVaultAddress) {
     useVaultAddress = graphVaultAddress;
@@ -203,18 +208,16 @@ const GraphHistoryModal = ({
                                 <span className="truncate overflow-hidden flex-1">
                                   {useTo}
                                 </span>
-                                {useTo === 'N/A' ? (null) : (
-                                  <Button
-                                    className="ml-[4px]"
-                                    variant="outline"
-                                    size="sm"
-                                    onClick={() => handleCopyText(useTo)}
-                                  >
-                                    <DocumentDuplicateIcon
-                                      className="h-3 w-3 inline-block"
-                                    />
-                                  </Button>
-                                )}
+                                <Button
+                                  className="ml-[4px]"
+                                  variant="outline"
+                                  size="sm"
+                                  onClick={() => handleCopyText(useTo)}
+                                >
+                                  <DocumentDuplicateIcon
+                                    className="h-3 w-3 inline-block"
+                                  />
+                                </Button>
                               </div>
                             ) : ('')}
                           </>
@@ -238,18 +241,49 @@ const GraphHistoryModal = ({
                                 <span className="truncate overflow-hidden flex-1">
                                   {useFrom}
                                 </span>
-                                {useFrom === 'N/A' ? (null) : (
-                                  <Button
-                                    className="ml-[4px]"
-                                    variant="outline"
-                                    size="sm"
-                                    onClick={() => handleCopyText(useFrom)}
-                                  >
-                                    <DocumentDuplicateIcon
-                                      className="h-3 w-3 inline-block"
-                                    />
-                                  </Button>
-                                )}
+                                <Button
+                                  className="ml-[4px]"
+                                  variant="outline"
+                                  size="sm"
+                                  onClick={() => handleCopyText(useFrom)}
+                                >
+                                  <DocumentDuplicateIcon
+                                    className="h-3 w-3 inline-block"
+                                  />
+                                </Button>
+                              </div>
+                            ) : ('')}
+                          </>
+                        )}
+                      </Typography>
+                    </div>
+                  ) : (null)}
+
+                  {useTokenAddress ? (
+                    <div className="bg-base-300/40 p-2 rounded-lg w-full flex flex-col col-span-2 sm:col-span-1">
+                      <Typography variant="p" className="opacity-40">
+                        Token Address
+                      </Typography>
+                      <Typography variant="p" className="font-bold">
+                        {graphDataLoading ? (
+                          <span className="loading loading-bars loading-md"></span>
+                        ) : (
+                          <>
+                            {useTokenAddress ? (
+                              <div className="flex items-center">
+                                <span className="truncate overflow-hidden flex-1">
+                                  {useTokenAddress}
+                                </span>
+                                <Button
+                                  className="ml-[4px]"
+                                  variant="outline"
+                                  size="sm"
+                                  onClick={() => handleCopyText(useTokenAddress)}
+                                >
+                                  <DocumentDuplicateIcon
+                                    className="h-3 w-3 inline-block"
+                                  />
+                                </Button>
                               </div>
                             ) : ('')}
                           </>
@@ -316,18 +350,16 @@ const GraphHistoryModal = ({
                             <span className="truncate overflow-hidden flex-1">
                               {useVaultAddress}
                             </span>
-                            {useVaultAddress === 'N/A' ? (null) : (
-                              <Button
-                                className="ml-[4px]"
-                                variant="outline"
-                                size="sm"
-                                onClick={() => handleCopyText(useVaultAddress)}
-                              >
-                                <DocumentDuplicateIcon
-                                  className="h-3 w-3 inline-block"
-                                />
-                              </Button>
-                            )}
+                            <Button
+                              className="ml-[4px]"
+                              variant="outline"
+                              size="sm"
+                              onClick={() => handleCopyText(useVaultAddress)}
+                            >
+                              <DocumentDuplicateIcon
+                                className="h-3 w-3 inline-block"
+                              />
+                            </Button>
                           </div>
                         )}
                       </Typography>
@@ -346,18 +378,16 @@ const GraphHistoryModal = ({
                             <span className="truncate overflow-hidden flex-1">
                               {useOwner}
                             </span>
-                            {useOwner === 'N/A' ? (null) : (
-                              <Button
-                                className="ml-[4px]"
-                                variant="outline"
-                                size="sm"
-                                onClick={() => handleCopyText(useOwner)}
-                              >
-                                <DocumentDuplicateIcon
-                                  className="h-3 w-3 inline-block"
-                                />
-                              </Button>
-                            )}
+                            <Button
+                              className="ml-[4px]"
+                              variant="outline"
+                              size="sm"
+                              onClick={() => handleCopyText(useOwner)}
+                            >
+                              <DocumentDuplicateIcon
+                                className="h-3 w-3 inline-block"
+                              />
+                            </Button>
                           </div>
                         )}
                       </Typography>
