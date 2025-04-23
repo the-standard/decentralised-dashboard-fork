@@ -12,7 +12,7 @@ import {
 
 import {
   useCurrentPageStore,
-  useContractAddressStore,
+  usesUSDContractAddressStore,
   useVaultManagerAbiStore,
 } from "../../../store/Store";
 
@@ -25,7 +25,10 @@ import HistoryGraph from "./HistoryGraph";
 
 const VaultHistory = () => {
   const chainId = useChainId();
-  const { arbitrumSepoliaContractAddress, arbitrumContractAddress } = useContractAddressStore();
+  const {
+    arbitrumsUSDSepoliaContractAddress,
+    arbitrumsUSDContractAddress,
+  } = usesUSDContractAddressStore();
   const { vaultManagerAbi } = useVaultManagerAbiStore();
   const { vaultType, vaultId } = useParams();
   const navigate = useNavigate();
@@ -64,8 +67,8 @@ const VaultHistory = () => {
   }, []);
 
   const vaultManagerAddress = chainId === arbitrumSepolia.id ?
-      arbitrumSepoliaContractAddress :
-      arbitrumContractAddress;
+      arbitrumsUSDSepoliaContractAddress :
+      arbitrumsUSDContractAddress;
 
   const { data: vaultData, refetch } = useReadContract({
     address: vaultManagerAddress,
