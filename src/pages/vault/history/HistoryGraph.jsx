@@ -86,6 +86,9 @@ const HistoryGraph = ({
   const formatType = (camelCase) => {
     const withSpaces = camelCase.replace(/([A-Z])/g, ' $1');
     const sentence = withSpaces.charAt(0).toUpperCase() + withSpaces.slice(1).trim();
+    if (sentence.toLowerCase().includes('usds')) {
+      return sentence.replace(/usds/i, 'USDs');
+    }
     return sentence;
   }
 
@@ -132,7 +135,7 @@ const HistoryGraph = ({
                       const useTimestamp = row.blockTimestamp || '';
                       let useDate = '';
                       if (useTimestamp) {
-                        useDate = moment.unix(useTimestamp).format("D/MMM/YYYY HH:mm:ss");
+                        useDate = moment.unix(useTimestamp).format("D MMM YYYY HH:mm:ss");
                       }
                       const useAsset = row.asset || '';
                       const amount = row.amount || '';
