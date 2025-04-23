@@ -9,7 +9,7 @@ import DashLayout from "./components/ui/DashLayout";
 import Home from './pages/Home';
 import Vaults from './pages/vaults/Vaults';
 import Vault from './pages/vault/Vault';
-import VaultHistory from './pages/vault/VaultHistory';
+import VaultHistory from './pages/vault/history/VaultHistory';
 import VaultSavings from './pages/vault/VaultSavings';
 import VaultMerkl from './pages/vault/VaultMerkl';
 import TstStaking from './pages/tst-staking/TstStaking';
