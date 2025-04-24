@@ -78,11 +78,11 @@ const GraphHistoryModal = ({
   const graphFee = graphData?.fee;
   const graphSymbol = graphData?.symbol;
   const graphTokenAddress = graphData?.token;
-
   const graphVaultAddress = graphData?.vaultAddress;
   const graphOwner = graphData?.owner;
   const graphTokenId = graphData?.tokenId;
-
+  const graphTokenIn = graphData?.tokenIn;
+  const graphTokenOut = graphData?.tokenOut;
 
   let useTo = '';
   if (graphTo) {
@@ -119,6 +119,14 @@ const GraphHistoryModal = ({
   let useTokenId = '';
   if (graphTokenId) {
     useTokenId = graphTokenId;
+  }
+  let useTokenIn = '';
+  if (graphTokenIn) {
+    useTokenIn = graphTokenIn;
+  }
+  let useTokenOut = '';
+  if (graphTokenOut) {
+    useTokenOut = graphTokenOut;
   }
 
   return (
@@ -302,6 +310,36 @@ const GraphHistoryModal = ({
                           <span className="loading loading-bars loading-md"></span>
                         ) : (
                           useSymbol || ''
+                        )}
+                      </Typography>
+                    </div>
+                  ) : ('')}
+
+                  {useTokenIn ? (
+                    <div className="bg-base-300/40 p-2 rounded-lg w-full flex flex-col">
+                      <Typography variant="p" className="opacity-40">
+                        Token In
+                      </Typography>
+                      <Typography variant="p" className="font-bold">
+                        {graphDataLoading ? (
+                          <span className="loading loading-bars loading-md"></span>
+                        ) : (
+                          useTokenIn || ''
+                        )}
+                      </Typography>
+                    </div>
+                  ) : ('')}
+
+                  {useTokenOut ? (
+                    <div className="bg-base-300/40 p-2 rounded-lg w-full flex flex-col">
+                      <Typography variant="p" className="opacity-40">
+                        Token Out
+                      </Typography>
+                      <Typography variant="p" className="font-bold">
+                        {graphDataLoading ? (
+                          <span className="loading loading-bars loading-md"></span>
+                        ) : (
+                          useTokenOut || ''
                         )}
                       </Typography>
                     </div>
