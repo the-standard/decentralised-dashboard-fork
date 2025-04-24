@@ -3,10 +3,21 @@ import { toast } from 'react-toastify';
 import { ethers } from "ethers";
 import moment from 'moment';
 import axios from "axios";
+import {
+  useChainId,
+} from "wagmi";
+import { arbitrumSepolia } from "wagmi/chains";
 
 import {
   DocumentDuplicateIcon,
 } from '@heroicons/react/24/solid';
+
+import {
+  ArbitrumVaults,
+  SepoliaVaults,
+} from "../yield/YieldGammaVaults";
+
+import TokenNormalise from "../../ui/TokenNormalise";
 
 import Button from "../../ui/Button";
 import Modal from "../../ui/Modal";
@@ -20,6 +31,12 @@ const GraphHistoryModal = ({
   currentPage,
   vaultAddress
 }) => {
+
+  const chainId = useChainId();
+
+  const yieldTokenInfo = chainId === arbitrumSepolia.id
+  ? SepoliaVaults
+  : ArbitrumVaults;
 
   const {
     useGraphId,
@@ -82,7 +99,9 @@ const GraphHistoryModal = ({
   const graphOwner = graphData?.owner;
   const graphTokenId = graphData?.tokenId;
   const graphTokenIn = graphData?.tokenIn;
+  const graphAmountIn = graphData?.amountIn;
   const graphTokenOut = graphData?.tokenOut;
+  const graphFeeRate = graphData?.feeRate;
 
   let useTo = '';
   if (graphTo) {
@@ -124,9 +143,24 @@ const GraphHistoryModal = ({
   if (graphTokenIn) {
     useTokenIn = graphTokenIn;
   }
+
+  let useAmountIn = '';
+  let tokenInDecimals = 8;
+  let tokenInfo = yieldTokenInfo.find(item => item.asset === useTokenIn);
+  if (tokenInfo && tokenInfo.dec) {
+    tokenInDecimals = Number(tokenInfo.dec);
+  }
+  if (graphAmountIn) {
+    useAmountIn = ethers.formatUnits(graphAmountIn.toString(), tokenInDecimals);
+  }
+  
   let useTokenOut = '';
   if (graphTokenOut) {
     useTokenOut = graphTokenOut;
+  }
+  let useFeeRate = '';
+  if (graphFeeRate) {
+    useFeeRate = Number(graphFeeRate) / 10000 + '%';
   }
 
   return (
@@ -139,7 +173,7 @@ const GraphHistoryModal = ({
         closeModal={() => {
           handleCloseModal();
         }}
-        wide={false}
+        wide={true}
       >
         <>
           <div>
@@ -309,7 +343,7 @@ const GraphHistoryModal = ({
                         {graphDataLoading ? (
                           <span className="loading loading-bars loading-md"></span>
                         ) : (
-                          useSymbol || ''
+                          TokenNormalise(useSymbol) || ''
                         )}
                       </Typography>
                     </div>
@@ -324,11 +358,26 @@ const GraphHistoryModal = ({
                         {graphDataLoading ? (
                           <span className="loading loading-bars loading-md"></span>
                         ) : (
-                          useTokenIn || ''
+                          TokenNormalise(useTokenIn) || ''
                         )}
                       </Typography>
                     </div>
                   ) : ('')}
+
+                  {useAmountIn ? (
+                    <div className="bg-base-300/40 p-2 rounded-lg w-full flex flex-col">
+                      <Typography variant="p" className="opacity-40">
+                        Amount In
+                      </Typography>
+                      <Typography variant="p" className="font-bold">
+                        {graphDataLoading ? (
+                          <span className="loading loading-bars loading-md"></span>
+                        ) : (
+                          useAmountIn || ''
+                        )}
+                      </Typography>
+                    </div>
+                  ) : (null)}
 
                   {useTokenOut ? (
                     <div className="bg-base-300/40 p-2 rounded-lg w-full flex flex-col">
@@ -339,11 +388,26 @@ const GraphHistoryModal = ({
                         {graphDataLoading ? (
                           <span className="loading loading-bars loading-md"></span>
                         ) : (
-                          useTokenOut || ''
+                          TokenNormalise(useTokenOut) || ''
                         )}
                       </Typography>
                     </div>
                   ) : ('')}
+
+                  {useFeeRate ? (
+                    <div className="bg-base-300/40 p-2 rounded-lg w-full flex flex-col">
+                      <Typography variant="p" className="opacity-40">
+                        Uniswap Fee Rate
+                      </Typography>
+                      <Typography variant="p" className="font-bold">
+                        {graphDataLoading ? (
+                          <span className="loading loading-bars loading-md"></span>
+                        ) : (
+                          useFeeRate || ''
+                        )}
+                      </Typography>
+                    </div>
+                  ) : (null)}
 
                   {useAmount ? (
                     <div className="bg-base-300/40 p-2 rounded-lg w-full flex flex-col">
