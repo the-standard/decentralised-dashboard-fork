@@ -102,6 +102,8 @@ const GraphHistoryModal = ({
   const graphAmountIn = graphData?.amountIn;
   const graphTokenOut = graphData?.tokenOut;
   const graphFeeRate = graphData?.feeRate;
+  const graphStablePercentage = graphData?.stablePercentage;
+  const graphHypervisor = graphData?.hypervisor;
 
   let useTo = '';
   if (graphTo) {
@@ -161,6 +163,16 @@ const GraphHistoryModal = ({
   let useFeeRate = '';
   if (graphFeeRate) {
     useFeeRate = Number(graphFeeRate) / 10000 + '%';
+  }
+  let useStablePercentage = '';
+  let useVolatilePercentage = '';
+  if (graphStablePercentage) {
+    useStablePercentage = Number(graphStablePercentage) / 1000 + '%';
+    useVolatilePercentage = Number(100) - (Number(graphStablePercentage) / 1000) + '%';
+  }
+  let useHypervisor = '';
+  if (graphHypervisor) {
+    useHypervisor = graphHypervisor;
   }
 
   return (
@@ -505,6 +517,64 @@ const GraphHistoryModal = ({
                           <span className="loading loading-bars loading-md"></span>
                         ) : (
                           useTokenId || ''
+                        )}
+                      </Typography>
+                    </div>
+                  ) : (null)}
+
+                  {useStablePercentage ? (
+                    <div className="bg-base-300/40 p-2 rounded-lg w-full flex flex-col">
+                      <Typography variant="p" className="opacity-40">
+                        Stable Percentage
+                      </Typography>
+                      <Typography variant="p" className="font-bold">
+                        {graphDataLoading ? (
+                          <span className="loading loading-bars loading-md"></span>
+                        ) : (
+                          useStablePercentage || ''
+                        )}
+                      </Typography>
+                    </div>
+                  ) : (null)}
+                  {useVolatilePercentage ? (
+                    <div className="bg-base-300/40 p-2 rounded-lg w-full flex flex-col">
+                      <Typography variant="p" className="opacity-40">
+                        Volatile Percentage
+                      </Typography>
+                      <Typography variant="p" className="font-bold">
+                        {graphDataLoading ? (
+                          <span className="loading loading-bars loading-md"></span>
+                        ) : (
+                          useVolatilePercentage || ''
+                        )}
+                      </Typography>
+                    </div>
+                  ) : (null)}
+
+                  {useHypervisor ? (
+                    <div className="bg-base-300/40 p-2 rounded-lg w-full flex flex-col col-span-2 sm:col-span-1">
+                      <Typography variant="p" className="opacity-40">
+                        Hypervisor Address
+                      </Typography>
+                      <Typography variant="p" className="font-bold">
+                        {graphDataLoading ? (
+                          <span className="loading loading-bars loading-md"></span>
+                        ) : (
+                          <div className="flex items-center">
+                            <span className="truncate overflow-hidden flex-1">
+                              {useHypervisor}
+                            </span>
+                            <Button
+                              className="ml-[4px]"
+                              variant="outline"
+                              size="sm"
+                              onClick={() => handleCopyText(useHypervisor)}
+                            >
+                              <DocumentDuplicateIcon
+                                className="h-3 w-3 inline-block"
+                              />
+                            </Button>
+                          </div>
                         )}
                       </Typography>
                     </div>
