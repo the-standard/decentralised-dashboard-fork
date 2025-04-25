@@ -15,6 +15,7 @@ import CenterLoader from "../../../components/ui/CenterLoader";
 import Card from "../../../components/ui/Card";
 import Button from "../../../components/ui/Button";
 import Pagination from "../../../components/ui/Pagination";
+import Typography from "../../../components/ui/Typography";
 
 import GraphHistoryModal from "../../../components/vault/history/GraphHistoryModal";
 
@@ -105,12 +106,35 @@ const HistoryGraph = ({
     )
   }
 
+  const ethTxLink = `https://arbiscan.io/address/${vaultAddress}?amt=0.0001~999999999`;
+  const erc20TxLink = `https://arbiscan.io/address/${vaultAddress}#tokentxns`;
+
   return (
     <div>
       <Card className="card-compact">
         <div className="card-body overflow-x-scroll">
           {vaultNav()}
-
+          <div className="flex flex-col sm:flex-row justify-between">
+            <Typography variant="p">
+              We are currently unable to show collateral deposit events.<br/> You can view your Smart Vault's&nbsp;
+              <a
+                href={ethTxLink}
+                target="_blank"
+                className="font-bold underline"
+              >
+                ETH transactions here
+              </a>
+              , and your&nbsp;
+              <a
+                href={erc20TxLink}
+                target="_blank"
+                className="font-bold underline"
+              >
+                ERC20 transactions here
+              </a>
+              .
+            </Typography>
+          </div>
           <table className="table table-zebra">
             <thead>
               <tr>
