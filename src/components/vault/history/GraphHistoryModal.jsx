@@ -104,6 +104,7 @@ const GraphHistoryModal = ({
   const graphFeeRate = graphData?.feeRate;
   const graphStablePercentage = graphData?.stablePercentage;
   const graphHypervisor = graphData?.hypervisor;
+  const graphUSDsRedeemed = graphData?.USDsRedeemed;
 
   let useTo = '';
   if (graphTo) {
@@ -173,6 +174,10 @@ const GraphHistoryModal = ({
   let useHypervisor = '';
   if (graphHypervisor) {
     useHypervisor = graphHypervisor;
+  }
+  let useUSDsRedeemed = '';
+  if (graphUSDsRedeemed) {
+    useUSDsRedeemed = ethers.formatUnits(graphAmountIn.toString(), 18);
   }
 
   return (
@@ -575,6 +580,21 @@ const GraphHistoryModal = ({
                               />
                             </Button>
                           </div>
+                        )}
+                      </Typography>
+                    </div>
+                  ) : (null)}
+
+                  {useVolatilePercentage ? (
+                    <div className="bg-base-300/40 p-2 rounded-lg w-full flex flex-col">
+                      <Typography variant="p" className="opacity-40">
+                        USDs Redeemed
+                      </Typography>
+                      <Typography variant="p" className="font-bold">
+                        {graphDataLoading ? (
+                          <span className="loading loading-bars loading-md"></span>
+                        ) : (
+                          useUSDsRedeemed || ''
                         )}
                       </Typography>
                     </div>
