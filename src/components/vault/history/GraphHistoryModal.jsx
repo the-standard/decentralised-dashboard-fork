@@ -177,7 +177,7 @@ const GraphHistoryModal = ({
   }
   let useUSDsRedeemed = '';
   if (graphUSDsRedeemed) {
-    useUSDsRedeemed = ethers.formatUnits(graphAmountIn.toString(), 18);
+    useUSDsRedeemed = ethers.formatUnits(graphUSDsRedeemed.toString(), 18);
   }
 
   return (
@@ -585,7 +585,7 @@ const GraphHistoryModal = ({
                     </div>
                   ) : (null)}
 
-                  {useVolatilePercentage ? (
+                  {useUSDsRedeemed ? (
                     <div className="bg-base-300/40 p-2 rounded-lg w-full flex flex-col">
                       <Typography variant="p" className="opacity-40">
                         USDs Redeemed
