@@ -27,6 +27,7 @@ import CenterLoader from "../../components/ui/CenterLoader";
 import Card from "../../components/ui/Card";
 import Button from "../../components/ui/Button";
 import Typography from "../../components/ui/Typography";
+import TokenNormalise from "../../components/ui/TokenNormalise";
 
 const VaultSavings = () => {
   const chainId = useChainId();
@@ -275,13 +276,13 @@ const VaultSavings = () => {
                           <div className="bg-emerald-400/20 p-4 rounded-lg w-full flex items-center order-1">
                             <div className="overflow-x-hidden text-wrap">
                               <p className="text-sm opacity-80">Money Saved</p>
-                              <p className="text-lg font-semibold truncate text-ellipsis text-wrap">${amountSaved ? (totalSaved.toFixed(2)) : ('')}</p>
+                              <p className="text-lg font-semibold truncate text-ellipsis text-wrap">${showSaved ? (showSaved) : ('')}</p>
                             </div>
                           </div>
                           <div className="bg-base-300/40 p-4 rounded-lg w-full flex items-center order-3 sm:order-2 col-span-2 sm:col-span-1">
                             <div className="overflow-x-hidden text-wrap">
                               <p className="text-sm opacity-80">Asset Sold</p>
-                              <p className="text-lg font-semibold truncate text-ellipsis text-wrap">{amountSold || ''} {tokenSold || ''}</p>
+                              <p className="text-lg font-semibold truncate text-ellipsis text-wrap">{amountSold || ''} {TokenNormalise(tokenSold) || ''}</p>
                             </div>
                           </div>
                           <div className="bg-emerald-400/20 p-4 rounded-lg w-full flex items-center order-2 sm:order-3">
