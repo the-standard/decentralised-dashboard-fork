@@ -1,4 +1,11 @@
-import { createContext, useContext, useEffect, useState, useRef } from "react";
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+  useRef,
+  useCallback,
+} from "react";
 
 const InactivityContext = createContext(null);
 
@@ -22,7 +29,7 @@ export function InactivityProvider(
   const sleepTimeout = useRef(null);
   const graceTimeout = useRef(null);
 
-  const clearTimers = () => {
+  const clearTimers = useCallback(() => {
     if (sleepTimeout.current) {
       clearTimeout(sleepTimeout.current);
       sleepTimeout.current = null;
@@ -31,27 +38,28 @@ export function InactivityProvider(
       clearTimeout(graceTimeout.current);
       graceTimeout.current = null;
     }
-  };
+  }, []);
 
-  const startSleepTimer = () => {
+  const startSleepTimer = useCallback(() => {
     clearTimers();
     sleepTimeout.current = setTimeout(() => {
       setIsAwake(false);
     }, sleepAfter);
-  };
+  }, [clearTimers, sleepAfter]);
 
-  const handleUserActivity = () => {
+  // Use useCallback to memoize the handleUserActivity function
+  const handleUserActivity = useCallback(() => {
     if (!isAwake) {
       setIsAwake(true);
     }
     startSleepTimer();
-  };
+  }, [isAwake, startSleepTimer]);
 
   // Initialize sleep timer
   useEffect(() => {
     startSleepTimer();
     return clearTimers;
-  }, [sleepAfter]);
+  }, [startSleepTimer, clearTimers]);
 
   // Handle visibility changes
   useEffect(() => {
@@ -76,9 +84,9 @@ export function InactivityProvider(
       document.removeEventListener('visibilitychange', handleVisibilityChange);
       clearTimers();
     };
-  }, [sleepAfter, gracePeriod]);
+  }, [clearTimers, startSleepTimer, gracePeriod]);
 
-  // Monitor user activity
+  // Monitor user activity - now with proper dependencies
   useEffect(() => {
     // Only add listeners if the page is visible
     if (!isPageVisible) return;
@@ -92,12 +100,12 @@ export function InactivityProvider(
         window.removeEventListener(event, handleUserActivity);
       });
     };
-  }, [isPageVisible]);
+  }, [isPageVisible, handleUserActivity, activityEvents]);
 
-  const wake = () => {
+  const wake = useCallback(() => {
     setIsAwake(true);
     startSleepTimer();
-  };
+  }, [startSleepTimer]);
 
   const value = {
     isActive: isPageVisible && isAwake,

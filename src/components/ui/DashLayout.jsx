@@ -1,5 +1,5 @@
-import { useState, useCallback } from "react";
-import { ToastContainer, Slide } from 'react-toastify';
+import { useState, useCallback, useRef, useEffect } from "react";
+import { ToastContainer, Slide, Bounce, toast } from 'react-toastify';
 import {
   Drawer,
 } from 'react-daisyui';
@@ -16,6 +16,7 @@ import {
 
 import ChainChecker from "../ChainChecker";
 import RainbowConnect from "../RainbowConnectButton";
+import { useInactivityControl } from '../InactivityControl';
 
 import TopNav from './TopNav';
 import SideNav from './SideNav';
@@ -30,6 +31,8 @@ const DashLayout = ({children}) => {
     useShowcase,
   } = useGuestShowcaseStore();
   const [showSideNav, setShowSideNav] = useState(false);
+  const { isActive } = useInactivityControl();
+  const isActiveToastRef = useRef(null);
 
   const toggleVisible = useCallback(() => {
     setShowSideNav(visible => !visible);
@@ -37,6 +40,40 @@ const DashLayout = ({children}) => {
 
   const { localThemeModeStore } = useLocalThemeModeStore();
   const isLight = localThemeModeStore && localThemeModeStore.includes('light');
+
+  useEffect(() => {
+    console.log(123123, isActive, isActiveToastRef.current)
+    if (!isActive) {
+      isActiveToastRef.current = toast('App Sleeping', {
+        theme: "dark",
+        position: "bottom-center",
+        transition: Bounce,
+        autoClose: false,
+        closeOnClick: false,
+        draggable: false,
+        progress: undefined,
+        hideProgressBar: true,
+        pauseOnFocusLoss: false,
+      });
+    } else {
+      if (isActiveToastRef.current) {
+        toast.update(isActiveToastRef.current, {
+          render: "App Waking",
+          position: "top-right",
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          transition: Bounce,
+        });  
+        isActiveToastRef.current = null;
+        // toast.dismiss(toastIdRef.current);
+      }
+    }
+  }, [isActive]);
 
   return (
     <div className="tst-con">

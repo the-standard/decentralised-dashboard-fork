@@ -29,8 +29,10 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <InactivityProvider
-        sleepAfter={5 * 60 * 1000}
-        gracePeriod={2 * 60 * 1000}
+        // sleepAfter={5 * 60 * 1000}
+        // gracePeriod={2 * 60 * 1000}
+        sleepAfter={3 * 10 * 1000}
+        gracePeriod={1 * 10 * 1000}
       >
         <ThemeHandler>
           <WalletProvider>
