@@ -14,6 +14,7 @@ import usdclogo from "../../assets/usdclogo.svg";
 import wethlogo from "../../assets/wethlogo.svg";
 import merkllogo from "../../assets/merkllogo.webp";
 import usdtlogo from "../../assets/usdtlogo.svg";
+import wstethlogo from "../../assets/wstethlogo.svg";
 
 import Typography from "./Typography";
 
@@ -161,6 +162,17 @@ const TokenIcon = ({
           className={className ? className : ''}
         />    
       );    
+    case 'wstETH':
+    case 'wsteth':
+    case 'WSTETH':
+          return (
+          <img
+            style={style}
+            src={wstethlogo}
+            alt={`wstETH logo`}
+            className={className ? className : ''}
+          />    
+        ); 
     default:
       if (isMerkl) {
         return (

@@ -36,7 +36,11 @@ const TokenNormalise = (symbol) => {
       return 'USDs18';
     case 'USDT':
     case 'USD₮0':
-      return 'USDT';    
+      return 'USDT';
+    case 'wstETH':
+    case 'WSTETH':
+    case 'wsteth':
+      return 'wstETH';
     default:
       return (symbol);
   }  
