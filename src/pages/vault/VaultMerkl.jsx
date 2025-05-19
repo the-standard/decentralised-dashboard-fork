@@ -22,6 +22,8 @@ import {
   useVaultStore,
 } from "../../store/Store";
 
+import { useInactivityControl } from '../../components/InactivityControl';
+
 import MerklPoweredDark from "../../assets/merkl-powered-dark.svg";
 import MerklPoweredLight from "../../assets/merkl-powered-light.svg";
 
@@ -33,6 +35,7 @@ import Button from "../../components/ui/Button";
 
 const VaultMerkl = () => {
   const chainId = useChainId();
+  const { isActive } = useInactivityControl();
 
   const {
     arbitrumsUSDSepoliaContractAddress,
@@ -105,9 +108,11 @@ const VaultMerkl = () => {
     address: sUSDVaultManagerAddress,
     functionName: "vaultData",
     args: [vaultId],
+    enabled: isActive,
   });
 
   // useWatchBlockNumber({
+  //   enabled: isActive,
   //   onBlockNumber() {
   //     refetch();
   //   },

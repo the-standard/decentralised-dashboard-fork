@@ -27,6 +27,8 @@ import {
   ArbitrumVaults,
 } from "./YieldGammaVaults";
 
+import { useInactivityControl } from '../../InactivityControl';
+
 import YieldItem from "./YieldItem";
 import YieldViewModal from "./YieldViewModalNew";
 import YieldClaimModal from "./YieldClaimModalNew";
@@ -79,6 +81,7 @@ const YieldParent = (props) => {
   const { yieldEnabled } = props;
   const { vaultAddress } = useVaultAddressStore();
   const { smartVaultABI } = useSmartVaultABIStore();
+  const { isActive } = useInactivityControl();
 
   const {
     gammaHypervisorsAllData,
@@ -160,6 +163,7 @@ const YieldParent = (props) => {
     address: vaultAddress,
     functionName: "yieldAssets",
     args: [],
+    enabled: isActive,
   });
 
   let hypervisorAddresses = [];
@@ -170,6 +174,7 @@ const YieldParent = (props) => {
   }
 
   useWatchBlockNumber({
+    enabled: isActive,
     onBlockNumber() {
       refetchYield();
     },

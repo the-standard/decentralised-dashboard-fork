@@ -1,12 +1,8 @@
 import { useState, useEffect, useRef, Fragment } from "react";
 import { ethers } from "ethers";
-import { Link, useNavigate } from "react-router-dom";
 import {
-  useBlockNumber,
   useReadContract,
   useChainId,
-  useWatchBlockNumber,
-  useAccount,
 } from "wagmi";
 import { arbitrumSepolia } from "wagmi/chains";
 
@@ -19,8 +15,9 @@ import {
   useContractAddressStore,
   useVaultManagerAbiStore,
   usesUSDContractAddressStore,
-  useGuestShowcaseStore,
 } from "../../store/Store";
+
+import { useInactivityControl } from '../InactivityControl';
 
 import Typography from "../ui/Typography";
 
@@ -60,6 +57,7 @@ const LiquidationItem = ( props ) => {
     arbitrumsUSDSepoliaContractAddress,
     arbitrumsUSDContractAddress,
   } = usesUSDContractAddressStore();
+  const { isActive } = useInactivityControl();
 
   const [isDataReady, setIsDataReady] = useState(false);
 
@@ -98,7 +96,7 @@ const LiquidationItem = ( props ) => {
     address: sUSDVaultManagerAddress,
     functionName: "vaultData",
     args: [vaultId],
-    enabled: true,
+    enabled: isActive,
   });
 
   useEffect(() => {

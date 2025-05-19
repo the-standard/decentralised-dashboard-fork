@@ -12,6 +12,8 @@ import {
   useLiquidationPoolStore,
 } from "../../store/Store";
 
+import { useInactivityControl } from '../../components/InactivityControl';
+
 import StakedAssets from "../../components/liquidation-pools/StakedAssets";
 import ClaimTokens from "../../components/liquidation-pools/ClaimTokens";
 
@@ -24,6 +26,8 @@ const LiquidationPools = () => {
     arbitrumSepoliaLiquidationPoolAddress,
     arbitrumLiquidationPoolAddress,
   } = useLiquidationPoolStore();
+
+  const { isActive } = useInactivityControl();
 
   const { address } = useAccount();
   const chainId = useChainId();
@@ -38,9 +42,11 @@ const LiquidationPools = () => {
     abi: liquidationPoolAbi,
     functionName: "position",
     args: [address],
+    enabled: isActive,
   });
 
   useWatchBlockNumber({
+    enabled: isActive,
     onBlockNumber() {
       refetch();
     },

@@ -23,6 +23,8 @@ import {
   useGuestShowcaseStore,
 } from "../../store/Store";
 
+import { useInactivityControl } from '../InactivityControl';
+
 import smartVaultAbi from "../../abis/smartVault";
 
 import BorrowModal from "./BorrowModal";
@@ -57,6 +59,8 @@ const Debt = ({
   } = useVaultHealthUpdate();
   const inputRef = useRef(null);
 
+  const { isActive } = useInactivityControl();
+
   const [ amount, setAmount ] = useState(BigInt(0));
   const [ stage, setStage ] = useState('');
 
@@ -89,15 +93,17 @@ const Debt = ({
     contracts: [{
       ... sContract,
       functionName: "allowance",
-      args: [address, vaultAddress]
+      args: [address, vaultAddress],
     },{
       ... sContract,
       functionName: "balanceOf",
-      args: [address]
+      args: [address],
     }],
+    enabled: isActive,
   });
 
   useWatchBlockNumber({
+    enabled: isActive,
     onBlockNumber() {
       refetch();
     },

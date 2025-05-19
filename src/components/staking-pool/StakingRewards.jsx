@@ -8,6 +8,8 @@ import {
   useErc20AbiStore,
 } from "../../store/Store";
 
+import { useInactivityControl } from '../InactivityControl';
+
 import Button from "../ui/Button";
 import Card from "../ui/Card";
 import Typography from "../ui/Typography";
@@ -26,6 +28,7 @@ const StakingRewards = ({
 }) => {
   const [open, setOpen] = useState(false);
   const { erc20Abi } = useErc20AbiStore();
+  const { isActive } = useInactivityControl();
 
   if (poolRewardsLoading) {
     return (
@@ -43,7 +46,8 @@ const StakingRewards = ({
       abi: erc20Abi,
       functionName: "decimals",
       args: [],
-    }))
+    })),
+    enabled: isActive,
   })
 
   const { data: rewardSymbols } = useReadContracts({
@@ -52,7 +56,8 @@ const StakingRewards = ({
       abi: erc20Abi,
       functionName: "symbol",
       args: [],
-    }))
+    })),
+    enabled: isActive,
   })
 
   const rewardData = collaterals?.map((item, index) => {

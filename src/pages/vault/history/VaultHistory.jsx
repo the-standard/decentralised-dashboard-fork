@@ -16,6 +16,8 @@ import {
   useVaultManagerAbiStore,
 } from "../../../store/Store";
 
+import { useInactivityControl } from '../../../components/InactivityControl';
+
 import CenterLoader from "../../../components/ui/CenterLoader";
 import Card from "../../../components/ui/Card";
 import Button from "../../../components/ui/Button";
@@ -32,6 +34,7 @@ const VaultHistory = () => {
   const { vaultManagerAbi } = useVaultManagerAbiStore();
   const { vaultType, vaultId } = useParams();
   const navigate = useNavigate();
+  const { isActive } = useInactivityControl();
 
   const [vaultsLoading, setVaultsLoading] = useState(true);
 
@@ -75,9 +78,11 @@ const VaultHistory = () => {
     abi: vaultManagerAbi,
     functionName: "vaultData",
     args: [vaultId],
+    enabled: isActive,
   });
 
   useWatchBlockNumber({
+    enabled: isActive,
     onBlockNumber() {
       refetch();
     },
