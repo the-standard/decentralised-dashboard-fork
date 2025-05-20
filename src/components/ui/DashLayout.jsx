@@ -42,12 +42,11 @@ const DashLayout = ({children}) => {
   const isLight = localThemeModeStore && localThemeModeStore.includes('light');
 
   useEffect(() => {
-    console.log(123123, isActive, isActiveToastRef.current)
     if (!isActive) {
-      isActiveToastRef.current = toast('App Sleeping', {
+      isActiveToastRef.current = toast('🌙 App Sleeping', {
         theme: "dark",
         position: "bottom-center",
-        transition: Bounce,
+        transition: Slide,
         autoClose: false,
         closeOnClick: false,
         draggable: false,
@@ -58,16 +57,16 @@ const DashLayout = ({children}) => {
     } else {
       if (isActiveToastRef.current) {
         toast.update(isActiveToastRef.current, {
-          render: "App Waking",
-          position: "top-right",
+          render: "🔆 App Waking",
+          theme: "light",
+          position: "bottom-center",
+          transition: Slide,
           autoClose: 3000,
-          hideProgressBar: false,
           closeOnClick: false,
-          pauseOnHover: true,
           draggable: true,
           progress: undefined,
-          theme: "light",
-          transition: Bounce,
+          hideProgressBar: false,
+          pauseOnFocusLoss: false,
         });  
         isActiveToastRef.current = null;
         // toast.dismiss(toastIdRef.current);
