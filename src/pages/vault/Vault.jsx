@@ -24,6 +24,8 @@ import {
   useGuestShowcaseStore,
 } from "../../store/Store";
 
+import { useInactivityControl } from '../../components/InactivityControl';
+
 import CenterLoader from "../../components/ui/CenterLoader";
 import Button from "../../components/ui/Button";
 
@@ -52,6 +54,7 @@ const Vault = () => {
   const { vaultStore, setVaultStore } = useVaultStore();
   const { vaultManagerAbi } = useVaultManagerAbiStore();
   const { setVaultID } = useVaultIdStore();
+  const { isActive } = useInactivityControl();
 
   const {
     arbitrumSepoliaContractAddress,
@@ -101,6 +104,7 @@ const Vault = () => {
     address: vaultManagerAddress,
     functionName: "vaultData",
     args: [vaultId],
+    enabled: isActive,
   });
 
   const { data: vaultDatasUSD, refetch: refetchsUSD, isLoading: isLoadingsUSD } = useReadContract({
@@ -108,6 +112,7 @@ const Vault = () => {
     address: sUSDVaultManagerAddress,
     functionName: "vaultData",
     args: [vaultId],
+    enabled: isActive,
   });
 
   let currentVault = {};
@@ -127,6 +132,7 @@ const Vault = () => {
   }
 
   useWatchBlockNumber({
+    enabled: isActive,
     onBlockNumber() {
       setRenderedBlock(blockNumber);
       if (vaultType === 'EUROs') {

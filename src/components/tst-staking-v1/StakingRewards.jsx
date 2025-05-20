@@ -6,6 +6,8 @@ import {
   useErc20AbiStore,
 } from "../../store/Store";
 
+import { useInactivityControl } from '../InactivityControl';
+
 import StakingSummary from "./StakingSummary";
 import StakingRewardsList from "./StakingRewardsList";
 
@@ -23,6 +25,7 @@ const StakingRewards = ({
   tstGlobalBalanceLoading,
 }) => {
   const { erc20Abi } = useErc20AbiStore();
+  const { isActive } = useInactivityControl();
 
   const { data: rewardDecimals } = useReadContracts({
     contracts:collaterals.map((item) =>({
@@ -30,7 +33,8 @@ const StakingRewards = ({
       abi: erc20Abi,
       functionName: "decimals",
       args: [],
-    }))
+    })),
+    enabled: isActive,
   })
 
   const { data: rewardSymbols } = useReadContracts({
@@ -39,7 +43,8 @@ const StakingRewards = ({
       abi: erc20Abi,
       functionName: "symbol",
       args: [],
-    }))
+    })),
+    enabled: isActive,
   })
 
   const rewardData = collaterals?.map((item, index) => {

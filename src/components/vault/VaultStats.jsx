@@ -22,6 +22,8 @@ import {
   Tooltip,
 } from 'react-daisyui';
 
+import { useInactivityControl } from '../InactivityControl';
+
 import { formatNumber, formatCurrency } from '../ui/NumberUtils';
 import Typography from "../ui/Typography";
 import VaultHealth from "./VaultHealth";
@@ -41,6 +43,7 @@ const VaultStats = ({
     yieldBalances,
     yieldBalancesLoading,
   } = useYieldBalancesStore();
+  const { isActive } = useInactivityControl();
 
   const chainId = useChainId();
   const { data: blockNumber } = useBlockNumber();
@@ -55,6 +58,7 @@ const VaultStats = ({
     address: usdsAddress,
     functionName: "totalSupply",
     args: [],
+    enabled: isActive,
   });
 
   const { data: supplyLimit, refetch: refetchSupplyLimit, isLoading: isLoadingSupplyLimit } = useReadContract({
@@ -62,6 +66,7 @@ const VaultStats = ({
     address: usdsAddress,
     functionName: "supplyLimit",
     args: [],
+    enabled: isActive,
   });
 
   useEffect(() => {
@@ -73,6 +78,7 @@ const VaultStats = ({
   ]);
 
   useWatchBlockNumber({
+    enabled: isActive,
     onBlockNumber() {
       setRenderedBlock(blockNumber);
       if (vaultType === 'USDs') {
