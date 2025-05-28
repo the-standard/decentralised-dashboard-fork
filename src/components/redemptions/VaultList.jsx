@@ -19,6 +19,8 @@ import {
   useGuestShowcaseStore,
 } from "../../store/Store";
 
+import { useInactivityControl } from '../InactivityControl';
+
 import { formatNumber, formatCurrency } from '../ui/NumberUtils';
 
 import Card from "../ui/Card";
@@ -30,6 +32,7 @@ import susdlogo from "../../assets/USDs.svg";
 
 const VaultList = ( props ) => {
   const { vaults, vaultsLoading, listType} = props;
+  const { isActive } = useInactivityControl();
   const navigate = useNavigate();
   const { vaultManagerAbi } = useVaultManagerAbiStore();
   const {
@@ -58,7 +61,8 @@ const VaultList = ( props ) => {
   });
 
   const { data: vaultData, refetch: refetchVaultData } = useReadContracts({
-    contracts: vaultContracts
+    contracts: vaultContracts,
+    enabled: isActive,
   });
 
   const useVaults = vaultData?.map((item) => {
@@ -73,13 +77,14 @@ const VaultList = ( props ) => {
     abi: vaultManagerAbi,
     address: vaultManagerAddress,
     functionName: "vaultIDs",
-    args: [accountAddress || ethers?.constants?.AddressZero]
+    args: [accountAddress || ethers?.constants?.AddressZero],
+    enabled: isActive,
   });
 
   useWatchBlockNumber({
+    enabled: isActive,
     onBlockNumber() {
       refetchVaultData();
-      // refetchUserVaultIDs();
     },
   })
 
