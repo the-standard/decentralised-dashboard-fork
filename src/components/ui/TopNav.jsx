@@ -99,7 +99,7 @@ const TopNav = (props) => {
             color="ghost"
             onClick={() => navigate("/redemptions")}
           >
-            Auto-Redemptions
+            Auto Redemptions
           </Button>
         </div>
         <div className="navbar-end">
