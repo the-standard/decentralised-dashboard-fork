@@ -2,6 +2,10 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
+import {
+  ArrowTopRightOnSquareIcon
+} from '@heroicons/react/16/solid';
+
 import VaultList from '../../components/redemptions/VaultList';
 import USDsStatus from '../../components/redemptions/USDsStatus';
 
@@ -10,7 +14,7 @@ import Typography from "../../components/ui/Typography";
 import Button from "../../components/ui/Button";
 
 const Redemptions = (props) => {
-  const [redemptionsData, setRedemptionsData] = useState([]);
+  const [redemptionsData, setRedemptionsData] = useState({});
   const [redemptionsDataLoading, setRedemptionsDataLoading] = useState(true);
   const [USDsBalance, setUSDsBalance] = useState(0n);
 
@@ -59,6 +63,16 @@ const Redemptions = (props) => {
             </div>
 
             <div className="card-actions">
+              <Button
+                onClick={() => window.open("https://www.thestandard.io/blog/why-the-standards-self-redeeming-smart-vaults-redefine-defi-redemptions", "_blank")}
+                variant="outline"
+                className="w-auto"
+              >
+                <ArrowTopRightOnSquareIcon
+                  className="h-4 w-4 inline-block"
+                />
+                More Info
+              </Button>
               <Button
                 color="primary"
                 onClick={() => navigate("/dex")}
