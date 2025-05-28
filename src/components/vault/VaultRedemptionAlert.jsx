@@ -13,26 +13,33 @@ const VaultRedemptionAlert = ({
   vaultId,
 }) => {
   const navigate = useNavigate();
-  const [redemption, setRedemption] = useState();
+  const [redemptionsData, setRedemptionsData] = useState({});
+  const [redemptionsDataLoading, setRedemptionsDataLoading] = useState(true);
 
-  useEffect(() => {
-    getUpcomingRedemption();
-  }, []);
-
-  const getUpcomingRedemption = async () => {
+  const getUpcomingRedemptionsData = async () => {
     try {
       const response = await axios.get(
-        `https://smart-vault-api.thestandard.io/redemption`
+        `https://smart-vault-api.thestandard.io/redemptions`
       );
-      const data = response.data;
-      setRedemption(data);
+      const useData = response?.data;
+      setRedemptionsData(useData);
+      setRedemptionsDataLoading(false);
     } catch (error) {
       console.log(error);
+      setRedemptionsDataLoading(false);
     }
   };
 
-  if (redemption) {
-    if (vaultId === redemption?.tokenID) {
+  useEffect(() => {
+    getUpcomingRedemptionsData();
+  }, []);
+
+  const redemptionsVaults = redemptionsData?.vaults || [];
+
+  const vaultOnList = redemptionsVaults?.find((item) => item.tokenID === Number(vaultId));
+
+  if (redemptionsData) {
+    if (vaultOnList) {
       return (
         <>
           <Card className="card-compact mb-4 warn-card">
@@ -44,7 +51,7 @@ const VaultRedemptionAlert = ({
                 Upcoming Auto Redemption
               </Typography>
               <Typography variant="p">
-                Your smart vault currently has the lowest collateral-to-debt ratio on the protocol. It may automatically use its collateral to repay your debt at a slight discount if USDs trades below $0.9899 cents.
+                Your smart vault currently has one of the lowest collateral-to-debt ratios on the protocol. It may automatically use its collateral to repay your debt at a slight discount if USDs trades below $0.9899 cents.
                 <br/>
                 This ensures the stability of the protocol.
                 <br/>
@@ -52,11 +59,11 @@ const VaultRedemptionAlert = ({
               </Typography>
               <div className="card-actions flex-1 flex-col lg:flex-row justify-end items-end">
                 <Button
-                  onClick={() => window.open("https://www.thestandard.io/blog/why-the-standards-self-redeeming-smart-vaults-redefine-defi-redemptions", "_blank")}
+                  onClick={() => navigate('/redemptions')}
                   variant="outline"
                   className="w-full sm:w-auto sm:btn-sm"
                 >
-                  Read More
+                  See More
                 </Button>
                 <Button
                   onClick={() => navigate('/dex?toChain=42161&toToken=0x2Ea0bE86990E8Dac0D09e4316Bb92086F304622d')}

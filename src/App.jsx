@@ -19,6 +19,7 @@ import LegacyPools from './pages/legacy-pools/LegacyPools';
 import TermsOfUse from './pages/TermsOfUse';
 import Dex from './pages/dex/Dex';
 import Liquidations from './pages/liquidations/Liquidations';
+import Redemptions from './pages/redemptions/Redemptions';
 
 import './App.css';
 import 'react-toastify/dist/ReactToastify.min.css';

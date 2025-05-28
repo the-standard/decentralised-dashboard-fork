@@ -28,6 +28,7 @@ import StakingIncrease from "../../components/tst-staking/StakingIncrease";
 import StakingRewards from "../../components/tst-staking/StakingRewards";
 
 import Card from "../../components/ui/Card";
+import Button from "../../components/ui/Button";
 import CenterLoader from "../../components/ui/CenterLoader";
 import Typography from "../../components/ui/Typography";
 
@@ -180,26 +181,6 @@ const TstStaking = (props) => {
             </div>
           </Card>
 
-          {/* <Card className="card-compact mb-4">
-            <div className="card-body overflow-x-scroll">
-              <Typography variant="h2" className="card-title flex gap-0">
-                <Square3Stack3DIcon className="mr-2 h-6 w-6 inline-block"/>
-                Staking Pool
-              </Typography>
-
-              <Typography variant="p">
-                Stake TST to earn USDs & more tokens daily.
-              </Typography>
-
-              {useShowcase ? (null) : (
-                <Typography variant="p">
-                  If you're looking for our previous staking pools, <span className="underline cursor-pointer" onClick={() => navigate("/legacy-pools")}>they can be found here</span>.
-                </Typography>
-              )}
-
-            </div>
-          </Card> */}
-
           <StakingIncrease />
         </div>
 
@@ -236,6 +217,17 @@ const TstStaking = (props) => {
             </>
           )}
 
+          <div className="flex flex-row justify-end">
+            <Button
+              color="ghost"
+              variant="outline"
+              onClick={() => navigate("/legacy-pools")}
+              disabled={useShowcase}
+              className="w-full lg:w-auto mt-4"
+            >
+              View Legacy Pools
+            </Button>
+          </div>
         </div>
       </main>
     </>
