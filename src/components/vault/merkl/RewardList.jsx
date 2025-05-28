@@ -24,6 +24,8 @@ import {
   useMerklTSTStakeStage,
 } from "../../../store/Store";
 
+import { useInactivityControl } from '../../InactivityControl';
+
 import Button from "../../ui/Button";
 import CenterLoader from "../../ui/CenterLoader";
 import Typography from "../../ui/Typography";
@@ -45,6 +47,7 @@ const RewardList = ({
   const { erc20Abi } = useErc20AbiStore();
   const { vaultAddress } = useVaultAddressStore();
   const { setMerklTSTStakeStage } = useMerklTSTStakeStage();
+  const { isActive } = useInactivityControl();
 
   const [claimAllOpen, setClaimAllOpen] = useState(false);
   const [stakeTSTOpen, setStakeTSTOpen] = useState(false);
@@ -94,10 +97,12 @@ const RewardList = ({
     isLoading: merklBalancesLoading,
     refetch: refetchBalances,
   } = useReadContracts({
-    contracts: balanceOfContracts
+    contracts: balanceOfContracts,
+    enabled: isActive,
   })
 
   useWatchBlockNumber({
+    enabled: isActive,
     onBlockNumber() {
       refetchBalances();
     },

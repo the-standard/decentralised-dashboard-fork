@@ -16,9 +16,10 @@ import {
   useVaultManagerAbiStore,
   usesUSDContractAddressStore,
   useContractAddressStore,
-
   useGuestShowcaseStore,
 } from "../../store/Store";
+
+import { useInactivityControl } from '../../components/InactivityControl';
 
 import VaultCreate from "../../components/vaults/VaultCreate";
 import VaultList from "../../components/vaults/VaultList";
@@ -29,6 +30,7 @@ import Button from "../../components/ui/Button";
 const Vaults = () => {
   // const { address: accountAddress } = useAccount();
   // const { address: wagmiWallet } = useAccount();
+  const { isActive } = useInactivityControl();
 
   const {
     useWallet,
@@ -66,14 +68,16 @@ const Vaults = () => {
     abi: vaultManagerAbi,
     address: vaultManagerAddress,
     functionName: "vaultIDs",
-    args: [accountAddress || ethers?.constants?.AddressZero]
+    args: [accountAddress || ethers?.constants?.AddressZero],
+    enabled: isActive,
   });
 
   const { data: sUSDvaultIDs, refetch: refetchsUSDVaultIDs } = useReadContract({
     abi: vaultManagerAbi,
     address: sUSDVaultManagerAddress,
     functionName: "vaultIDs",
-    args: [accountAddress || ethers?.constants?.AddressZero]
+    args: [accountAddress || ethers?.constants?.AddressZero],
+    enabled: isActive,
   });
 
   const [tokenId, setTokenId] = useState();
@@ -164,11 +168,13 @@ const Vaults = () => {
   });
 
   const { data: sEURvaultData, isPending: sEURisPending, refetch: refetchsEURVaultData } = useReadContracts({
-    contracts: sEURcontracts
+    contracts: sEURcontracts,
+    enabled: isActive,
   });
 
   const { data: sUSDvaultData, isPending: sUSDisPending, refetch: refetchsUSDVaultData } = useReadContracts({
-    contracts: sUSDcontracts
+    contracts: sUSDcontracts,
+    enabled: isActive,
   });
 
   const mysEURVaults = sEURvaultData?.map((item) => {
@@ -188,6 +194,7 @@ const Vaults = () => {
   });
 
   useWatchBlockNumber({
+    enabled: isActive,
     onBlockNumber() {
       refetchsEURVaultIDs();
       refetchsEURVaultData();

@@ -22,6 +22,8 @@ import {
   useGuestShowcaseStore,
 } from "../../store/Store";
 
+import { useInactivityControl } from '../../components/InactivityControl';
+
 import StakingIncrease from "../../components/tst-staking/StakingIncrease";
 import StakingRewards from "../../components/tst-staking/StakingRewards";
 
@@ -33,6 +35,7 @@ import Typography from "../../components/ui/Typography";
 const TstStaking = (props) => {
   const { stakingPoolv4Abi } = useStakingPoolv4AbiStore();
   const { erc20Abi } = useErc20AbiStore();
+  const { isActive } = useInactivityControl();
 
   const {
     arbitrumSepoliaStakingPoolv4Address,
@@ -68,6 +71,7 @@ const TstStaking = (props) => {
     abi: stakingPoolv4Abi,
     functionName: "positions",
     args: [accountAddress],
+    enabled: isActive,
   });
 
   const { data: poolRewards, isLoading: poolRewardsLoading, refetch: refetchRewards } = useReadContract({
@@ -75,6 +79,7 @@ const TstStaking = (props) => {
     abi: stakingPoolv4Abi,
     functionName: "projectedEarnings",
     args: [accountAddress],
+    enabled: isActive,
   });
 
   const { data: dailyYield, isLoading, dailyYieldLoading, refetch: refetchDailyReward } = useReadContract({
@@ -82,6 +87,7 @@ const TstStaking = (props) => {
     abi: stakingPoolv4Abi,
     functionName: "dailyYield",
     args: [],
+    enabled: isActive,
   });
 
   const { data: tstGlobalBalance, isLoading: tstGlobalBalanceLoading, refetch: refetchTstGlobalBalance } = useReadContract({
@@ -89,9 +95,11 @@ const TstStaking = (props) => {
     abi: erc20Abi,
     functionName: "balanceOf",
     args: [stakingPoolv4Address],
+    enabled: isActive,
   });
 
   useWatchBlockNumber({
+    enabled: isActive,
     onBlockNumber() {
       refetchPositions();
       refetchRewards();

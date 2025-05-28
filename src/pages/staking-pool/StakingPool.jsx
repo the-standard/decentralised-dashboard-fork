@@ -13,6 +13,8 @@ import {
   useStakingPoolv2AddressStore,
 } from "../../store/Store";
 
+import { useInactivityControl } from '../../components/InactivityControl';
+
 import StakingAssets from "../../components/staking-pool/StakingAssets";
 import StakingRewards from "../../components/staking-pool/StakingRewards";
 
@@ -22,6 +24,7 @@ import CenterLoader from "../../components/ui/CenterLoader";
 const StakingPool = (props) => {
   const { stakingPoolv2Abi } = useStakingPoolv2AbiStore();
   const [showValue, setShowValue] = useState(false);
+  const { isActive } = useInactivityControl();
 
   const {
     arbitrumSepoliaStakingPoolv2Address,
@@ -41,6 +44,7 @@ const StakingPool = (props) => {
     abi: stakingPoolv2Abi,
     functionName: "positions",
     args: [address],
+    enabled: isActive,
   });
 
   const { data: poolRewards, isLoading: poolRewardsLoading, refetch: refetchRewards } = useReadContract({
@@ -48,6 +52,7 @@ const StakingPool = (props) => {
     abi: stakingPoolv2Abi,
     functionName: "projectedEarnings",
     args: [address],
+    enabled: isActive,
   });
 
   const { data: dailyYield, refetch: refetchDailyReward } = useReadContract({
@@ -55,9 +60,11 @@ const StakingPool = (props) => {
     abi: stakingPoolv2Abi,
     functionName: "dailyYield",
     args: [],
+    enabled: isActive,
   });
 
   useWatchBlockNumber({
+    enabled: isActive,
     onBlockNumber() {
       refetchPositions();
       refetchRewards();
