@@ -120,6 +120,8 @@ const StakingRewards = ({
         dailyYieldLoading={dailyYieldLoading}
         rewardData={rewardData}
         latestPrices={latestPrices}
+        stakedSince={stakedSince}
+        rawStakedSince={rawStakedSince}
       />
     </div>
   )
