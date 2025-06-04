@@ -49,6 +49,7 @@ function App() {
                   <Route path="dex/*" element={<DashLayout><Dex /></DashLayout>} />
                   <Route path="liquidations" element={<DashLayout><Liquidations /></DashLayout>} />
                   <Route path="termsofuse" element={<DashLayout><TermsOfUse /></DashLayout>} />
+                  <Route path="redemptions" element={<DashLayout><Redemptions /></DashLayout>} />
                   <Route path="*" element={<Home/>} />
                 </Routes>
               </DisconnectHandler>
