@@ -17,6 +17,8 @@ import {
   StopCircleIcon
 } from '@heroicons/react/24/outline';
 
+import { useInactivityControl } from '../InactivityControl';
+
 import Card from "../ui/Card";
 import Button from "../ui/Button";
 import Typography from "../ui/Typography";
@@ -30,6 +32,7 @@ const VaultNFT = ({
   } = useGuestShowcaseStore();
   const { vaultManagerAbi } = useVaultManagerAbiStore();
   const [ isLoading, setIsLoading ] = useState(false);
+  const { isActive } = useInactivityControl();
 
   const {
     arbitrumSepoliaContractAddress,
@@ -63,7 +66,8 @@ const VaultNFT = ({
     address: useVaultManagerAddress,
     abi: vaultManagerAbi,
     functionName: "tokenURI",
-    args: [vaultId]
+    args: [vaultId],
+    enabled: isActive,
   });
 
   let decoded = '';

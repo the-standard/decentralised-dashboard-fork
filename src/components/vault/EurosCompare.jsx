@@ -10,15 +10,21 @@ import {
   useWideBorrowModal,
 } from "../../store/Store";
 
+import { useInactivityControl } from '../InactivityControl';
+
 import Typography from "../ui/Typography";
 
 const EurosCompare = ({vaultType}) => {
   const [poolData, setPoolData] = useState(undefined);
   const chainId = useChainId();
   const { chainlinkAbi } = useChainlinkAbiStore();
-  const { arbitrumOneUSDToEuroAddress, arbitrumSepoliaUSDToEuroAddress } =
-    useUSDToEuroAddressStore();
-    const { setBorrowWide } = useWideBorrowModal();
+  const { 
+    arbitrumOneUSDToEuroAddress,
+    arbitrumSepoliaUSDToEuroAddress
+  } = useUSDToEuroAddressStore();
+  const { setBorrowWide } = useWideBorrowModal();
+
+  const { isActive } = useInactivityControl();
 
   const chainlinkContract = {
     abi: chainlinkAbi,
@@ -40,6 +46,7 @@ const EurosCompare = ({vaultType}) => {
 
   const { data: priceData, isPending } = useReadContracts({
     contracts,
+    enabled: isActive,
   });
 
   const chainPriceData = priceData?.map((data) => {

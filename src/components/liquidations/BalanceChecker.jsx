@@ -7,6 +7,8 @@ import {
   usesUSDAddressStore,
 } from "../../store/Store";
 
+import { useInactivityControl } from '../InactivityControl';
+
 import Typography from "../ui/Typography";
 
 import susdlogo from "../../assets/USDs.svg";
@@ -19,6 +21,7 @@ const BalanceChecker = (props) => {
   const [formattedBalance, setFormattedBalance] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const { isActive } = useInactivityControl();
 
   const usdsAddress = arbitrumsUSDAddress;
 
@@ -26,7 +29,7 @@ const BalanceChecker = (props) => {
     address: usdsAddress,
     abi: erc20Abi,
     functionName: 'decimals',
-    enabled: !!usdsAddress && isConnected,
+    enabled: isActive && !!usdsAddress && isConnected,
   });
 
   // Get balance
@@ -35,7 +38,7 @@ const BalanceChecker = (props) => {
     abi: erc20Abi,
     functionName: 'balanceOf',
     args: [address],
-    enabled: !!usdsAddress && !!address && isConnected,
+    enabled: isActive && !!usdsAddress && !!address && isConnected,
   });
 
   useEffect(() => {

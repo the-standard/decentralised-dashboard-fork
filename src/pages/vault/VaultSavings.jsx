@@ -23,6 +23,8 @@ import {
   useVaultManagerAbiStore,
 } from "../../store/Store";
 
+import { useInactivityControl } from '../../components/InactivityControl';
+
 import CenterLoader from "../../components/ui/CenterLoader";
 import Card from "../../components/ui/Card";
 import Button from "../../components/ui/Button";
@@ -35,6 +37,7 @@ const VaultSavings = () => {
     arbitrumsUSDSepoliaContractAddress,
     arbitrumsUSDContractAddress,
   } = usesUSDContractAddressStore();
+  const { isActive } = useInactivityControl();
 
   const { vaultManagerAbi } = useVaultManagerAbiStore();
   const { vaultType, vaultId } = useParams();
@@ -88,6 +91,7 @@ const VaultSavings = () => {
   };
 
   useWatchBlockNumber({
+    enabled: isActive,
     onBlockNumber() {
       refetch();
     },
@@ -102,6 +106,7 @@ const VaultSavings = () => {
     abi: vaultManagerAbi,
     functionName: "vaultData",
     args: [vaultId],
+    enabled: isActive,
   });
 
   const currentVault = vaultData;

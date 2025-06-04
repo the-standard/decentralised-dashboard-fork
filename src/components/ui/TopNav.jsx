@@ -83,17 +83,6 @@ const TopNav = (props) => {
           >
             Cross-Chain Dex
           </Button>
-          {useShowcase ? (null) : (
-            <Button
-              className={location.pathname.includes('/legacy-pools') ?
-                `${navButtonClass} btn-outline` : `${navButtonClass} btn-ghost`
-              }
-              color="ghost"
-              onClick={() => navigate("/legacy-pools")}
-            >
-              Legacy Pools
-            </Button>          
-          )}
           <Button
             className={location.pathname.includes('/liquidations') ?
               `${navButtonClass} btn-outline` : `${navButtonClass} btn-ghost`
@@ -102,6 +91,15 @@ const TopNav = (props) => {
             onClick={() => navigate("/liquidations")}
           >
             Liquidations
+          </Button>
+          <Button
+            className={location.pathname.includes('/redemptions') ?
+              `${navButtonClass} btn-outline` : `${navButtonClass} btn-ghost`
+            }
+            color="ghost"
+            onClick={() => navigate("/redemptions")}
+          >
+            Auto Redemptions
           </Button>
         </div>
         <div className="navbar-end">

@@ -11,6 +11,7 @@ import {
   ArrowPathRoundedSquareIcon,
   ArchiveBoxIcon,
   BoltIcon,
+  ScaleIcon,
 } from '@heroicons/react/24/outline';
 
 import {
@@ -99,23 +100,6 @@ const SideNav = (props) => {
             Cross-Chain Dex
           </NavLink>
         </Menu.Item>
-        {useShowcase ? (null) : (
-          <Menu.Item>
-            <NavLink
-              to="/legacy-pools"
-              className={({ isActive }) => 
-                isActive ||
-                location.pathname.includes('/legacy-pools') ?
-                'navbar-item active' : 'navbar-item'
-              }
-            >
-              <ArchiveBoxIcon className="h-6 w-6 inline-block"/>
-              <span className="md:hidden">
-                Legacy Pools
-              </span>
-            </NavLink>
-          </Menu.Item>
-        )}
         <Menu.Item>
           <NavLink
             to="/liquidations"
@@ -131,96 +115,22 @@ const SideNav = (props) => {
             </span>
           </NavLink>
         </Menu.Item>
-      </div>
-      {/* Med + */}
-      {/* <div className="p-2 flex-col gap-2 w-full hidden md:flex">
-        <Tooltip
-          position="right"
-          message="Vaults"
-        >
-          <Menu.Item>
-            <NavLink
-              to="/vaults"
-              className={({ isActive }) => 
-                isActive ||
-                location.pathname === '/' ||
-                location.pathname.includes('/vault') ?
-                'navbar-item active' : 'navbar-item'
-              }
-            >
-              <CircleStackIcon className="h-6 w-6 inline-block"/>
-              <span className="md:hidden">
-                Vaults
-              </span>
-            </NavLink>
-          </Menu.Item>
-        </Tooltip>
-        <Tooltip
-          position="right"
-          message="Staking Pool"
-        >
-          <Menu.Item>
-            <NavLink
-              to="/staking-pool"
-              className={({ isActive }) => 
-                isActive ||
-                location.pathname.includes('/staking-pool') ?
-                'navbar-item active' : 'navbar-item'
-              }
-            >
-              <Square3Stack3DIcon className="h-6 w-6 inline-block"/>
-              <span className="md:hidden">
-                Staking Pool
-              </span>
-            </NavLink>
-          </Menu.Item>
-        </Tooltip>
-        <Tooltip
-          position="right"
-          message="Cross-Chain Dex"
-        >
-          <Menu.Item>
-            <NavLink
-              to="/dex"
-              className={({ isActive }) => 
-                isActive ||
-                location.pathname.includes('/dex') ?
-                'navbar-item active' : 'navbar-item'
-              }
-            >
-              <ArrowPathRoundedSquareIcon className="h-6 w-6 inline-block"/>
-              <span className="md:hidden">
-                Cross-Chain Dex
-              </span>
-            </NavLink>
-          </Menu.Item>
-        </Tooltip>
-        {useShowcase ? (null) : (
-          <Tooltip
-            position="right"
-            message="Legacy Pools"
+        <Menu.Item>
+          <NavLink
+            to="/redemptions"
+            className={({ isActive }) => 
+              isActive ||
+              location.pathname.includes('/redemptions') ?
+              'navbar-item active' : 'navbar-item'
+            }
           >
-            <Menu.Item>
-              <NavLink
-                to="/legacy-pools"
-                className={({ isActive }) => 
-                  isActive ||
-                  location.pathname.includes('/legacy-pools') ?
-                  'navbar-item active' : 'navbar-item'
-                }
-              >
-                <ArchiveBoxIcon className="h-6 w-6 inline-block"/>
-                <span className="md:hidden">
-                  Legacy Pools
-                </span>
-              </NavLink>
-            </Menu.Item>
-          </Tooltip>
-        )}
+            <ScaleIcon className="h-6 w-6 inline-block"/>
+            <span className="md:hidden">
+              Auto Redemptions
+            </span>
+          </NavLink>
+        </Menu.Item>
       </div>
-      <div className="block md:hidden self-center mt-auto pb-4">
-        <ThemeButton />
-      </div> */}
     </Menu>
   );
 };

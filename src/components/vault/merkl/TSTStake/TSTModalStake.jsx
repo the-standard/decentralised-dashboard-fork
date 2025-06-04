@@ -24,6 +24,8 @@ import {
   useMerklTSTStakeStage,
 } from "../../../../store/Store";
 
+import { useInactivityControl } from '../../../InactivityControl';
+
 import Card from "../../../ui/Card";
 import Typography from "../../../ui/Typography";
 import Button from "../../../ui/Button";
@@ -54,6 +56,7 @@ const TSTModalStake = (props) => {
     useShowcase,
   } = useGuestShowcaseStore();
   const accountAddress = useWallet;
+  const { isActive } = useInactivityControl();
 
   const { erc20Abi } = useErc20AbiStore();
   const { stakingPoolv4Abi } = useStakingPoolv4AbiStore();
@@ -88,6 +91,7 @@ const TSTModalStake = (props) => {
       functionName: "balanceOf",
       args: [accountAddress]
     }],
+    enabled: isActive,
   });
 
   // useWatchBlockNumber({

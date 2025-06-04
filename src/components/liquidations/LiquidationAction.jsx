@@ -13,6 +13,8 @@ import {
   usesUSDContractAddressStore
 } from "../../store/Store";
 
+import { useInactivityControl } from '../InactivityControl';
+
 import Button from "../ui/Button";
 
 const LiquidationAction = ( props ) => {
@@ -23,7 +25,8 @@ const LiquidationAction = ( props ) => {
     arbitrumsUSDSepoliaContractAddress,
     arbitrumsUSDContractAddress,
   } = usesUSDContractAddressStore();
-  
+  const { isActive } = useInactivityControl();
+
   const chainId = useChainId();
 
   const vaultAddress = vaultData?.status?.vaultAddress;
@@ -45,6 +48,7 @@ const LiquidationAction = ( props ) => {
     address: vaultAddress,
     functionName: "undercollateralised",
     args: [],
+    enabled: isActive,
   });
 
   const {

@@ -19,6 +19,8 @@ import {
   useGuestShowcaseStore,
 } from "../../store/Store";
 
+import { useInactivityControl } from '../InactivityControl';
+
 import Card from "../ui/Card";
 import Typography from "../ui/Typography";
 import Button from "../ui/Button";
@@ -40,6 +42,7 @@ const StakingIncrease = () => {
     useShowcase,
   } = useGuestShowcaseStore();
   const accountAddress = useWallet;
+  const { isActive } = useInactivityControl();
 
   const { erc20Abi } = useErc20AbiStore();
   const { stakingPoolv4Abi } = useStakingPoolv4AbiStore();
@@ -64,15 +67,17 @@ const StakingIncrease = () => {
     contracts: [{
       ... tstContract,
       functionName: "allowance",
-      args: [accountAddress, stakingPoolv4Address]
+      args: [accountAddress, stakingPoolv4Address],
     },{
       ... tstContract,
       functionName: "balanceOf",
-      args: [accountAddress]
+      args: [accountAddress],
     }],
+    enabled: isActive,
   });
 
   useWatchBlockNumber({
+    enabled: isActive,
     onBlockNumber() {
       refetchTst();
     },
