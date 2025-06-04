@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ethers } from "ethers";
+import moment from 'moment';
 
 import {
   useGuestShowcaseStore,
@@ -17,6 +18,7 @@ import ClaimingRewardsModal from "./ClaimingRewardsModal";
 
 const StakingRewardsList = ({
   stakedSince,
+  rawStakedSince,
   poolRewardsLoading,
   rewardData,
   latestPrices,
@@ -25,6 +27,8 @@ const StakingRewardsList = ({
     useShowcase,
   } = useGuestShowcaseStore();
   const [open, setOpen] = useState(false);
+  const [timeRemaining, setTimeRemaining] = useState('');
+  const [isRewardReady, setIsRewardReady] = useState(false);
 
   if (poolRewardsLoading) {
     return (
@@ -60,6 +64,45 @@ const StakingRewardsList = ({
     noRewards = false;
   }
 
+  const calculateNextRewardTime = (rawStakedSince) => {
+    const now = moment();
+    const stakingStart = moment.unix((Number(rawStakedSince)));
+    
+    const hoursSinceStaking = now.diff(stakingStart, 'hours');
+    const completedPeriods = Math.floor(hoursSinceStaking / 24);
+    
+    const nextRewardTime = stakingStart.clone().add((completedPeriods + 1) * 24, 'hours');
+    
+    return nextRewardTime;
+  };
+
+  const formatCountdown = (duration) => {
+    const hours = Math.floor(duration.asHours());
+    const minutes = duration.minutes();
+    const seconds = duration.seconds();
+    
+    return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+  };
+
+  const updateCountdown = () => {
+    const nextRewardTime = calculateNextRewardTime(rawStakedSince);
+    const now = moment();
+    const duration = moment.duration(nextRewardTime.diff(now));
+    
+    if (duration.asMilliseconds() <= 0) {
+      setIsRewardReady(true);
+      setTimeRemaining(formatCountdown(moment.duration(24, 'hours')));
+    } else {
+      setIsRewardReady(false);
+      setTimeRemaining(formatCountdown(duration));
+    }
+  };
+
+  useEffect(() => {
+    updateCountdown();
+    const interval = setInterval(updateCountdown, 1000);
+    return () => clearInterval(interval);
+  }, [rawStakedSince]);
 
   return (
     <Card className="card-compact w-full">
@@ -78,6 +121,12 @@ const StakingRewardsList = ({
             <Typography variant="p">
               Staked Since:
               <b> {stakedSince}</b>
+            </Typography>
+          ) : null}
+          {timeRemaining ? (
+            <Typography variant="p">
+              Next Reward In:
+              <b> {timeRemaining}</b>
             </Typography>
           ) : null}
         </div>
