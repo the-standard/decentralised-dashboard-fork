@@ -3,6 +3,14 @@ const Typography = (props) => {
   const classes = props.className || '';
 
   switch (type) {
+    case 'small':
+      return (
+        <p
+          className={`text-sm font-normal opacity-80 ${classes ? classes : ''}`}
+        >
+          {props.children || ''}
+        </p>
+      );
     case 'p':
       return (
         <p

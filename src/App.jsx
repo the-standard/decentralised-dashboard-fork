@@ -20,6 +20,7 @@ import TermsOfUse from './pages/TermsOfUse';
 import Dex from './pages/dex/Dex';
 import Liquidations from './pages/liquidations/Liquidations';
 import Redemptions from './pages/redemptions/Redemptions';
+import Projects from './pages/projects/Projects';
 
 import './App.css';
 import 'react-toastify/dist/ReactToastify.min.css';
@@ -50,6 +51,7 @@ function App() {
                   <Route path="liquidations" element={<DashLayout><Liquidations /></DashLayout>} />
                   <Route path="termsofuse" element={<DashLayout><TermsOfUse /></DashLayout>} />
                   <Route path="redemptions" element={<DashLayout><Redemptions /></DashLayout>} />
+                  <Route path="projects" element={<DashLayout><Projects /></DashLayout>} />
                   <Route path="*" element={<Home/>} />
                 </Routes>
               </DisconnectHandler>

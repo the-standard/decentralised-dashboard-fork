@@ -4,7 +4,6 @@ import { Bars3Icon } from '@heroicons/react/24/outline';
 
 import {
   useLocalThemeModeStore,
-
   useGuestShowcaseStore,
 } from "../../store/Store";
 
@@ -33,14 +32,16 @@ const TopNav = (props) => {
 
   const isLight = localThemeModeStore && localThemeModeStore.includes('light');
 
-  const navButtonClass = 'hidden md:flex';
+  // const navButtonClass = 'hidden md:flex';
+  const navButtonClass = 'hidden min-[1220px]:flex';
 
   if (accountAddress) {
     return (
       <div className="navbar sticky shadow-md tst-topnav">
         <div className="navbar-start gap-[4px]">
           <Button
-            className="md:hidden"
+            // className="md:hidden"
+            className="min-[1220px]:hidden"
             color="ghost"
             onClick={toggleVisible}
           >
@@ -48,6 +49,7 @@ const TopNav = (props) => {
           </Button>
           <Button
             className="text-xl hidden md:flex"
+            // className="text-xl hidden min-[1220px]:flex"
             color="ghost"
             onClick={() => navigate("/")}
           >
@@ -101,8 +103,18 @@ const TopNav = (props) => {
           >
             Auto Redemptions
           </Button>
+          <Button
+            className={location.pathname.includes('/projects') ?
+              `${navButtonClass} btn-outline` : `${navButtonClass} btn-ghost`
+            }
+            color="ghost"
+            onClick={() => navigate("/projects")}
+          >
+            Other Projects
+          </Button>
         </div>
         <div className="navbar-end">
+          {/* <div className="hidden md:block"> */}
           <div className="hidden md:block">
             <ThemeButton />
           </div>
