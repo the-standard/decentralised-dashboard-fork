@@ -94,7 +94,8 @@ const DashLayout = ({children}) => {
         side={
           <SideNav toggleVisible={toggleVisible} />
         }
-        className="md:drawer-open bg-base-400/0"
+        // className="md:drawer-open bg-base-400/0"
+        className="min-[1220px]:drawer-open bg-base-400/0"
         contentClassName="tst-sidenav__content min-h-screen bg-base-400/0"
         sideClassName="tst-sidenav__side bg-base-400/0 z-[1]"
       >

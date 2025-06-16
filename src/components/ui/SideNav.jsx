@@ -12,6 +12,9 @@ import {
   ArchiveBoxIcon,
   BoltIcon,
   ScaleIcon,
+  PuzzlePieceIcon,
+  QueueListIcon,
+  RectangleStackIcon,
 } from '@heroicons/react/24/outline';
 
 import {
@@ -39,7 +42,8 @@ const SideNav = (props) => {
 
   return (
     <Menu className="p-0 text-base-content tst-sidenav">
-      <div className="flex flex-row flex-no-wrap space-x-2 md:hidden p-2 h-16">
+      {/* <div className="flex flex-row flex-no-wrap space-x-2 md:hidden p-2 h-16"> */}
+      <div className="flex flex-row flex-no-wrap space-x-2 min-[1220px]:hidden p-2 h-16">
         <Button
           className="flex grow text-xl p-2 px-4"
           color="ghost"
@@ -57,7 +61,8 @@ const SideNav = (props) => {
         </Button>
       </div>
       {/* Small - */}
-      <div className="p-2 flex flex-col gap-2 w-full md:hidden">
+      {/* <div className="p-2 flex flex-col gap-2 w-full md:hidden"> */}
+      <div className="p-2 flex flex-col gap-2 w-full min-[1220px]:hidden">
         <Menu.Item>
           <NavLink
             to="/vaults"
@@ -68,8 +73,9 @@ const SideNav = (props) => {
               'navbar-item active' : 'navbar-item'
             }
           >
-            <CircleStackIcon className="h-6 w-6 inline-block"/>
-            <span className="md:hidden">
+            <RectangleStackIcon className="h-6 w-6 inline-block"/>
+            {/* <span className="md:hidden"> */}
+            <span className="min-[1220px]:hidden">
               Vaults
             </span>
           </NavLink>
@@ -110,7 +116,8 @@ const SideNav = (props) => {
             }
           >
             <BoltIcon className="h-6 w-6 inline-block"/>
-            <span className="md:hidden">
+            {/* <span className="md:hidden"> */}
+            <span className="min-[1220px]:hidden">
               Liquidations
             </span>
           </NavLink>
@@ -125,8 +132,25 @@ const SideNav = (props) => {
             }
           >
             <ScaleIcon className="h-6 w-6 inline-block"/>
-            <span className="md:hidden">
+            {/* <span className="md:hidden"> */}
+            <span className="min-[1220px]:hidden">
               Auto Redemptions
+            </span>
+          </NavLink>
+        </Menu.Item>
+        <Menu.Item>
+          <NavLink
+            to="/projects"
+            className={({ isActive }) => 
+              isActive ||
+              location.pathname.includes('/projects') ?
+              'navbar-item active' : 'navbar-item'
+            }
+          >
+            <PuzzlePieceIcon className="h-6 w-6 inline-block"/>
+            {/* <span className="md:hidden"> */}
+            <span className="min-[1220px]:hidden">
+              Other Projects
             </span>
           </NavLink>
         </Menu.Item>
