@@ -154,6 +154,10 @@ const SideNav = (props) => {
             </span>
           </NavLink>
         </Menu.Item>
+
+        <div className="self-center">
+          <ThemeButton />
+        </div>
       </div>
     </Menu>
   );

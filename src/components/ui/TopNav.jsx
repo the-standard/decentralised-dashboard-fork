@@ -115,7 +115,7 @@ const TopNav = (props) => {
         </div>
         <div className="navbar-end">
           {/* <div className="hidden md:block"> */}
-          <div className="hidden min-[1220px]:block">
+          <div className="hidden md:block">
             <ThemeButton />
           </div>
           {/* <Notifications /> */}
