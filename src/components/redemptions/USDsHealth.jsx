@@ -9,11 +9,13 @@ const USDsHealth = ({remaining}) => {
 
   const value = handleValue(Number(remaining));
 
-  let useValue = value || 0;
+  let cappedValue = value || 0;
 
   if (value > 100) {
-    useValue = 100;
+    cappedValue = 100;
   }
+
+  let useValue = 100 - cappedValue || 0;
 
 
   useEffect(() => {
@@ -41,19 +43,19 @@ const USDsHealth = ({remaining}) => {
   const colourNegativeVery = '#ef4444';
   
   const getSentimentLabel = (val) => {
-    if (val < 20) return 'Very Possible';
-    if (val < 40) return 'Possible';
+    if (val < 20) return 'Very Unlikely';
+    if (val < 40) return 'Unlikely';
     if (val < 60) return 'Neutral';
-    if (val < 80) return 'Unlikely';
-    return 'Very Unlikely';
+    if (val < 80) return 'Possible';
+    return 'Very Possible';
   };
 
   const getSentimentColor = (val) => {
-    if (val < 20) return colourNegativeVery;
-    if (val < 40) return colourNegative;
+    if (val < 20) return colourPositiveVery;
+    if (val < 40) return colourPositive;
     if (val < 60) return colourNeutral;
-    if (val < 80) return colourPositive;
-    return colourPositiveVery;
+    if (val < 80) return colourNegative;
+    return colourNegativeVery;
   };
 
   const indicatorPos = calculateIndicatorPosition(animatedValue);
@@ -61,9 +63,9 @@ const USDsHealth = ({remaining}) => {
   return (
     <div className="relative w-36 h-20 flex justify-center items-end">
       <svg width="144" height="78" viewBox="0 0 144 78">
-        <path
+      <path
           d="M 13 67.99999999999999 A 59 59 0 0 1 20.699799159192082 38.85742987153037"
-          stroke={colourNegativeVery}
+          stroke={colourPositiveVery}
           strokeWidth="6"
           strokeLinecap="round"
           fill="none"
@@ -71,7 +73,7 @@ const USDsHealth = ({remaining}) => {
         />
         <path
           d="M 25.25491104204376 32.001435329825206 A 59 59 0 0 1 49.136580399325936 13.610074056278464"
-          stroke={colourNegative}
+          stroke={colourPositive}
           strokeWidth="6"
           strokeLinecap="round"
           fill="none"
@@ -87,7 +89,7 @@ const USDsHealth = ({remaining}) => {
         />
         <path
           d="M 94.86341960067408 13.61007405627847 A 59 59 0 0 1 118.74508895795626 32.00143532982522"
-          stroke={colourPositive}
+          stroke={colourNegative}
           strokeWidth="6"
           strokeLinecap="round"
           fill="none"
@@ -95,7 +97,7 @@ const USDsHealth = ({remaining}) => {
         />
         <path
           d="M 123.30020084080792 38.85742987153038 A 59 59 0 0 1 131 68"
-          stroke={colourPositiveVery}
+          stroke={colourNegativeVery}
           strokeWidth="6"
           strokeLinecap="round"
           fill="none"

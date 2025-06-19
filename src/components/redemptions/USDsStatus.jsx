@@ -116,7 +116,7 @@ const USDsStatus = (props) => {
               <div className="flex flex-col items-center">
                 <div className="flex items-center w-full">
                   <Typography variant="p">
-                    Chance of Auto Redemption:
+                    Auto Redemption Risk:
                   </Typography>
                 </div>
                 <div className="w-full">
