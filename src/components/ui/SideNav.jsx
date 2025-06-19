@@ -155,7 +155,7 @@ const SideNav = (props) => {
           </NavLink>
         </Menu.Item>
 
-        <div className="self-center">
+        <div className="block md:hidden self-center mt-auto pb-4">
           <ThemeButton />
         </div>
       </div>
