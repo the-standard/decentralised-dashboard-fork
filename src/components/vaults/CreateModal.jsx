@@ -48,9 +48,12 @@ const CreateModal = ({
   };
 
   const handleQuizComplete = () => {
+    console.log('handleQuizComplete');
     handleSetQuizCooldown();
     setStage('CREATE');
-    handleMintVault(createType);
+    if (!isPendingEur || !isPendingUsd) {
+      handleMintVault(createType);
+    }
   }
 
   if (showError) {

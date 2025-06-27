@@ -88,6 +88,8 @@ const VaultCreate = ({ tokenId, vaultType }) => {
     setShowError(false);
   };
 
+  console.log(123123, process.env.NODE_ENV)
+
   const handleMintVault = async (type) => {
     if (chainId !== arbitrumSepolia.id && chainId !== arbitrum.id) {
       toast.error('Please change to Arbitrum network!');
