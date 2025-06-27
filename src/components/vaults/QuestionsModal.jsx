@@ -249,8 +249,9 @@ const QuestionsModal = ({
           {useQuestion === quiz.length ? (
             <Button
               color="primary"
-              // onClick={() => handleMintVault(createType)}
-              onClick={() => handleQuizComplete()}
+              onClick={() => {
+                handleQuizComplete();
+              }}
               disabled={!userAnswer || isPendingUsd || isPendingEur }
               loading={isPendingUsd || isPendingEur}  
             >
