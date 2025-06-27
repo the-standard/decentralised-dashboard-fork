@@ -1,5 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { CookiesProvider } from 'react-cookie';
 
 import { InactivityProvider } from './components/InactivityControl';
 
@@ -38,22 +39,24 @@ function App() {
           <WalletProvider>
             <GuestHandler>
               <DisconnectHandler>
-                <Routes>
-                  <Route path="/" element={<Home />} />
-                  <Route path="vaults" element={<DashLayout><Vaults /></DashLayout>} />
-                  <Route path="vault/:vaultType/:vaultId" element={<DashLayout><Vault /></DashLayout>} />
-                  <Route path="vault/:vaultType/:vaultId/history" element={<DashLayout><VaultHistory /></DashLayout>} />
-                  <Route path="vault/:vaultType/:vaultId/savings" element={<DashLayout><VaultSavings /></DashLayout>} />
-                  <Route path="vault/:vaultType/:vaultId/merkl" element={<DashLayout><VaultMerkl /></DashLayout>} />
-                  <Route path="legacy-pools" element={<DashLayout><LegacyPools /></DashLayout>} />
-                  <Route path="staking-pool" element={<DashLayout><TstStaking /></DashLayout>} />
-                  <Route path="dex/*" element={<DashLayout><Dex /></DashLayout>} />
-                  <Route path="liquidations" element={<DashLayout><Liquidations /></DashLayout>} />
-                  <Route path="termsofuse" element={<DashLayout><TermsOfUse /></DashLayout>} />
-                  <Route path="redemptions" element={<DashLayout><Redemptions /></DashLayout>} />
-                  <Route path="projects" element={<DashLayout><Projects /></DashLayout>} />
-                  <Route path="*" element={<Home/>} />
-                </Routes>
+                <CookiesProvider>
+                  <Routes>
+                    <Route path="/" element={<Home />} />
+                    <Route path="vaults" element={<DashLayout><Vaults /></DashLayout>} />
+                    <Route path="vault/:vaultType/:vaultId" element={<DashLayout><Vault /></DashLayout>} />
+                    <Route path="vault/:vaultType/:vaultId/history" element={<DashLayout><VaultHistory /></DashLayout>} />
+                    <Route path="vault/:vaultType/:vaultId/savings" element={<DashLayout><VaultSavings /></DashLayout>} />
+                    <Route path="vault/:vaultType/:vaultId/merkl" element={<DashLayout><VaultMerkl /></DashLayout>} />
+                    <Route path="legacy-pools" element={<DashLayout><LegacyPools /></DashLayout>} />
+                    <Route path="staking-pool" element={<DashLayout><TstStaking /></DashLayout>} />
+                    <Route path="dex/*" element={<DashLayout><Dex /></DashLayout>} />
+                    <Route path="liquidations" element={<DashLayout><Liquidations /></DashLayout>} />
+                    <Route path="termsofuse" element={<DashLayout><TermsOfUse /></DashLayout>} />
+                    <Route path="redemptions" element={<DashLayout><Redemptions /></DashLayout>} />
+                    <Route path="projects" element={<DashLayout><Projects /></DashLayout>} />
+                    <Route path="*" element={<Home/>} />
+                  </Routes>
+                </CookiesProvider>
               </DisconnectHandler>
             </GuestHandler>
           </WalletProvider>
