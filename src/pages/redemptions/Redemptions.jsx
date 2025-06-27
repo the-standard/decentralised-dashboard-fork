@@ -44,7 +44,7 @@ const Redemptions = (props) => {
 
       <div className="flex gap-4 mb-4 flex-col md:flex-row">
 
-        <Card className="card-compact flex-1">
+        <Card className="card-compact flex-1 h-fit">
           <div className="card-body overflow-x-scroll">
             <Typography variant="h2" className="card-title flex gap-0">
               Auto Redemptions
@@ -58,7 +58,7 @@ const Redemptions = (props) => {
                 This is to ensure the stability of the protocol.
               </Typography>
               <Typography variant="p" className="mb-2">
-                To avoid an auto-redemption, consider repaying some USDs debt soon.
+                To avoid an auto-redemption, consider repaying some USDs debt soon or add more collateral.
               </Typography>
             </div>
 
@@ -75,7 +75,7 @@ const Redemptions = (props) => {
               </Button>
               <Button
                 color="primary"
-                onClick={() => navigate("/dex")}
+                onClick={() => navigate('/dex?toChain=42161&toToken=0x2Ea0bE86990E8Dac0D09e4316Bb92086F304622d')}
               >
                 Need more USDs? Exchange Here
               </Button>

@@ -55,7 +55,7 @@ const VaultRedemptionAlert = ({
                 <br/>
                 This ensures the stability of the protocol.
                 <br/>
-                To avoid an auto redemption, consider repaying some USDs debt soon.
+                To avoid an auto redemption, consider repaying some USDs debt soon or add more collateral.
               </Typography>
               <div className="card-actions flex-1 flex-col lg:flex-row justify-end items-end">
                 <Button

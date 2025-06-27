@@ -1,3 +1,5 @@
+import USDsHealth from "./USDsHealth";
+
 import Typography from "../ui/Typography";
 import Card from "../ui/Card";
 import TokenIcon from "../ui/TokenIcon";
@@ -98,6 +100,27 @@ const USDsStatus = (props) => {
                   )}
                 </Typography>
 
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+
+        <div>
+          <div className="bg-base-300/40 p-4 rounded-lg w-full">
+            {isLoading ? (
+              <Typography variant="h2" className="text-center">
+                <span className="loading loading-spinner loading-lg"></span>
+              </Typography>
+            ) : (
+              <div className="flex flex-col items-center">
+                <div className="flex items-center w-full">
+                  <Typography variant="p">
+                    Auto Redemption Risk:
+                  </Typography>
+                </div>
+                <div className="w-full">
+                  <USDsHealth remaining={usdsRemainingToTriggerPrice} />
                 </div>
               </div>
             )}

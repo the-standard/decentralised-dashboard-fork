@@ -53,7 +53,7 @@ const Liquidations = (props) => {
             <div className="card-actions">
               <Button
                 color="primary"
-                onClick={() => navigate("/dex")}
+                onClick={() => navigate('/dex?toChain=42161&toToken=0x2Ea0bE86990E8Dac0D09e4316Bb92086F304622d')}
               >
                 Need more USDs? Exchange Here
               </Button>
