@@ -78,10 +78,13 @@ const quiz = [
 const QuestionsModal = ({
   isOpen,
   handleCloseModal,
-  handleMintVault,
+  handleQuizComplete,
   createType,
   isPendingUsd,
   isPendingEur,
+  isSuccessUsd,
+  isSuccessEur,
+  setStage,
 }) => {
   const [question, setQuestion] = useState(0);
   const [userAnswer, setUserAnswer] = useState(undefined);
@@ -111,13 +114,13 @@ const QuestionsModal = ({
 
   return (
     <>
-      <Modal
+      {/* <Modal
         open={isOpen}
         // open={true}
         closeModal={() => {
           handleCloseQuiz();
         }}
-      >
+      > */}
         <div className="text-center">
           <Typography variant="h2" className="mb-2">
             Welcome to Your Smart Vault
@@ -246,7 +249,8 @@ const QuestionsModal = ({
           {useQuestion === quiz.length ? (
             <Button
               color="primary"
-              onClick={() => handleMintVault(createType)}
+              // onClick={() => handleMintVault(createType)}
+              onClick={() => handleQuizComplete()}
               disabled={!userAnswer || isPendingUsd || isPendingEur }
               loading={isPendingUsd || isPendingEur}  
             >
@@ -265,7 +269,7 @@ const QuestionsModal = ({
             </Button>
           )}
         </div>
-      </Modal>
+      {/* </Modal> */}
     </>
   )
 

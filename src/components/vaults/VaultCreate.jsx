@@ -18,11 +18,13 @@ import {
 import Card from "../ui/Card";
 import Button from "../ui/Button";
 import Typography from "../ui/Typography";
+import Modal from "../ui/Modal";
 
 import seurologo from "../../assets/EUROs.svg";
 import susdlogo from "../../assets/USDs.svg";
 
 import QuestionsModal from "./QuestionsModal";
+import CreateModal from "./CreateModal";
 
 const vaultTypes = [
   {
@@ -45,6 +47,9 @@ const vaultTypes = [
 
 const VaultCreate = ({ tokenId, vaultType }) => {
   const [open, setOpen] = useState(false);
+  const [stage, setStage] = useState('CREATE');
+  const [showError, setShowError] = useState(false);
+  // const [questionsOpen, setQuestionsOpen] = useState(false);
   const [createType, setCreateType] = useState('');
   const {
     useShowcase,
@@ -71,7 +76,7 @@ const VaultCreate = ({ tokenId, vaultType }) => {
   const sUSDVaultManagerAddress =
   chainId === arbitrumSepolia.id
     ? arbitrumsUSDSepoliaContractAddress
-    : arbitrumsUSDContractAddress;  
+    : arbitrumsUSDContractAddress;
 
   const { writeContract: mintVaultEur, isError: isErrorEur, isPending: isPendingEur, isSuccess: isSuccessEur } = useWriteContract();
   const { writeContract: mintVaultUsd, isError: isErrorUsd, isPending: isPendingUsd, isSuccess: isSuccessUsd } = useWriteContract();
@@ -79,6 +84,8 @@ const VaultCreate = ({ tokenId, vaultType }) => {
   const handleCloseModal = () => {
     setOpen(false);
     setCreateType('');
+    setStage('CREATE');
+    setShowError(false);
   };
 
   const handleMintVault = async (type) => {
@@ -111,6 +118,7 @@ const VaultCreate = ({ tokenId, vaultType }) => {
       navigate(`/vault/${vaultType.toString()}/${tokenId.toString()}`);
     } else if (isErrorEur || isErrorUsd) {
       toast.error('There was a problem');
+      setShowError(true);
     }
   }, [
     isErrorEur,
@@ -191,13 +199,19 @@ const VaultCreate = ({ tokenId, vaultType }) => {
           )}
         )}
       </div>
-      <QuestionsModal
+      <CreateModal
         handleCloseModal={handleCloseModal}
         isOpen={open}
         handleMintVault={handleMintVault}
         createType={createType}
         isPendingUsd={isPendingUsd}
         isPendingEur={isPendingEur}
+        isSuccessUsd={isSuccessUsd}
+        isSuccessEur={isSuccessEur}
+        stage={stage}
+        setStage={setStage}
+        showError={showError}
+        tokenId={tokenId}
       />
     </>
   );
