@@ -49,6 +49,7 @@ const VaultCreate = ({ tokenId, vaultType }) => {
   const [open, setOpen] = useState(false);
   const [stage, setStage] = useState('CREATE');
   const [showError, setShowError] = useState(false);
+  const [isMinting, setIsMinting] = useState(false);
   // const [questionsOpen, setQuestionsOpen] = useState(false);
   const [createType, setCreateType] = useState('');
   const {
@@ -88,28 +89,35 @@ const VaultCreate = ({ tokenId, vaultType }) => {
     setShowError(false);
   };
 
-  console.log(123123, process.env.NODE_ENV)
-
   const handleMintVault = async (type) => {
+    if (isMinting) return;
+    
     if (chainId !== arbitrumSepolia.id && chainId !== arbitrum.id) {
       toast.error('Please change to Arbitrum network!');
       return;
     }
-    if (type === 'EUROs') {
-      mintVaultEur({
-        abi: vaultManagerAbi,
-        address: vaultManagerAddress,
-        functionName: 'mint',
-        args: [],
-      });
-    }
-    if (type === 'USDs') {
-      mintVaultUsd({
-        abi: vaultManagerAbi,
-        address: sUSDVaultManagerAddress,
-        functionName: 'mint',
-        args: [],
-      });
+
+    setIsMinting(true);
+
+    try {
+      if (type === 'EUROs') {
+        await mintVaultEur({
+          abi: vaultManagerAbi,
+          address: vaultManagerAddress,
+          functionName: 'mint',
+          args: [],
+        });
+      }
+      if (type === 'USDs') {
+        await mintVaultUsd({
+          abi: vaultManagerAbi,
+          address: sUSDVaultManagerAddress,
+          functionName: 'mint',
+          args: [],
+        });
+      }
+    } finally {
+      setIsMinting(false);
     }
   };
 

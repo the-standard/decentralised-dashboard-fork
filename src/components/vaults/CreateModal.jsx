@@ -48,7 +48,6 @@ const CreateModal = ({
   };
 
   const handleQuizComplete = () => {
-    console.log('handleQuizComplete');
     handleSetQuizCooldown();
     setStage('CREATE');
     if (!isPendingEur || !isPendingUsd) {
