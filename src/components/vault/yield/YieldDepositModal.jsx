@@ -106,8 +106,11 @@ const YieldDepositModal = (props) => {
       closeModal();
     } else if (isError) {
       //
-      console.log(error)
-      toast.error('There was a problem');
+      if (error?.cause?.reason) {
+        toast.error(`Error: ${error.cause.reason}`)
+      } else (
+        toast.error('There was a problem')
+      )
     }
   }, [
     isPending,
@@ -364,6 +367,19 @@ const YieldDepositModal = (props) => {
               ✅ Minimum 10% stable allocation is required
             </Typography>
           </div>
+
+          {isError ? (
+            <div className="bg-error/5 border border-error rounded-lg p-4">
+              <div className="flex items-start">
+                <Typography
+                  variant="p"
+                  className="text-sm text-error"
+                >
+                  We were unable to create a swap at that ratio. You may need to try a different ratio or try again later.
+                </Typography>
+              </div>
+            </div>
+          ) : null}
   
           <div className="card-actions pt-4 flex-col-reverse lg:flex-row justify-end">
             <Button
