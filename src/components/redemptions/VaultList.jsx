@@ -202,9 +202,9 @@ const VaultList = ( props ) => {
                             userOwned = true;
                           }
 
-                          if (!Number(vaultHealth) > 0) {
-                            return null;
-                          }
+                          // if (!Number(vaultHealth) > 0) {
+                          //   return null;
+                          // }
 
                           return(
                             <tr
