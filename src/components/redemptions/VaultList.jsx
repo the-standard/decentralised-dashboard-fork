@@ -99,6 +99,12 @@ const VaultList = ( props ) => {
       : (Number((10000n * totalDebt) / totalCollateralValue) / 100).toFixed(2);
   };
 
+  const calculateVaultHealth = (status) => {
+    return status?.totalCollateralValue && status.totalCollateralValue !== 0n
+      ? Number((10000n * status.minted) / status.totalCollateralValue) / 100
+      : 0;
+  };
+
   function truncateToTwoDecimals(num) {
     const withTwoDecimals = num.toString().match(/^-?\d+(?:\.\d{0,2})?/);
     return withTwoDecimals ? withTwoDecimals[0] : num;
@@ -130,8 +136,9 @@ const VaultList = ( props ) => {
                       {useVaults
                         .sort((a, b) => {
                           // Sort by health percent
-                          const vaultHealthA = Number((10000n * a?.status?.minted) / a?.status?.totalCollateralValue) / 100;
-                          const vaultHealthB = Number((10000n * b?.status?.minted) / b?.status?.totalCollateralValue) / 100;
+                          const vaultHealthA = calculateVaultHealth(a?.status);
+                          const vaultHealthB = calculateVaultHealth(b?.status);
+                          
                           if (vaultHealthA < vaultHealthB) {
                             return 1;
                           } else if (vaultHealthB < vaultHealthA) {
@@ -194,6 +201,10 @@ const VaultList = ( props ) => {
                           if (userVaultIDs && userVaultIDs.includes(vault.tokenId)) {
                             userOwned = true;
                           }
+
+                          // if (!Number(vaultHealth) > 0) {
+                          //   return null;
+                          // }
 
                           return(
                             <tr
